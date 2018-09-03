@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="big">20dp</dimen>
+    <dimen name="title">18dp</dimen>
+    <dimen name="textSize">16dp</dimen>
+    <dimen name="sencond_textSize">15dp</dimen>
+    <dimen name="small_textSize">10dp</dimen>
+    <dimen name="dp_10">10dp</dimen>
+    <dimen name="dp_5">5dp</dimen>
+    <dimen name="dp_20">20dp</dimen>
+    <dimen name="dp_15">15dp</dimen>
+
+</resources>

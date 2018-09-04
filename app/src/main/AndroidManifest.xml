@@ -55,7 +55,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".homepage.activity.VipDetailActivity" />
-        <activity android:name=".homepage.activity.SearchActivity" />
+        <activity
+            android:name=".homepage.activity.SearchActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name=".homepage.activity.CollageActivity" />
         <activity android:name=".homepage.activity.OpenUpVipActivity"></activity>
     </application>

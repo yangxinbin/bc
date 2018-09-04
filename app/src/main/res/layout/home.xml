@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageView_vip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_10"
@@ -39,7 +39,6 @@
             android:textSize="16sp" />
 
         <ImageView
-            android:id="@+id/et_delete"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/search" />

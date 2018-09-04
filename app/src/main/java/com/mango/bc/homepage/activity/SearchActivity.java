@@ -69,9 +69,9 @@ public class SearchActivity extends BaseActivity {
 
     private void initRecycle() {
         Log.v("yyyyyyyyyy", "====toList(longHistory)==" + longHistory);
-        if (longHistory.equals("")){
+        if (longHistory.equals("")) {
             mHistorySearchAdapter = new HistorySearchAdapter(new ArrayList<String>());
-        }else {
+        } else {
             mHistorySearchAdapter = new HistorySearchAdapter(toList(longHistory));
         }
         mRecyclerView.setHasFixedSize(true);
@@ -85,10 +85,18 @@ public class SearchActivity extends BaseActivity {
 
             @Override
             public void onDeleteClick(View view, int position) {
-
+                List<String> hList = mHistorySearchAdapter.reMoveItem(position);
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hList.size(); i++) {
+                    if (hList.size() - 1 == i) {
+                        sb.append(hList.get(i));
+                        break;
+                    }
+                    sb.append(hList.get(i) + ",");
+                }
+                spUtils.put(SEARCH_HISTORY,sb.toString());
+                Log.v("yyyyyyyyyy", "====sb.toString()==" + sb.toString());
             }
-
-
         });
     }
 

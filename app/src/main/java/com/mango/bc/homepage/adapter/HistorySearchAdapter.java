@@ -2,6 +2,7 @@ package com.mango.bc.homepage.adapter;
 
 import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,11 +32,24 @@ public class HistorySearchAdapter extends RecyclerView.Adapter {
     public void setOnItemClickLitener(HistorySearchAdapter.OnItemClickLitener mOnItemClickLitener) {
         this.mOnItemClickLitener = mOnItemClickLitener;
     }
+
     public void reMove() {
         List<String> m = new ArrayList<String>();
         this.datas = m;
         this.notifyDataSetChanged();
     }
+
+    public List<String> reMoveItem(int position) {
+        if (datas != null) {
+            datas.remove(position);
+            for (int i = 0; i < datas.size(); i++) {
+                Log.v("ooooooo", "---addItem--" + datas.get(i));
+            }
+        }
+        this.notifyDataSetChanged();
+        return datas;
+    }
+
     public interface OnItemClickLitener {
 
         void onItemClick(View view, int position);
@@ -72,23 +86,22 @@ public class HistorySearchAdapter extends RecyclerView.Adapter {
         return datas.size();
     }
 
-    class SingleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class SingleViewHolder extends RecyclerView.ViewHolder {
         TextView tv_search;
         ImageView img_delete;
 
-        public SingleViewHolder(View itemView) {
+        public SingleViewHolder(final View itemView) {
             super(itemView);
             tv_search = (TextView) itemView.findViewById(R.id.tv_search);
             img_delete = (ImageView) itemView.findViewById(R.id.img_delete);
-            img_delete.setOnClickListener(this);
+            img_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickLitener.onItemClick(itemView, getAdapterPosition());
+                }
+            });
         }
 
-        @Override
-        public void onClick(View view) {
-            if (mOnItemClickLitener != null) {
-                mOnItemClickLitener.onDeleteClick(view, this.getLayoutPosition());
-            }
-        }
     }
 
 }

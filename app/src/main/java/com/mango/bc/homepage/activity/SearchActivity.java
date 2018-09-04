@@ -104,7 +104,8 @@ public class SearchActivity extends BaseActivity {
     private List<String> toList(String value) {
         String[] arg = value.split(",");
         //List<String> list = Arrays.asList(arg);
-        List<String> list = new LinkedList(Arrays.asList(arg));
+        //List<String> list = new LinkedList(Arrays.asList(arg));//这个也行
+        List<String> list = new ArrayList(Arrays.asList(arg));
 /*        GsonJsonParser gson = new GsonJsonParser();
         List<String> list = (List<String>) gson.parse(value);*/
         Log.v("yyyyyyyyyy", "====list==" + list.size());

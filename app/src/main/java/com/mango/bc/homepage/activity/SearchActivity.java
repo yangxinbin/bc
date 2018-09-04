@@ -21,6 +21,7 @@ import com.mango.bc.util.SPUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -95,14 +96,15 @@ public class SearchActivity extends BaseActivity {
                     sb.append(hList.get(i) + ",");
                 }
                 spUtils.put(SEARCH_HISTORY,sb.toString());
-                Log.v("yyyyyyyyyy", "====sb.toString()==" + sb.toString());
+                Log.v("yyyyyyyyyy", sb.toString()+"====onDeleteClick=="+position);
             }
         });
     }
 
     private List<String> toList(String value) {
         String[] arg = value.split(",");
-        List<String> list = Arrays.asList(arg);
+        //List<String> list = Arrays.asList(arg);
+        List<String> list = new LinkedList(Arrays.asList(arg));
 /*        GsonJsonParser gson = new GsonJsonParser();
         List<String> list = (List<String>) gson.parse(value);*/
         Log.v("yyyyyyyyyy", "====list==" + list.size());

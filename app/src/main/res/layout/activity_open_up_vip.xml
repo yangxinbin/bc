@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:scrollbars="none"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -47,11 +48,12 @@
             android:textColor="@color/black"
             android:textSize="@dimen/title" />
 
-        <ListView
-            android:id="@+id/list_item"
-            android:listSelector="@drawable/checkable_item_selector"
+        <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="@dimen/dp_10"
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></ListView>
+            android:layout_height="match_parent">
+        </android.support.v7.widget.RecyclerView>
 
         <ImageView
             android:layout_marginTop="@dimen/dp_10"

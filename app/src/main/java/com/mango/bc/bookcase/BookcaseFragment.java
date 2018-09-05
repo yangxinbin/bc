@@ -17,6 +17,7 @@ import com.mango.bc.adapter.ViewPageAdapter;
 import com.mango.bc.bookcase.fragment.MyExpertFragment;
 import com.mango.bc.bookcase.fragment.MyFreeFragment;
 import com.mango.bc.bookcase.fragment.MyQualityFragment;
+import com.mango.bc.util.DensityUtil;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -85,7 +86,7 @@ public class BookcaseFragment extends Fragment {
                     //拿到tabLayout的mTabStrip属性
                     LinearLayout mTabStrip = (LinearLayout) tabLayout.getChildAt(0);
 
-                    int dp20 = dip2px(tabLayout.getContext(), 20);
+                    int dp20 = DensityUtil.dip2px(tabLayout.getContext(), 20);
 
                     for (int i = 0; i < mTabStrip.getChildCount(); i++) {
                         View tabView = mTabStrip.getChildAt(i);
@@ -123,11 +124,6 @@ public class BookcaseFragment extends Fragment {
                 }
             }
         });
-    }
-
-    private int dip2px(Context context, int dpValue) {
-        float scale = context.getResources().getDisplayMetrics().density;
-        return (int)(dpValue * scale + 0.5F);
     }
 
     @Override

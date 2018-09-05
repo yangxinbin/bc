@@ -59,7 +59,8 @@
             android:name=".homepage.activity.SearchActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name=".homepage.activity.CollageActivity" />
-        <activity android:name=".homepage.activity.OpenUpVipActivity"></activity>
+        <activity android:name=".homepage.activity.OpenUpVipActivity" />
+        <activity android:name=".wallet.activity.ProblemActivity"></activity>
     </application>
 
 </manifest>

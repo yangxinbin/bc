@@ -6,4 +6,41 @@
     <string name="vip_center">VIP购买中心</string>
     <string name="buy_vip">确认支付</string>
     <string name="search">搜索</string>
+    <string name="my_wallet">我的钱包</string>
+    <string name="transaction_record">交易记录</string>
+    <string name="total_balance">总余额（PP币）</string>
+    <string name="Can_be_presented">可提现余额</string>
+    <string name="no_mention">不可提现余额</string>
+    <string name="copy">复制</string>
+    <string name="purse_address">钱包地址</string>
+    <string name="pp_recharge">PP币充值</string>
+    <string name="pp_transfer">PP币转账</string>
+    <string name="pp_currency">PP币提现</string>
+    <string name="sign_immediately">立即签到</string>
+    <string name="sign_7day">连续签到7天额外奖励5币</string>
+    <string name="apply_bc">申请成为BC达人</string>
+    <string name="earn_pp">马上赚取PP币</string>
+    <string name="what_pp">什么是PP币？</string>
+    <string name="how_pp">如何获得PP币？</string>
+    <string name="does_pp">PP币如何转账？</string>
+    <string name="how_to_pp">PP币如何提现？</string>
+    <string name="cancel_pp">如何取消自动续费？</string>
+    <string name="common_problem">常见问题</string>
+    <string name="what_pp_detail">PP币是BC大陆关键的流通token, 是基于以太坊平台，按照ERC20标准协议开发的区块链货币， 可以用于在社群上进行购买会员、课程、书籍等服务， PP币也具备强大的投票权和影响力能改变BC大陆的发展方向。PP币也可以通过交易平台兑换其他虚拟货币，具备价值储备、交易流通、保值增值等功能。</string>
+    <string name="how_pp_detail">1.	用户在BC大陆小程序进行阅读时，系统会按用户的阅   读时间来计算出一定的PP币奖励给用户，这也是BC大陆独创的“学习即赚钱”、“阅读即挖矿”模式。\n
+2.	每天用户登陆BC大陆小程序，会奖励PP币。\n
+3.	每天签到及连续一周签到，奖励PP币。\n
+4.	当用户转发小程序里的文章时，会奖励PP币。\n
+5.	答题赢PP币。BC大陆会长期设置关于区块链知识的答题环节，达到不同的分数会有不同的PP币奖励。\n
+6.	用户通过BC大陆官方的不定期空投来获得奖励。\n
+7.	用户可以通过交易所直接购买来获得PP币。\n</string>
+    <string name="does_pp_detail">1.	如果没提钱到以太坊钱包（如imtoken钱包），可以在BC大陆的小程序个人中心进行转账。\n
+2.	如果已提钱到以太坊钱包，可以通过钱包自行转账给其他人，也可以通过钱包收款。</string>
+    <string name="how_to_pp_detail">PP币的提现方式有：\n
+1.	用户可以在小程序个人中心提现，BC大陆通过微信红包的形式发放给用户。\n
+2.	用户可以提现到自己的以太坊钱包，如imtoken钱包，长期持币和增值。\n
+3.	待PP币上线交易所后，用户可以将PP币提现到交易所
+进行交易变现。</string>
+    <string name="cancel_pp_detail">可在首页内点击会员展示卡片，选择“管理自动续费”-“取消续费”即可。</string>
+
 </resources>

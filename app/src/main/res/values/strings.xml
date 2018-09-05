@@ -1,8 +1,44 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">BC LAND</string>
     <string name="more">Look at more</string>
     <string name="open_up">Open up vip</string>
     <string name="vip_center">VIP purchase center</string>
     <string name="buy_vip">Confirm the purchase</string>
     <string name="search">Search</string>
+    <string name="my_wallet">My wallet</string>
+    <string name="transaction_record">Transaction record</string>
+    <string name="total_balance">Total balance</string>
+    <string name="Can_be_presented">Can be presented</string>
+    <string name="no_mention">Cannot be presented</string>
+    <string name="copy">Copy</string>
+    <string name="purse_address">Purse address</string>
+    <string name="pp_recharge">Recharge</string>
+    <string name="pp_transfer">Transfer</string>
+    <string name="pp_currency">Currency</string>
+    <string name="sign_immediately">Sign in immediately</string>
+    <string name="sign_7day">Continuous sign up for 7 days, extra bonus 5 coins.</string>
+    <string name="apply_bc">Apply for BC</string>
+    <string name="earn_pp">Earn PP coins immediately</string>
+    <string name="what_pp">What is PP currency?</string>
+    <string name="how_pp">How to get PP coins?</string>
+    <string name="does_pp">How does PP currency transfer?</string>
+    <string name="how_to_pp">How to withdraw cash in PP currency?</string>
+    <string name="cancel_pp">How to cancel automatic renewal?</string>
+    <string name="common_problem">Common problem</string>
+    <string name="what_pp_detail">PP coin is the key circulation token of BC mainland. It is based on the platform of Ethernet square and developed according to the ERC20 standard agreement. It can be used to buy members, courses, books and other services in the community. PP coin also has strong voting power and influence to change the development direction of BC mainland. PP currency can also be converted into other virtual currencies through the trading platform, with value reserves, trading circulation, value preservation and appreciation functions.</string>
+    <string name="how_pp_detail" >1. When the user reads the BC Mainland Small program, the system will calculate a certain PP coin reward to the user according to the user\'s reading time. This is also the original "learning is making money" and "reading is digging" mode of BC mainland. \n
+2. every day the user login to the BC mainland applet, which will reward the PP currency. \n
+3. sign in every day and sign in for a week, reward PP coins. \n
+4. when users transmit articles in small programs, they will reward PP coins. \n
+5. answers to win PP coins. BC mainland will set up a long-term knowledge of the block chain answer link, to achieve different scores will have different PP coin awards. \n
+6. users are rewarded through the BC's official irregular airdrop. \n
+7. users can get PP coins directly through the exchange. \n</string>
+    <string name="does_pp_detail">1. If you don\'t bring the money to an Ethernet wallet (such as an imtoken wallet), you can transfer it to a small personal center on the BC mainland. \n
+2. If the money has been mentioned in the Ethernet wallet, it can be transferred to other people through the wallet itself, or it can be collected through the wallet.</string>
+    <string name="how_to_pp_detail">PP currency withdrawals are: \n
+1. Users can pick it up in the personal center of the applet and distribute it to users in the form of a Wechat Red Packet from BC Mainland. \n
+2. users can cash in their own Ethernet purse, such as imtoken wallet, long-term holding currency and value added. \n
+3. after the PP currency online exchange, users can cash the PP currency to the stock exchange.
+Transaction realisation.</string>
+    <string name="cancel_pp_detail">You can click on members\' display cards in the front page and choose "automatic renewal of management" - "cancel renewals".</string>
 </resources>

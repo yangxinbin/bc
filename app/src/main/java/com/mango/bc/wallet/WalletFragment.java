@@ -20,6 +20,7 @@ import com.mango.bc.bookcase.fragment.MyFreeFragment;
 import com.mango.bc.bookcase.fragment.MyQualityFragment;
 import com.mango.bc.homepage.activity.VipDetailActivity;
 import com.mango.bc.util.DensityUtil;
+import com.mango.bc.wallet.activity.ExpertActivity;
 import com.mango.bc.wallet.activity.ProblemActivity;
 import com.mango.bc.wallet.fragment.AlreadyObtainedFragment;
 import com.mango.bc.wallet.fragment.DailyTasksFragment;
@@ -165,7 +166,7 @@ public class WalletFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.tv_transaction_record, R.id.tv_copy, R.id.l_recharge, R.id.l_transfer, R.id.l_currency, R.id.tv_sign, R.id.l_1, R.id.l_2, R.id.l_3, R.id.l_4, R.id.l_5, R.id.l_service})
+    @OnClick({R.id.tv_transaction_record, R.id.tv_copy, R.id.l_recharge, R.id.l_transfer, R.id.l_currency,R.id.tv_sign, R.id.l_to_bc, R.id.l_1, R.id.l_2, R.id.l_3, R.id.l_4, R.id.l_5, R.id.l_service})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -180,6 +181,10 @@ public class WalletFragment extends Fragment {
             case R.id.l_currency:
                 break;
             case R.id.tv_sign:
+                break;
+            case R.id.l_to_bc:
+                intent = new Intent(getActivity(), ExpertActivity.class);
+                startActivity(intent);
                 break;
             case R.id.l_1:
                 intent = new Intent(getActivity(), ProblemActivity.class);

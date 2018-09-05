@@ -11,7 +11,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_1"
         android:background="@color/common_gray"
         android:orientation="vertical">
 
@@ -552,6 +552,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
+                        android:padding="@dimen/dp_5"
                         android:text="@string/what_pp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/textSize" />
@@ -581,6 +582,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
+                        android:padding="@dimen/dp_5"
                         android:text="@string/how_pp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/textSize" />
@@ -610,6 +612,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
+                        android:padding="@dimen/dp_5"
                         android:text="@string/does_pp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/textSize" />
@@ -639,6 +642,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
+                        android:padding="@dimen/dp_5"
                         android:text="@string/how_to_pp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/textSize" />
@@ -668,6 +672,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
+                        android:padding="@dimen/dp_5"
                         android:text="@string/cancel_pp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/textSize" />
@@ -703,6 +708,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_weight="1"
+                android:padding="@dimen/dp_5"
                 android:text="联系客服"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize" />

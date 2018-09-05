@@ -24,7 +24,7 @@ public class BcActivity extends BaseActivity {
         setContentView(R.layout.activity_bc);
         ButterKnife.bind(this);
         bottomBar.setContainer(R.id.container)
-                .setTitleBeforeAndAfterColor("#333333", "#38FF74")
+                .setTitleBeforeAndAfterColor("#333333", "#ffac00")
                 .addItem(HomePageFragment.class,
                         "主页",
                         R.drawable.home,

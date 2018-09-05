@@ -109,7 +109,7 @@ public class WalletFragment extends Fragment {
         mfragments.add(new AlreadyObtainedFragment());
         viewPager.setAdapter(vp);
         viewPager.setCurrentItem(0);
-        viewPager.setOffscreenPageLimit(1);
+        viewPager.setOffscreenPageLimit(0);
         reflex(tabLayout);
     }
     public void reflex(final TabLayout tabLayout){

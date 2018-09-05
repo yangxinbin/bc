@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/dp_100"
         android:layout_marginLeft="@dimen/dp_10"
         android:orientation="horizontal">
 
@@ -64,7 +64,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/dp_100"
         android:layout_marginLeft="@dimen/dp_10"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -122,7 +122,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/dp_100"
         android:layout_marginLeft="@dimen/dp_10"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -180,7 +180,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/dp_100"
         android:layout_marginLeft="@dimen/dp_10"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -238,7 +238,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/dp_100"
         android:layout_marginLeft="@dimen/dp_10"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -296,7 +296,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/dp_100"
         android:layout_marginLeft="@dimen/dp_10"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -354,7 +354,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/dp_100"
         android:layout_marginLeft="@dimen/dp_10"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -412,7 +412,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/dp_100"
         android:layout_marginLeft="@dimen/dp_10"
         android:gravity="center_vertical"
         android:orientation="horizontal">

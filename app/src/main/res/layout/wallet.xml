@@ -495,7 +495,7 @@
                 android:id="@+id/tabLayout_wallet"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_gravity="center"
+                android:layout_gravity="left"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tabGravity="center"
                 app:tabIndicatorColor="@color/yello"

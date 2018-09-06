@@ -437,10 +437,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/yellow_circle"
-            android:paddingBottom="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_5"
             android:paddingLeft="@dimen/dp_30"
             android:paddingRight="@dimen/dp_30"
-            android:paddingTop="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_5"
             android:text="@string/sign_immediately"
             android:textColor="@color/yello"
             android:textStyle="bold" />

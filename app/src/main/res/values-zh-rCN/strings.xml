@@ -59,5 +59,6 @@
     <string name="write_apply_email">请输入您的邮箱</string>
     <string name="apply_phone">电话</string>
     <string name="write_apply_phone">请输入您的电话号码</string>
+    <string name="my_collage">我的拼团</string>
 
 </resources>

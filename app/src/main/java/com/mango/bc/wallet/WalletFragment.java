@@ -1,11 +1,13 @@
 package com.mango.bc.wallet;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import com.mango.bc.bookcase.fragment.MyFreeFragment;
 import com.mango.bc.bookcase.fragment.MyQualityFragment;
 import com.mango.bc.homepage.activity.VipDetailActivity;
 import com.mango.bc.util.DensityUtil;
+import com.mango.bc.view.ViewPagerForScrollView;
 import com.mango.bc.wallet.activity.ExpertActivity;
 import com.mango.bc.wallet.activity.ProblemActivity;
 import com.mango.bc.wallet.fragment.AlreadyObtainedFragment;
@@ -101,6 +104,7 @@ public class WalletFragment extends Fragment {
 
     }
 
+    @SuppressLint("NewApi")
     private void init() {
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         ViewPageAdapter vp = new ViewPageAdapter(getFragmentManager(), mfragments, mDatas);
@@ -110,6 +114,29 @@ public class WalletFragment extends Fragment {
         viewPager.setAdapter(vp);
         viewPager.setCurrentItem(0);
         viewPager.setOffscreenPageLimit(0);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) viewPager.getLayoutParams();
+                switch (position){
+                    case 0:
+                        linearParams.height = DensityUtil.dip2px(getActivity(),810);// 当控件的高强制设成50象素
+                        break;
+                    case 1:
+                        linearParams.height = DensityUtil.dip2px(getActivity(),650);// 当控件的高强制设成50象素
+                        break;
+                }
+                viewPager.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件myGrid
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         reflex(tabLayout);
     }
     public void reflex(final TabLayout tabLayout){

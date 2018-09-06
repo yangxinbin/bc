@@ -25,6 +25,7 @@ import com.mango.bc.util.DensityUtil;
 import com.mango.bc.view.ViewPagerForScrollView;
 import com.mango.bc.wallet.activity.ExpertActivity;
 import com.mango.bc.wallet.activity.ProblemActivity;
+import com.mango.bc.wallet.activity.TransactionActivity;
 import com.mango.bc.wallet.fragment.AlreadyObtainedFragment;
 import com.mango.bc.wallet.fragment.DailyTasksFragment;
 
@@ -198,6 +199,8 @@ public class WalletFragment extends Fragment {
         Intent intent;
         switch (view.getId()) {
             case R.id.tv_transaction_record:
+                intent = new Intent(getActivity(), TransactionActivity.class);
+                startActivity(intent);
                 break;
             case R.id.tv_copy:
                 break;

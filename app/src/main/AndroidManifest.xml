@@ -63,7 +63,8 @@
         <activity android:name=".homepage.activity.OpenUpVipActivity" />
         <activity android:name=".wallet.activity.ProblemActivity" />
         <activity android:name=".wallet.activity.ExpertActivity" />
-        <activity android:name=".wallet.activity.ExpertApplyActivity"></activity>
+        <activity android:name=".wallet.activity.ExpertApplyActivity" />
+        <activity android:name=".wallet.activity.TransactionActivity"></activity>
     </application>
 
 </manifest>

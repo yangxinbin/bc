@@ -80,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="点赞"
+                android:text="分享"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize" />
 
@@ -138,7 +138,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="点赞"
+                android:text="评论"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize" />
 
@@ -196,7 +196,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="点赞"
+                android:text="阅读时长"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize" />
 
@@ -206,7 +206,7 @@
                 android:layout_marginBottom="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_weight="1"
-                android:text="限10次，0.1BC积分/次"
+                android:text="10分钟0.2BC，限50分钟"
                 android:textColor="@color/plan_gray"
                 android:textSize="@dimen/dp_12" />
 
@@ -254,7 +254,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="点赞"
+                android:text="发起拼团"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize" />
 
@@ -264,7 +264,7 @@
                 android:layout_marginBottom="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_weight="1"
-                android:text="限10次，0.1BC积分/次"
+                android:text="15%收益"
                 android:textColor="@color/plan_gray"
                 android:textSize="@dimen/dp_12" />
 
@@ -277,14 +277,32 @@
                 android:textSize="@dimen/dp_12" />
         </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_height="match_parent"
             android:layout_marginRight="@dimen/dp_20"
-            android:text="进度"
-            android:textColor="@color/plan_gray"
-            android:textSize="@dimen/dp_14" />
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:text="不限次数"
+                android:gravity="bottom"
+                android:textColor="@color/plan_gray"
+                android:textSize="@dimen/dp_14" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="top"
+                android:text="去拼团>>"
+                android:textColor="@color/yello"
+                android:textSize="@dimen/dp_14" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <View
@@ -312,7 +330,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="点赞"
+                android:text="邀请开通VIP（需成交）"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize" />
 
@@ -322,7 +340,7 @@
                 android:layout_marginBottom="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_weight="1"
-                android:text="限10次，0.1BC积分/次"
+                android:text="10%收益"
                 android:textColor="@color/plan_gray"
                 android:textSize="@dimen/dp_12" />
 
@@ -335,14 +353,31 @@
                 android:textSize="@dimen/dp_12" />
         </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_height="match_parent"
             android:layout_marginRight="@dimen/dp_20"
-            android:text="进度"
-            android:textColor="@color/plan_gray"
-            android:textSize="@dimen/dp_14" />
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:text="不限次数"
+                android:gravity="bottom"
+                android:textColor="@color/plan_gray"
+                android:textSize="@dimen/dp_14" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="top"
+                android:text="去邀请>>"
+                android:textColor="@color/yello"
+                android:textSize="@dimen/dp_14" />
+        </LinearLayout>
     </LinearLayout>
 
     <View
@@ -370,7 +405,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="点赞"
+                android:text="推荐精品课（需成交）"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize" />
 
@@ -380,7 +415,7 @@
                 android:layout_marginBottom="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_weight="1"
-                android:text="限10次，0.1BC积分/次"
+                android:text="15%收益"
                 android:textColor="@color/plan_gray"
                 android:textSize="@dimen/dp_12" />
 
@@ -393,14 +428,31 @@
                 android:textSize="@dimen/dp_12" />
         </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_height="match_parent"
             android:layout_marginRight="@dimen/dp_20"
-            android:text="进度"
-            android:textColor="@color/plan_gray"
-            android:textSize="@dimen/dp_14" />
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:text="不限次数"
+                android:gravity="bottom"
+                android:textColor="@color/plan_gray"
+                android:textSize="@dimen/dp_14" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="top"
+                android:text="去推荐>>"
+                android:textColor="@color/yello"
+                android:textSize="@dimen/dp_14" />
+        </LinearLayout>
     </LinearLayout>
 
     <View
@@ -428,7 +480,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="点赞"
+                android:text="推荐大咖课程（需成交）"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize" />
 
@@ -438,7 +490,7 @@
                 android:layout_marginBottom="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_weight="1"
-                android:text="限10次，0.1BC积分/次"
+                android:text="10%收益"
                 android:textColor="@color/plan_gray"
                 android:textSize="@dimen/dp_12" />
 
@@ -451,14 +503,31 @@
                 android:textSize="@dimen/dp_12" />
         </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_height="match_parent"
             android:layout_marginRight="@dimen/dp_20"
-            android:text="进度"
-            android:textColor="@color/plan_gray"
-            android:textSize="@dimen/dp_14" />
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:text="不限次数"
+                android:gravity="bottom"
+                android:textColor="@color/plan_gray"
+                android:textSize="@dimen/dp_14" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="top"
+                android:text="去推荐>>"
+                android:textColor="@color/yello"
+                android:textSize="@dimen/dp_14" />
+        </LinearLayout>
     </LinearLayout>
 
     <View

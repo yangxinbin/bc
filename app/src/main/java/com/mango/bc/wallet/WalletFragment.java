@@ -23,9 +23,12 @@ import com.mango.bc.bookcase.fragment.MyQualityFragment;
 import com.mango.bc.homepage.activity.VipDetailActivity;
 import com.mango.bc.util.DensityUtil;
 import com.mango.bc.view.ViewPagerForScrollView;
+import com.mango.bc.wallet.activity.CurrencyActivity;
 import com.mango.bc.wallet.activity.ExpertActivity;
 import com.mango.bc.wallet.activity.ProblemActivity;
+import com.mango.bc.wallet.activity.RechargeActivity;
 import com.mango.bc.wallet.activity.TransactionActivity;
+import com.mango.bc.wallet.activity.TransferActivity;
 import com.mango.bc.wallet.fragment.AlreadyObtainedFragment;
 import com.mango.bc.wallet.fragment.DailyTasksFragment;
 
@@ -205,10 +208,16 @@ public class WalletFragment extends Fragment {
             case R.id.tv_copy:
                 break;
             case R.id.l_recharge:
+                intent = new Intent(getActivity(), RechargeActivity.class);
+                startActivity(intent);
                 break;
             case R.id.l_transfer:
+                intent = new Intent(getActivity(), TransferActivity.class);
+                startActivity(intent);
                 break;
             case R.id.l_currency:
+                intent = new Intent(getActivity(), CurrencyActivity.class);
+                startActivity(intent);
                 break;
             case R.id.tv_sign:
                 break;

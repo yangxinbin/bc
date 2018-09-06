@@ -59,4 +59,6 @@ Active BC continental token incentives can cash in, replace other virtual digita
     <string name="apply_phone">电话</string>
     <string name="write_apply_phone">请输入您的电话号码</string>
     <string name="my_collage">我的拼团</string>
+    <string name="confirm_recharge">Confirm the recharge</string>
+    <string name="recharge_num">请选择充值金额</string>
 </resources>

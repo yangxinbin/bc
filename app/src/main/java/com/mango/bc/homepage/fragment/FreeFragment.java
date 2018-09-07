@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mango.bc.R;
-import com.mango.bc.homepage.adapter.BookAdapter;
-import com.mango.bc.homepage.adapter.BookFreeAdapter;
+import com.mango.bc.homepage.adapter.BookGirdAdapter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,7 +22,7 @@ public class FreeFragment extends Fragment {
     TextView seeMore;
     @Bind(R.id.recycle)
     RecyclerView recycle;
-    private BookFreeAdapter bookFreeAdapter;
+    private BookGirdAdapter bookGirdAdapter;
 
     @Nullable
     @Override
@@ -35,9 +33,9 @@ public class FreeFragment extends Fragment {
         return view;
     }
     private void initView() {
-        bookFreeAdapter = new BookFreeAdapter();
+        bookGirdAdapter = new BookGirdAdapter();
         recycle.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(),3));
-        recycle.setAdapter(bookFreeAdapter);
+        recycle.setAdapter(bookGirdAdapter);
     }
     @Override
     public void onDestroyView() {

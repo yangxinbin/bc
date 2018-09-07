@@ -1,7 +1,6 @@
 package com.mango.bc.homepage.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,20 +18,20 @@ import java.util.List;
  * Created by admin on 2018/9/4.
  */
 
-public class BookFreeAdapter extends RecyclerView.Adapter {
+public class BookGirdAdapter extends RecyclerView.Adapter {
 
     private List<BookFree> datas = new ArrayList<>();
 
-    public BookFreeAdapter(List<BookFree> datas) {
+    public BookGirdAdapter(List<BookFree> datas) {
         this.datas = datas;
     }
 
-    private BookFreeAdapter.OnItemClickLitener mOnItemClickLitener;
+    private BookGirdAdapter.OnItemClickLitener mOnItemClickLitener;
 
-    public BookFreeAdapter() {
+    public BookGirdAdapter() {
     }
 
-    public void setOnItemClickLitener(BookFreeAdapter.OnItemClickLitener mOnItemClickLitener) {
+    public void setOnItemClickLitener(BookGirdAdapter.OnItemClickLitener mOnItemClickLitener) {
         this.mOnItemClickLitener = mOnItemClickLitener;
     }
 
@@ -47,15 +46,15 @@ public class BookFreeAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_free_item, parent, false);
-        return new BookFreeAdapter.BookFreeViewHolder(view);
+        return new BookGirdAdapter.BookGirdViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if (holder instanceof BookFreeAdapter.BookFreeViewHolder) {
-            final BookFreeAdapter.BookFreeViewHolder viewHolder = (BookFreeAdapter.BookFreeViewHolder) holder;
-            //viewHolder.tv_free_title.setText(datas.get(position).getBookFreeTitle());
-            //viewHolder.tv_free_title.setText(datas.get(position).getBookFreeTitle());
+        if (holder instanceof BookGirdAdapter.BookGirdViewHolder) {
+            final BookGirdAdapter.BookGirdViewHolder viewHolder = (BookGirdAdapter.BookGirdViewHolder) holder;
+            //viewHolder.tv_free_title.setText(datas.get(position).getBookGirdTitle());
+            //viewHolder.tv_free_title.setText(datas.get(position).getBookGirdTitle());
         }
     }
 
@@ -64,12 +63,12 @@ public class BookFreeAdapter extends RecyclerView.Adapter {
         return 3;//datas.size();
     }
 
-    class BookFreeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class BookGirdViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tv_free_title, tv_free_stage;
         ImageView img_free_book;
         LinearLayout book_free_item;
 
-        public BookFreeViewHolder(final View itemView) {
+        public BookGirdViewHolder(final View itemView) {
             super(itemView);
             img_free_book = (ImageView) itemView.findViewById(R.id.img_free_book);
             tv_free_title = (TextView) itemView.findViewById(R.id.tv_free_title);

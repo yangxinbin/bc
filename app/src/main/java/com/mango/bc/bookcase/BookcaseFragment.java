@@ -1,11 +1,11 @@
 package com.mango.bc.bookcase;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,26 +26,27 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by admin on 2018/9/3.
  */
 
 public class BookcaseFragment extends Fragment {
-    @Bind(R.id.imageVie_pic)
-    CircleImageView imageViePic;
-    @Bind(R.id.tv_class)
-    TextView tvClass;
-    @Bind(R.id.tv_get)
-    TextView tvGet;
-    @Bind(R.id.tv_time)
-    TextView tvTime;
-    @Bind(R.id.tv_code)
-    TextView tvCode;
+    /*    @Bind(R.id.imageVie_pic)
+        CircleImageView imageVieP;
+        @Bind(R.id.tv_class)
+        TextView tvClass;
+        @Bind(R.id.tv_get)
+        TextView tvGet;
+        @Bind(R.id.tv_time)
+        TextView tvTime;
+        @Bind(R.id.tv_code)
+    TextView tvCode;*/
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     @Bind(R.id.tabLayout)
     TabLayout tabLayout;
-    @Bind(R.id.viewPager)
+    @Bind(R.id.viewpager)
     ViewPager viewPager;
     private ArrayList<String> mDatas;
     List<Fragment> mfragments = new ArrayList<Fragment>();
@@ -59,9 +60,10 @@ public class BookcaseFragment extends Fragment {
         init();
         return view;
     }
+
     private void initDatas() {
         //  mDatas = new ArrayList<String>(Arrays.asList("       我的事件       ", "       全部事件       "));
-        mDatas = new ArrayList<String>(Arrays.asList("大咖课程","精品课程", "免费课程"));
+        mDatas = new ArrayList<String>(Arrays.asList("大咖课程", "精品课程", "免费课程"));
 
     }
 
@@ -76,8 +78,11 @@ public class BookcaseFragment extends Fragment {
         viewPager.setCurrentItem(0);
         viewPager.setOffscreenPageLimit(1);
         reflex(tabLayout);
+        tabLayout.setupWithViewPager(viewPager);
+        setHasOptionsMenu(true);
     }
-    public void reflex(final TabLayout tabLayout){
+
+    public void reflex(final TabLayout tabLayout) {
         //了解源码得知 线的宽度是根据 tabView的宽度来设置的
         tabLayout.post(new Runnable() {
             @Override
@@ -109,7 +114,7 @@ public class BookcaseFragment extends Fragment {
 
                         //设置tab左右间距为10dp  注意这里不能使用Padding 因为源码中线的宽度是根据 tabView的宽度来设置的
                         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) tabView.getLayoutParams();
-                        params.width = width ;
+                        params.width = width;
                         params.leftMargin = dp20;
                         params.rightMargin = dp20;
                         tabView.setLayoutParams(params);

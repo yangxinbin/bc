@@ -60,7 +60,7 @@ public class BookGirdAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 3;//datas.size();
+        return 10;//datas.size();
     }
 
     class BookGirdViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/book_free_item"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dp_10"
+    android:layout_marginRight="@dimen/dp_10"
+    android:layout_marginTop="@dimen/dp_10"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.mango.bc.util.RoundImageView
+        android:id="@+id/img_free_book"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/book_pic1" />
+    <TextView
+        android:id="@+id/tv_free_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_5"
+        android:text="徐小平·三点钟课程"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:textSize="@dimen/dp_12" />
+    <TextView
+        android:id="@+id/tv_free_stage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gray_full_circle"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp_5"
+        android:text="免费领取"
+        android:textColor="@color/yello"
+        android:textSize="@dimen/textSize" />
+</LinearLayout>

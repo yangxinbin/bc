@@ -7,6 +7,7 @@
     <color name="common_black">#333333</color>
     <color name="white">#FFFFFF</color>
     <color name="gray">#b2b2b2</color>
+    <color name="gray_get">#f2f2f2</color>
     <color name="common_gray">#f6f6f6</color>
     <color name="common_sign_gray">#e5e5e5</color>
     <color name="plan_gray">#888888</color>

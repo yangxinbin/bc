@@ -23,7 +23,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/dp_10"
             android:textStyle="bold"
-            android:text="大咖课程"
+            android:text="@string/expert_course"
             android:textColor="@color/black"
             android:textSize="@dimen/textSize" />
 

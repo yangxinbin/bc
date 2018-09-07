@@ -1,5 +1,6 @@
 package com.mango.bc.homepage.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mango.bc.R;
+import com.mango.bc.homepage.activity.expertbook.ExpertBookActivity;
+import com.mango.bc.homepage.activity.freebook.FreeBookActivity;
 import com.mango.bc.homepage.adapter.BookAdapter;
 import com.mango.bc.homepage.adapter.HomePageAdapter;
 import com.mango.bc.homepage.bean.Books;
@@ -47,5 +50,7 @@ public class ExpertFragment extends Fragment {
 
     @OnClick(R.id.see_more)
     public void onViewClicked() {
+        Intent intent = new Intent(getContext(), ExpertBookActivity.class);
+        startActivity(intent);
     }
 }

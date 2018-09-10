@@ -69,7 +69,8 @@
         <activity android:name=".wallet.activity.TransferActivity" />
         <activity android:name=".wallet.activity.CurrencyActivity" />
         <activity android:name=".homepage.activity.freebook.FreeBookActivity" />
-        <activity android:name=".homepage.activity.expertbook.ExpertBookActivity"></activity>
+        <activity android:name=".homepage.activity.expertbook.ExpertBookActivity" />
+        <activity android:name=".mine.activity.FaqActivity"></activity>
     </application>
 
 </manifest>

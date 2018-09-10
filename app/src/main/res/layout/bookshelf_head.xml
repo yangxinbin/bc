@@ -55,6 +55,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/l_class"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -89,6 +90,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/l_get"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -123,6 +125,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/l_time"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -157,6 +160,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/l_code"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

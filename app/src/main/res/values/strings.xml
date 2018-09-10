@@ -63,4 +63,7 @@ Active BC continental token incentives can cash in, replace other virtual digita
     <string name="recharge_num">请选择充值金额</string>
     <string name="free_book">免费试听</string>
     <string name="expert_course">大咖课程</string>
+    <string name="faq_always">常见问题</string>
+    <string name="service">联系客服</string>
+    <string name="setting">设置</string>
 </resources>

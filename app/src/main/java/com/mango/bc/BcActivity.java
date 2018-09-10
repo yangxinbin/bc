@@ -8,6 +8,7 @@ import butterknife.ButterKnife;
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.bookcase.BookcaseFragment;
 import com.mango.bc.homepage.HomePageFragment;
+import com.mango.bc.mine.MineFragment;
 import com.mango.bc.view.BottomBar;
 import com.mango.bc.wallet.WalletFragment;
 
@@ -35,6 +36,10 @@ public class BcActivity extends BaseActivity {
                         R.drawable.bookcase_select)
                 .addItem(WalletFragment.class,
                         "钱包",
+                        R.drawable.wallet,
+                        R.drawable.wallet_select)
+                .addItem(MineFragment.class,
+                        "我的",
                         R.drawable.wallet,
                         R.drawable.wallet_select)
                 .build();

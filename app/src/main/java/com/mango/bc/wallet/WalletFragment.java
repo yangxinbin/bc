@@ -72,8 +72,8 @@ public class WalletFragment extends Fragment {
     TextView tvSignDay;
     @Bind(R.id.tv_sign)
     TextView tvSign;
-    @Bind(R.id.l_to_bc)
-    LinearLayout lToBc;
+/*    @Bind(R.id.l_to_bc)
+    LinearLayout lToBc;*/
     @Bind(R.id.tabLayout_wallet)
     TabLayout tabLayout;
     @Bind(R.id.viewPager_wallet)
@@ -197,7 +197,7 @@ public class WalletFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.tv_transaction_record, R.id.tv_copy, R.id.l_recharge, R.id.l_transfer, R.id.l_currency,R.id.tv_sign, R.id.l_to_bc, R.id.l_1, R.id.l_2, R.id.l_3, R.id.l_4, R.id.l_5, R.id.l_service})
+    @OnClick({R.id.tv_transaction_record, R.id.tv_copy, R.id.l_recharge, R.id.l_transfer, R.id.l_currency,R.id.tv_sign,/* R.id.l_to_bc,*/ R.id.l_1, R.id.l_2, R.id.l_3, R.id.l_4, R.id.l_5, R.id.l_service})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -221,10 +221,10 @@ public class WalletFragment extends Fragment {
                 break;
             case R.id.tv_sign:
                 break;
-            case R.id.l_to_bc:
+/*            case R.id.l_to_bc:
                 intent = new Intent(getActivity(), ExpertActivity.class);
                 startActivity(intent);
-                break;
+                break;*/
             case R.id.l_1:
                 intent = new Intent(getActivity(), ProblemActivity.class);
                 intent.putExtra("k1",getActivity().getResources().getString(R.string.what_pp));

@@ -41,9 +41,9 @@ public class BookcaseFragment extends Fragment {
         @Bind(R.id.tv_time)
         TextView tvTime;
         @Bind(R.id.tv_code)
-    TextView tvCode;*/
+    TextView tvCode;
     @Bind(R.id.toolbar)
-    Toolbar toolbar;
+    Toolbar toolbar;*/
     @Bind(R.id.tabLayout)
     TabLayout tabLayout;
     @Bind(R.id.viewpager)

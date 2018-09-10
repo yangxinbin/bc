@@ -16,9 +16,9 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private Context context;
     //type
     public static final int TYPE_HEAD = 0;
-    public static final int TYPE_EXPERT = 1;
-    public static final int TYPE_FREE = 2;
-    public static final int TYPE_COMPETITIVE = 3;
+    public static final int TYPE_COMPETITIVE = 1;
+    public static final int TYPE_EXPERT = 2;
+    public static final int TYPE_FREE = 3;
     public static final int TYPE_NEWEST = 4;
 
     public HomePageAdapter(Context context) {
@@ -103,11 +103,11 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (position == 0) {
             return TYPE_HEAD;
         } else if (position == 1) {
-            return TYPE_EXPERT;
-        } else if (position == 2) {
-            return TYPE_FREE;
-        } else if (position == 3) {
             return TYPE_COMPETITIVE;
+        } else if (position == 2) {
+            return TYPE_EXPERT;
+        } else if (position == 3) {
+            return TYPE_FREE;
         } else {
             return TYPE_NEWEST;
         }

@@ -30,30 +30,30 @@ public class BookModelImpl implements BookModel {
     private SharedPreferences sharedPreferences;
 
     @Override
-    public void visitBooks(final Context context, final int type, final String url, String tabString, int page, final Boolean ifCache, final OnBookListener listener) {
+    public void visitBooks(final Context context, final int type, final String url, String tabString, final int page, final Boolean ifCache, final OnBookListener listener) {
         sharedPreferences = context.getSharedPreferences("BC", MODE_PRIVATE);
         final ACache mCache = ACache.get(context);
         if (type == 0) {//精品tab字段
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    if (ifCache){//读取缓存数据
-                        String newString = mCache.getAsString("cache"+type);
-                        Log.v("yyyyyy","---cache---");
+                    if (ifCache) {//读取缓存数据
+                        String newString = mCache.getAsString("cache" + type);
+                        Log.v("yyyyyy", "---cache---");
                         if (newString != null) {
                             List<CompetitiveFieldBean> beanList = JsonUtils.readCompetitiveFieldBean(newString);//data是json字段获得data的值即对象数组
                             listener.onSuccessCompetitiveField(beanList);
                             listener.onSuccessMes("SUCCESS");
-                            Log.v("yyyyyy","---cache---"+type);
+                            Log.v("yyyyyy", "---cache---" + type);
                             return;
                         }
-                    }else {
-                        mCache.remove("cache"+type);//刷新之后缓存也更新过来
+                    } else {
+                        mCache.remove("cache" + type);//刷新之后缓存也更新过来
                     }
                     HttpUtils.doGet(url, new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
-                            Log.v("yyyyyyyyy", e+"*****onFailure*****"+url);
+                            Log.v("yyyyyyyyy", e + "*****onFailure*****" + url);
                             listener.onFailMes("FAILURE", e);
                         }
 
@@ -62,7 +62,7 @@ public class BookModelImpl implements BookModel {
                             try {
                                 String string = response.body().string();
                                 Log.v("yyyyyyyyy", "*****string*****" + string);
-                                mCache.put("cache"+type, string);
+                                mCache.put("cache" + type, string);
                                 List<CompetitiveFieldBean> beanList = JsonUtils.readCompetitiveFieldBean(string);//data是json字段获得data的值即对象数组
                                 listener.onSuccessCompetitiveField(beanList);
                                 listener.onSuccessMes("SUCCESS");
@@ -76,25 +76,45 @@ public class BookModelImpl implements BookModel {
             }).start();
         }
         if (type == 1) {//精品课程各种
-            Log.v("yyyyyyyyy", "*****onResponse******" + 0);
-
-            HttpUtils.doGet(url, new Callback() {
+            new Thread(new Runnable() {
                 @Override
-                public void onFailure(Call call, IOException e) {
-                    listener.onFailMes("FAILURE", e);
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    try {
-                        //response.body().string() 只能用一次  java.lang.IllegalStateException异常, 该异常表示，当前对客户端的响应已经结束，不能在响应已经结束（或说消亡）后再向客户端（实际上是缓冲区）输出任何内容。
-                        // List<ListEventBean> beanList = EventJsonUtils.readJsonEventBeans(response.body().string(), "list");//data是json字段获得data的值即对象数组
-                        // listener.onSuccess(beanList);
-                    } catch (Exception e) {
-                        listener.onSuccessMes("请求失败");
+                public void run() {
+                    if (ifCache) {//读取缓存数据
+                        String newString = mCache.getAsString("cache" + type+page);
+                        Log.v("yyyyyy", "---cache---");
+                        if (newString != null) {
+                            List<CompetitiveFieldBean> beanList = JsonUtils.readCompetitiveFieldBean(newString);//data是json字段获得data的值即对象数组
+                            listener.onSuccessCompetitiveField(beanList);
+                            listener.onSuccessMes("SUCCESS");
+                            Log.v("yyyyyy", "---cache---" + type);
+                            return;
+                        }
+                    } else {
+                        mCache.remove("cache" + type+page);//刷新之后缓存也更新过来
                     }
+                    HttpUtils.doGet(url, new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            listener.onFailMes("FAILURE", e);
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            try {
+                                String string = response.body().string();
+                                Log.v("yyyyyyyyy", "*****string*****" + string);
+                                mCache.put("cache" + type+page, string);
+                                List<CompetitiveFieldBean> beanList = JsonUtils.readCompetitiveFieldBean(string);//data是json字段获得data的值即对象数组
+                                listener.onSuccessCompetitiveField(beanList);
+                                listener.onSuccessMes("SUCCESS");
+                            } catch (Exception e) {
+                                listener.onFailMes("FAILURE", e);
+                            }
+                        }
+                    });
                 }
-            });
+            }).start();
+
         }
         if (type == 2) {//大咖课
             Log.v("yyyyyyyyy", "*****onResponse******" + 1);

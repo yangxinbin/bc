@@ -5,8 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/common_gray"
     tools:context="com.mango.bc.homepage.activity.competitivebook.CompetitiveBookActivity">
     <RelativeLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:padding="@dimen/dp_10"
         android:gravity="center_vertical"
@@ -32,19 +34,28 @@
             android:layout_marginStart="@dimen/dp_10"
             app:srcCompat="@drawable/back" />
     </RelativeLayout>
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tabGravity="center"
-        app:tabIndicatorColor="@color/yello"
-        app:tabIndicatorHeight="4dp"
-        app:tabMode="scrollable"
-        app:tabSelectedTextColor="@color/yello"
-        app:tabTextAppearance="@style/TabTextOther"/>
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp_1"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabGravity="center"
+            app:tabIndicatorColor="@color/yello"
+            app:tabIndicatorHeight="4dp"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/yello"
+            app:tabTextAppearance="@style/TabTextOther"/>
+    </LinearLayout>
+
     <android.support.v4.view.ViewPager
+        android:layout_marginTop="@dimen/dp_1"
         android:background="@color/white"
         android:id="@+id/viewpager"
         android:layout_width="match_parent"

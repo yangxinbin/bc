@@ -38,11 +38,13 @@ public class ExpertBookActivity extends AppCompatActivity {
         initView();
         refreshAndLoadMore();
     }
+
     private void initView() {
         bookAdapter = new BookAdapter();
         recycle.setLayoutManager(new LinearLayoutManager(this.getApplicationContext()));
         recycle.setAdapter(bookAdapter);
     }
+
     private void refreshAndLoadMore() {
         refresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -77,6 +79,7 @@ public class ExpertBookActivity extends AppCompatActivity {
             //mAdapter.refresh(initData());
         }
     }
+
     @OnClick(R.id.imageView_back)
     public void onViewClicked() {
         finish();

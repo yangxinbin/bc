@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,17 +17,17 @@ import java.util.List;
  * Created by admin on 2018/9/4.
  */
 
-public class FinefieldAdapter extends RecyclerView.Adapter {
+public class CompetitiveFieldAdapter extends RecyclerView.Adapter {
 
     private List<Finefield> datas = new ArrayList<>();
 
-    public FinefieldAdapter(List<Finefield> datas) {
+    public CompetitiveFieldAdapter(List<Finefield> datas) {
         this.datas = datas;
     }
 
-    private FinefieldAdapter.OnItemClickLitener mOnItemClickLitener;
+    private CompetitiveFieldAdapter.OnItemClickLitener mOnItemClickLitener;
 
-    public void setOnItemClickLitener(FinefieldAdapter.OnItemClickLitener mOnItemClickLitener) {
+    public void setOnItemClickLitener(CompetitiveFieldAdapter.OnItemClickLitener mOnItemClickLitener) {
         this.mOnItemClickLitener = mOnItemClickLitener;
     }
 
@@ -42,13 +41,13 @@ public class FinefieldAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_field_item, parent, false);
-        return new FinefieldAdapter.FinefieldViewHolder(view);
+        return new CompetitiveFieldAdapter.FinefieldViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if (holder instanceof FinefieldAdapter.FinefieldViewHolder) {
-            final FinefieldAdapter.FinefieldViewHolder viewHolder = (FinefieldAdapter.FinefieldViewHolder) holder;
+        if (holder instanceof CompetitiveFieldAdapter.FinefieldViewHolder) {
+            final CompetitiveFieldAdapter.FinefieldViewHolder viewHolder = (CompetitiveFieldAdapter.FinefieldViewHolder) holder;
             viewHolder.tv_field.setText(datas.get(position).getField());
         }
     }

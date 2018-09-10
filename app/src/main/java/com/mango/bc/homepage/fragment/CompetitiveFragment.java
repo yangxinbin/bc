@@ -1,10 +1,10 @@
 package com.mango.bc.homepage.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mango.bc.R;
-import com.mango.bc.homepage.adapter.BookAdapter;
-import com.mango.bc.homepage.adapter.FinefieldAdapter;
+import com.mango.bc.homepage.activity.competitivebook.CompetitiveBookActivity;
+import com.mango.bc.homepage.adapter.CompetitiveFieldAdapter;
 import com.mango.bc.homepage.bean.Finefield;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class CompetitiveFragment extends Fragment {
     @Bind(R.id.recycle)
     RecyclerView recycle;
     private List<Finefield> listS;
-    private FinefieldAdapter finefieldAdapter;
+    private CompetitiveFieldAdapter competitiveFieldAdapter;
 
     @Nullable
     @Override
@@ -53,9 +53,9 @@ public class CompetitiveFragment extends Fragment {
     }
 
     private void initView() {
-        finefieldAdapter = new FinefieldAdapter(listS);
+        competitiveFieldAdapter = new CompetitiveFieldAdapter(listS);
         recycle.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(),4));
-        recycle.setAdapter(finefieldAdapter);
+        recycle.setAdapter(competitiveFieldAdapter);
     }
 
     @Override
@@ -66,5 +66,7 @@ public class CompetitiveFragment extends Fragment {
 
     @OnClick(R.id.see_more)
     public void onViewClicked() {
+        Intent intent = new Intent(getContext(), CompetitiveBookActivity.class);
+        startActivity(intent);
     }
 }

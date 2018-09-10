@@ -34,7 +34,7 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
     }
 
     @Override
-    public void visitBooks(Context context, int type,String tabString, int page) {
+    public void visitBooks(Context context, int type, String tabString, int page,Boolean ifCache) {
         sharedPreferences = context.getSharedPreferences("DCOM", MODE_PRIVATE);
         String url = null;
         if (type == 0) {
@@ -45,8 +45,9 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
             url = getUrl(type, context);
         }
         Log.v("pppppppppppp", "" + url);
-        bookModel.visitBooks(context, type, url,tabString,page, this);
+        bookModel.visitBooks(context, type, url, tabString, page,ifCache, this);
     }
+
     private String getUrl(int type, Context context) {
         StringBuffer sburl = new StringBuffer();
         switch (type) {
@@ -65,36 +66,36 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
 
     @Override
     public void onSuccessCompetitiveBook(List<CompetitiveBookBean> competitiveBookBeanList) {
-
+        bookView.addCompetitiveBook(competitiveBookBeanList);
     }
 
     @Override
     public void onSuccessCompetitiveField(List<CompetitiveFieldBean> competitiveFieldBeanList) {
-
+        bookView.addCompetitiveField(competitiveFieldBeanList);
     }
 
     @Override
     public void onSuccessExpertBook(List<ExpertBookBean> expertBookBeanList) {
-
+        bookView.addExpertBook(expertBookBeanList);
     }
 
     @Override
     public void onSuccessFreeBook(List<FreeBookBean> freeBookBeanList) {
-
+        bookView.addFreeBook(freeBookBeanList);
     }
 
     @Override
     public void onSuccessNewestBook(List<NewestBookBean> newestBookBeanList) {
-
+        bookView.addNewestBook(newestBookBeanList);
     }
 
     @Override
     public void onSuccessMes(String msg) {
-
+        bookView.addSuccess(msg);
     }
 
     @Override
     public void onFailMes(String msg, Exception e) {
-
+        bookView.addFail(msg);
     }
 }

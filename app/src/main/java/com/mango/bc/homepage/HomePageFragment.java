@@ -10,6 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mango.bc.homepage.net.bean.CompetitiveBookBean;
+import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
+import com.mango.bc.homepage.net.bean.ExpertBookBean;
+import com.mango.bc.homepage.net.bean.FreeBookBean;
+import com.mango.bc.homepage.net.bean.NewestBookBean;
+import com.mango.bc.homepage.net.bean.RefreshStageBean;
+import com.mango.bc.homepage.net.presenter.BookPresenter;
+import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
+import com.mango.bc.homepage.net.view.BookView;
+import com.mango.bc.util.NetUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -18,30 +28,40 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
 import com.mango.bc.R;
 import com.mango.bc.homepage.adapter.HomePageAdapter;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.List;
 
 /**
  * Created by admin on 2018/9/3.
  */
 
-public class HomePageFragment extends Fragment {
+public class HomePageFragment extends Fragment implements BookView {
     @Bind(R.id.recycle)
     RecyclerView recycle;
     @Bind(R.id.refresh)
     SmartRefreshLayout refresh;
     private boolean isFirstEnter = true;
     private HomePageAdapter homePageAdapter;
+    private BookPresenter bookPresenter;
+    private final int TYPE = -1;
+    private int page = -1;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.homepage, container, false);
+        bookPresenter = new BookPresenterImpl(this);
         ButterKnife.bind(this, view);
         initView();
         refreshAndLoadMore();
         return view;
     }
+
     private void initView() {
         homePageAdapter = new HomePageAdapter(getActivity());
         recycle.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
@@ -55,6 +75,13 @@ public class HomePageFragment extends Fragment {
                 refreshLayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        if (NetUtil.isNetConnect(getActivity())) {
+                            RefreshStageBean refreshStageBean = new RefreshStageBean(true, true, true, true, true);
+                            EventBus.getDefault().postSticky(refreshStageBean);
+                        } else {
+                            RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, false, false);
+                            EventBus.getDefault().postSticky(refreshStageBean);
+                        }
                         refreshLayout.finishRefresh();
                     }
                 }, 500);
@@ -82,9 +109,38 @@ public class HomePageFragment extends Fragment {
             //mAdapter.refresh(initData());
         }
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void addCompetitiveField(List<CompetitiveFieldBean> competitiveFieldBeanList) {
+    }
+
+    @Override
+    public void addCompetitiveBook(List<CompetitiveBookBean> competitiveBookBeanList) {
+    }
+
+    @Override
+    public void addExpertBook(List<ExpertBookBean> expertBookBeanList) {
+    }
+
+    @Override
+    public void addFreeBook(List<FreeBookBean> freeBookBeanList) {
+    }
+
+    @Override
+    public void addNewestBook(List<NewestBookBean> newestBookBeanList) {
+    }
+
+    @Override
+    public void addSuccess(String s) {
+    }
+
+    @Override
+    public void addFail(String f) {
     }
 }

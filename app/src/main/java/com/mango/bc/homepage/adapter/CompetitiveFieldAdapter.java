@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mango.bc.R;
-import com.mango.bc.homepage.bean.Finefield;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +18,9 @@ import java.util.List;
 
 public class CompetitiveFieldAdapter extends RecyclerView.Adapter {
 
-    private List<Finefield> datas = new ArrayList<>();
+    private List<String> datas = new ArrayList<>();
 
-    public CompetitiveFieldAdapter(List<Finefield> datas) {
+    public CompetitiveFieldAdapter(List<String> datas) {
         this.datas = datas;
     }
 
@@ -33,7 +32,6 @@ public class CompetitiveFieldAdapter extends RecyclerView.Adapter {
 
     public interface OnItemClickLitener {
         void onItemClick(View view, int position);
-
         void onStageClick(View view, int position);
     }
 
@@ -48,7 +46,7 @@ public class CompetitiveFieldAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof CompetitiveFieldAdapter.FinefieldViewHolder) {
             final CompetitiveFieldAdapter.FinefieldViewHolder viewHolder = (CompetitiveFieldAdapter.FinefieldViewHolder) holder;
-            viewHolder.tv_field.setText(datas.get(position).getField());
+            viewHolder.tv_field.setText(datas.get(position));
         }
     }
 

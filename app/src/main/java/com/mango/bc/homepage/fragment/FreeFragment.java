@@ -67,7 +67,7 @@ public class FreeFragment extends Fragment implements BookView {
         if (bean.getFreeBook()) {
             bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);//刷新从网络。
             bean.setFreeBook(false);//刷新完修改状态
-            Log.v("yyyyyyy","=====3--"+bean.toString());
+            Log.v("yyyyyyy", "=====3--" + bean.toString());
             EventBus.getDefault().postSticky(bean);
         } else {
             //bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//缓存。
@@ -84,6 +84,7 @@ public class FreeFragment extends Fragment implements BookView {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        EventBus.getDefault().unregister(this);
     }
 
     @OnClick(R.id.see_more)
@@ -122,8 +123,9 @@ public class FreeFragment extends Fragment implements BookView {
                 }
                 if (page == 0) {
                     for (int i = 0; i < 3; i++) {//
-                        if (bookBeanList.get(i) != null)
-                            mData.add(bookBeanList.get(i)); //一次显示page= ? 20条数据
+                        if (i > bookBeanList.size() - 1)
+                            continue;
+                        mData.add(bookBeanList.get(i)); //一次显示page= ? 20条数据
                     }
                     bookGirdAdapter.setmDate(mData);
                 }

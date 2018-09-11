@@ -119,26 +119,43 @@ public class BookModelImpl implements BookModel {
 
         }
         if (type == 2) {//大咖课
-            Log.v("yyyyyyyyy", "*****onResponse******" + 1);
-
-            HttpUtils.doGet(url, new Callback() {
+            new Thread(new Runnable() {
                 @Override
-                public void onFailure(Call call, IOException e) {
-                    listener.onFailMes("FAILURE", e);
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    try {
-                        //response.body().string() 只能用一次  java.lang.IllegalStateException异常, 该异常表示，当前对客户端的响应已经结束，不能在响应已经结束（或说消亡）后再向客户端（实际上是缓冲区）输出任何内容。
-                        //List<ListEventBean> beanList = EventJsonUtils.readJsonEventBeans(response.body().string(), "list");//data是json字段获得data的值即对象数组
-                        //listener.onSuccess(beanList);
-                        //listener.onSuccessMes("请求成功");
-                    } catch (Exception e) {
-                        //listener.onSuccessMes("请求失败");//java.lang.IllegalStateException: Not a JSON Object: null
+                public void run() {
+                    if (ifCache) {//读取缓存数据
+                        String newString = mCache.getAsString("cache" + type);
+                        Log.v("yyyyyy", "---cache2---"+newString);
+                        if (newString != null) {
+                            List<BookBean> beanList = JsonUtils.readBookBean(newString);//data是json字段获得data的值即对象数组
+                            listener.onSuccessExpertBook(beanList);
+                            listener.onSuccessMes("SUCCESS");
+                            return;
+                        }
+                    } else {
+                        mCache.remove("cache" + type);//刷新之后缓存也更新过来
                     }
+                    HttpUtils.doGet(url, new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            listener.onFailMes("FAILURE", e);
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            try {
+                                String string = response.body().string();
+                                Log.v("yyyyyyyyy", "*****string2*****" + string);
+                                mCache.put("cache" + type, string);
+                                List<BookBean> beanList = JsonUtils.readBookBean(string);
+                                listener.onSuccessExpertBook(beanList);
+                                listener.onSuccessMes("请求成功");
+                            } catch (Exception e) {
+                                listener.onSuccessMes("请求失败");//java.lang.IllegalStateException: Not a JSON Object: null
+                            }
+                        }
+                    });
                 }
-            });
+            }).start();
         }
         if (type == 3) {//免费课
             new Thread(new Runnable() {

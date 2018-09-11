@@ -57,12 +57,7 @@ public class JsonUtils {
         List<CompetitiveFieldBean> competitiveFieldBeans = gson.fromJson(res, new TypeToken<List<CompetitiveFieldBean>>(){}.getType());
         return competitiveFieldBeans;
     }
-    public static List<BookBean> readCompetitiveBookBean(String res) {
-        Gson gson = new Gson();
-        List<BookBean> bookBeans = gson.fromJson(res, new TypeToken<List<BookBean>>(){}.getType());
-        return bookBeans;
-    }
-    public static List<BookBean> readFreeBookBean(String res) {
+    public static List<BookBean> readBookBean(String res) {
         Gson gson = new Gson();
         List<BookBean> bookBeans = gson.fromJson(res, new TypeToken<List<BookBean>>(){}.getType());
         return bookBeans;

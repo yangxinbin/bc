@@ -84,7 +84,7 @@ public class BookModelImpl implements BookModel {
 
                         String newString = mCache.getAsString("cache" + tabString + page);
                         if (newString != null) {
-                            List<BookBean> beanList = JsonUtils.readCompetitiveBookBean(newString);//data是json字段获得data的值即对象数组
+                            List<BookBean> beanList = JsonUtils.readBookBean(newString);//data是json字段获得data的值即对象数组
                             listener.onSuccessCompetitiveBook(beanList);
                             listener.onSuccessMes("SUCCESS");
                             Log.v("yyyyyy", "---cache---" + type);
@@ -106,7 +106,7 @@ public class BookModelImpl implements BookModel {
                                 String string = response.body().string();
                                 mCache.put("cache" + tabString + page, string);
                                 Log.v("yyyyyyyyy", url + "*****1*****" + string);
-                                List<BookBean> beanList = JsonUtils.readCompetitiveBookBean(string);//data是json字段获得data的值即对象数组
+                                List<BookBean> beanList = JsonUtils.readBookBean(string);//data是json字段获得data的值即对象数组
                                 listener.onSuccessCompetitiveBook(beanList);
                                 listener.onSuccessMes("SUCCESS");
                             } catch (Exception e) {
@@ -149,7 +149,7 @@ public class BookModelImpl implements BookModel {
                         String newString = mCache.getAsString("cache" + type);
                         Log.v("yyyyyy", "---cache3---"+newString);
                         if (newString != null) {
-                            List<BookBean> beanList = JsonUtils.readFreeBookBean(newString);//data是json字段获得data的值即对象数组
+                            List<BookBean> beanList = JsonUtils.readBookBean(newString);//data是json字段获得data的值即对象数组
                             listener.onSuccessFreeBook(beanList);
                             listener.onSuccessMes("SUCCESS");
                             return;
@@ -169,7 +169,7 @@ public class BookModelImpl implements BookModel {
                                 String string = response.body().string();
                                 Log.v("yyyyyyyyy", "*****string3*****" + string);
                                 mCache.put("cache" + type, string);
-                                List<BookBean> beanList = JsonUtils.readFreeBookBean(string);
+                                List<BookBean> beanList = JsonUtils.readBookBean(string);
                                 listener.onSuccessFreeBook(beanList);
                                 listener.onSuccessMes("请求成功");
                             } catch (Exception e) {

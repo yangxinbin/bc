@@ -60,7 +60,6 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
     private String mType = "";
     private final int TYPE = 1;
     private int page = 0;
-    private ArrayList<BookBean> mData, mDataAll;
 
 
     public static CompetitivesRecyclerviewFragment newInstance(String type) {
@@ -111,12 +110,6 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
                 refreshLayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (mDataAll != null) {
-                            mDataAll.clear();
-                        }
-                        if (mData != null) {
-                            mData.clear();
-                        }
                         page = 0;
                         if (NetUtil.isNetConnect(getActivity())) {
                             Log.v("zzzzzzzzz", "-------onRefresh y-------" + page);
@@ -201,26 +194,13 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
                     AppUtils.showToast(getActivity(), getString(R.string.date_over));
                     return;
                 }
-                if (mData == null && mDataAll == null) {
-                    mData = new ArrayList<BookBean>();
-                    mDataAll = new ArrayList<BookBean>();
-                }
-                if (mDataAll != null) {
-                    mDataAll.clear();
-                }
-                mDataAll.addAll(bookBeanList);
                 if (page == 0) {
-                    for (int i = 0; i < mDataAll.size(); i++) {//
-                        mData.add(mDataAll.get(i)); //一次显示page= ? 20条数据
-                    }
-                    adapter.setmDate(mData);
+                    adapter.reMove();
+                    adapter.setmDate(bookBeanList);
                 } else {
                     //加载更多
-                    for (int i = 0; i < mDataAll.size(); i++) {
-                        if (mDataAll == null) {
-                            return;//一开始断网报空指针的情况
-                        }
-                        adapter.addItem(mDataAll.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
+                    for (int i = 0; i < bookBeanList.size(); i++) {
+                        adapter.addItem(bookBeanList.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
                     }
                 }
 

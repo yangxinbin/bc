@@ -96,8 +96,8 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
     }
 
     @Override
-    public void onSuccessFreeBook(List<FreeBookBean> freeBookBeanList) {
-        bookView.addFreeBook(freeBookBeanList);
+    public void onSuccessFreeBook(List<BookBean> bookBeanList) {
+        bookView.addFreeBook(bookBeanList);
     }
 
     @Override

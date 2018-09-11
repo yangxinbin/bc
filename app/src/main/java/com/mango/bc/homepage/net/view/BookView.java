@@ -16,7 +16,7 @@ public interface BookView {
     void addCompetitiveField(List<CompetitiveFieldBean> competitiveFieldBeanList);
     void addCompetitiveBook(List<BookBean> bookBeanList);
     void addExpertBook(List<ExpertBookBean> expertBookBeanList);
-    void addFreeBook(List<FreeBookBean> freeBookBeanList);
+    void addFreeBook(List<BookBean> bookBeanList);
     void addNewestBook(List<NewestBookBean> newestBookBeanList);
 
     void addSuccess(String s);

@@ -235,7 +235,7 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
     }
 
     @Override
-    public void addFreeBook(List<FreeBookBean> freeBookBeanList) {
+    public void addFreeBook(List<BookBean> bookBeanList) {
 
     }
 

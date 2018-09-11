@@ -131,7 +131,7 @@ public class HomePageFragment extends Fragment implements BookView {
     }
 
     @Override
-    public void addFreeBook(List<FreeBookBean> freeBookBeanList) {
+    public void addFreeBook(List<BookBean> bookBeen) {
     }
 
     @Override

@@ -44,9 +44,9 @@ public class BookcaseFragment extends Fragment {
     TextView tvCode;
     @Bind(R.id.toolbar)
     Toolbar toolbar;*/
-    @Bind(R.id.tabLayout)
+    @Bind(R.id.tabLayout_bookcase)
     TabLayout tabLayout;
-    @Bind(R.id.viewpager)
+    @Bind(R.id.viewpager_bookcase)
     ViewPager viewPager;
     private ArrayList<String> mDatas;
     List<Fragment> mfragments = new ArrayList<Fragment>();
@@ -82,7 +82,7 @@ public class BookcaseFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-    public void reflex(final TabLayout tabLayout) {
+    public void reflex(final TabLayout tabLayout){
         //了解源码得知 线的宽度是根据 tabView的宽度来设置的
         tabLayout.post(new Runnable() {
             @Override
@@ -114,7 +114,7 @@ public class BookcaseFragment extends Fragment {
 
                         //设置tab左右间距为10dp  注意这里不能使用Padding 因为源码中线的宽度是根据 tabView的宽度来设置的
                         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) tabView.getLayoutParams();
-                        params.width = width;
+                        params.width = width ;
                         params.leftMargin = dp20;
                         params.rightMargin = dp20;
                         tabView.setLayoutParams(params);

@@ -6,7 +6,52 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <ImageView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_15"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/search_circle"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/dp_10">
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:cursorVisible="false"
+                android:hint="请输入搜索内容"
+                android:imeOptions="actionDone"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grayText"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/search" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView_collage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:src="@drawable/group" />
+    </LinearLayout>
+
+<!--    <ImageView
         android:id="@+id/imageView_vip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,12 +59,21 @@
         android:layout_marginRight="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_10"
         android:scaleType="fitXY"
-        app:srcCompat="@drawable/banner" />
-
-
+        app:srcCompat="@drawable/banner" />-->
+    <com.youth.banner.Banner
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:scaleType="fitXY"
+        tools:layout_editor_absoluteX="0dp" />
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/l_vip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,7 +83,8 @@
         android:background="@drawable/vip_card"
         android:orientation="vertical"
         android:padding="@dimen/dp_10"
-        android:scaleType="fitXY">
+        android:scaleType="fitXY"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,10 +100,10 @@
                 tools:layout_editor_absoluteX="13dp" />
 
             <LinearLayout
-                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/dp_10"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -64,18 +119,20 @@
                         android:text="匿名用户"
                         android:textColor="@color/white"
                         android:textSize="@dimen/textSize" />
+
                     <ImageView
-                        android:src="@drawable/vip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="@dimen/dp_10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:src="@drawable/vip" />
+
                     <ImageView
-                        android:src="@drawable/talent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="@dimen/dp_5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:src="@drawable/talent" />
                 </LinearLayout>
 
                 <TextView
@@ -87,27 +144,29 @@
                     android:textColor="@color/gray"
                     android:textSize="@dimen/dp_12" />
             </LinearLayout>
+
             <TextView
                 android:id="@+id/buy_vip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp_10"
                 android:background="@drawable/yellow_full_circle"
-                android:paddingTop="@dimen/dp_5"
                 android:paddingBottom="@dimen/dp_5"
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_5"
                 android:text="续费会员"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:padding="@dimen/dp_5"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="@dimen/dp_5">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -116,6 +175,7 @@
                 android:text="BC大陆已经陪你读书234天"
                 android:textColor="@color/white"
                 android:textSize="@dimen/textSize" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -127,11 +187,12 @@
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:padding="@dimen/dp_5"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="@dimen/dp_5">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -140,6 +201,7 @@
                 android:text="VIP特权免费读了138本书，共节省234币"
                 android:textColor="@color/white"
                 android:textSize="@dimen/dp_12" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -150,44 +212,15 @@
                 android:textSize="@dimen/dp_12" />
         </LinearLayout>
     </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginRight="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_15"
-        android:background="@drawable/search_circle"
-        android:gravity="center_vertical"
-        android:padding="@dimen/dp_10">
-
-        <EditText
-            android:id="@+id/et_search"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@null"
-            android:cursorVisible="false"
-            android:hint="请输入搜索内容"
-            android:imeOptions="actionDone"
-            android:textColor="@color/black"
-            android:textColorHint="@color/grayText"
-            android:textSize="16sp" />
-
+    <!--
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/search" />
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/imageView_collage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginRight="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_15"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/check_group" />
+            android:visibility="gone"
+            android:id="@+id/imageView_collage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_15"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/check_group" />-->
 </LinearLayout>

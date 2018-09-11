@@ -7,12 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mango.bc.R;
+import com.mango.bc.homepage.activity.VipDetailActivity;
 import com.mango.bc.mine.activity.FaqActivity;
-import com.mango.bc.wallet.activity.CurrencyActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -42,18 +43,22 @@ public class MineFragment extends Fragment {
     TextView tvCode;
     @Bind(R.id.l_code)
     LinearLayout lCode;
-    @Bind(R.id.l_to_vip)
-    LinearLayout lToVip;
+    /*    @Bind(R.id.l_to_vip)
+        LinearLayout lToVip;*/
     @Bind(R.id.l_to_agent)
     LinearLayout lToAgent;
-    @Bind(R.id.l_to_talent)
-    LinearLayout lToTalent;
+    /*    @Bind(R.id.l_to_talent)
+        LinearLayout lToTalent;*/
     @Bind(R.id.l_faq)
     LinearLayout lFaq;
     @Bind(R.id.l_service)
     LinearLayout lService;
     @Bind(R.id.l_setting)
     LinearLayout lSetting;
+    @Bind(R.id.imageView_to_vip)
+    ImageView imageViewToVip;
+    @Bind(R.id.l_collage)
+    LinearLayout lCollage;
 
     @Nullable
     @Override
@@ -69,7 +74,7 @@ public class MineFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.imageVie_pic, R.id.l_class, R.id.l_get, R.id.l_time, R.id.l_code, R.id.l_to_vip, R.id.l_to_agent, R.id.l_to_talent, R.id.l_faq, R.id.l_service, R.id.l_setting})
+    @OnClick({R.id.imageView_to_vip, R.id.l_collage,R.id.imageVie_pic, R.id.l_class, R.id.l_get, R.id.l_time, R.id.l_code,/* R.id.l_to_vip,*/ R.id.l_to_agent, /*R.id.l_to_talent,*/ R.id.l_faq, R.id.l_service, R.id.l_setting})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -83,12 +88,12 @@ public class MineFragment extends Fragment {
                 break;
             case R.id.l_code:
                 break;
-            case R.id.l_to_vip:
-                break;
+/*            case R.id.l_to_vip:
+                break;*/
             case R.id.l_to_agent:
                 break;
-            case R.id.l_to_talent:
-                break;
+/*            case R.id.l_to_talent:
+                break;*/
             case R.id.l_faq:
                 intent = new Intent(getActivity(), FaqActivity.class);
                 startActivity(intent);
@@ -97,6 +102,13 @@ public class MineFragment extends Fragment {
                 break;
             case R.id.l_setting:
                 break;
+            case R.id.imageView_to_vip:
+                break;
+            case R.id.l_collage:
+                intent = new Intent(getContext(), VipDetailActivity.class);
+                startActivity(intent);
+                break;
         }
     }
+
 }

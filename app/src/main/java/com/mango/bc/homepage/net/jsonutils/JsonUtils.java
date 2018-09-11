@@ -2,8 +2,9 @@ package com.mango.bc.homepage.net.jsonutils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.mango.bc.homepage.net.bean.CompetitiveBookBean;
+import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
+import com.mango.bc.homepage.net.bean.FreeBookBean;
 
 import java.util.List;
 
@@ -56,9 +57,14 @@ public class JsonUtils {
         List<CompetitiveFieldBean> competitiveFieldBeans = gson.fromJson(res, new TypeToken<List<CompetitiveFieldBean>>(){}.getType());
         return competitiveFieldBeans;
     }
-    public static List<CompetitiveBookBean> readCompetitiveBookBean(String res) {
+    public static List<BookBean> readCompetitiveBookBean(String res) {
         Gson gson = new Gson();
-        List<CompetitiveBookBean> competitiveBookBeans = gson.fromJson(res, new TypeToken<List<CompetitiveBookBean>>(){}.getType());
-        return competitiveBookBeans;
+        List<BookBean> bookBeans = gson.fromJson(res, new TypeToken<List<BookBean>>(){}.getType());
+        return bookBeans;
+    }
+    public static List<BookBean> readFreeBookBean(String res) {
+        Gson gson = new Gson();
+        List<BookBean> bookBeans = gson.fromJson(res, new TypeToken<List<BookBean>>(){}.getType());
+        return bookBeans;
     }
 }

@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mango.bc.homepage.net.bean.CompetitiveBookBean;
+import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.bean.ExpertBookBean;
 import com.mango.bc.homepage.net.bean.FreeBookBean;
@@ -123,7 +123,7 @@ public class HomePageFragment extends Fragment implements BookView {
     }
 
     @Override
-    public void addCompetitiveBook(List<CompetitiveBookBean> competitiveBookBeanList) {
+    public void addCompetitiveBook(List<BookBean> bookBeanList) {
     }
 
     @Override

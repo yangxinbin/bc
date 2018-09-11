@@ -6,7 +6,7 @@ import java.util.List;
  * Created by admin on 2018/9/10.
  */
 
-public class CompetitiveBookBean {
+public class BookBean {
 
     /**
      * id : 5b84b31c04440c128c659ff2

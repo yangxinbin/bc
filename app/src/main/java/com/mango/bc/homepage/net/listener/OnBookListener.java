@@ -1,6 +1,6 @@
 package com.mango.bc.homepage.net.listener;
 
-import com.mango.bc.homepage.net.bean.CompetitiveBookBean;
+import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.bean.ExpertBookBean;
 import com.mango.bc.homepage.net.bean.FreeBookBean;
@@ -13,10 +13,10 @@ import java.util.List;
  */
 
 public interface OnBookListener {
-    void onSuccessCompetitiveBook(List<CompetitiveBookBean> competitiveBookBeanList);
+    void onSuccessCompetitiveBook(List<BookBean> bookBeanList);
     void onSuccessCompetitiveField(List<CompetitiveFieldBean> competitiveFieldBeanList);
     void onSuccessExpertBook(List<ExpertBookBean> expertBookBeanList);
-    void onSuccessFreeBook(List<FreeBookBean> freeBookBeanList);
+    void onSuccessFreeBook(List<BookBean> bookBeanList);
     void onSuccessNewestBook(List<NewestBookBean> newestBookBeanList);
 
     void onSuccessMes(String msg);

@@ -1,6 +1,6 @@
 package com.mango.bc.homepage.net.view;
 
-import com.mango.bc.homepage.net.bean.CompetitiveBookBean;
+import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.bean.ExpertBookBean;
 import com.mango.bc.homepage.net.bean.FreeBookBean;
@@ -14,7 +14,7 @@ import java.util.List;
 
 public interface BookView {
     void addCompetitiveField(List<CompetitiveFieldBean> competitiveFieldBeanList);
-    void addCompetitiveBook(List<CompetitiveBookBean> competitiveBookBeanList);
+    void addCompetitiveBook(List<BookBean> bookBeanList);
     void addExpertBook(List<ExpertBookBean> expertBookBeanList);
     void addFreeBook(List<FreeBookBean> freeBookBeanList);
     void addNewestBook(List<NewestBookBean> newestBookBeanList);

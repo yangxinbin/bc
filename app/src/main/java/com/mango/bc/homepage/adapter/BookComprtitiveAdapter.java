@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.mango.bc.R;
-import com.mango.bc.homepage.net.bean.CompetitiveBookBean;
+import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.RoundImageView;
 import com.mango.bc.util.Urls;
 
@@ -29,18 +28,18 @@ import java.util.List;
 public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private OnItemClickLitener mOnItemClickLitener;//自注册的接口给调用者用于点击逻辑
-    private List<CompetitiveBookBean> mData = new ArrayList<>();
+    private List<BookBean> mData = new ArrayList<>();
     public static final int TYPE_HEAD = 0;
     public static final int TYPE_ITEM = 1;
     private Handler mHandler = new Handler(Looper.getMainLooper()); //获取主线程的Handler
 
-    public void setmDate(List<CompetitiveBookBean> data) {
+    public void setmDate(List<BookBean> data) {
         this.mData = data;
         this.notifyDataSetChanged();
     }
 
     public void reMove() {
-        List<CompetitiveBookBean> m = new ArrayList<CompetitiveBookBean>();
+        List<BookBean> m = new ArrayList<BookBean>();
         this.mData = m;
         this.notifyDataSetChanged();
     }
@@ -48,7 +47,7 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     /**
      * 添加列表项     * @param item
      */
-    public void addItem(CompetitiveBookBean bean) {
+    public void addItem(BookBean bean) {
         if (mData != null) {
             mData.add(bean);
         }
@@ -151,7 +150,7 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
 
-    public CompetitiveBookBean getItem(int position) {
+    public BookBean getItem(int position) {
         return mData == null ? null : mData.get(position);
     }
 

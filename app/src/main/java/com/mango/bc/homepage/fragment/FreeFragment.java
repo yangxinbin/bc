@@ -12,20 +12,31 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mango.bc.R;
-import com.mango.bc.homepage.activity.VipDetailActivity;
 import com.mango.bc.homepage.activity.freebook.FreeBookActivity;
 import com.mango.bc.homepage.adapter.BookGirdAdapter;
+import com.mango.bc.homepage.net.bean.BookBean;
+import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
+import com.mango.bc.homepage.net.bean.ExpertBookBean;
+import com.mango.bc.homepage.net.bean.FreeBookBean;
+import com.mango.bc.homepage.net.bean.NewestBookBean;
+import com.mango.bc.homepage.net.presenter.BookPresenter;
+import com.mango.bc.homepage.net.view.BookView;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class FreeFragment extends Fragment {
+public class FreeFragment extends Fragment implements BookView {
     @Bind(R.id.see_more)
     TextView seeMore;
     @Bind(R.id.recycle)
     RecyclerView recycle;
     private BookGirdAdapter bookGirdAdapter;
+    private BookPresenter bookPresenter;
+    private final int TYPE = 2;
+    private int page = 0;
 
     @Nullable
     @Override
@@ -50,5 +61,40 @@ public class FreeFragment extends Fragment {
     public void onViewClicked() {
         Intent intent = new Intent(getContext(), FreeBookActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void addCompetitiveField(List<CompetitiveFieldBean> competitiveFieldBeanList) {
+
+    }
+
+    @Override
+    public void addCompetitiveBook(List<BookBean> bookBeanList) {
+
+    }
+
+    @Override
+    public void addExpertBook(List<ExpertBookBean> expertBookBeanList) {
+
+    }
+
+    @Override
+    public void addFreeBook(List<FreeBookBean> freeBookBeanList) {
+
+    }
+
+    @Override
+    public void addNewestBook(List<NewestBookBean> newestBookBeanList) {
+
+    }
+
+    @Override
+    public void addSuccess(String s) {
+
+    }
+
+    @Override
+    public void addFail(String f) {
+
     }
 }

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.mango.bc.homepage.net.bean.CompetitiveBookBean;
+import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.bean.ExpertBookBean;
 import com.mango.bc.homepage.net.bean.FreeBookBean;
@@ -49,6 +49,10 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
             }
         } else if (type == 2) {
             url = getUrl(type, context);
+        } else if (type == 3) {
+            url = getUrl(type, context)+"?type=free"+"&page=" + page;
+        } else if (type == 4) {
+            url = getUrl(type, context);
         }
         Log.v("pppppppppppp", "" + url);
         bookModel.visitBooks(context, type, url, tabString, page,ifCache, this);
@@ -58,21 +62,27 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
         StringBuffer sburl = new StringBuffer();
         switch (type) {
             case 0:
-                sburl.append(Urls.HOST_BOOKCATEGORIES);
+                sburl.append(Urls.HOST_BOOKCATEGORIES);//精品字段
                 break;
             case 1:
-                sburl.append(Urls.HOST_BOOKLISTCATEGORIES);
+                sburl.append(Urls.HOST_BOOKLISTCATEGORIES);//精品课列表
                 break;
             case 2:
-                sburl.append(Urls.HOST_BOOKTYPE);
+                sburl.append(Urls.HOST_BOOKTYPE);//大咖
+                break;
+            case 3:
+                sburl.append(Urls.HOST_BOOKTYPE);//免费
+                break;
+            case 4:
+                sburl.append(Urls.HOST_BOOKTYPE);//最新
                 break;
         }
         return sburl.toString();
     }
 
     @Override
-    public void onSuccessCompetitiveBook(List<CompetitiveBookBean> competitiveBookBeanList) {
-        bookView.addCompetitiveBook(competitiveBookBeanList);
+    public void onSuccessCompetitiveBook(List<BookBean> bookBeanList) {
+        bookView.addCompetitiveBook(bookBeanList);
     }
 
     @Override

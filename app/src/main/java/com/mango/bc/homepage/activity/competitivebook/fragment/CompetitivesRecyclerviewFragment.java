@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 
 import com.mango.bc.R;
 import com.mango.bc.homepage.adapter.BookComprtitiveAdapter;
-import com.mango.bc.homepage.net.bean.CompetitiveBookBean;
+import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.bean.ExpertBookBean;
 import com.mango.bc.homepage.net.bean.FreeBookBean;
@@ -61,7 +61,7 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
     private String mType = "";
     private final int TYPE = 1;
     private int page = 0;
-    private ArrayList<CompetitiveBookBean> mData, mDataAll;
+    private ArrayList<BookBean> mData, mDataAll;
 
 
     public static CompetitivesRecyclerviewFragment newInstance(String type) {
@@ -193,23 +193,23 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
     }
 
     @Override
-    public void addCompetitiveBook(final List<CompetitiveBookBean> competitiveBookBeanList) {
+    public void addCompetitiveBook(final List<BookBean> bookBeanList) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Log.v("yyyyyyyyyyy", "========" + competitiveBookBeanList.size());
-                if (competitiveBookBeanList == null || competitiveBookBeanList.size() == 0) {
+                Log.v("yyyyyyyyyyy", "========" + bookBeanList.size());
+                if (bookBeanList == null || bookBeanList.size() == 0) {
                     AppUtils.showToast(getActivity(), getString(R.string.date_over));
                     return;
                 }
                 if (mData == null && mDataAll == null) {
-                    mData = new ArrayList<CompetitiveBookBean>();
-                    mDataAll = new ArrayList<CompetitiveBookBean>();
+                    mData = new ArrayList<BookBean>();
+                    mDataAll = new ArrayList<BookBean>();
                 }
                 if (mDataAll != null) {
                     mDataAll.clear();
                 }
-                mDataAll.addAll(competitiveBookBeanList);
+                mDataAll.addAll(bookBeanList);
                 if (page == 0) {
                     for (int i = 0; i < mDataAll.size(); i++) {//
                         mData.add(mDataAll.get(i)); //一次显示page= ? 20条数据

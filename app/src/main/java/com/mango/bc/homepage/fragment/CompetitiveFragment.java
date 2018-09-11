@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.mango.bc.R;
 import com.mango.bc.homepage.activity.competitivebook.CompetitiveBookActivity;
 import com.mango.bc.homepage.adapter.CompetitiveFieldAdapter;
-import com.mango.bc.homepage.net.bean.CompetitiveBookBean;
+import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.bean.ExpertBookBean;
 import com.mango.bc.homepage.net.bean.FreeBookBean;
@@ -109,7 +109,7 @@ public class CompetitiveFragment extends Fragment implements BookView {
     }
 
     @Override
-    public void addCompetitiveBook(List<CompetitiveBookBean> competitiveBookBeanList) {
+    public void addCompetitiveBook(List<BookBean> bookBeanList) {
 
     }
 

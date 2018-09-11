@@ -49,7 +49,7 @@ public class BookcaseFragment extends Fragment {
     @Bind(R.id.viewpager_bookcase)
     ViewPager viewPager;
     private ArrayList<String> mDatas;
-    List<Fragment> mfragments = new ArrayList<Fragment>();
+    List<Fragment> mfragments = new ArrayList<Fragment>();//
 
 
     @Nullable

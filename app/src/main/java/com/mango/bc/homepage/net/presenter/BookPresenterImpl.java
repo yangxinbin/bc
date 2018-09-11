@@ -51,7 +51,7 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
         } else if (type == 3) {
             url = getUrl(type, context) + "?type=free" + "&page=" + page;
         } else if (type == 4) {
-            url = getUrl(type, context);
+            url = getUrl(type, context) + "?type=paid" + "&page=" + page;
         }
         Log.v("pppppppppppp", "" + url);
         bookModel.visitBooks(context, type, url, tabString, page, ifCache, this);

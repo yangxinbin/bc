@@ -67,9 +67,10 @@ public class CompetitiveFragment extends Fragment implements BookView {
         if (bean.getCompetitiveField()) {
             bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);//刷新从网络。
             bean.setCompetitiveField(false);//刷新完修改状态
+            Log.v("yyyyyyy","=====1--"+bean.toString());
             EventBus.getDefault().postSticky(bean);
         } else {
-            bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//缓存。
+            //bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//缓存。
         }
     }
 

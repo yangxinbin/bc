@@ -1,5 +1,6 @@
 package com.mango.bc.homepage.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mango.bc.R;
-import com.mango.bc.homepage.bean.BookFree;
+import com.mango.bc.homepage.net.bean.BookBean;
+import com.mango.bc.util.Urls;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,16 +22,41 @@ import java.util.List;
  */
 
 public class BookGirdAdapter extends RecyclerView.Adapter {
+    private Context context;
+    private List<BookBean> datas = new ArrayList<>();
 
-    private List<BookFree> datas = new ArrayList<>();
+    public BookGirdAdapter(Context context) {
+        this.context = context;
+    }
 
-    public BookGirdAdapter(List<BookFree> datas) {
+    public BookGirdAdapter(List<BookBean> datas) {
         this.datas = datas;
     }
 
     private BookGirdAdapter.OnItemClickLitener mOnItemClickLitener;
 
     public BookGirdAdapter() {
+    }
+
+    public void setmDate(List<BookBean> data) {
+        this.datas = data;
+        this.notifyDataSetChanged();
+    }
+
+    public void reMove() {
+        List<BookBean> m = new ArrayList<BookBean>();
+        this.datas = m;
+        this.notifyDataSetChanged();
+    }
+
+    /**
+     * 添加列表项     * @param item
+     */
+    public void addItem(BookBean bean) {
+        if (datas != null) {
+            datas.add(bean);
+        }
+        this.notifyDataSetChanged();
     }
 
     public void setOnItemClickLitener(BookGirdAdapter.OnItemClickLitener mOnItemClickLitener) {
@@ -53,14 +81,16 @@ public class BookGirdAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof BookGirdAdapter.BookGirdViewHolder) {
             final BookGirdAdapter.BookGirdViewHolder viewHolder = (BookGirdAdapter.BookGirdViewHolder) holder;
-            //viewHolder.tv_free_title.setText(datas.get(position).getBookGirdTitle());
-            //viewHolder.tv_free_title.setText(datas.get(position).getBookGirdTitle());
+            viewHolder.tv_free_title.setText(datas.get(position).getTitle());
+            viewHolder.tv_free_stage.setText("免费领取");
+            if (datas.get(position).getCover() != null)
+                Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getCover().getFileName()).into(((BookGirdAdapter.BookGirdViewHolder) holder).img_free_book);
         }
     }
 
     @Override
     public int getItemCount() {
-        return 3;//datas.size();
+        return datas.size();
     }
 
     class BookGirdViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

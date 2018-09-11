@@ -125,6 +125,8 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 ((ItemViewHolder) holder).tv_detail.setText(mData.get(position).getSubtitle());
                 ((ItemViewHolder) holder).tv_time.setText("共" + mData.get(position).getChapters().size() + "节课");
                 ((ItemViewHolder) holder).tv_buy.setText("已购买" + mData.get(position).getSold());
+                ((ItemViewHolder) holder).tv_stage.setText("免费领取");
+
                 if (mData.get(position).getCover() != null)
                     Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + mData.get(position).getCover().getFileName()).into(((ItemViewHolder) holder).img_book);
                     /*Picasso.with(context)

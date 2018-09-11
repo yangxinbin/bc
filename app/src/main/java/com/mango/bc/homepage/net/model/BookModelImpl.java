@@ -147,7 +147,7 @@ public class BookModelImpl implements BookModel {
                 public void run() {
                     if (ifCache) {//读取缓存数据
                         String newString = mCache.getAsString("cache" + type);
-                        Log.v("yyyyyy", "---cache---");
+                        Log.v("yyyyyy", "---cache3---"+newString);
                         if (newString != null) {
                             List<BookBean> beanList = JsonUtils.readFreeBookBean(newString);//data是json字段获得data的值即对象数组
                             listener.onSuccessFreeBook(beanList);

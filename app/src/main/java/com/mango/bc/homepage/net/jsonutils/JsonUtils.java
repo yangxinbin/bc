@@ -56,4 +56,5 @@ public class JsonUtils {
         List<CompetitiveFieldBean> competitiveFieldBeans = gson.fromJson(res, new TypeToken<List<CompetitiveFieldBean>>(){}.getType());
         return competitiveFieldBeans;
     }
+
 }

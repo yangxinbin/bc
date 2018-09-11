@@ -83,8 +83,8 @@ public class BookModelImpl implements BookModel {
                         String newString = mCache.getAsString("cache" + type+page);
                         Log.v("yyyyyy", "---cache---");
                         if (newString != null) {
-                            List<CompetitiveFieldBean> beanList = JsonUtils.readCompetitiveFieldBean(newString);//data是json字段获得data的值即对象数组
-                            listener.onSuccessCompetitiveField(beanList);
+//                            List<CompetitiveFieldBean> beanList = JsonUtils.readCompetitiveFieldBean(newString);//data是json字段获得data的值即对象数组
+                            //listener.onSuccessCompetitiveField(beanList);
                             listener.onSuccessMes("SUCCESS");
                             Log.v("yyyyyy", "---cache---" + type);
                             return;
@@ -104,8 +104,8 @@ public class BookModelImpl implements BookModel {
                                 String string = response.body().string();
                                 Log.v("yyyyyyyyy", "*****string*****" + string);
                                 mCache.put("cache" + type+page, string);
-                                List<CompetitiveFieldBean> beanList = JsonUtils.readCompetitiveFieldBean(string);//data是json字段获得data的值即对象数组
-                                listener.onSuccessCompetitiveField(beanList);
+                                //List<CompetitiveFieldBean> beanList = JsonUtils.readCompetitiveFieldBean(string);//data是json字段获得data的值即对象数组
+                                //listener.onSuccessCompetitiveField(beanList);
                                 listener.onSuccessMes("SUCCESS");
                             } catch (Exception e) {
                                 listener.onFailMes("FAILURE", e);

@@ -51,7 +51,7 @@
             app:tabIndicatorHeight="4dp"
             app:tabMode="scrollable"
             app:tabSelectedTextColor="@color/yello"
-            app:tabTextAppearance="@style/TabTextOther"/>
+            app:tabTextAppearance="@style/TabTextMore"/>
     </LinearLayout>
 
     <android.support.v4.view.ViewPager

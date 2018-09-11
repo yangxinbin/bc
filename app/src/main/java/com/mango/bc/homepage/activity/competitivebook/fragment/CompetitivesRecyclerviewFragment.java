@@ -25,6 +25,7 @@ import com.mango.bc.homepage.net.bean.NewestBookBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookView;
+import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.NetUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -34,6 +35,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -55,11 +57,12 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
     private LinearLayoutManager mLayoutManager;
     private SharedPreferences sharedPreferences;
     private static SharedPreferences.Editor editor;
-    private String nowProvince, nowCity, nowDistrict;
     private boolean isFirstEnter;
     private String mType = "";
     private final int TYPE = 1;
     private int page = 0;
+    private ArrayList<CompetitiveBookBean> mData, mDataAll;
+
 
     public static CompetitivesRecyclerviewFragment newInstance(String type) {
         Bundle bundle = new Bundle();
@@ -109,16 +112,23 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
                 refreshLayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        if (mDataAll != null) {
+                            mDataAll.clear();
+                        }
+                        if (mData != null) {
+                            mData.clear();
+                        }
                         page = 0;
                         if (NetUtil.isNetConnect(getActivity())) {
-                            Log.v("zzzzzzzzz", "-------onRefresh-------" + page);
+                            Log.v("zzzzzzzzz", "-------onRefresh y-------" + page);
                             bookPresenter.visitBooks(getActivity(), TYPE, mType, page, false);
                         } else {
+                            Log.v("zzzzzzzzz", "-------onRefresh n-------" + page);
                             bookPresenter.visitBooks(getActivity(), TYPE, mType, page, true);
                         }
                         refreshLayout.finishRefresh();
                     }
-                }, 500);
+                }, 200);
             }
         });
         refresh.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -128,13 +138,16 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
                     @Override
                     public void run() {
                         page++;
+                        Log.v("yyyyyy", "-------isNetConnect-------"+NetUtil.isNetConnect(getActivity()));
                         if (NetUtil.isNetConnect(getActivity())) {
-                            Log.v("zzzzzzzzz", "-------onRefresh-------" + page);
+                            Log.v("yyyyyy", "-------isNetConnect-------");
                             bookPresenter.visitBooks(getActivity(), TYPE, mType, page, false);
                         } else {
+                            Log.v("yyyyyy", "-------isnoNetConnect-------");
+
                             bookPresenter.visitBooks(getActivity(), TYPE, mType, page, true);
                         }
-
+                        refreshLayout.finishLoadMore();
                     }
                 }, 500);
             }
@@ -180,8 +193,40 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
     }
 
     @Override
-    public void addCompetitiveBook(List<CompetitiveBookBean> competitiveBookBeanList) {
+    public void addCompetitiveBook(final List<CompetitiveBookBean> competitiveBookBeanList) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Log.v("yyyyyyyyyyy", "========" + competitiveBookBeanList.size());
+                if (competitiveBookBeanList == null || competitiveBookBeanList.size() == 0) {
+                    AppUtils.showToast(getActivity(), getString(R.string.date_over));
+                    return;
+                }
+                if (mData == null && mDataAll == null) {
+                    mData = new ArrayList<CompetitiveBookBean>();
+                    mDataAll = new ArrayList<CompetitiveBookBean>();
+                }
+                if (mDataAll != null) {
+                    mDataAll.clear();
+                }
+                mDataAll.addAll(competitiveBookBeanList);
+                if (page == 0) {
+                    for (int i = 0; i < mDataAll.size(); i++) {//
+                        mData.add(mDataAll.get(i)); //一次显示page= ? 20条数据
+                    }
+                    adapter.setmDate(mData);
+                } else {
+                    //加载更多
+                    for (int i = 0; i < mDataAll.size(); i++) {
+                        if (mDataAll == null) {
+                            return;//一开始断网报空指针的情况
+                        }
+                        adapter.addItem(mDataAll.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
+                    }
+                }
 
+            }
+        });
     }
 
     @Override
@@ -201,12 +246,22 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
 
     @Override
     public void addSuccess(String s) {
-
+/*        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                AppUtils.showToast(getActivity(), "SUCCESS");
+            }
+        });*/
     }
 
     @Override
     public void addFail(String f) {
-
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                AppUtils.showToast(getActivity(), "精品课程请求失败");
+            }
+        });
     }
 
     private class MyHandler extends Handler {

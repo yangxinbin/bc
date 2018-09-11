@@ -34,8 +34,8 @@
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_weight="1"
             android:gravity="right|center_vertical"
-            android:text="查看更多"
-            android:textColor="@color/gray"
+            android:text="@string/more"
+            android:textColor="@color/grayBlack"
             android:textSize="@dimen/dp_12" />
     </LinearLayout>
 

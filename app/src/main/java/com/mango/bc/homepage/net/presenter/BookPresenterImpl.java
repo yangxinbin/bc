@@ -13,8 +13,10 @@ import com.mango.bc.homepage.net.listener.OnBookListener;
 import com.mango.bc.homepage.net.model.BookModel;
 import com.mango.bc.homepage.net.model.BookModelImpl;
 import com.mango.bc.homepage.net.view.BookView;
+import com.mango.bc.util.URLEncoderURI;
 import com.mango.bc.util.Urls;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -40,7 +42,11 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
         if (type == 0) {
             url = getUrl(type, context);
         } else if (type == 1) {
-            url = getUrl(type, context) + "?token=" + sharedPreferences.getString("token", "") + "&pageNum=" + page;
+            try {
+                url = getUrl(type, context) + "?category=" + URLEncoderURI.encode(tabString, "UTF-8")+ "&page=" + page;
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         } else if (type == 2) {
             url = getUrl(type, context);
         }

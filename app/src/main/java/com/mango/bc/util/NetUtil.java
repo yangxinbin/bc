@@ -12,29 +12,20 @@ import android.os.Build;
  */
 
 public class NetUtil {
-    public static boolean isNetConnect(Activity activity){
-        ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (cm == null)
+    public static boolean isNetConnect(Context context){
+        // 获得网络状态管理器
+        ConnectivityManager connectivityManager = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager == null) {
             return false;
-        else {   // 获取所有NetworkInfo对象
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                Network[] networks = cm.getAllNetworks();
-                NetworkInfo networkInfo;
-                for (Network mNetwork : networks) {
-                    networkInfo = cm.getNetworkInfo(mNetwork);
-                    if (networkInfo.getState().equals(NetworkInfo.State.CONNECTED)) {
+        } else {
+            // 建立网络数组
+            NetworkInfo[] net_info = connectivityManager.getAllNetworkInfo();
+            if (net_info != null) {
+                for (int i = 0; i < net_info.length; i++) {
+                    // 判断获得的网络状态是否是处于连接状态
+                    if (net_info[i].getState() == NetworkInfo.State.CONNECTED) {
                         return true;
-                    }
-                }
-            }
-            else {
-                //否则调用旧版本方法
-                NetworkInfo[] info = cm.getAllNetworkInfo();
-                if (info != null) {
-                    for (NetworkInfo anInfo : info) {
-                        if (anInfo.getState() == NetworkInfo.State.CONNECTED) {
-                            return true;
-                        }
                     }
                 }
             }

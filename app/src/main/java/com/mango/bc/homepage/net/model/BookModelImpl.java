@@ -30,7 +30,7 @@ public class BookModelImpl implements BookModel {
     private SharedPreferences sharedPreferences;
 
     @Override
-    public void visitBooks(final Context context, final int type, final String url, String tabString, final int page, final Boolean ifCache, final OnBookListener listener) {
+    public void visitBooks(final Context context, final int type, final String url, final String tabString, final int page, final Boolean ifCache, final OnBookListener listener) {
         sharedPreferences = context.getSharedPreferences("BC", MODE_PRIVATE);
         final ACache mCache = ACache.get(context);
         if (type == 0) {//精品tab字段
@@ -80,34 +80,37 @@ public class BookModelImpl implements BookModel {
                 @Override
                 public void run() {
                     if (ifCache) {//读取缓存数据
-                        String newString = mCache.getAsString("cache" + type+page);
-                        Log.v("yyyyyy", "---cache---");
+                        Log.v("yyyyyy", url+"---cache1---"+ifCache);
+
+                        String newString = mCache.getAsString("cache" + tabString+page);
                         if (newString != null) {
-//                            List<CompetitiveFieldBean> beanList = JsonUtils.readCompetitiveFieldBean(newString);//data是json字段获得data的值即对象数组
-                            //listener.onSuccessCompetitiveField(beanList);
+                            List<CompetitiveBookBean> beanList = JsonUtils.readCompetitiveBookBean(newString);//data是json字段获得data的值即对象数组
+                            listener.onSuccessCompetitiveBook(beanList);
                             listener.onSuccessMes("SUCCESS");
                             Log.v("yyyyyy", "---cache---" + type);
                             return;
                         }
                     } else {
-                        mCache.remove("cache" + type+page);//刷新之后缓存也更新过来
+                        mCache.remove("cache" + tabString+page);//刷新之后缓存也更新过来
                     }
                     HttpUtils.doGet(url, new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             listener.onFailMes("FAILURE", e);
+                            Log.v("yyyyyyyyy", url+"*****1*****" + e);
                         }
 
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
                             try {
                                 String string = response.body().string();
-                                Log.v("yyyyyyyyy", "*****string*****" + string);
-                                mCache.put("cache" + type+page, string);
-                                //List<CompetitiveFieldBean> beanList = JsonUtils.readCompetitiveFieldBean(string);//data是json字段获得data的值即对象数组
-                                //listener.onSuccessCompetitiveField(beanList);
+                                mCache.put("cache" + tabString+page, string);
+                                Log.v("yyyyyyyyy", url+"*****1*****" + string);
+                                List<CompetitiveBookBean> beanList = JsonUtils.readCompetitiveBookBean(string);//data是json字段获得data的值即对象数组
+                                listener.onSuccessCompetitiveBook(beanList);
                                 listener.onSuccessMes("SUCCESS");
                             } catch (Exception e) {
+                                Log.v("yyyyyyyyy", "*****Exception*****" + e);
                                 listener.onFailMes("FAILURE", e);
                             }
                         }

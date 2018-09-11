@@ -43,7 +43,7 @@ public class CompetitiveBookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_competitive_book);
         ButterKnife.bind(this);
-        viewpager.setOffscreenPageLimit(0);
+        viewpager.setOffscreenPageLimit(8);
         initDatas();
         reflex(tabLayout);
         setupViewPager(viewpager);

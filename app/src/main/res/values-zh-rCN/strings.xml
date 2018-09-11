@@ -68,5 +68,7 @@
     <string name="service">联系客服</string>
     <string name="setting">设置</string>
     <string name="competitive_book">精品课程</string>
+    <string name="check_net">请检查网络连接</string>
+    <string name="date_over">数据全部加载完毕</string>
 
 </resources>

@@ -19,6 +19,7 @@ import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookView;
+import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.NetUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -79,6 +80,7 @@ public class HomePageFragment extends Fragment implements BookView {
                             RefreshStageBean refreshStageBean = new RefreshStageBean(true, true, true, true, true);
                             EventBus.getDefault().postSticky(refreshStageBean);
                         } else {
+                            AppUtils.showToast(getActivity(),getString(R.string.check_net));
                             RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, false, false);
                             EventBus.getDefault().postSticky(refreshStageBean);
                         }

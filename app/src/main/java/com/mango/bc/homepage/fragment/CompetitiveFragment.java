@@ -55,20 +55,24 @@ public class CompetitiveFragment extends Fragment implements BookView {
         bookPresenter = new BookPresenterImpl(this);
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
-        bookPresenter.visitBooks(getActivity(), TYPE, "", page,true);//true从缓存读数据，false从网络读数据。
+        bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//true从缓存读数据，false从网络读数据。
         return view;
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void RefreshStageBeanEventBus(RefreshStageBean bean) {
         if (bean == null) {
             return;
         }
-        if (bean.getCompetitiveField()){
-            bookPresenter.visitBooks(getActivity(), TYPE, "", page,false);//从缓存读数据，刷新从网络。
+        if (bean.getCompetitiveField()) {
+            bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);//刷新从网络。
             bean.setCompetitiveField(false);//刷新完修改状态
             EventBus.getDefault().postSticky(bean);
+        } else {
+            bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//缓存。
         }
     }
+
     private void initView() {
         competitiveFieldAdapter = new CompetitiveFieldAdapter(listS);
         recycle.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 4));
@@ -90,10 +94,12 @@ public class CompetitiveFragment extends Fragment implements BookView {
 
     @Override
     public void addCompetitiveField(final List<CompetitiveFieldBean> competitiveFieldBeanList) {
+        if (competitiveFieldBeanList == null)
+            return;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Log.v("yyyyyy","----------"+competitiveFieldBeanList.size());
+                Log.v("yyyyyy", "----------" + competitiveFieldBeanList.size());
                 listS.clear();
                 for (int i = 0; i < competitiveFieldBeanList.size(); i++) {
                     listS.add(competitiveFieldBeanList.get(i).getName());
@@ -137,7 +143,7 @@ public class CompetitiveFragment extends Fragment implements BookView {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                AppUtils.showToast(getActivity(),"精品课程请求失败");
+                AppUtils.showToast(getActivity(), "精品课程请求失败");
             }
         });
     }

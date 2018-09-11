@@ -9,70 +9,102 @@ import java.util.List;
 public class CompetitiveBookBean {
 
     /**
-     * author : {"id":"string","introduction":"string","name":"string","photo":{"alias":"string","contentType":"string","createdOn":0,"fileName":"string","id":"string","size":0}}
-     * banner : {"alias":"string","contentType":"string","createdOn":0,"fileName":"string","id":"string","size":0}
-     * category : string
-     * chapters : [{"audio":{"alias":"string","contentType":"string","createdOn":0,"fileName":"string","id":"string","size":0},"contentImages":[{"alias":"string","contentType":"string","createdOn":0,"fileName":"string","id":"string","size":0}],"duration":0,"free":true,"id":"string","index":0,"title":"string","updatedOn":0}]
-     * cover : {"alias":"string","contentType":"string","createdOn":0,"fileName":"string","id":"string","size":0}
-     * descriptionImages : [{"alias":"string","contentType":"string","createdOn":0,"fileName":"string","id":"string","size":0}]
+     * id : 5b84b31c04440c128c659ff2
+     * title : 贝尔福特：华尔街之狼
+     * subtitle : 出狱后比入狱前更赚钱的传奇人生。
+     * recommendation : 出狱后比入狱前更赚钱的传奇人生。
+     * descriptionImages : [{"id":"5b84b35304440c128c659ff3","alias":"郭宏才详情.jpg","fileName":"15354233153218227.jpg","contentType":"image/jpeg","size":49510,"createdOn":1535423315321}]
+     * cover : {"id":"5b87560e04440c002066b616","alias":"贝尔福特.jpg","fileName":"15355960465391611.jpg","contentType":"image/jpeg","size":97859,"createdOn":1535596046539}
+     * banner : null
+     * category : 人物系列
+     * author : {"id":"5b839f2b04440c1224e72ba7","name":"BC大陆","introduction":"no","photo":{"id":"5b8501b204440c128c65a11e","alias":"作者-BC大陆.jpg","fileName":"15354433784241925.jpg","contentType":"image/jpeg","size":39399,"createdOn":1535443378424}}
+     * chapters : [{"id":"1535423361229","title":"贝尔福特：华尔街之狼","duration":653,"audio":{"id":"5b84b3c004440c128c659ffa","alias":"贝尔福特完整版.mp3","fileName":"15354234248283889.mp3","contentType":"audio/mp3","size":15685975,"createdOn":1535423424828},"contentImages":[{"id":"5b84b39104440c128c659ff7","alias":"贝尔.jpg","fileName":"15354233774864373.jpg","contentType":"image/jpeg","size":512384,"createdOn":1535423377486}],"free":true,"index":1,"updatedOn":1535423361229}]
+     * tags : ["人物系列"]
+     * price : 0
+     * vipPrice : 0
      * groupBuy2Price : 0
      * groupBuy3Price : 0
-     * id : string
-     * likes : 0
+     * type : free
+     * likes : 13
      * likesPlus : 0
-     * price : 0
-     * recommendation : string
-     * recommended : 0
-     * sold : 0
+     * sold : 70
      * soldPlus : 0
+     * recommended : 102
+     * updatedOn : 1536139478337
+     * updatedBy : 5b84ad3904440c128c32992b
      * status : online
-     * subtitle : string
-     * tags : ["string"]
-     * title : string
-     * type : paid
-     * updatedBy : string
-     * updatedOn : 0
-     * vipPrice : 0
      */
 
-    private AuthorBean author;
-    private BannerBean banner;
-    private String category;
-    private CoverBean cover;
-    private int groupBuy2Price;
-    private int groupBuy3Price;
     private String id;
+    private String title;
+    private String subtitle;
+    private String recommendation;
+    private CoverBean cover;
+    private Object banner;
+    private String category;
+    private AuthorBean author;
+    private Double price;
+    private Double vipPrice;
+    private Double groupBuy2Price;
+    private Double groupBuy3Price;
+    private String type;
     private int likes;
     private int likesPlus;
-    private int price;
-    private String recommendation;
-    private int recommended;
     private int sold;
     private int soldPlus;
-    private String status;
-    private String subtitle;
-    private String title;
-    private String type;
+    private int recommended;
+    private long updatedOn;
     private String updatedBy;
-    private int updatedOn;
-    private int vipPrice;
-    private List<ChaptersBean> chapters;
+    private String status;
     private List<DescriptionImagesBean> descriptionImages;
+    private List<ChaptersBean> chapters;
     private List<String> tags;
 
-    public AuthorBean getAuthor() {
-        return author;
+    public String getId() {
+        return id;
     }
 
-    public void setAuthor(AuthorBean author) {
-        this.author = author;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public BannerBean getBanner() {
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
+    }
+
+    public String getRecommendation() {
+        return recommendation;
+    }
+
+    public void setRecommendation(String recommendation) {
+        this.recommendation = recommendation;
+    }
+
+    public CoverBean getCover() {
+        return cover;
+    }
+
+    public void setCover(CoverBean cover) {
+        this.cover = cover;
+    }
+
+    public Object getBanner() {
         return banner;
     }
 
-    public void setBanner(BannerBean banner) {
+    public void setBanner(Object banner) {
         this.banner = banner;
     }
 
@@ -84,36 +116,52 @@ public class CompetitiveBookBean {
         this.category = category;
     }
 
-    public CoverBean getCover() {
-        return cover;
+    public AuthorBean getAuthor() {
+        return author;
     }
 
-    public void setCover(CoverBean cover) {
-        this.cover = cover;
+    public void setAuthor(AuthorBean author) {
+        this.author = author;
     }
 
-    public int getGroupBuy2Price() {
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Double getVipPrice() {
+        return vipPrice;
+    }
+
+    public void setVipPrice(Double vipPrice) {
+        this.vipPrice = vipPrice;
+    }
+
+    public Double getGroupBuy2Price() {
         return groupBuy2Price;
     }
 
-    public void setGroupBuy2Price(int groupBuy2Price) {
+    public void setGroupBuy2Price(Double groupBuy2Price) {
         this.groupBuy2Price = groupBuy2Price;
     }
 
-    public int getGroupBuy3Price() {
+    public Double getGroupBuy3Price() {
         return groupBuy3Price;
     }
 
-    public void setGroupBuy3Price(int groupBuy3Price) {
+    public void setGroupBuy3Price(Double groupBuy3Price) {
         this.groupBuy3Price = groupBuy3Price;
     }
 
-    public String getId() {
-        return id;
+    public String getType() {
+        return type;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public int getLikes() {
@@ -132,30 +180,6 @@ public class CompetitiveBookBean {
         this.likesPlus = likesPlus;
     }
 
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public String getRecommendation() {
-        return recommendation;
-    }
-
-    public void setRecommendation(String recommendation) {
-        this.recommendation = recommendation;
-    }
-
-    public int getRecommended() {
-        return recommended;
-    }
-
-    public void setRecommended(int recommended) {
-        this.recommended = recommended;
-    }
-
     public int getSold() {
         return sold;
     }
@@ -172,36 +196,20 @@ public class CompetitiveBookBean {
         this.soldPlus = soldPlus;
     }
 
-    public String getStatus() {
-        return status;
+    public int getRecommended() {
+        return recommended;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setRecommended(int recommended) {
+        this.recommended = recommended;
     }
 
-    public String getSubtitle() {
-        return subtitle;
+    public long getUpdatedOn() {
+        return updatedOn;
     }
 
-    public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public void setUpdatedOn(long updatedOn) {
+        this.updatedOn = updatedOn;
     }
 
     public String getUpdatedBy() {
@@ -212,28 +220,12 @@ public class CompetitiveBookBean {
         this.updatedBy = updatedBy;
     }
 
-    public int getUpdatedOn() {
-        return updatedOn;
+    public String getStatus() {
+        return status;
     }
 
-    public void setUpdatedOn(int updatedOn) {
-        this.updatedOn = updatedOn;
-    }
-
-    public int getVipPrice() {
-        return vipPrice;
-    }
-
-    public void setVipPrice(int vipPrice) {
-        this.vipPrice = vipPrice;
-    }
-
-    public List<ChaptersBean> getChapters() {
-        return chapters;
-    }
-
-    public void setChapters(List<ChaptersBean> chapters) {
-        this.chapters = chapters;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public List<DescriptionImagesBean> getDescriptionImages() {
@@ -244,6 +236,14 @@ public class CompetitiveBookBean {
         this.descriptionImages = descriptionImages;
     }
 
+    public List<ChaptersBean> getChapters() {
+        return chapters;
+    }
+
+    public void setChapters(List<ChaptersBean> chapters) {
+        this.chapters = chapters;
+    }
+
     public List<String> getTags() {
         return tags;
     }
@@ -252,17 +252,83 @@ public class CompetitiveBookBean {
         this.tags = tags;
     }
 
-    public static class AuthorBean {
+    public static class CoverBean {
         /**
-         * id : string
-         * introduction : string
-         * name : string
-         * photo : {"alias":"string","contentType":"string","createdOn":0,"fileName":"string","id":"string","size":0}
+         * id : 5b87560e04440c002066b616
+         * alias : 贝尔福特.jpg
+         * fileName : 15355960465391611.jpg
+         * contentType : image/jpeg
+         * size : 97859
+         * createdOn : 1535596046539
          */
 
         private String id;
-        private String introduction;
+        private String alias;
+        private String fileName;
+        private String contentType;
+        private int size;
+        private long createdOn;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getAlias() {
+            return alias;
+        }
+
+        public void setAlias(String alias) {
+            this.alias = alias;
+        }
+
+        public String getFileName() {
+            return fileName;
+        }
+
+        public void setFileName(String fileName) {
+            this.fileName = fileName;
+        }
+
+        public String getContentType() {
+            return contentType;
+        }
+
+        public void setContentType(String contentType) {
+            this.contentType = contentType;
+        }
+
+        public int getSize() {
+            return size;
+        }
+
+        public void setSize(int size) {
+            this.size = size;
+        }
+
+        public long getCreatedOn() {
+            return createdOn;
+        }
+
+        public void setCreatedOn(long createdOn) {
+            this.createdOn = createdOn;
+        }
+    }
+
+    public static class AuthorBean {
+        /**
+         * id : 5b839f2b04440c1224e72ba7
+         * name : BC大陆
+         * introduction : no
+         * photo : {"id":"5b8501b204440c128c65a11e","alias":"作者-BC大陆.jpg","fileName":"15354433784241925.jpg","contentType":"image/jpeg","size":39399,"createdOn":1535443378424}
+         */
+
+        private String id;
         private String name;
+        private String introduction;
         private PhotoBean photo;
 
         public String getId() {
@@ -273,20 +339,20 @@ public class CompetitiveBookBean {
             this.id = id;
         }
 
-        public String getIntroduction() {
-            return introduction;
-        }
-
-        public void setIntroduction(String introduction) {
-            this.introduction = introduction;
-        }
-
         public String getName() {
             return name;
         }
 
         public void setName(String name) {
             this.name = name;
+        }
+
+        public String getIntroduction() {
+            return introduction;
+        }
+
+        public void setIntroduction(String introduction) {
+            this.introduction = introduction;
         }
 
         public PhotoBean getPhoto() {
@@ -299,20 +365,28 @@ public class CompetitiveBookBean {
 
         public static class PhotoBean {
             /**
-             * alias : string
-             * contentType : string
-             * createdOn : 0
-             * fileName : string
-             * id : string
-             * size : 0
+             * id : 5b8501b204440c128c65a11e
+             * alias : 作者-BC大陆.jpg
+             * fileName : 15354433784241925.jpg
+             * contentType : image/jpeg
+             * size : 39399
+             * createdOn : 1535443378424
              */
 
-            private String alias;
-            private String contentType;
-            private int createdOn;
-            private String fileName;
             private String id;
+            private String alias;
+            private String fileName;
+            private String contentType;
             private int size;
+            private long createdOn;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
 
             public String getAlias() {
                 return alias;
@@ -320,22 +394,6 @@ public class CompetitiveBookBean {
 
             public void setAlias(String alias) {
                 this.alias = alias;
-            }
-
-            public String getContentType() {
-                return contentType;
-            }
-
-            public void setContentType(String contentType) {
-                this.contentType = contentType;
-            }
-
-            public int getCreatedOn() {
-                return createdOn;
-            }
-
-            public void setCreatedOn(int createdOn) {
-                this.createdOn = createdOn;
             }
 
             public String getFileName() {
@@ -346,12 +404,12 @@ public class CompetitiveBookBean {
                 this.fileName = fileName;
             }
 
-            public String getId() {
-                return id;
+            public String getContentType() {
+                return contentType;
             }
 
-            public void setId(String id) {
-                this.id = id;
+            public void setContentType(String contentType) {
+                this.contentType = contentType;
             }
 
             public int getSize() {
@@ -361,25 +419,41 @@ public class CompetitiveBookBean {
             public void setSize(int size) {
                 this.size = size;
             }
+
+            public long getCreatedOn() {
+                return createdOn;
+            }
+
+            public void setCreatedOn(long createdOn) {
+                this.createdOn = createdOn;
+            }
         }
     }
 
-    public static class BannerBean {
+    public static class DescriptionImagesBean {
         /**
-         * alias : string
-         * contentType : string
-         * createdOn : 0
-         * fileName : string
-         * id : string
-         * size : 0
+         * id : 5b84b35304440c128c659ff3
+         * alias : 郭宏才详情.jpg
+         * fileName : 15354233153218227.jpg
+         * contentType : image/jpeg
+         * size : 49510
+         * createdOn : 1535423315321
          */
 
-        private String alias;
-        private String contentType;
-        private int createdOn;
-        private String fileName;
         private String id;
+        private String alias;
+        private String fileName;
+        private String contentType;
         private int size;
+        private long createdOn;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
 
         public String getAlias() {
             return alias;
@@ -387,22 +461,6 @@ public class CompetitiveBookBean {
 
         public void setAlias(String alias) {
             this.alias = alias;
-        }
-
-        public String getContentType() {
-            return contentType;
-        }
-
-        public void setContentType(String contentType) {
-            this.contentType = contentType;
-        }
-
-        public int getCreatedOn() {
-            return createdOn;
-        }
-
-        public void setCreatedOn(int createdOn) {
-            this.createdOn = createdOn;
         }
 
         public String getFileName() {
@@ -413,48 +471,6 @@ public class CompetitiveBookBean {
             this.fileName = fileName;
         }
 
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public int getSize() {
-            return size;
-        }
-
-        public void setSize(int size) {
-            this.size = size;
-        }
-    }
-
-    public static class CoverBean {
-        /**
-         * alias : string
-         * contentType : string
-         * createdOn : 0
-         * fileName : string
-         * id : string
-         * size : 0
-         */
-
-        private String alias;
-        private String contentType;
-        private int createdOn;
-        private String fileName;
-        private String id;
-        private int size;
-
-        public String getAlias() {
-            return alias;
-        }
-
-        public void setAlias(String alias) {
-            this.alias = alias;
-        }
-
         public String getContentType() {
             return contentType;
         }
@@ -463,83 +479,43 @@ public class CompetitiveBookBean {
             this.contentType = contentType;
         }
 
-        public int getCreatedOn() {
-            return createdOn;
-        }
-
-        public void setCreatedOn(int createdOn) {
-            this.createdOn = createdOn;
-        }
-
-        public String getFileName() {
-            return fileName;
-        }
-
-        public void setFileName(String fileName) {
-            this.fileName = fileName;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
         public int getSize() {
             return size;
         }
 
         public void setSize(int size) {
             this.size = size;
+        }
+
+        public long getCreatedOn() {
+            return createdOn;
+        }
+
+        public void setCreatedOn(long createdOn) {
+            this.createdOn = createdOn;
         }
     }
 
     public static class ChaptersBean {
         /**
-         * audio : {"alias":"string","contentType":"string","createdOn":0,"fileName":"string","id":"string","size":0}
-         * contentImages : [{"alias":"string","contentType":"string","createdOn":0,"fileName":"string","id":"string","size":0}]
-         * duration : 0
+         * id : 1535423361229
+         * title : 贝尔福特：华尔街之狼
+         * duration : 653
+         * audio : {"id":"5b84b3c004440c128c659ffa","alias":"贝尔福特完整版.mp3","fileName":"15354234248283889.mp3","contentType":"audio/mp3","size":15685975,"createdOn":1535423424828}
+         * contentImages : [{"id":"5b84b39104440c128c659ff7","alias":"贝尔.jpg","fileName":"15354233774864373.jpg","contentType":"image/jpeg","size":512384,"createdOn":1535423377486}]
          * free : true
-         * id : string
-         * index : 0
-         * title : string
-         * updatedOn : 0
+         * index : 1
+         * updatedOn : 1535423361229
          */
 
-        private AudioBean audio;
-        private int duration;
-        private boolean free;
         private String id;
-        private int index;
         private String title;
-        private int updatedOn;
+        private int duration;
+        private AudioBean audio;
+        private boolean free;
+        private int index;
+        private long updatedOn;
         private List<ContentImagesBean> contentImages;
-
-        public AudioBean getAudio() {
-            return audio;
-        }
-
-        public void setAudio(AudioBean audio) {
-            this.audio = audio;
-        }
-
-        public int getDuration() {
-            return duration;
-        }
-
-        public void setDuration(int duration) {
-            this.duration = duration;
-        }
-
-        public boolean isFree() {
-            return free;
-        }
-
-        public void setFree(boolean free) {
-            this.free = free;
-        }
 
         public String getId() {
             return id;
@@ -547,14 +523,6 @@ public class CompetitiveBookBean {
 
         public void setId(String id) {
             this.id = id;
-        }
-
-        public int getIndex() {
-            return index;
-        }
-
-        public void setIndex(int index) {
-            this.index = index;
         }
 
         public String getTitle() {
@@ -565,11 +533,43 @@ public class CompetitiveBookBean {
             this.title = title;
         }
 
-        public int getUpdatedOn() {
+        public int getDuration() {
+            return duration;
+        }
+
+        public void setDuration(int duration) {
+            this.duration = duration;
+        }
+
+        public AudioBean getAudio() {
+            return audio;
+        }
+
+        public void setAudio(AudioBean audio) {
+            this.audio = audio;
+        }
+
+        public boolean isFree() {
+            return free;
+        }
+
+        public void setFree(boolean free) {
+            this.free = free;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public void setIndex(int index) {
+            this.index = index;
+        }
+
+        public long getUpdatedOn() {
             return updatedOn;
         }
 
-        public void setUpdatedOn(int updatedOn) {
+        public void setUpdatedOn(long updatedOn) {
             this.updatedOn = updatedOn;
         }
 
@@ -583,20 +583,28 @@ public class CompetitiveBookBean {
 
         public static class AudioBean {
             /**
-             * alias : string
-             * contentType : string
-             * createdOn : 0
-             * fileName : string
-             * id : string
-             * size : 0
+             * id : 5b84b3c004440c128c659ffa
+             * alias : 贝尔福特完整版.mp3
+             * fileName : 15354234248283889.mp3
+             * contentType : audio/mp3
+             * size : 15685975
+             * createdOn : 1535423424828
              */
 
-            private String alias;
-            private String contentType;
-            private int createdOn;
-            private String fileName;
             private String id;
+            private String alias;
+            private String fileName;
+            private String contentType;
             private int size;
+            private long createdOn;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
 
             public String getAlias() {
                 return alias;
@@ -604,22 +612,6 @@ public class CompetitiveBookBean {
 
             public void setAlias(String alias) {
                 this.alias = alias;
-            }
-
-            public String getContentType() {
-                return contentType;
-            }
-
-            public void setContentType(String contentType) {
-                this.contentType = contentType;
-            }
-
-            public int getCreatedOn() {
-                return createdOn;
-            }
-
-            public void setCreatedOn(int createdOn) {
-                this.createdOn = createdOn;
             }
 
             public String getFileName() {
@@ -630,12 +622,12 @@ public class CompetitiveBookBean {
                 this.fileName = fileName;
             }
 
-            public String getId() {
-                return id;
+            public String getContentType() {
+                return contentType;
             }
 
-            public void setId(String id) {
-                this.id = id;
+            public void setContentType(String contentType) {
+                this.contentType = contentType;
             }
 
             public int getSize() {
@@ -644,25 +636,41 @@ public class CompetitiveBookBean {
 
             public void setSize(int size) {
                 this.size = size;
+            }
+
+            public long getCreatedOn() {
+                return createdOn;
+            }
+
+            public void setCreatedOn(long createdOn) {
+                this.createdOn = createdOn;
             }
         }
 
         public static class ContentImagesBean {
             /**
-             * alias : string
-             * contentType : string
-             * createdOn : 0
-             * fileName : string
-             * id : string
-             * size : 0
+             * id : 5b84b39104440c128c659ff7
+             * alias : 贝尔.jpg
+             * fileName : 15354233774864373.jpg
+             * contentType : image/jpeg
+             * size : 512384
+             * createdOn : 1535423377486
              */
 
-            private String alias;
-            private String contentType;
-            private int createdOn;
-            private String fileName;
             private String id;
+            private String alias;
+            private String fileName;
+            private String contentType;
             private int size;
+            private long createdOn;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
 
             public String getAlias() {
                 return alias;
@@ -670,22 +678,6 @@ public class CompetitiveBookBean {
 
             public void setAlias(String alias) {
                 this.alias = alias;
-            }
-
-            public String getContentType() {
-                return contentType;
-            }
-
-            public void setContentType(String contentType) {
-                this.contentType = contentType;
-            }
-
-            public int getCreatedOn() {
-                return createdOn;
-            }
-
-            public void setCreatedOn(int createdOn) {
-                this.createdOn = createdOn;
             }
 
             public String getFileName() {
@@ -696,12 +688,12 @@ public class CompetitiveBookBean {
                 this.fileName = fileName;
             }
 
-            public String getId() {
-                return id;
+            public String getContentType() {
+                return contentType;
             }
 
-            public void setId(String id) {
-                this.id = id;
+            public void setContentType(String contentType) {
+                this.contentType = contentType;
             }
 
             public int getSize() {
@@ -711,72 +703,14 @@ public class CompetitiveBookBean {
             public void setSize(int size) {
                 this.size = size;
             }
-        }
-    }
 
-    public static class DescriptionImagesBean {
-        /**
-         * alias : string
-         * contentType : string
-         * createdOn : 0
-         * fileName : string
-         * id : string
-         * size : 0
-         */
+            public long getCreatedOn() {
+                return createdOn;
+            }
 
-        private String alias;
-        private String contentType;
-        private int createdOn;
-        private String fileName;
-        private String id;
-        private int size;
-
-        public String getAlias() {
-            return alias;
-        }
-
-        public void setAlias(String alias) {
-            this.alias = alias;
-        }
-
-        public String getContentType() {
-            return contentType;
-        }
-
-        public void setContentType(String contentType) {
-            this.contentType = contentType;
-        }
-
-        public int getCreatedOn() {
-            return createdOn;
-        }
-
-        public void setCreatedOn(int createdOn) {
-            this.createdOn = createdOn;
-        }
-
-        public String getFileName() {
-            return fileName;
-        }
-
-        public void setFileName(String fileName) {
-            this.fileName = fileName;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public int getSize() {
-            return size;
-        }
-
-        public void setSize(int size) {
-            this.size = size;
+            public void setCreatedOn(long createdOn) {
+                this.createdOn = createdOn;
+            }
         }
     }
 }

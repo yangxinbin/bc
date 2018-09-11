@@ -10,8 +10,8 @@
 
     <com.mango.bc.util.RoundImageView
         android:id="@+id/img_book"
-        android:layout_width="100dp"
-        android:layout_height="130dp"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_130"
         android:src="@drawable/book_pic1" />
 
     <LinearLayout

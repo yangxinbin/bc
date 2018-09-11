@@ -32,6 +32,7 @@
         app:tabSelectedTextColor="@color/yello"
         app:tabTextAppearance="@style/TabTextOther" />
 <!--    </android.support.design.widget.AppBarLayout>-->
+
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager_bookcase"
         android:layout_width="match_parent"

@@ -482,7 +482,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/dp_15"
-                    android:background="@drawable/apply"
+                    android:background="@drawaapply_collagepply"
                     android:orientation="vertical">
 
                     <TextView

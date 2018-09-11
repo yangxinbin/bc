@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/dp_10"
-            android:background="@drawable/apply"
+            android:background="@drawaapply_collagepply"
             android:orientation="vertical">
 
             <TextView
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/dp_5"
-            android:background="@drawable/apply_for"
+            android:background="@drawable/apply_for_all"
             android:orientation="vertical">
 
 <!--            <TextView
@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/dp_5"
-            android:background="@drawable/apply"
+            android:background="@drawaapply_collagepply"
             android:orientation="vertical">
 
             <TextView

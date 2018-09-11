@@ -51,6 +51,7 @@ public class BookcaseFragment extends Fragment {
     private ArrayList<String> mDatas;
     List<Fragment> mfragments = new ArrayList<Fragment>();
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -11,11 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mango.bc.R;
+import com.mango.bc.homepage.adapter.HomePageAdapter;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
-import com.mango.bc.homepage.net.bean.ExpertBookBean;
-import com.mango.bc.homepage.net.bean.FreeBookBean;
-import com.mango.bc.homepage.net.bean.NewestBookBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
@@ -28,15 +27,12 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
-import com.mango.bc.R;
-import com.mango.bc.homepage.adapter.HomePageAdapter;
-
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by admin on 2018/9/3.
@@ -129,7 +125,7 @@ public class HomePageFragment extends Fragment implements BookView {
     }
 
     @Override
-    public void addExpertBook(List<ExpertBookBean> expertBookBeanList) {
+    public void addExpertBook(List<BookBean> bookBeanList) {
     }
 
     @Override
@@ -137,7 +133,7 @@ public class HomePageFragment extends Fragment implements BookView {
     }
 
     @Override
-    public void addNewestBook(List<NewestBookBean> newestBookBeanList) {
+    public void addNewestBook(List<BookBean> bookBeanList) {
     }
 
     @Override

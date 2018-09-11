@@ -7,7 +7,6 @@ import android.util.Log;
 
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
-import com.mango.bc.homepage.net.bean.FreeBookBean;
 import com.mango.bc.homepage.net.jsonutils.JsonUtils;
 import com.mango.bc.homepage.net.listener.OnBookListener;
 import com.mango.bc.util.ACache;

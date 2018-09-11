@@ -6,9 +6,8 @@ import android.util.Log;
 
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
-import com.mango.bc.homepage.net.bean.ExpertBookBean;
-import com.mango.bc.homepage.net.bean.FreeBookBean;
-import com.mango.bc.homepage.net.bean.NewestBookBean;
+import com.mango.bc.homepage.net.bean.BookBean;
+import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.listener.OnBookListener;
 import com.mango.bc.homepage.net.model.BookModel;
 import com.mango.bc.homepage.net.model.BookModelImpl;
@@ -91,8 +90,8 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
     }
 
     @Override
-    public void onSuccessExpertBook(List<ExpertBookBean> expertBookBeanList) {
-        bookView.addExpertBook(expertBookBeanList);
+    public void onSuccessExpertBook(List<BookBean> bookBeanList) {
+        bookView.addExpertBook(bookBeanList);
     }
 
     @Override
@@ -101,8 +100,8 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
     }
 
     @Override
-    public void onSuccessNewestBook(List<NewestBookBean> newestBookBeanList) {
-        bookView.addNewestBook(newestBookBeanList);
+    public void onSuccessNewestBook(List<BookBean> bookBeanList) {
+        bookView.addNewestBook(bookBeanList);
     }
 
     @Override

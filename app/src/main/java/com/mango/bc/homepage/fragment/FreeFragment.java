@@ -17,9 +17,8 @@ import com.mango.bc.homepage.activity.freebook.FreeBookActivity;
 import com.mango.bc.homepage.adapter.BookGirdAdapter;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
-import com.mango.bc.homepage.net.bean.ExpertBookBean;
-import com.mango.bc.homepage.net.bean.FreeBookBean;
-import com.mango.bc.homepage.net.bean.NewestBookBean;
+import com.mango.bc.homepage.net.bean.BookBean;
+import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
@@ -104,7 +103,7 @@ public class FreeFragment extends Fragment implements BookView {
     }
 
     @Override
-    public void addExpertBook(List<ExpertBookBean> expertBookBeanList) {
+    public void addExpertBook(List<BookBean> bookBeanList) {
 
     }
 
@@ -133,7 +132,7 @@ public class FreeFragment extends Fragment implements BookView {
     }
 
     @Override
-    public void addNewestBook(List<NewestBookBean> newestBookBeanList) {
+    public void addNewestBook(List<BookBean> bookBeanList) {
 
     }
 

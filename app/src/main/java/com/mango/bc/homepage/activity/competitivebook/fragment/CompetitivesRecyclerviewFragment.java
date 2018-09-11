@@ -19,9 +19,8 @@ import com.mango.bc.R;
 import com.mango.bc.homepage.adapter.BookComprtitiveAdapter;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
-import com.mango.bc.homepage.net.bean.ExpertBookBean;
-import com.mango.bc.homepage.net.bean.FreeBookBean;
-import com.mango.bc.homepage.net.bean.NewestBookBean;
+import com.mango.bc.homepage.net.bean.BookBean;
+import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookView;
@@ -230,7 +229,7 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
     }
 
     @Override
-    public void addExpertBook(List<ExpertBookBean> expertBookBeanList) {
+    public void addExpertBook(List<BookBean> bookBeanList) {
 
     }
 
@@ -240,7 +239,7 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
     }
 
     @Override
-    public void addNewestBook(List<NewestBookBean> newestBookBeanList) {
+    public void addNewestBook(List<BookBean> bookBeanList) {
 
     }
 

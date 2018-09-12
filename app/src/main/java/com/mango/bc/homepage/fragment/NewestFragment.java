@@ -55,7 +55,9 @@ public class NewestFragment extends Fragment implements BookView{
         if (bean == null) {
             return;
         }
+        EventBus.getDefault().removeStickyEvent(LoadStageBean.class);//移除加载
         if (bean.getNewestBook()) {
+            page = 0;
             bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);//刷新从网络。
             bean.setNewestBook(false);//刷新完修改状态
             Log.v("yyyyyyy", "=====4--" + bean.toString());
@@ -64,12 +66,15 @@ public class NewestFragment extends Fragment implements BookView{
             //bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//缓存。
         }
     }
-/*    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void LoadStageBeanEventBus(LoadStageBean bean) {
         if (bean == null) {
             return;
         }
-    }*/
+        page = bean.getNewestBookPage();
+        Log.v("yyyyyyy", "=====4--" + page);
+        bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);//刷新从网络。
+    }
     private void initView() {
         bookAdapter = new BookAdapter(getActivity());
         recycle.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));

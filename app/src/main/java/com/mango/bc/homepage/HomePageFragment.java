@@ -15,6 +15,7 @@ import com.mango.bc.R;
 import com.mango.bc.homepage.adapter.HomePageAdapter;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
+import com.mango.bc.homepage.net.bean.LoadStageBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
@@ -47,7 +48,7 @@ public class HomePageFragment extends Fragment implements BookView {
     private HomePageAdapter homePageAdapter;
     private BookPresenter bookPresenter;
     private final int TYPE = -1;
-    private int page = -1;
+    private int page = 0;
 
     @Nullable
     @Override
@@ -73,6 +74,7 @@ public class HomePageFragment extends Fragment implements BookView {
                 refreshLayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        page = 0;
                         if (NetUtil.isNetConnect(getActivity())) {
                             RefreshStageBean refreshStageBean = new RefreshStageBean(true, true, true, true, true);
                             Log.v("yyyyyyy","=====all--"+refreshStageBean.toString());
@@ -93,6 +95,8 @@ public class HomePageFragment extends Fragment implements BookView {
                 refreshLayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        LoadStageBean loadStageBean = new LoadStageBean(++page);
+                        EventBus.getDefault().postSticky(loadStageBean);
                         refreshLayout.finishLoadMore();
                     }
                 }, 500);

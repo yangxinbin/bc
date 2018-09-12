@@ -225,6 +225,11 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
     }
 
     @Override
+    public void addSearchBook(List<BookBean> bookBeanList) {
+
+    }
+
+    @Override
     public void addSuccess(String s) {
 /*                if (getActivity() != null)            getActivity().runOnUiThread(new Runnable() {
             @Override

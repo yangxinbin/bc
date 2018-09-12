@@ -143,6 +143,11 @@ public class CompetitiveFragment extends Fragment implements BookView {
     }
 
     @Override
+    public void addSearchBook(List<BookBean> bookBeanList) {
+
+    }
+
+    @Override
     public void addSuccess(String s) {
         if (getActivity() != null) getActivity().runOnUiThread(new Runnable() {
             @Override

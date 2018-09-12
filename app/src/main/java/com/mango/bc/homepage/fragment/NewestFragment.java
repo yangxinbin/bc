@@ -135,6 +135,11 @@ public class NewestFragment extends Fragment implements BookView {
     }
 
     @Override
+    public void addSearchBook(List<BookBean> bookBeanList) {
+
+    }
+
+    @Override
     public void addSuccess(String s) {
 
     }

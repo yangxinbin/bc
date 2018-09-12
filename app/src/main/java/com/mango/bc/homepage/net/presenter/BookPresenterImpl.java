@@ -110,6 +110,11 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
     }
 
     @Override
+    public void onSuccessSearchBook(List<BookBean> bookBeanList) {
+        bookView.addSearchBook(bookBeanList);
+    }
+
+    @Override
     public void onSuccessMes(String msg) {
         bookView.addSuccess(msg);
     }

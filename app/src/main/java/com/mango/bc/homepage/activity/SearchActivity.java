@@ -18,7 +18,10 @@ import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.homepage.adapter.BookGirdAdapter;
 import com.mango.bc.homepage.adapter.HistorySearchAdapter;
+import com.mango.bc.homepage.net.bean.BookBean;
+import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
+import com.mango.bc.homepage.net.view.BookView;
 import com.mango.bc.util.SPUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
@@ -30,7 +33,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SearchActivity extends BaseActivity {
+public class SearchActivity extends BaseActivity implements BookView {
 
     @Bind(R.id.imageView_back)
     ImageView imageViewBack;
@@ -222,4 +225,43 @@ public class SearchActivity extends BaseActivity {
         Log.v("yyyyyyyyyy", "======" + sb);
     }
 
+    @Override
+    public void addCompetitiveField(List<CompetitiveFieldBean> competitiveFieldBeanList) {
+
+    }
+
+    @Override
+    public void addCompetitiveBook(List<BookBean> bookBeanList) {
+
+    }
+
+    @Override
+    public void addExpertBook(List<BookBean> bookBeanList) {
+
+    }
+
+    @Override
+    public void addFreeBook(List<BookBean> bookBeanList) {
+
+    }
+
+    @Override
+    public void addNewestBook(List<BookBean> bookBeanList) {
+
+    }
+
+    @Override
+    public void addSearchBook(List<BookBean> bookBeanList) {
+
+    }
+
+    @Override
+    public void addSuccess(String s) {
+
+    }
+
+    @Override
+    public void addFail(String f) {
+
+    }
 }

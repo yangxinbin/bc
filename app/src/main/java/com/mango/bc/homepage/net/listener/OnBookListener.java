@@ -17,6 +17,7 @@ public interface OnBookListener {
     void onSuccessExpertBook(List<BookBean> bookBeanList);
     void onSuccessFreeBook(List<BookBean> bookBeanList);
     void onSuccessNewestBook(List<BookBean> bookBeanList);
+    void onSuccessSearchBook(List<BookBean> bookBeanList);
 
     void onSuccessMes(String msg);
     void onFailMes(String msg, Exception e);

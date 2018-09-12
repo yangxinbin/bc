@@ -164,6 +164,11 @@ public class ExpertBookActivity extends AppCompatActivity implements BookView{
     }
 
     @Override
+    public void addSearchBook(List<BookBean> bookBeanList) {
+
+    }
+
+    @Override
     public void addSuccess(String s) {
 
     }

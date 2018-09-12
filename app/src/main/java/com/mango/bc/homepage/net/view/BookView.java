@@ -17,6 +17,7 @@ public interface BookView {
     void addExpertBook(List<BookBean> bookBeanList);
     void addFreeBook(List<BookBean> bookBeanList);
     void addNewestBook(List<BookBean> bookBeanList);
+    void addSearchBook(List<BookBean> bookBeanList);
 
     void addSuccess(String s);
     void addFail(String f);

@@ -237,10 +237,10 @@ public class BookModelImpl implements BookModel {
                 public void run() {
                     if (ifCache) {//读取缓存数据
                         String newString = mCache.getAsString("cache" + type + page);
-                        Log.v("yyyyyy", "---cache4---" + newString);
+                        Log.v("yyyyyy", "---cache5---" + newString);
                         if (newString != null) {
                             List<BookBean> beanList = JsonUtils.readBookBean(newString);//data是json字段获得data的值即对象数组
-                            listener.onSuccessNewestBook(beanList);
+                            listener.onSuccessSearchBook(beanList);
                             listener.onSuccessMes("SUCCESS");
                             return;
                         }
@@ -257,10 +257,10 @@ public class BookModelImpl implements BookModel {
                         public void onResponse(Call call, Response response) throws IOException {
                             try {
                                 String string = response.body().string();
-                                Log.v("yyyyyyyyy", "*****string4*****" + string);
+                                Log.v("yyyyyyyyy", "*****string5*****" + string);
                                 mCache.put("cache" + type + page, string);
                                 List<BookBean> beanList = JsonUtils.readBookBean(string);
-                                listener.onSuccessNewestBook(beanList);
+                                listener.onSuccessSearchBook(beanList);
                                 listener.onSuccessMes("请求成功");
                             } catch (Exception e) {
                                 listener.onSuccessMes("请求失败");//java.lang.IllegalStateException: Not a JSON Object: null

@@ -21,7 +21,7 @@
             android:background="@drawable/search_circle"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="@dimen/dp_15">
+            android:padding="@dimen/dp_10">
 
             <EditText
                 android:id="@+id/et_search"

@@ -111,6 +111,7 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
         @Override
         public void onItemClick(View view, int position) {
             Intent intent = new Intent(getActivity(), BookDetailActivity.class);
+            EventBus.getDefault().postSticky(adapter.getItem(position));
             startActivity(intent);
         }
 

@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,6 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         this.mData = m;
         this.notifyDataSetChanged();
     }
-
     /**
      * 添加列表项     * @param item
      */
@@ -109,9 +109,8 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        final int pos = position;
         if (holder instanceof HeadViewHolder) {
-            if (((HeadViewHolder) holder) != null && mData.get(pos) != null) {
+            if (((HeadViewHolder) holder) != null && mData.get(position) != null) {
                 ((HeadViewHolder) holder).tv_head_title.setText(mData.get(position).getTitle());
                 ((HeadViewHolder) holder).tv_head_detail.setText(mData.get(position).getSubtitle());
                 ((HeadViewHolder) holder).tv_head_bc.setText(mData.get(position).getPrice()+"BC积分");
@@ -120,7 +119,7 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + mData.get(position).getCover().getFileName()).into(((HeadViewHolder) holder).img_head_book);
             }
         } else if (holder instanceof ItemViewHolder) {
-            if (((ItemViewHolder) holder) != null && mData.get(pos) != null) {
+            if (((ItemViewHolder) holder) != null && mData.get(position) != null) {
                 ((ItemViewHolder) holder).tv_title.setText(mData.get(position).getTitle());
                 ((ItemViewHolder) holder).tv_detail.setText(mData.get(position).getSubtitle());
                 ((ItemViewHolder) holder).tv_time.setText("共" + mData.get(position).getChapters().size() + "节课");

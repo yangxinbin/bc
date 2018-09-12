@@ -2,6 +2,7 @@ package com.mango.bc.homepage.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,10 @@ public class BookGirdAdapter extends RecyclerView.Adapter {
             datas.add(bean);
         }
         this.notifyDataSetChanged();
+    }
+
+    public BookBean getItem(int position) {
+        return datas == null ? null : datas.get(position);
     }
 
     public void setOnItemClickLitener(BookGirdAdapter.OnItemClickLitener mOnItemClickLitener) {

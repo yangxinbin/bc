@@ -91,6 +91,7 @@ public class NewestFragment extends Fragment implements BookView {
         @Override
         public void onItemClick(View view, int position) {
             Intent intent = new Intent(getActivity(), BookDetailActivity.class);
+            EventBus.getDefault().postSticky(bookAdapter.getItem(position));
             startActivity(intent);
         }
 

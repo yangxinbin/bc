@@ -83,10 +83,12 @@ public class FreeFragment extends Fragment implements BookView {
         recycle.setAdapter(bookGirdAdapter);
         bookGirdAdapter.setOnItemClickLitener(mOnClickListenner);
     }
+
     private BookGirdAdapter.OnItemClickLitener mOnClickListenner = new BookGirdAdapter.OnItemClickLitener() {
         @Override
         public void onItemClick(View view, int position) {
             Intent intent = new Intent(getActivity(), BookDetailActivity.class);
+            EventBus.getDefault().postSticky(bookGirdAdapter.getItem(position));
             startActivity(intent);
         }
 
@@ -95,6 +97,7 @@ public class FreeFragment extends Fragment implements BookView {
 
         }
     };
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

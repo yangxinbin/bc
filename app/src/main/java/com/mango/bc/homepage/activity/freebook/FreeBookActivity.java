@@ -26,6 +26,8 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import butterknife.Bind;
@@ -70,6 +72,7 @@ public class FreeBookActivity extends AppCompatActivity implements BookView {
         @Override
         public void onItemClick(View view, int position) {
             Intent intent = new Intent(getBaseContext(), BookDetailActivity.class);
+            EventBus.getDefault().postSticky(bookGirdAdapter.getItem(position));
             startActivity(intent);
         }
 

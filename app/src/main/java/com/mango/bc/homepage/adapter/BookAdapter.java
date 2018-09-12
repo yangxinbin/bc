@@ -49,7 +49,9 @@ public class BookAdapter extends RecyclerView.Adapter {
         this.datas = m;
         this.notifyDataSetChanged();
     }
-
+    public BookBean getItem(int position) {
+        return datas == null ? null : datas.get(position);
+    }
     /**
      * 添加列表项     * @param item
      */

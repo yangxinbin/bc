@@ -53,7 +53,6 @@ public class DetailFragment extends Fragment {
             recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
             recycle.setAdapter(bookDetailAdapter);
             Log.v("uuuuuuuuuuuu","--?--");
-
         }
     }
 

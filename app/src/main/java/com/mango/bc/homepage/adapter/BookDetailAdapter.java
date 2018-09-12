@@ -46,7 +46,7 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
                 Log.v("uuuuuuuuuuuu", "----" + Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName());
             }
         }
-    }
+    }//
 
     @Override
     public int getItemCount() {

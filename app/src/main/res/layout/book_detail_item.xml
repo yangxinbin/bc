@@ -10,4 +10,5 @@
         android:layout_height="1000dp"
         android:scaleType="fitStart"
         android:src="@drawable/vip_introduce" />
+
 </LinearLayout>

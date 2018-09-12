@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.mango.bc.R;
@@ -23,15 +24,13 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ExpertBookActivity extends AppCompatActivity implements BookView{
+public class ExpertBookActivity extends AppCompatActivity implements BookView {
 
     @Bind(R.id.imageView_back)
     ImageView imageViewBack;
@@ -39,6 +38,8 @@ public class ExpertBookActivity extends AppCompatActivity implements BookView{
     RecyclerView recycle;
     @Bind(R.id.refresh)
     SmartRefreshLayout refresh;
+    @Bind(R.id.img_no_book)
+    ImageView imgNoBook;
     private BookAdapter bookAdapter;
     private boolean isFirstEnter;
     private BookPresenter bookPresenter;
@@ -135,8 +136,16 @@ public class ExpertBookActivity extends AppCompatActivity implements BookView{
             @Override
             public void run() {
                 if (bookBeanList == null || bookBeanList.size() == 0) {
+                    if (page == 0) {
+                        refresh.setVisibility(View.GONE);
+                        imgNoBook.setVisibility(View.VISIBLE);
+                        return;
+                    }
                     AppUtils.showToast(getBaseContext(), getString(R.string.date_over));
                     return;
+                } else {
+                    refresh.setVisibility(View.VISIBLE);
+                    imgNoBook.setVisibility(View.GONE);
                 }
                 if (page == 0) {
                     bookAdapter.reMove();

@@ -14,13 +14,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.mango.bc.R;
 import com.mango.bc.homepage.adapter.BookComprtitiveAdapter;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
-import com.mango.bc.homepage.net.bean.BookBean;
-import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookView;
@@ -34,7 +33,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -51,6 +49,8 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
     RecyclerView recycle;
     @Bind(R.id.refresh)
     SmartRefreshLayout refresh;
+    @Bind(R.id.img_no_book)
+    ImageView imgNoBook;
     private BookPresenter bookPresenter;
     private BookComprtitiveAdapter adapter;
     private LinearLayoutManager mLayoutManager;
@@ -192,8 +192,16 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
                 public void run() {
                     Log.v("yyyyyyyyyyy", "========" + bookBeanList.size());
                     if (bookBeanList == null || bookBeanList.size() == 0) {
+                        if (page == 0) {
+                            refresh.setVisibility(View.GONE);
+                            imgNoBook.setVisibility(View.VISIBLE);
+                            return;
+                        }
                         AppUtils.showToast(getActivity(), getString(R.string.date_over));
                         return;
+                    } else {
+                        refresh.setVisibility(View.VISIBLE);
+                        imgNoBook.setVisibility(View.GONE);
                     }
                     if (page == 0) {
                         adapter.reMove();

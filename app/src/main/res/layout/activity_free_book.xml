@@ -33,4 +33,11 @@
             app:srcCompat="@drawable/back" />
     </RelativeLayout>
     <include layout="@layout/refresh_recycler"/>
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/img_no_book"
+        android:src="@drawable/no_book"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

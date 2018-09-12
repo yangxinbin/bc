@@ -1,6 +1,7 @@
 package com.mango.bc.homepage.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,9 +22,16 @@ import com.mango.bc.homepage.adapter.HistorySearchAdapter;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
+import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookView;
+import com.mango.bc.util.AppUtils;
+import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.SPUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,19 +71,71 @@ public class SearchActivity extends BaseActivity implements BookView {
     private BookPresenter bookPresenter;
     private final int TYPE = 5;//搜索课
     private int page = 0;
+    private boolean isFirstEnter = true;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        bookPresenter = new BookPresenterImpl(this);
         ButterKnife.bind(this);
         init();
         initRecycle();
         initRecycleBook();
-
+        refreshAndLoadMore();
     }
+    private void refreshAndLoadMore() {
+        refresh.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
+                refreshLayout.getLayout().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        page = 0;
+                        if (NetUtil.isNetConnect(getBaseContext())) {
+                            Log.v("zzzzzzzzz", "-------onRefresh y-------" + page);
+                            bookPresenter.visitBooks(getBaseContext(), TYPE, etSearch.getText().toString(), page, false);
+                        } else {
+                            Log.v("zzzzzzzzz", "-------onRefresh n-------" + page);
+                            bookPresenter.visitBooks(getBaseContext(), TYPE, etSearch.getText().toString(), page, true);
+                        }
+                        refreshLayout.finishRefresh();
+                    }
+                }, 500);
+            }
+        });
+        refresh.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
+                refreshLayout.getLayout().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        page++;
+                        if (NetUtil.isNetConnect(getBaseContext())) {
+                            Log.v("yyyyyy", "-------isNetConnect-------");
+                            bookPresenter.visitBooks(getBaseContext(), TYPE, etSearch.getText().toString(), page, false);
+                        } else {
+                            Log.v("yyyyyy", "-------isnoNetConnect-------");
 
+                            bookPresenter.visitBooks(getBaseContext(), TYPE, etSearch.getText().toString(), page, true);
+                        }
+                        refreshLayout.finishLoadMore();
+                    }
+                }, 500);
+            }
+        });
+        refresh.setRefreshHeader(new ClassicsHeader(this));
+        refresh.setHeaderHeight(50);
+
+        //触发自动刷新
+        if (isFirstEnter) {
+            isFirstEnter = false;
+            //refresh.autoRefresh();
+        } else {
+            //mAdapter.refresh(initData());
+        }
+    }
     private void initRecycleBook() {
         bookGirdAdapter = new BookGirdAdapter(this);
         recycle.setLayoutManager(new GridLayoutManager(this, 3));
@@ -161,6 +221,7 @@ public class SearchActivity extends BaseActivity implements BookView {
                             //jumpPage(inputText);                              //获取搜索关键字跳页面
                             saveSearchHistory(inputText);                     //保存搜索历史
                             mHistorySearchAdapter.notifyDataSetChanged();        //刷新适配器
+                            bookPresenter.visitBooks(getBaseContext(), TYPE, etSearch.getText().toString(), page, false);
                             return true;
                         }
 
@@ -169,6 +230,7 @@ public class SearchActivity extends BaseActivity implements BookView {
                 });
                 String inputText = etSearch.getText().toString().trim();
                 //jumpPage(inputText);                              //获取搜索关键字跳页面
+                bookPresenter.visitBooks(getBaseContext(), TYPE, etSearch.getText().toString(), page, false);
                 saveSearchHistory(inputText);                     //保存搜索历史
                 break;
         }
@@ -251,8 +313,27 @@ public class SearchActivity extends BaseActivity implements BookView {
     }
 
     @Override
-    public void addSearchBook(List<BookBean> bookBeanList) {
+    public void addSearchBook(final List<BookBean> bookBeanList) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (bookBeanList == null || bookBeanList.size() == 0) {
+                    AppUtils.showToast(getBaseContext(), getString(R.string.date_over));
+                    lSearchBook.setVisibility(View.GONE);
+                    return;
+                }
+                if (page == 0) {
+                    bookGirdAdapter.reMove();
+                    bookGirdAdapter.setmDate(bookBeanList);
+                } else {
+                    //加载更多
+                    for (int i = 0; i < bookBeanList.size(); i++) {
+                        bookGirdAdapter.addItem(bookBeanList.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
+                    }
+                }
 
+            }
+        });
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.mango.bc.homepage.activity.expertbook;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 
 import com.mango.bc.R;
 import com.mango.bc.homepage.adapter.BookAdapter;
+import com.mango.bc.homepage.bookdetail.BookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
@@ -61,7 +63,21 @@ public class ExpertBookActivity extends AppCompatActivity implements BookView {
         bookAdapter = new BookAdapter(this);
         recycle.setLayoutManager(new LinearLayoutManager(this.getApplicationContext()));
         recycle.setAdapter(bookAdapter);
+        bookAdapter.setOnItemClickLitener(mOnClickListenner);
     }
+
+    private BookAdapter.OnItemClickLitener mOnClickListenner = new BookAdapter.OnItemClickLitener() {
+        @Override
+        public void onItemClick(View view, int position) {
+            Intent intent = new Intent(getBaseContext(), BookDetailActivity.class);
+            startActivity(intent);
+        }
+
+        @Override
+        public void onStageClick(View view, int position) {
+
+        }
+    };
 
     private void refreshAndLoadMore() {
         refresh.setOnRefreshListener(new OnRefreshListener() {

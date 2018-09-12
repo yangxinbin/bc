@@ -1,5 +1,6 @@
 package com.mango.bc.homepage.activity.freebook;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 
 import com.mango.bc.R;
 import com.mango.bc.homepage.adapter.BookGirdAdapter;
+import com.mango.bc.homepage.bookdetail.BookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
@@ -61,7 +63,21 @@ public class FreeBookActivity extends AppCompatActivity implements BookView {
         bookGirdAdapter = new BookGirdAdapter(this);
         recycle.setLayoutManager(new GridLayoutManager(this.getApplicationContext(), 3));
         recycle.setAdapter(bookGirdAdapter);
+        bookGirdAdapter.setOnItemClickLitener(mOnClickListenner);
     }
+
+    private BookGirdAdapter.OnItemClickLitener mOnClickListenner = new BookGirdAdapter.OnItemClickLitener() {
+        @Override
+        public void onItemClick(View view, int position) {
+            Intent intent = new Intent(getBaseContext(), BookDetailActivity.class);
+            startActivity(intent);
+        }
+
+        @Override
+        public void onStageClick(View view, int position) {
+
+        }
+    };
 
     private void refreshAndLoadMore() {
         refresh.setOnRefreshListener(new OnRefreshListener() {

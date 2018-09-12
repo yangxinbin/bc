@@ -1,5 +1,6 @@
 package com.mango.bc.homepage.activity.competitivebook.fragment;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,7 +18,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.mango.bc.R;
+import com.mango.bc.homepage.adapter.BookAdapter;
 import com.mango.bc.homepage.adapter.BookComprtitiveAdapter;
+import com.mango.bc.homepage.bookdetail.BookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
@@ -101,7 +104,21 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
         recycle.removeAllViews();
         recycle.setAdapter(adapter);
         bookPresenter.visitBooks(getActivity(), TYPE, mType, page, true);
+        adapter.setOnItemClickLitener(mOnClickListenner);
     }
+
+    private BookComprtitiveAdapter.OnItemClickLitener mOnClickListenner = new BookComprtitiveAdapter.OnItemClickLitener() {
+        @Override
+        public void onItemClick(View view, int position) {
+            Intent intent = new Intent(getActivity(), BookDetailActivity.class);
+            startActivity(intent);
+        }
+
+        @Override
+        public void onStageClick(View view, int position) {
+
+        }
+    };
 
     private void refreshAndLoadMore() {
         refresh.setOnRefreshListener(new OnRefreshListener() {

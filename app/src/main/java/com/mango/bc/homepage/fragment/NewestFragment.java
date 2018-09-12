@@ -1,5 +1,6 @@
 package com.mango.bc.homepage.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.mango.bc.R;
 import com.mango.bc.homepage.adapter.BookAdapter;
+import com.mango.bc.homepage.bookdetail.BookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.bean.LoadStageBean;
@@ -82,7 +84,21 @@ public class NewestFragment extends Fragment implements BookView {
         bookAdapter = new BookAdapter(getActivity());
         recycle.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         recycle.setAdapter(bookAdapter);
+        bookAdapter.setOnItemClickLitener(mOnClickListenner);
     }
+
+    private BookAdapter.OnItemClickLitener mOnClickListenner = new BookAdapter.OnItemClickLitener() {
+        @Override
+        public void onItemClick(View view, int position) {
+            Intent intent = new Intent(getActivity(), BookDetailActivity.class);
+            startActivity(intent);
+        }
+
+        @Override
+        public void onStageClick(View view, int position) {
+
+        }
+    };
 
     @Override
     public void onDestroyView() {

@@ -13,8 +13,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mango.bc.R;
+import com.mango.bc.homepage.activity.competitivebook.CompetitiveBookActivity;
 import com.mango.bc.homepage.activity.freebook.FreeBookActivity;
 import com.mango.bc.homepage.adapter.BookGirdAdapter;
+import com.mango.bc.homepage.adapter.CompetitiveFieldAdapter;
+import com.mango.bc.homepage.bookdetail.BookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.bean.BookBean;
@@ -78,8 +81,20 @@ public class FreeFragment extends Fragment implements BookView {
         bookGirdAdapter = new BookGirdAdapter(getActivity());
         recycle.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 3));
         recycle.setAdapter(bookGirdAdapter);
+        bookGirdAdapter.setOnItemClickLitener(mOnClickListenner);
     }
+    private BookGirdAdapter.OnItemClickLitener mOnClickListenner = new BookGirdAdapter.OnItemClickLitener() {
+        @Override
+        public void onItemClick(View view, int position) {
+            Intent intent = new Intent(getActivity(), BookDetailActivity.class);
+            startActivity(intent);
+        }
 
+        @Override
+        public void onStageClick(View view, int position) {
+
+        }
+    };
     @Override
     public void onDestroyView() {
         super.onDestroyView();

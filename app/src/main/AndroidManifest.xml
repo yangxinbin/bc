@@ -71,7 +71,8 @@
         <activity android:name=".homepage.activity.expertbook.ExpertBookActivity" />
         <activity android:name=".mine.activity.FaqActivity" />
         <activity android:name=".homepage.activity.competitivebook.CompetitiveBookActivity" />
-        <activity android:name=".mine.activity.ServiceActivity"></activity>
+        <activity android:name=".mine.activity.ServiceActivity" />
+        <activity android:name=".homepage.bookdetail.BookDetailActivity"></activity>
     </application>
 
 </manifest>

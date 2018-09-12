@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="@dimen/dp_10">
+    android:padding="@dimen/dp_15">
 
     <com.mango.bc.util.RoundImageView
         android:id="@+id/img_free_book"

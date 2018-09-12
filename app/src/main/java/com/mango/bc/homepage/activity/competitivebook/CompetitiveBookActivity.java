@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mango.bc.R;
+import com.mango.bc.base.BaseActivity;
 import com.mango.bc.homepage.activity.competitivebook.fragment.CompetitivesRecyclerviewFragment;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.jsonutils.JsonUtils;
@@ -28,7 +29,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CompetitiveBookActivity extends AppCompatActivity {
+public class CompetitiveBookActivity extends BaseActivity {
 
     @Bind(R.id.imageView_back)
     ImageView imageViewBack;
@@ -99,7 +100,7 @@ public class CompetitiveBookActivity extends AppCompatActivity {
         });
     }
     private void initDatas() {
-        final ACache mCache = ACache.get(this);
+        final ACache mCache = ACache.get(getApplicationContext());
         String newString = mCache.getAsString("cache" + 0);
         Log.v("yyyyyyyyy", "*****newString*****" + newString);
 

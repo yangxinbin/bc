@@ -6,7 +6,9 @@ package com.mango.bc.util;
 
 public class Urls {
     //public static final String HOST = "http://192.168.1.145:8000/bcms";
-    public static final String HOST = "https://cms.bccontinent.com/bcms";
+    //public static final String HOST = "https://cms.bccontinent.com/bcms";
+    public static final String HOST = "https://api.bccontinent.com/bcms";
+
     public static final String BOOKCATEGORIES = "/book/categories";
     public static final String BOOKLISTCATEGORIES = "/book/list/category";
     public static final String BOOKTYPE = "/book/list/type";

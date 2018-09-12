@@ -48,6 +48,7 @@ public class CompetitiveBookActivity extends AppCompatActivity {
         reflex(tabLayout);
         setupViewPager(viewpager);
         tabLayout.setupWithViewPager(viewpager);
+        viewpager.setCurrentItem(getIntent().getIntExtra("which",0));//默认第一页
     }
     public void reflex(final TabLayout tabLayout) {
         //了解源码得知 线的宽度是根据 tabView的宽度来设置的

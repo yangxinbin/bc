@@ -77,8 +77,20 @@ public class CompetitiveFragment extends Fragment implements BookView {
         competitiveFieldAdapter = new CompetitiveFieldAdapter(listS);
         recycle.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 4));
         recycle.setAdapter(competitiveFieldAdapter);
+        competitiveFieldAdapter.setOnItemClickLitener(mOnClickListenner);
     }
+    private CompetitiveFieldAdapter.OnItemClickLitener mOnClickListenner = new CompetitiveFieldAdapter.OnItemClickLitener() {
+        @Override
+        public void onItemClick(View view, int position) {
+            Intent intent = new Intent(getActivity(), CompetitiveBookActivity.class);
+            intent.putExtra("which",position);
+            startActivity(intent);
+        }
 
+/*        @Override
+        public void onStageClick(View view, int position) {
+        }*/
+    };
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -89,6 +101,7 @@ public class CompetitiveFragment extends Fragment implements BookView {
     @OnClick(R.id.see_more)
     public void onViewClicked() {
         Intent intent = new Intent(getContext(), CompetitiveBookActivity.class);
+        intent.putExtra("which",0);
         startActivity(intent);
     }
 

@@ -1,6 +1,7 @@
 package com.mango.bc.homepage.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ public class CompetitiveFieldAdapter extends RecyclerView.Adapter {
 
     public interface OnItemClickLitener {
         void onItemClick(View view, int position);
-        void onStageClick(View view, int position);
+        //void onStageClick(View view, int position);
     }
 
 
@@ -64,22 +65,24 @@ public class CompetitiveFieldAdapter extends RecyclerView.Adapter {
             tv_field = (TextView) itemView.findViewById(R.id.tv_field);
             book_field_item = (LinearLayout) itemView.findViewById(R.id.book_field_item);
             book_field_item.setOnClickListener(this);
-            tv_field.setOnClickListener(this);
+            //tv_field.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.book_field_item:
+                    Log.v("yyyyyyy", "===book_field_item--");
+
                     if (mOnItemClickLitener != null) {
                         mOnItemClickLitener.onItemClick(book_field_item, getAdapterPosition());
                     }
                     break;
-                case R.id.tv_field:
+/*                case R.id.tv_field:
                     if (mOnItemClickLitener != null) {
                         mOnItemClickLitener.onStageClick(tv_field, getAdapterPosition());
                     }
-                    break;
+                    break;*/
             }
         }
     }

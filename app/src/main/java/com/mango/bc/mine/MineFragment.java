@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.mango.bc.R;
 import com.mango.bc.homepage.activity.VipDetailActivity;
 import com.mango.bc.mine.activity.FaqActivity;
+import com.mango.bc.mine.activity.ServiceActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -99,6 +100,8 @@ public class MineFragment extends Fragment {
                 startActivity(intent);
                 break;
             case R.id.l_service:
+                intent = new Intent(getActivity(), ServiceActivity.class);
+                startActivity(intent);
                 break;
             case R.id.l_setting:
                 break;

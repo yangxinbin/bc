@@ -70,7 +70,8 @@
         <activity android:name=".homepage.activity.freebook.FreeBookActivity" />
         <activity android:name=".homepage.activity.expertbook.ExpertBookActivity" />
         <activity android:name=".mine.activity.FaqActivity" />
-        <activity android:name=".homepage.activity.competitivebook.CompetitiveBookActivity"></activity>
+        <activity android:name=".homepage.activity.competitivebook.CompetitiveBookActivity" />
+        <activity android:name=".mine.activity.ServiceActivity"></activity>
     </application>
 
 </manifest>

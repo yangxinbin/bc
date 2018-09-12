@@ -9,5 +9,5 @@ import com.mango.bc.homepage.net.listener.OnBookListener;
  */
 
 public interface BookModel {
-    void visitBooks(Context context, int type, String url, String tabString,int page,Boolean ifCache, OnBookListener listener);//刷新动作加载书
+    void visitBooks(Context context, int type, String url, String keyWordString,int page,Boolean ifCache, OnBookListener listener);//刷新动作加载书
 }

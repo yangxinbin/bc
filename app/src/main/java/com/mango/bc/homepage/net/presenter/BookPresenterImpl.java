@@ -35,14 +35,14 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
     }
 
     @Override
-    public void visitBooks(Context context, int type, String tabString, int page, Boolean ifCache) {
+    public void visitBooks(Context context, int type, String keyWordString, int page, Boolean ifCache) {
         sharedPreferences = context.getSharedPreferences("DCOM", MODE_PRIVATE);
         String url = null;
         if (type == 0) {
             url = getUrl(type, context);
         } else if (type == 1) {
             try {
-                url = getUrl(type, context) + "?category=" + URLEncoderURI.encode(tabString, "UTF-8") + "&page=" + page;
+                url = getUrl(type, context) + "?category=" + URLEncoderURI.encode(keyWordString, "UTF-8") + "&page=" + page;
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
@@ -54,7 +54,7 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
             url = getUrl(type, context) + "?page=" + page;
         }
         Log.v("pppppppppppp", "" + url);
-        bookModel.visitBooks(context, type, url, tabString, page, ifCache, this);
+        bookModel.visitBooks(context, type, url, keyWordString, page, ifCache, this);
     }
 
     private String getUrl(int type, Context context) {

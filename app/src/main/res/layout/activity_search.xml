@@ -50,10 +50,10 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
-            android:maxLines="1"
-            android:inputType="text"
             android:hint="请输入搜索内容"
             android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1"
             android:textColor="@color/black"
             android:textColorHint="@color/grayText"
             android:textSize="16sp" />
@@ -66,6 +66,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/l_history"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -115,9 +116,34 @@
             android:background="@color/gray" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycle"
+            android:id="@+id/recycle_file"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_10"></android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/l_search_book"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srlEnableAutoLoadMore="false">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_5"></android.support.v7.widget.RecyclerView>
+
+            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srlClassicsSpinnerStyle="Translate" />
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     </LinearLayout>
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.mango.bc.homepage.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -15,13 +16,14 @@ import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
+import com.mango.bc.homepage.adapter.BookGirdAdapter;
 import com.mango.bc.homepage.adapter.HistorySearchAdapter;
-import com.mango.bc.homepage.adapter.SingleAdapter;
+import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.util.SPUtils;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -36,16 +38,29 @@ public class SearchActivity extends BaseActivity {
     EditText etSearch;
     @Bind(R.id.l_delete)
     LinearLayout lDelete;
-    @Bind(R.id.recycle)
+    @Bind(R.id.recycle_file)
     RecyclerView mRecyclerView;
     @Bind(R.id.img_search)
     ImageView imgSearch;
+    @Bind(R.id.l_history)
+    LinearLayout lHistory;
+    @Bind(R.id.recycle)
+    RecyclerView recycle;
+    @Bind(R.id.refresh)
+    SmartRefreshLayout refresh;
+    @Bind(R.id.l_search_book)
+    LinearLayout lSearchBook;
     private String SEARCH_HISTORY = "search_history";
     private ArrayList<String> historyList;
     private HistorySearchAdapter mHistorySearchAdapter;
     private StringBuilder sb;
     private SPUtils spUtils;
     private String longHistory;
+    private BookGirdAdapter bookGirdAdapter;
+    private BookPresenter bookPresenter;
+    private final int TYPE = 5;//搜索课
+    private int page = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +69,14 @@ public class SearchActivity extends BaseActivity {
         ButterKnife.bind(this);
         init();
         initRecycle();
+        initRecycleBook();
+
+    }
+
+    private void initRecycleBook() {
+        bookGirdAdapter = new BookGirdAdapter(this);
+        recycle.setLayoutManager(new GridLayoutManager(this, 3));
+        recycle.setAdapter(bookGirdAdapter);
     }
 
 
@@ -82,6 +105,7 @@ public class SearchActivity extends BaseActivity {
             @Override
             public void onItemClick(View view, int position) {
                 etSearch.setText(toList(longHistory).get(position));
+                lHistory.setVisibility(View.GONE);
             }
 
             @Override
@@ -95,10 +119,12 @@ public class SearchActivity extends BaseActivity {
                     }
                     sb.append(hList.get(i) + ",");
                 }
-                spUtils.put(SEARCH_HISTORY,sb.toString());
-                Log.v("yyyyyyyyyy", sb.toString()+"====onDeleteClick=="+position);
+                spUtils.put(SEARCH_HISTORY, sb.toString());
+                Log.v("yyyyyyyyyy", sb.toString() + "====onDeleteClick==" + position);
             }
         });
+
+
     }
 
     private List<String> toList(String value) {

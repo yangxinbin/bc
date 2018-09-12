@@ -8,5 +8,5 @@ import android.content.Context;
  */
 
 public interface BookPresenter {
-    void visitBooks(Context context, int type,String tabString, int page,Boolean ifCache);//刷新动作加载书
+    void visitBooks(Context context, int type,String keyWordString, int page,Boolean ifCache);//刷新动作加载书
 }

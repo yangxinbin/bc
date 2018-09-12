@@ -29,7 +29,7 @@ public class BookModelImpl implements BookModel {
     private SharedPreferences sharedPreferences;
 
     @Override
-    public void visitBooks(final Context context, final int type, final String url, final String tabString, final int page, final Boolean ifCache, final OnBookListener listener) {
+    public void visitBooks(final Context context, final int type, final String url, final String keyWordString, final int page, final Boolean ifCache, final OnBookListener listener) {
         sharedPreferences = context.getSharedPreferences("BC", MODE_PRIVATE);
         final ACache mCache = ACache.get(context);
         if (type == 0) {//精品tab字段
@@ -81,7 +81,7 @@ public class BookModelImpl implements BookModel {
                     if (ifCache) {//读取缓存数据
                         Log.v("yyyyyy", url + "---cache1---" + ifCache);
 
-                        String newString = mCache.getAsString("cache" + tabString + page);
+                        String newString = mCache.getAsString("cache" + keyWordString + page);
                         if (newString != null) {
                             List<BookBean> beanList = JsonUtils.readBookBean(newString);//data是json字段获得data的值即对象数组
                             listener.onSuccessCompetitiveBook(beanList);
@@ -90,7 +90,7 @@ public class BookModelImpl implements BookModel {
                             return;
                         }
                     } else {
-                        mCache.remove("cache" + tabString + page);//刷新之后缓存也更新过来
+                        mCache.remove("cache" + keyWordString + page);//刷新之后缓存也更新过来
                     }
                     HttpUtils.doGet(url, new Callback() {
                         @Override
@@ -103,7 +103,7 @@ public class BookModelImpl implements BookModel {
                         public void onResponse(Call call, Response response) throws IOException {
                             try {
                                 String string = response.body().string();
-                                mCache.put("cache" + tabString + page, string);
+                                mCache.put("cache" + keyWordString + page, string);
                                 Log.v("yyyyyyyyy", url + "*****1*****" + string);
                                 List<BookBean> beanList = JsonUtils.readBookBean(string);//data是json字段获得data的值即对象数组
                                 listener.onSuccessCompetitiveBook(beanList);

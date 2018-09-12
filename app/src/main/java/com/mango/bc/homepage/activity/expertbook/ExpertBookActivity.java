@@ -173,7 +173,7 @@ public class ExpertBookActivity extends AppCompatActivity implements BookView{
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                AppUtils.showToast(getBaseContext(), "免费课程请求失败");
+                AppUtils.showToast(getBaseContext(), "大咖课程请求失败");
             }
         });
     }

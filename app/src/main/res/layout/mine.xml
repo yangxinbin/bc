@@ -81,7 +81,7 @@
             android:layout_marginRight="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_10"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/check_group" />
+            app:srcCompat="@drawable/apply_vip" />
 
         <!--<LinearLayout
             android:id="@+id/l_to_talent"
@@ -126,7 +126,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/service" />
+                android:src="@drawable/my_group" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -159,7 +159,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/service" />
+                android:src="@drawable/question" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -226,7 +226,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/service" />
+                android:src="@drawable/set_up" />
 
             <TextView
                 android:layout_width="wrap_content"

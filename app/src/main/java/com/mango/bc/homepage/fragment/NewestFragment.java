@@ -106,7 +106,6 @@ public class NewestFragment extends Fragment implements BookView{
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Log.v("yyyyyyyyyyy", "========" + bookBeanList.size());
                 if (bookBeanList == null || bookBeanList.size() == 0) {
                     AppUtils.showToast(getActivity(), getString(R.string.date_over));
                     return;

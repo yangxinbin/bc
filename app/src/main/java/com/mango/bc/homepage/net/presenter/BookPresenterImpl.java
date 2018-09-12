@@ -51,7 +51,7 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
         } else if (type == 3) {
             url = getUrl(type, context) + "?type=free" + "&page=" + page;
         } else if (type == 4) {
-            url = getUrl(type, context) + "?type=paid" + "&page=" + page;
+            url = getUrl(type, context) + "?page=" + page;
         }
         Log.v("pppppppppppp", "" + url);
         bookModel.visitBooks(context, type, url, tabString, page, ifCache, this);
@@ -73,7 +73,7 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
                 sburl.append(Urls.HOST_BOOKTYPE);//免费
                 break;
             case 4:
-                sburl.append(Urls.HOST_BOOKTYPE);//最新
+                sburl.append(Urls.HOST_RECENT);//最新
                 break;
         }
         return sburl.toString();

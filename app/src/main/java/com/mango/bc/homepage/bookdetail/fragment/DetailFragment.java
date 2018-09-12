@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.mango.bc.R;
@@ -31,6 +30,8 @@ public class DetailFragment extends Fragment {
 
     @Bind(R.id.l_img)
     LinearLayout lImg;
+    @Bind(R.id.img_book)
+    ImageView imgBook;
 
     @Nullable
     @Override
@@ -47,16 +48,19 @@ public class DetailFragment extends Fragment {
             return;
         }
         if (bookBean.getDescriptionImages() != null) {
-            for (int i = 0;i<bookBean.getDescriptionImages().size();i++){
-                Log.v("oooooooooooo","====");
+            Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookBean.getDescriptionImages().get(0).getFileName()).into(imgBook);
+
+/*            for (int i = 0; i < bookBean.getDescriptionImages().size(); i++) {
+                Log.v("oooooooooooo", "====");
                 ImageView imageView = new ImageView(getContext());
                 ViewGroup.LayoutParams lp = imageView.getLayoutParams();
-                lp.width = ViewGroup.LayoutParams.MATCH_PARENT;;
+                lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                ;
                 lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
                 imageView.setLayoutParams(lp);
                 Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookBean.getDescriptionImages().get(i).getFileName()).into(imageView);
-                lImg.addView(imageView,i);
-            }
+                lImg.addView(imageView, i);
+            }*/
         }
     }
 

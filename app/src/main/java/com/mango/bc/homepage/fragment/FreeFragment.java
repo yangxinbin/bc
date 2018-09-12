@@ -110,27 +110,28 @@ public class FreeFragment extends Fragment implements BookView {
 
     @Override
     public void addFreeBook(final List<BookBean> bookBeanList) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Log.v("yyyyyyyyyyy", "=====3===" + bookBeanList.size());
-                if (bookBeanList == null || bookBeanList.size() == 0) {
-                    AppUtils.showToast(getActivity(), getString(R.string.date_over));
-                    return;
-                }
-                if (mData != null) {
-                    mData.clear();
-                }
-                if (page == 0) {
-                    for (int i = 0; i < 3; i++) {//
-                        if (i > bookBeanList.size() - 1)
-                            continue;
-                        mData.add(bookBeanList.get(i)); //一次显示page= ? 20条数据
+        if (getActivity() != null)
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.v("yyyyyyyyyyy", "=====3===" + bookBeanList.size());
+                    if (bookBeanList == null || bookBeanList.size() == 0) {
+                        AppUtils.showToast(getActivity(), getString(R.string.date_over));
+                        return;
                     }
-                    bookGirdAdapter.setmDate(mData);
+                    if (mData != null) {
+                        mData.clear();
+                    }
+                    if (page == 0) {
+                        for (int i = 0; i < 3; i++) {//
+                            if (i > bookBeanList.size() - 1)
+                                continue;
+                            mData.add(bookBeanList.get(i)); //一次显示page= ? 20条数据
+                        }
+                        bookGirdAdapter.setmDate(mData);
+                    }
                 }
-            }
-        });
+            });
     }
 
     @Override
@@ -145,7 +146,7 @@ public class FreeFragment extends Fragment implements BookView {
 
     @Override
     public void addFail(String f) {
-        getActivity().runOnUiThread(new Runnable() {
+        if (getActivity() != null) getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 AppUtils.showToast(getActivity(), "免费课程请求失败");

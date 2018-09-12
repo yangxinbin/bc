@@ -130,7 +130,7 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
                     @Override
                     public void run() {
                         page++;
-                        Log.v("yyyyyy", "-------isNetConnect-------"+NetUtil.isNetConnect(getActivity()));
+                        Log.v("yyyyyy", "-------isNetConnect-------" + NetUtil.isNetConnect(getActivity()));
                         if (NetUtil.isNetConnect(getActivity())) {
                             Log.v("yyyyyy", "-------isNetConnect-------");
                             bookPresenter.visitBooks(getActivity(), TYPE, mType, page, false);
@@ -186,26 +186,27 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
 
     @Override
     public void addCompetitiveBook(final List<BookBean> bookBeanList) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Log.v("yyyyyyyyyyy", "========" + bookBeanList.size());
-                if (bookBeanList == null || bookBeanList.size() == 0) {
-                    AppUtils.showToast(getActivity(), getString(R.string.date_over));
-                    return;
-                }
-                if (page == 0) {
-                    adapter.reMove();
-                    adapter.setmDate(bookBeanList);
-                } else {
-                    //加载更多
-                    for (int i = 0; i < bookBeanList.size(); i++) {
-                        adapter.addItem(bookBeanList.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
+        if (getActivity() != null)
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.v("yyyyyyyyyyy", "========" + bookBeanList.size());
+                    if (bookBeanList == null || bookBeanList.size() == 0) {
+                        AppUtils.showToast(getActivity(), getString(R.string.date_over));
+                        return;
                     }
-                }
+                    if (page == 0) {
+                        adapter.reMove();
+                        adapter.setmDate(bookBeanList);
+                    } else {
+                        //加载更多
+                        for (int i = 0; i < bookBeanList.size(); i++) {
+                            adapter.addItem(bookBeanList.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
+                        }
+                    }
 
-            }
-        });
+                }
+            });
     }
 
     @Override
@@ -225,7 +226,7 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
 
     @Override
     public void addSuccess(String s) {
-/*        getActivity().runOnUiThread(new Runnable() {
+/*                if (getActivity() != null)            getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 AppUtils.showToast(getActivity(), "SUCCESS");
@@ -235,7 +236,7 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
 
     @Override
     public void addFail(String f) {
-        getActivity().runOnUiThread(new Runnable() {
+        if (getActivity() != null) getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 AppUtils.showToast(getActivity(), "精品课程请求失败");

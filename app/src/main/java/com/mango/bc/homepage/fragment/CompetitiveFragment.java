@@ -66,7 +66,7 @@ public class CompetitiveFragment extends Fragment implements BookView {
         if (bean.getCompetitiveField()) {
             bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);//刷新从网络。
             bean.setCompetitiveField(false);//刷新完修改状态
-            Log.v("yyyyyyy","=====1--"+bean.toString());
+            Log.v("yyyyyyy", "=====1--" + bean.toString());
             EventBus.getDefault().postSticky(bean);
         } else {
             //bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//缓存。
@@ -96,16 +96,17 @@ public class CompetitiveFragment extends Fragment implements BookView {
     public void addCompetitiveField(final List<CompetitiveFieldBean> competitiveFieldBeanList) {
         if (competitiveFieldBeanList == null)
             return;
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Log.v("yyyyyy", "----------" + competitiveFieldBeanList.size());
-                listS.clear();
-                for (int i = 0; i < competitiveFieldBeanList.size(); i++) {
-                    listS.add(competitiveFieldBeanList.get(i).getName());
+        if (getActivity() != null)
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.v("yyyyyy", "----------" + competitiveFieldBeanList.size());
+                    listS.clear();
+                    for (int i = 0; i < competitiveFieldBeanList.size(); i++) {
+                        listS.add(competitiveFieldBeanList.get(i).getName());
+                    }
                 }
-            }
-        });
+            });
     }
 
     @Override
@@ -130,7 +131,7 @@ public class CompetitiveFragment extends Fragment implements BookView {
 
     @Override
     public void addSuccess(String s) {
-        getActivity().runOnUiThread(new Runnable() {
+        if (getActivity() != null) getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 initView();
@@ -140,7 +141,7 @@ public class CompetitiveFragment extends Fragment implements BookView {
 
     @Override
     public void addFail(String f) {
-        getActivity().runOnUiThread(new Runnable() {
+        if (getActivity() != null) getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 AppUtils.showToast(getActivity(), "精品课程请求失败");

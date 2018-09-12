@@ -31,7 +31,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class NewestFragment extends Fragment implements BookView{
+public class NewestFragment extends Fragment implements BookView {
     @Bind(R.id.recycle)
     RecyclerView recycle;
     private BookAdapter bookAdapter;
@@ -50,6 +50,7 @@ public class NewestFragment extends Fragment implements BookView{
         bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);
         return view;
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void RefreshStageBeanEventBus(RefreshStageBean bean) {
         if (bean == null) {
@@ -66,6 +67,7 @@ public class NewestFragment extends Fragment implements BookView{
             //bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//缓存。
         }
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void LoadStageBeanEventBus(LoadStageBean bean) {
         if (bean == null) {
@@ -75,11 +77,13 @@ public class NewestFragment extends Fragment implements BookView{
         Log.v("yyyyyyy", "=====4--" + page);
         bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);//刷新从网络。
     }
+
     private void initView() {
         bookAdapter = new BookAdapter(getActivity());
         recycle.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         recycle.setAdapter(bookAdapter);
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -108,7 +112,8 @@ public class NewestFragment extends Fragment implements BookView{
 
     @Override
     public void addNewestBook(final List<BookBean> bookBeanList) {
-        getActivity().runOnUiThread(new Runnable() {
+        if (getActivity() != null)
+            getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (bookBeanList == null || bookBeanList.size() == 0) {
@@ -136,7 +141,7 @@ public class NewestFragment extends Fragment implements BookView{
 
     @Override
     public void addFail(String f) {
-        getActivity().runOnUiThread(new Runnable() {
+        if (getActivity() != null) getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 AppUtils.showToast(getActivity(), "免费课程请求失败");

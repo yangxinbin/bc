@@ -123,7 +123,7 @@ public class BookModelImpl implements BookModel {
                 @Override
                 public void run() {
                     if (ifCache) {//读取缓存数据
-                        String newString = mCache.getAsString("cache" + type);
+                        String newString = mCache.getAsString("cache" + type+page);
                         Log.v("yyyyyy", "---cache2---"+newString);
                         if (newString != null) {
                             List<BookBean> beanList = JsonUtils.readBookBean(newString);//data是json字段获得data的值即对象数组
@@ -132,7 +132,7 @@ public class BookModelImpl implements BookModel {
                             return;
                         }
                     } else {
-                        mCache.remove("cache" + type);//刷新之后缓存也更新过来
+                        mCache.remove("cache" + type+page);//刷新之后缓存也更新过来
                     }
                     HttpUtils.doGet(url, new Callback() {
                         @Override
@@ -145,7 +145,7 @@ public class BookModelImpl implements BookModel {
                             try {
                                 String string = response.body().string();
                                 Log.v("yyyyyyyyy", "*****string2*****" + string);
-                                mCache.put("cache" + type, string);
+                                mCache.put("cache" + type+page, string);
                                 List<BookBean> beanList = JsonUtils.readBookBean(string);
                                 listener.onSuccessExpertBook(beanList);
                                 listener.onSuccessMes("请求成功");
@@ -162,7 +162,7 @@ public class BookModelImpl implements BookModel {
                 @Override
                 public void run() {
                     if (ifCache) {//读取缓存数据
-                        String newString = mCache.getAsString("cache" + type);
+                        String newString = mCache.getAsString("cache" + type+page);
                         Log.v("yyyyyy", "---cache3---"+newString);
                         if (newString != null) {
                             List<BookBean> beanList = JsonUtils.readBookBean(newString);//data是json字段获得data的值即对象数组
@@ -171,7 +171,7 @@ public class BookModelImpl implements BookModel {
                             return;
                         }
                     } else {
-                        mCache.remove("cache" + type);//刷新之后缓存也更新过来
+                        mCache.remove("cache" + type+page);//刷新之后缓存也更新过来
                     }
                     HttpUtils.doGet(url, new Callback() {
                         @Override
@@ -184,7 +184,7 @@ public class BookModelImpl implements BookModel {
                             try {
                                 String string = response.body().string();
                                 Log.v("yyyyyyyyy", "*****string3*****" + string);
-                                mCache.put("cache" + type, string);
+                                mCache.put("cache" + type+page, string);
                                 List<BookBean> beanList = JsonUtils.readBookBean(string);
                                 listener.onSuccessFreeBook(beanList);
                                 listener.onSuccessMes("请求成功");
@@ -202,7 +202,7 @@ public class BookModelImpl implements BookModel {
                 @Override
                 public void run() {
                     if (ifCache) {//读取缓存数据
-                        String newString = mCache.getAsString("cache" + type);
+                        String newString = mCache.getAsString("cache" + type+page);
                         Log.v("yyyyyy", "---cache4---"+newString);
                         if (newString != null) {
                             List<BookBean> beanList = JsonUtils.readBookBean(newString);//data是json字段获得data的值即对象数组
@@ -211,7 +211,7 @@ public class BookModelImpl implements BookModel {
                             return;
                         }
                     } else {
-                        mCache.remove("cache" + type);//刷新之后缓存也更新过来
+                        mCache.remove("cache" + type+page);//刷新之后缓存也更新过来
                     }
                     HttpUtils.doGet(url, new Callback() {
                         @Override
@@ -224,7 +224,7 @@ public class BookModelImpl implements BookModel {
                             try {
                                 String string = response.body().string();
                                 Log.v("yyyyyyyyy", "*****string4*****" + string);
-                                mCache.put("cache" + type, string);
+                                mCache.put("cache" + type+page, string);
                                 List<BookBean> beanList = JsonUtils.readBookBean(string);
                                 listener.onSuccessNewestBook(beanList);
                                 listener.onSuccessMes("请求成功");

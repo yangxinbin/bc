@@ -1,17 +1,20 @@
 package com.mango.bc.homepage.bookdetail.fragment;
 
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-import com.bumptech.glide.Glide;
 import com.mango.bc.R;
+import com.mango.bc.homepage.adapter.BookDetailAdapter;
+import com.mango.bc.homepage.adapter.CompetitiveFieldAdapter;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.Urls;
 
@@ -27,11 +30,9 @@ import butterknife.ButterKnife;
  */
 
 public class DetailFragment extends Fragment {
-
-    @Bind(R.id.l_img)
-    LinearLayout lImg;
-    @Bind(R.id.img_book)
-    ImageView imgBook;
+    @Bind(R.id.recycle)
+    RecyclerView recycle;
+    private BookDetailAdapter bookDetailAdapter;
 
     @Nullable
     @Override
@@ -48,19 +49,11 @@ public class DetailFragment extends Fragment {
             return;
         }
         if (bookBean.getDescriptionImages() != null) {
-            Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookBean.getDescriptionImages().get(0).getFileName()).into(imgBook);
+            bookDetailAdapter = new BookDetailAdapter(bookBean.getDescriptionImages(),getActivity());
+            recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recycle.setAdapter(bookDetailAdapter);
+            Log.v("uuuuuuuuuuuu","--?--");
 
-/*            for (int i = 0; i < bookBean.getDescriptionImages().size(); i++) {
-                Log.v("oooooooooooo", "====");
-                ImageView imageView = new ImageView(getContext());
-                ViewGroup.LayoutParams lp = imageView.getLayoutParams();
-                lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                ;
-                lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-                imageView.setLayoutParams(lp);
-                Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookBean.getDescriptionImages().get(i).getFileName()).into(imageView);
-                lImg.addView(imageView, i);
-            }*/
         }
     }
 

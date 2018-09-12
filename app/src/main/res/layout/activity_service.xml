@@ -35,6 +35,7 @@
             app:srcCompat="@drawable/back" />
     </RelativeLayout>
     <LinearLayout
+        android:padding="@dimen/dp_10"
         android:background="@color/white"
         android:layout_marginTop="@dimen/dp_10"
         android:orientation="horizontal"

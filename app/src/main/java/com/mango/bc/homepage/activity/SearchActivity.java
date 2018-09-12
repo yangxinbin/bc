@@ -5,7 +5,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -61,6 +63,8 @@ public class SearchActivity extends BaseActivity implements BookView {
     SmartRefreshLayout refresh;
     @Bind(R.id.l_search_book)
     LinearLayout lSearchBook;
+    @Bind(R.id.img_no_book)
+    ImageView imgNoBook;
     private String SEARCH_HISTORY = "search_history";
     private ArrayList<String> historyList;
     private HistorySearchAdapter mHistorySearchAdapter;
@@ -85,6 +89,7 @@ public class SearchActivity extends BaseActivity implements BookView {
         initRecycleBook();
         refreshAndLoadMore();
     }
+
     private void refreshAndLoadMore() {
         refresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -136,6 +141,7 @@ public class SearchActivity extends BaseActivity implements BookView {
             //mAdapter.refresh(initData());
         }
     }
+
     private void initRecycleBook() {
         bookGirdAdapter = new BookGirdAdapter(this);
         recycle.setLayoutManager(new GridLayoutManager(this, 3));
@@ -151,7 +157,28 @@ public class SearchActivity extends BaseActivity implements BookView {
         if (historyList.size() == 1 && historyList.get(0).equals("")) {          //如果没有搜索记录，split之后第0位是个空串的情况下
             historyList.clear();                                                 //清空集合，这个很关键
         }
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.toString().equals("")) {
+                    page = 0;
+                    lHistory.setVisibility(View.VISIBLE);
+                    lSearchBook.setVisibility(View.GONE);
+                    imgNoBook.setVisibility(View.GONE);
+                    AppUtils.hideInput(getBaseContext());
+                }
+            }
+        });
     }
 
     private void initRecycle() {
@@ -168,7 +195,10 @@ public class SearchActivity extends BaseActivity implements BookView {
             @Override
             public void onItemClick(View view, int position) {
                 etSearch.setText(toList(longHistory).get(position));
+                lSearchBook.setVisibility(View.VISIBLE);
+                bookGirdAdapter.reMove();
                 lHistory.setVisibility(View.GONE);
+                bookPresenter.visitBooks(getBaseContext(), TYPE, etSearch.getText().toString(), page, false);
             }
 
             @Override
@@ -221,7 +251,10 @@ public class SearchActivity extends BaseActivity implements BookView {
                             //jumpPage(inputText);                              //获取搜索关键字跳页面
                             saveSearchHistory(inputText);                     //保存搜索历史
                             mHistorySearchAdapter.notifyDataSetChanged();        //刷新适配器
+                            page = 0;
                             bookPresenter.visitBooks(getBaseContext(), TYPE, etSearch.getText().toString(), page, false);
+                            lHistory.setVisibility(View.GONE);
+                            lSearchBook.setVisibility(View.VISIBLE);
                             return true;
                         }
 
@@ -230,7 +263,11 @@ public class SearchActivity extends BaseActivity implements BookView {
                 });
                 String inputText = etSearch.getText().toString().trim();
                 //jumpPage(inputText);                              //获取搜索关键字跳页面
+                page = 0;
                 bookPresenter.visitBooks(getBaseContext(), TYPE, etSearch.getText().toString(), page, false);
+                lHistory.setVisibility(View.GONE);
+                lSearchBook.setVisibility(View.VISIBLE);
+                AppUtils.hideInput(getBaseContext());
                 saveSearchHistory(inputText);                     //保存搜索历史
                 break;
         }
@@ -319,7 +356,10 @@ public class SearchActivity extends BaseActivity implements BookView {
             public void run() {
                 if (bookBeanList == null || bookBeanList.size() == 0) {
                     AppUtils.showToast(getBaseContext(), getString(R.string.date_over));
-                    lSearchBook.setVisibility(View.GONE);
+                    if (page == 0) {
+                        lSearchBook.setVisibility(View.GONE);
+                        imgNoBook.setVisibility(View.VISIBLE);
+                    }
                     return;
                 }
                 if (page == 0) {

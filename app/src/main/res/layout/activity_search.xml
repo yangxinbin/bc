@@ -123,9 +123,10 @@
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/l_search_book"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -137,7 +138,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginBottom="@dimen/dp_5"></android.support.v7.widget.RecyclerView>
 
             <com.scwang.smartrefresh.layout.footer.ClassicsFooter
@@ -146,4 +147,11 @@
                 app:srlClassicsSpinnerStyle="Translate" />
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     </LinearLayout>
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/img_no_book"
+        android:src="@drawable/no_book"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

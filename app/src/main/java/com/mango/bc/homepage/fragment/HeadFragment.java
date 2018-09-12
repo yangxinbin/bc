@@ -17,6 +17,7 @@ import com.mango.bc.R;
 import com.mango.bc.homepage.activity.CollageActivity;
 import com.mango.bc.homepage.activity.SearchActivity;
 import com.mango.bc.homepage.activity.VipDetailActivity;
+import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.GlideImageLoader;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -47,6 +48,7 @@ public class HeadFragment extends Fragment {
         etSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AppUtils.hideInput(getActivity());
                 Intent intent = new Intent(getContext(), SearchActivity.class);
                 startActivity(intent);
             }

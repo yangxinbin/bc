@@ -3,10 +3,9 @@
     android:id="@+id/book_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/dp_10"
-    android:layout_marginRight="@dimen/dp_10"
-    android:layout_marginTop="@dimen/dp_10"
-    android:orientation="horizontal">
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:padding="@dimen/dp_10">
 
     <com.mango.bc.util.RoundImageView
         android:id="@+id/img_book"
@@ -25,9 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="徐小平·三点钟课程"
-            android:maxLines="1"
             android:ellipsize="end"
+            android:maxLines="1"
+            android:text="徐小平·三点钟课程"
             android:textColor="@color/black"
             android:textSize="@dimen/textSize" />
 
@@ -36,9 +35,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.4"
-            android:text="创业时代，决胜股权。"
-            android:maxLines="2"
             android:ellipsize="end"
+            android:maxLines="2"
+            android:text="创业时代，决胜股权。"
             android:textColor="@color/grayText"
             android:textSize="@dimen/dp_14" />
 
@@ -63,8 +62,8 @@
                 android:id="@+id/tv_buy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_gravity="center_vertical"
+                android:layout_weight="1"
                 android:text="已售2314"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/dp_12" />
@@ -73,13 +72,13 @@
                 android:id="@+id/tv_stage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:background="@drawable/gray_full_circle"
                 android:gravity="center"
+                android:paddingBottom="@dimen/dp_1"
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_10"
-                android:paddingBottom="@dimen/dp_1"
                 android:paddingTop="@dimen/dp_1"
-                android:layout_gravity="center_vertical"
                 android:text="免费领取"
                 android:textColor="@color/yello"
                 android:textSize="@dimen/textSize" />

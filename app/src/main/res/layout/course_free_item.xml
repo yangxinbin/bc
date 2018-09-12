@@ -3,37 +3,38 @@
     android:id="@+id/book_free_item"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/dp_10"
-    android:layout_marginRight="@dimen/dp_10"
-    android:layout_marginTop="@dimen/dp_10"
+    android:background="@color/white"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/dp_10">
 
     <com.mango.bc.util.RoundImageView
         android:id="@+id/img_free_book"
         android:layout_width="@dimen/dp_100"
         android:layout_height="@dimen/dp_130"
         android:src="@drawable/book_pic1" />
+
     <TextView
         android:id="@+id/tv_free_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_5"
-        android:text="徐小平·三点钟课程"
-        android:maxLines="1"
         android:ellipsize="end"
-        android:textColor="@color/black"
         android:gravity="center"
+        android:maxLines="1"
+        android:text="徐小平·三点钟课程"
+        android:textColor="@color/black"
         android:textSize="@dimen/dp_12" />
+
     <TextView
         android:id="@+id/tv_free_stage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp_5"
         android:background="@drawable/gray_full_circle"
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dp_5"
         android:text="免费领取"
         android:textColor="@color/yello"
         android:textSize="@dimen/textSize" />

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@color/common_gray"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -31,13 +32,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:padding="@dimen/dp_15">
+                        android:padding="@dimen/dp_5">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
                             android:text="@string/book_detail"
                             android:textColor="@color/black"
                             android:textSize="@dimen/title" />
@@ -145,14 +146,15 @@
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/common_gray"
+            android:background="@color/white"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     </android.support.design.widget.CoordinatorLayout>
     <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/l_01"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
-        android:layout_alignParentBottom="true"
         android:background="@color/common_gray"
         android:orientation="horizontal">
 
@@ -223,6 +225,39 @@
             android:text="15-20币\n拼团购买"
             android:textColor="@color/common_black"
             android:textSize="@dimen/dp_14" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/l_2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_1"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginRight="@dimen/dp_15"
+            android:background="@drawable/search_circle"
+            android:padding="@dimen/dp_10">
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="请输入评论"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grayText"
+                android:textSize="16sp" />
+        </LinearLayout>
+
 
     </LinearLayout>
 </LinearLayout>

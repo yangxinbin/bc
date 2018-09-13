@@ -4,10 +4,9 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,12 +15,10 @@ import com.bumptech.glide.Glide;
 import com.mango.bc.R;
 import com.mango.bc.adapter.ViewPageAdapter;
 import com.mango.bc.base.BaseActivity;
-import com.mango.bc.homepage.adapter.BookGirdAdapter;
 import com.mango.bc.homepage.bookdetail.fragment.CommentFragment;
 import com.mango.bc.homepage.bookdetail.fragment.CourseFragment;
 import com.mango.bc.homepage.bookdetail.fragment.DetailFragment;
 import com.mango.bc.homepage.net.bean.BookBean;
-import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.util.DensityUtil;
 import com.mango.bc.util.Urls;
 
@@ -54,6 +51,12 @@ public class CompetitiveBookDetailActivity extends BaseActivity {
     TabLayout tabLayout;
     @Bind(R.id.viewpager)
     ViewPager viewPager;
+    @Bind(R.id.l_01)
+    LinearLayout l01;
+    @Bind(R.id.et_search)
+    EditText etSearch;
+    @Bind(R.id.l_2)
+    LinearLayout l2;
     private ArrayList<String> mDatas;
     List<Fragment> mfragments = new ArrayList<Fragment>();
 
@@ -66,7 +69,8 @@ public class CompetitiveBookDetailActivity extends BaseActivity {
         initDatas();
         init();
     }
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true,priority = 1)
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true, priority = 1)
     public void BookBeanEventBus(BookBean bookBean) {
         if (bookBean == null) {
             return;
@@ -75,8 +79,8 @@ public class CompetitiveBookDetailActivity extends BaseActivity {
             if (bookBean.getAuthor().getPhoto() != null)
                 Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookBean.getAuthor().getPhoto().getFileName()).into(imgCover);
         }
-        tvBuyer.setText(bookBean.getSold()+"");
-        tvCourse.setText(bookBean.getChapters().size()+"");
+        tvBuyer.setText(bookBean.getSold() + "");
+        tvCourse.setText(bookBean.getChapters().size() + "");
     }
 
     private void initDatas() {
@@ -97,6 +101,28 @@ public class CompetitiveBookDetailActivity extends BaseActivity {
         viewPager.setOffscreenPageLimit(1);
         reflex(tabLayout);
         tabLayout.setupWithViewPager(viewPager);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (position == 2) {
+                    l2.setVisibility(View.VISIBLE);
+                    l01.setVisibility(View.GONE);
+                } else {
+                    l2.setVisibility(View.GONE);
+                    l01.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     public void reflex(final TabLayout tabLayout) {

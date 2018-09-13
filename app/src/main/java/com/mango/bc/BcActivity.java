@@ -40,8 +40,8 @@ public class BcActivity extends BaseActivity {
                         R.drawable.wallet_select)
                 .addItem(MineFragment.class,
                         "我的",
-                        R.drawable.wallet,
-                        R.drawable.wallet_select)
+                        R.drawable.my,
+                        R.drawable.my_select)
                 .build();
     }
 }

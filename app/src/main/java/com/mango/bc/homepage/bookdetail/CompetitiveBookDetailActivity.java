@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.mango.bc.R;
 import com.mango.bc.adapter.ViewPageAdapter;
+import com.mango.bc.base.BaseActivity;
 import com.mango.bc.homepage.adapter.BookGirdAdapter;
 import com.mango.bc.homepage.bookdetail.fragment.CommentFragment;
 import com.mango.bc.homepage.bookdetail.fragment.CourseFragment;
@@ -37,7 +38,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class BookDetailActivity extends AppCompatActivity {
+public class CompetitiveBookDetailActivity extends BaseActivity {
 
     @Bind(R.id.imageView_back)
     ImageView imageViewBack;

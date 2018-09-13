@@ -13,15 +13,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mango.bc.R;
-import com.mango.bc.homepage.activity.competitivebook.CompetitiveBookActivity;
 import com.mango.bc.homepage.activity.freebook.FreeBookActivity;
 import com.mango.bc.homepage.adapter.BookGirdAdapter;
-import com.mango.bc.homepage.adapter.CompetitiveFieldAdapter;
-import com.mango.bc.homepage.bookdetail.BookDetailActivity;
+import com.mango.bc.homepage.bookdetail.CompetitiveBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
-import com.mango.bc.homepage.net.bean.BookBean;
-import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
@@ -87,7 +83,7 @@ public class FreeFragment extends Fragment implements BookView {
     private BookGirdAdapter.OnItemClickLitener mOnClickListenner = new BookGirdAdapter.OnItemClickLitener() {
         @Override
         public void onItemClick(View view, int position) {
-            Intent intent = new Intent(getActivity(), BookDetailActivity.class);
+            Intent intent = new Intent(getActivity(), CompetitiveBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookGirdAdapter.getItem(position));
             startActivity(intent);
         }

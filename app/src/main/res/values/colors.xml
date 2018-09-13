@@ -16,7 +16,7 @@
     <color name="grayBlack">#4b4b4b</color>
     <color name="grayText">#7b7b7b</color>
     <color name="yello">#ffac00</color>
-    <color name="common_yello">#fdf8ea</color>
+    <color name="common_yello">#fde09a</color>
     <color name="buy_vip">#FFE7B8</color>
     <color name="unbuy_vip">#FFF8E8</color>
 </resources>

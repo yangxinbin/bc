@@ -12,7 +12,7 @@ import android.widget.ImageView;
 
 import com.mango.bc.R;
 import com.mango.bc.homepage.adapter.BookAdapter;
-import com.mango.bc.homepage.bookdetail.BookDetailActivity;
+import com.mango.bc.homepage.bookdetail.CompetitiveBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
@@ -71,7 +71,7 @@ public class ExpertBookActivity extends AppCompatActivity implements BookView {
     private BookAdapter.OnItemClickLitener mOnClickListenner = new BookAdapter.OnItemClickLitener() {
         @Override
         public void onItemClick(View view, int position) {
-            Intent intent = new Intent(getBaseContext(), BookDetailActivity.class);
+            Intent intent = new Intent(getBaseContext(), CompetitiveBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookAdapter.getItem(position));
             startActivity(intent);
         }

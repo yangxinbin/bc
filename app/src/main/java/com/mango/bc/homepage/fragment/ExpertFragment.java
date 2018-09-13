@@ -15,8 +15,7 @@ import android.widget.TextView;
 import com.mango.bc.R;
 import com.mango.bc.homepage.activity.expertbook.ExpertBookActivity;
 import com.mango.bc.homepage.adapter.BookAdapter;
-import com.mango.bc.homepage.adapter.BookGirdAdapter;
-import com.mango.bc.homepage.bookdetail.BookDetailActivity;
+import com.mango.bc.homepage.bookdetail.CompetitiveBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
@@ -84,7 +83,7 @@ public class ExpertFragment extends Fragment implements BookView {
     private BookAdapter.OnItemClickLitener mOnClickListenner = new BookAdapter.OnItemClickLitener() {
         @Override
         public void onItemClick(View view, int position) {
-            Intent intent = new Intent(getActivity(), BookDetailActivity.class);
+            Intent intent = new Intent(getActivity(), CompetitiveBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookAdapter.getItem(position));
             startActivity(intent);
         }

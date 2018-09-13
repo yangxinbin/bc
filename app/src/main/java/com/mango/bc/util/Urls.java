@@ -15,6 +15,7 @@ public class Urls {
     public static final String GETFILE = "/public/file";
     public static final String RECENT = "/book/list/recent";
     public static final String SEARCH = "/book/list/keyword";
+    public static final String COMMENT = "/book/comments";
 
 
     public static final String HOST_BOOKCATEGORIES = HOST+BOOKCATEGORIES;
@@ -23,5 +24,6 @@ public class Urls {
     public static final String HOST_GETFILE = HOST+GETFILE;
     public static final String HOST_RECENT = HOST+RECENT;
     public static final String HOST_SEARCH = HOST+SEARCH;
+    public static final String HOST_COMMENT = HOST+COMMENT;
 
 }

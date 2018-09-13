@@ -72,5 +72,7 @@
     <string name="date_over">数据全部加载完毕</string>
     <string name="book_detail">课程详情</string>
     <string name="free_get">免费领取</string>
+    <string name="no_comment">没有更多评论</string>
+    <string name="fail_comment">获取评论失败</string>
 
 </resources>

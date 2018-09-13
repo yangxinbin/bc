@@ -1,10 +1,8 @@
 package com.mango.bc.homepage.bookdetail.fragment;
 
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,9 +12,7 @@ import android.view.ViewGroup;
 
 import com.mango.bc.R;
 import com.mango.bc.homepage.adapter.BookDetailAdapter;
-import com.mango.bc.homepage.adapter.CompetitiveFieldAdapter;
 import com.mango.bc.homepage.net.bean.BookBean;
-import com.mango.bc.util.Urls;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -54,6 +50,7 @@ public class DetailFragment extends Fragment {
             recycle.setAdapter(bookDetailAdapter);
             Log.v("uuuuuuuuuuuu","--?--");
         }
+        EventBus.getDefault().removeStickyEvent(BookBean.class);//展示完删除
     }
 
     @Override

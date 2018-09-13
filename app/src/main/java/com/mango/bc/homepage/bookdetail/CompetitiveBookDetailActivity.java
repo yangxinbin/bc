@@ -66,7 +66,7 @@ public class CompetitiveBookDetailActivity extends BaseActivity {
         initDatas();
         init();
     }
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true,priority = 1)
     public void BookBeanEventBus(BookBean bookBean) {
         if (bookBean == null) {
             return;
@@ -77,7 +77,6 @@ public class CompetitiveBookDetailActivity extends BaseActivity {
         }
         tvBuyer.setText(bookBean.getSold()+"");
         tvCourse.setText(bookBean.getChapters().size()+"");
-       // EventBus.getDefault().removeStickyEvent(BookBean.class);
     }
 
     private void initDatas() {

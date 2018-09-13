@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -55,12 +56,12 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
             if (datas.get(position).getFileName() != null) {
                 //Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName()).into(viewHolder.img_book_detail);
                 Log.v("uuuuuuuuuuuu", "----" + Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName());
-                setIamge(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName(), viewHolder.img_book_detail);
+                setIamge(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName(), viewHolder.img_book_detail,viewHolder.img_load);
             }
         }
     }
 
-    private void setIamge(String url, final ImageView imageView) {
+    private void setIamge(String url, final ImageView imageView,final ProgressBar imageView_load) {
         HttpUtils.doGet(url, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -73,12 +74,13 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
                 //使用BitmapFactory工厂，把字节数组转化为bitmap
                 final Bitmap bitmap = BitmapFactory.decodeByteArray(Picture, 0, Picture.length);
                 //通过imageview，设置图片
-                mHandler.postDelayed(new Runnable() {
+                mHandler.post(new Runnable() {
                     @Override
                     public void run() {
+                        imageView_load.setVisibility(View.GONE);
                         imageView.setImageBitmap(bitmap);
                     }
-                }, 100);
+                });
             }
         });
     }
@@ -90,10 +92,12 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
 
     class BookDetailViewHolder extends RecyclerView.ViewHolder {
         ImageView img_book_detail;
+        ProgressBar img_load;
 
         public BookDetailViewHolder(final View itemView) {
             super(itemView);
             img_book_detail = (ImageView) itemView.findViewById(R.id.img_book_detail);
+            img_load = (ProgressBar) itemView.findViewById(R.id.img_load);
 
         }
 

@@ -7,8 +7,9 @@
     <ImageView
         android:id="@+id/img_book_detail"
         android:layout_width="match_parent"
-        android:layout_height="1000dp"
-        android:scaleType="fitStart"
-        android:src="@drawable/vip_introduce" />
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:background="@drawable/write_alp"/>
 
 </LinearLayout>

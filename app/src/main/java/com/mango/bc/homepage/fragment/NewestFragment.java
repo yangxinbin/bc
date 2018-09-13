@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.mango.bc.R;
 import com.mango.bc.homepage.adapter.BookAdapter;
 import com.mango.bc.homepage.bookdetail.CompetitiveBookDetailActivity;
+import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.bean.LoadStageBean;
@@ -89,7 +90,7 @@ public class NewestFragment extends Fragment implements BookView {
     private BookAdapter.OnItemClickLitener mOnClickListenner = new BookAdapter.OnItemClickLitener() {
         @Override
         public void onItemClick(View view, int position) {
-            Intent intent = new Intent(getActivity(), CompetitiveBookDetailActivity.class);
+            Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookAdapter.getItem(position));
             startActivity(intent);
         }

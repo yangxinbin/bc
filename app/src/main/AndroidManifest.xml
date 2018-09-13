@@ -73,6 +73,8 @@
         <activity android:name=".homepage.activity.competitivebook.CompetitiveBookActivity" />
         <activity android:name=".mine.activity.ServiceActivity" />
         <activity android:name=".homepage.bookdetail.CompetitiveBookDetailActivity"></activity>
+        <activity android:name=".homepage.bookdetail.OtherBookDetailActivity"></activity>
+
     </application>
 
 </manifest>

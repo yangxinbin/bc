@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import com.mango.bc.R;
 import com.mango.bc.homepage.adapter.BookComprtitiveAdapter;
 import com.mango.bc.homepage.bookdetail.CompetitiveBookDetailActivity;
+import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
@@ -109,7 +110,7 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
     private BookComprtitiveAdapter.OnItemClickLitener mOnClickListenner = new BookComprtitiveAdapter.OnItemClickLitener() {
         @Override
         public void onItemClick(View view, int position) {
-            Intent intent = new Intent(getActivity(), CompetitiveBookDetailActivity.class);
+            Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
             EventBus.getDefault().postSticky(adapter.getItem(position));
             startActivity(intent);
         }

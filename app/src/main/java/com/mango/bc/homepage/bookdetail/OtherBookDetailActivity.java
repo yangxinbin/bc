@@ -39,6 +39,8 @@ public class OtherBookDetailActivity extends AppCompatActivity {
     LinearLayout lLike;
     @Bind(R.id.l_share)
     LinearLayout lShare;
+    @Bind(R.id.l_txt)
+    LinearLayout lTxt;
     @Bind(R.id.book_stage)
     TextView bookStage;
     @Bind(R.id.recycle)
@@ -53,6 +55,7 @@ public class OtherBookDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_other_detail);
         ButterKnife.bind(this);
+        recycle.setNestedScrollingEnabled(false);
         if (getIntent().getBooleanExtra("foot", false)) {
             lFoot.setVisibility(View.GONE);
         }else {
@@ -90,7 +93,7 @@ public class OtherBookDetailActivity extends AppCompatActivity {
         EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.imageView_back, R.id.l_like, R.id.l_share, R.id.book_stage})
+    @OnClick({R.id.imageView_back, R.id.l_like, R.id.l_share, R.id.l_txt, R.id.book_stage})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView_back:
@@ -99,6 +102,8 @@ public class OtherBookDetailActivity extends AppCompatActivity {
             case R.id.l_like:
                 break;
             case R.id.l_share:
+                break;
+            case R.id.l_txt:
                 break;
             case R.id.book_stage:
                 break;

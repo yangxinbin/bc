@@ -1,4 +1,4 @@
-package com.mango.bc.homepage.adapter;
+package com.mango.bc.homepage.bookdetail.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,11 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.mango.bc.R;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.HttpUtils;

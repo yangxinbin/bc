@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -75,6 +76,7 @@ public class CompetitiveBookDetailActivity extends BaseActivity {
         if (bookBean == null) {
             return;
         }
+        Log.v("uuuuuuuuuuuu","--0-");
         if (bookBean.getAuthor() != null) {
             if (bookBean.getAuthor().getPhoto() != null)
                 Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookBean.getAuthor().getPhoto().getFileName()).into(imgCover);

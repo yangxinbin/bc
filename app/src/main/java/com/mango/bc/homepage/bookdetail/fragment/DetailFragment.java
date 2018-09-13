@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mango.bc.R;
-import com.mango.bc.homepage.adapter.BookDetailAdapter;
+import com.mango.bc.homepage.bookdetail.adapter.BookDetailAdapter;
 import com.mango.bc.homepage.net.bean.BookBean;
 
 import org.greenrobot.eventbus.EventBus;
@@ -44,13 +44,13 @@ public class DetailFragment extends Fragment {
         if (bookBean == null) {
             return;
         }
+        Log.v("uuuuuuuuuuuu","--1--");
         if (bookBean.getDescriptionImages() != null) {
             bookDetailAdapter = new BookDetailAdapter(bookBean.getDescriptionImages(),getActivity());
             recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
             recycle.setAdapter(bookDetailAdapter);
-            Log.v("uuuuuuuuuuuu","--?--");
         }
-        EventBus.getDefault().removeStickyEvent(BookBean.class);//展示完删除
+        //EventBus.getDefault().removeStickyEvent(BookBean.class);//展示完删除
     }
 
     @Override

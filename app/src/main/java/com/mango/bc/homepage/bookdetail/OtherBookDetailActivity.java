@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mango.bc.R;
-import com.mango.bc.homepage.adapter.BookDetailAdapter;
+import com.mango.bc.homepage.bookdetail.adapter.BookDetailAdapter;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.Urls;
 

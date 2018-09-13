@@ -23,6 +23,7 @@ import java.util.List;
 
 public class BookAdapter extends RecyclerView.Adapter {
     private Context context;
+    private BookAdapter.OnItemClickLitener mOnItemClickLitener;
 
     private List<BookBean> datas = new ArrayList<>();
 
@@ -30,7 +31,6 @@ public class BookAdapter extends RecyclerView.Adapter {
         this.datas = datas;
     }
 
-    private BookAdapter.OnItemClickLitener mOnItemClickLitener;
 
     public BookAdapter(Context context) {
         this.context = context;
@@ -68,7 +68,6 @@ public class BookAdapter extends RecyclerView.Adapter {
 
     public interface OnItemClickLitener {
         void onItemClick(View view, int position);
-
         void onStageClick(View view, int position);
     }
 

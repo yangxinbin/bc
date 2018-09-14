@@ -185,7 +185,9 @@ public class SearchActivity extends BaseActivity implements BookView {
         Log.v("yyyyyyyyyy", "====toList(longHistory)==" + longHistory);
         if (longHistory.equals("")) {
             mHistorySearchAdapter = new HistorySearchAdapter(new ArrayList<String>());
+            lHistory.setVisibility(View.GONE);
         } else {
+            lHistory.setVisibility(View.VISIBLE);
             mHistorySearchAdapter = new HistorySearchAdapter(toList(longHistory));
         }
         mRecyclerView.setHasFixedSize(true);

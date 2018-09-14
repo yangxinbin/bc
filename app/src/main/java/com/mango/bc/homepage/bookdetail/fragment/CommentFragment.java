@@ -75,7 +75,7 @@ public class CommentFragment extends Fragment {
         }
         bookId = bookBean.getId();
         Log.v("uuuuuuuuuuuu", "--3--");
-        //EventBus.getDefault().removeStickyEvent(BookBean.class);//展示完删除
+        //EventBus.getDefault().removeStickyEvent(MyBookBean.class);//展示完删除
     }
 
     private void initView() {

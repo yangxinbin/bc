@@ -1,10 +1,12 @@
 package com.mango.bc;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.bookcase.BookcaseFragment;
 import com.mango.bc.homepage.HomePageFragment;
@@ -18,12 +20,19 @@ public class BcActivity extends BaseActivity {
     FrameLayout container;
     @Bind(R.id.bottom_bar)
     BottomBar bottomBar;
+    private SharedPreferences sharedPreferences;
+    private static SharedPreferences.Editor editor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bc);
         ButterKnife.bind(this);
+        sharedPreferences = this.getSharedPreferences("BC", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        editor.putString("authToken", "eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1MzY5MDk3MjI5MzksImFsaWFzIjoi5p2o6ZGr5paMIiwiaWQiOiI1YjhhM2Q0YjA0NDQwYzBhNDhhMzNhMDUiLCJ0eXBlIjoiZ2VuZXJhbCIsIndhbGxldEFkZHJlc3MiOiIweGU3MmUzODdhZjEyZTA4NmFlZWNjOGVmMTljNzcxY2M4IiwiZXhwIjo0MTI4OTA5NzIyLCJ1c2VybmFtZSI6Im9YaGk5NGpRa1hQb3ZCc3FFczBCOFFLc2JNMEEifQ.m6rVYWnsxxogOAVmOLQ1HEC5bv0YzAwPhqGOlQ0tOP1CVec8XBRytgEFo_0rMlgSW42u2F199y3WAOr8XE2yYA")
+                .commit();
         bottomBar.setContainer(R.id.container)
                 .setTitleBeforeAndAfterColor("#333333", "#ffac00")
                 .addItem(HomePageFragment.class,

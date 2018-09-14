@@ -55,7 +55,7 @@ public class CourseFragment extends Fragment {
             recycle.setAdapter(bookCourseAdapter);
             bookCourseAdapter.setOnItemClickLitener(mOnClickListenner);
         }
-        //EventBus.getDefault().removeStickyEvent(BookBean.class);//展示完删除
+        //EventBus.getDefault().removeStickyEvent(MyBookBean.class);//展示完删除
     }
     private BookCourseAdapter.OnItemClickLitener mOnClickListenner = new BookCourseAdapter.OnItemClickLitener() {
 

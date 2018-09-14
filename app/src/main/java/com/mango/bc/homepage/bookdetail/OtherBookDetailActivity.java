@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mango.bc.R;
+import com.mango.bc.base.BaseActivity;
+import com.mango.bc.bookcase.adapter.MyBookDetailAdapter;
+import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.bookdetail.adapter.BookDetailAdapter;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.Urls;
@@ -24,7 +27,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class OtherBookDetailActivity extends AppCompatActivity {
+public class OtherBookDetailActivity extends BaseActivity {
 
 
     @Bind(R.id.imageView_back)
@@ -48,6 +51,7 @@ public class OtherBookDetailActivity extends AppCompatActivity {
     @Bind(R.id.l_foot)
     LinearLayout lFoot;
     private BookDetailAdapter bookDetailAdapter;
+    private MyBookDetailAdapter myBookDetailAdapter;
 
 
     @Override
@@ -58,21 +62,20 @@ public class OtherBookDetailActivity extends AppCompatActivity {
         recycle.setNestedScrollingEnabled(false);
         if (getIntent().getBooleanExtra("foot", false)) {
             lFoot.setVisibility(View.GONE);
-        }else {
+        } else {
             lFoot.setVisibility(View.VISIBLE);//免费才有底部
         }
         EventBus.getDefault().register(this);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void BookBeanEventBus(BookBean bookBean) {
+    public void BookBeanEventBus(BookBean bookBean) { //首页进来
         if (bookBean == null) {
             return;
         }
         if (bookBean.getAuthor() != null) {
-            if (bookBean.getAuthor().getPhoto() != null) {
-            }
-            Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookBean.getAuthor().getPhoto().getFileName()).into(imgCover);
+            if (bookBean.getAuthor().getPhoto() != null)
+                Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookBean.getAuthor().getPhoto().getFileName()).into(imgCover);
         }
         tvTitle.setText(bookBean.getTitle());
         tvBuyer.setText(bookBean.getSold() + "人已购买");
@@ -84,6 +87,27 @@ public class OtherBookDetailActivity extends AppCompatActivity {
         }
 
         EventBus.getDefault().removeStickyEvent(BookBean.class);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void MyBookBeanEventBus(MyBookBean bookBean) {  //书架进来
+        if (bookBean == null) {
+            return;
+        }
+        if (bookBean.getBook() != null) {
+            if (bookBean.getBook().getCover() != null)
+            Glide.with(this).load(Urls.HOST_GETFILE + "?name=" +bookBean.getBook().getCover().getFileName()).into(imgCover);
+            tvTitle.setText(bookBean.getBook().getTitle());
+            tvBuyer.setText(bookBean.getBook().getSold() + "人已购买");
+        }
+        if (bookBean.getBook().getDescriptionImages() != null) {
+            myBookDetailAdapter = new MyBookDetailAdapter(bookBean.getBook().getDescriptionImages(), this);
+            recycle.setLayoutManager(new LinearLayoutManager(this));
+            recycle.setAdapter(myBookDetailAdapter);
+            Log.v("uuuuuuuuuuuu", "--?--");
+        }
+
+        EventBus.getDefault().removeStickyEvent(MyBookBean.class);
     }
 
     @Override

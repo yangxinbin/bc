@@ -4,8 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.mango.bc.R;
+import com.mango.bc.base.BaseActivity;
 
-public class CurrencyActivity extends AppCompatActivity {
+public class CurrencyActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.mango.bc.R;
+import com.mango.bc.base.BaseActivity;
 import com.mango.bc.wallet.adapter.SingleRechargeAdapter;
 import com.mango.bc.wallet.bean.RechargeType;
 
@@ -19,7 +20,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RechargeActivity extends AppCompatActivity {
+public class RechargeActivity extends BaseActivity {
 
     @Bind(R.id.imageView_back)
     ImageView imageViewBack;

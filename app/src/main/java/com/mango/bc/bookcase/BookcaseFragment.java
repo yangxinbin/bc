@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +13,9 @@ import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.adapter.ViewPageAdapter;
+import com.mango.bc.bookcase.fragment.MyCompetitiveFragment;
 import com.mango.bc.bookcase.fragment.MyExpertFragment;
 import com.mango.bc.bookcase.fragment.MyFreeFragment;
-import com.mango.bc.bookcase.fragment.MyQualityFragment;
 import com.mango.bc.util.DensityUtil;
 
 import java.lang.reflect.Field;
@@ -73,7 +72,7 @@ public class BookcaseFragment extends Fragment {
         ViewPageAdapter vp = new ViewPageAdapter(getFragmentManager(), mfragments, mDatas);
         tabLayout.setupWithViewPager(viewPager);
         mfragments.add(new MyExpertFragment());
-        mfragments.add(new MyQualityFragment());
+        mfragments.add(new MyCompetitiveFragment());
         mfragments.add(new MyFreeFragment());
         viewPager.setAdapter(vp);
         viewPager.setCurrentItem(0);

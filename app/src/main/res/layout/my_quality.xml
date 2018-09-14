@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.scwang.smartrefresh.layout.SmartRefreshLayout android:id="@+id/refresh"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:srlEnableAutoLoadMore="false"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/white"
+    android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+    <include layout="@layout/refresh_recycler"></include>
 
-    <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/img_nobook"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srlClassicsSpinnerStyle="Translate" />
-</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:src="@drawable/no_book" />
+
+</LinearLayout>

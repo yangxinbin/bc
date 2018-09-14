@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.mango.bc.R;
+import com.mango.bc.base.BaseActivity;
 import com.mango.bc.homepage.adapter.BookGirdAdapter;
 import com.mango.bc.homepage.bookdetail.CompetitiveBookDetailActivity;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
@@ -35,7 +36,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class FreeBookActivity extends AppCompatActivity implements BookView {
+public class FreeBookActivity extends BaseActivity implements BookView {
 
     @Bind(R.id.imageView_back)
     ImageView imageViewBack;
@@ -210,6 +211,5 @@ public class FreeBookActivity extends AppCompatActivity implements BookView {
                 AppUtils.showToast(getBaseContext(), "免费课程请求失败");
             }
         });
-
     }
 }

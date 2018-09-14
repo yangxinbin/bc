@@ -36,7 +36,7 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
 
     @Override
     public void visitBooks(Context context, int type, String keyWordString, int page, Boolean ifCache) {
-        sharedPreferences = context.getSharedPreferences("DCOM", MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences("BC", MODE_PRIVATE);
         String url = null;
         if (type == 0) {
             url = getUrl(type, context);

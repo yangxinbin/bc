@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
  * Created by admin on 2018/9/5.
  */
 
-public class MyExpertFragment extends Fragment implements MyBookView {
+public class MyCompetitiveFragment extends Fragment implements MyBookView {
     @Bind(R.id.recycle)
     RecyclerView recycle;
     @Bind(R.id.refresh)
@@ -46,13 +46,13 @@ public class MyExpertFragment extends Fragment implements MyBookView {
     private MyBookGirdAdapter myBookGirdAdapter;
     private boolean isFirstEnter = true;
     private MyBookPresenter myBookPresenter;
-    private final int TYPE = 0;//大咖
+    private final int TYPE = 1;//精品
     private int page = 0;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.my_expert, container, false);
+        View view = inflater.inflate(R.layout.my_quality, container, false);
         myBookPresenter = new MyBookPresenterImpl(this);
         ButterKnife.bind(this, view);
         initView();
@@ -120,12 +120,7 @@ public class MyExpertFragment extends Fragment implements MyBookView {
     }
 
     @Override
-    public void addCompetitiveBook(List<MyBookBean> bookBeanList) {
-
-    }
-
-    @Override
-    public void addExpertBook(final List<MyBookBean> bookBeanList) {
+    public void addCompetitiveBook(final List<MyBookBean> bookBeanList) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -153,6 +148,11 @@ public class MyExpertFragment extends Fragment implements MyBookView {
                 }
             }
         });
+    }
+
+    @Override
+    public void addExpertBook(List<MyBookBean> bookBeanList) {
+
     }
 
     @Override

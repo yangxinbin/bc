@@ -5,12 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import com.mango.bc.R;
+import com.mango.bc.base.BaseActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ServiceActivity extends AppCompatActivity {
+public class ServiceActivity extends BaseActivity {
 
     @Bind(R.id.imageView_back)
     ImageView imageViewBack;

@@ -6,13 +6,14 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 
 import com.mango.bc.R;
+import com.mango.bc.base.BaseActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class TransactionActivity extends AppCompatActivity {
+public class TransactionActivity extends BaseActivity {
 
     @Bind(R.id.imageView_back)
     ImageView imageViewBack;

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.mango.bc.R;
+import com.mango.bc.base.BaseActivity;
 import com.mango.bc.homepage.adapter.BookAdapter;
 import com.mango.bc.homepage.bookdetail.CompetitiveBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
@@ -34,7 +35,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ExpertBookActivity extends AppCompatActivity implements BookView {
+public class ExpertBookActivity extends BaseActivity implements BookView {
 
     @Bind(R.id.imageView_back)
     ImageView imageViewBack;

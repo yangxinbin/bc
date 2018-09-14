@@ -245,6 +245,7 @@ public class SearchActivity extends BaseActivity implements BookView {
                 mHistorySearchAdapter.reMove();      //刷新适配器
                 break;
             case R.id.img_search:
+                bookGirdAdapter.reMove();
                 etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {//键盘
                     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                         //点击搜索按钮
@@ -365,7 +366,6 @@ public class SearchActivity extends BaseActivity implements BookView {
                     return;
                 }
                 if (page == 0) {
-                    bookGirdAdapter.reMove();
                     bookGirdAdapter.setmDate(bookBeanList);
                 } else {
                     //加载更多

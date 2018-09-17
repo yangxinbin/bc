@@ -164,10 +164,10 @@
             android:layout_weight="1.2"
             android:orientation="vertical">
 
-            <ImageView
+            <com.mango.bc.view.likeview.PraiseView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_gravity="center"
+                android:layout_gravity="end"
                 android:layout_weight="1"
                 android:src="@drawable/black_like" />
 
@@ -175,7 +175,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="start"
                 android:text="14"
                 android:textColor="@color/common_black"
                 android:textSize="@dimen/dp_14" />

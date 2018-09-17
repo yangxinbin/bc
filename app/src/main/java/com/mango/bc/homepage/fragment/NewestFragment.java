@@ -88,17 +88,32 @@ public class NewestFragment extends Fragment implements BookView {
 
     private BookNewestAdapter.OnItemClickLitener mOnClickListenner = new BookNewestAdapter.OnItemClickLitener() {
         @Override
-        public void onItemClick(View view, int position) {
+        public void onItemPlayClick(View view, int position) {
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
-            intent.putExtra("foot",true);
+            intent.putExtra("foot_play",true);
             EventBus.getDefault().postSticky(bookAdapter.getItem(position));
             startActivity(intent);
         }
 
         @Override
-        public void onStageClick(View view, int position) {
+        public void onItemGetClick(View view, int position) {
+            Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
+            intent.putExtra("foot_buy_get",true);
+            EventBus.getDefault().postSticky(bookAdapter.getItem(position));
+            startActivity(intent);
+        }
+
+        @Override
+        public void onPlayClick(View view, int position) {
 
         }
+
+        @Override
+        public void onGetClick(View view, int position) {
+
+        }
+
+
     };
 
     @Override

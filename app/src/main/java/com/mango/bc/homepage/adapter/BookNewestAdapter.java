@@ -49,9 +49,11 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
         this.datas = m;
         this.notifyDataSetChanged();
     }
+
     public BookBean getItem(int position) {
         return datas == null ? null : datas.get(position);
     }
+
     /**
      * 添加列表项     * @param item
      */
@@ -67,8 +69,13 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
     }
 
     public interface OnItemClickLitener {
-        void onItemClick(View view, int position);
-        void onStageClick(View view, int position);
+        void onItemPlayClick(View view, int position);
+
+        void onItemGetClick(View view, int position);
+
+        void onPlayClick(View view, int position);
+
+        void onGetClick(View view, int position);
     }
 
 
@@ -79,21 +86,45 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof BookNewestAdapter.BookViewHolder) {
             if (((BookNewestAdapter.BookViewHolder) holder) != null && datas.get(position) != null) {
                 ((BookNewestAdapter.BookViewHolder) holder).tv_title.setText(datas.get(position).getTitle());
                 ((BookNewestAdapter.BookViewHolder) holder).tv_detail.setText(datas.get(position).getSubtitle());
                 ((BookNewestAdapter.BookViewHolder) holder).tv_time.setText("共" + datas.get(position).getChapters().size() + "节课");
                 ((BookNewestAdapter.BookViewHolder) holder).tv_buy.setText("已购买" + datas.get(position).getSold());
-
-                ((BookNewestAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice()+"积分");//还需要VIP状态判断  精品+上新
-
                 if (datas.get(position).getCover() != null)
                     Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getCover().getFileName()).into(((BookNewestAdapter.BookViewHolder) holder).img_book);
-                    /*Picasso.with(context)
-                            .load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getCover().getFileName())
-                            .into(((BookViewHolder) holder).img_book);*/
+
+                if (false) {//拿书id遍历判断
+                    ((BookViewHolder) holder).tv_stage.setText("播放");//是领取
+                    ((BookNewestAdapter.BookViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mOnItemClickLitener.onPlayClick(((BookNewestAdapter.BookViewHolder) holder).tv_stage, position);
+                        }
+                    });
+                    ((BookNewestAdapter.BookViewHolder) holder).book_item.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mOnItemClickLitener.onItemPlayClick(((BookNewestAdapter.BookViewHolder) holder).tv_stage, position);
+                        }
+                    });
+                } else {
+                    ((BookNewestAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice() + "积分");//否领取
+                    ((BookNewestAdapter.BookViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mOnItemClickLitener.onGetClick(((BookNewestAdapter.BookViewHolder) holder).tv_stage, position);
+                        }
+                    });
+                    ((BookNewestAdapter.BookViewHolder) holder).book_item.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mOnItemClickLitener.onItemGetClick(((BookNewestAdapter.BookViewHolder) holder).tv_stage, position);
+                        }
+                    });
+                }
             }
         }
     }
@@ -103,7 +134,7 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
         return datas.size();
     }
 
-    class BookViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class BookViewHolder extends RecyclerView.ViewHolder {
         TextView tv_title, tv_detail, tv_time, tv_buy, tv_stage;
         ImageView img_book;
         LinearLayout book_item;
@@ -115,28 +146,9 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
             tv_time = (TextView) itemView.findViewById(R.id.tv_time);
             tv_buy = (TextView) itemView.findViewById(R.id.tv_buy);
             tv_stage = (TextView) itemView.findViewById(R.id.tv_stage);
-
             img_book = (ImageView) itemView.findViewById(R.id.img_book);
             book_item = (LinearLayout) itemView.findViewById(R.id.book_item);
-            book_item.setOnClickListener(this);
-            tv_stage.setOnClickListener(this);
 
-        }
-
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.book_item:
-                    if (mOnItemClickLitener != null) {
-                        mOnItemClickLitener.onItemClick(book_item, getAdapterPosition());
-                    }
-                    break;
-                case R.id.tv_stage:
-                    if (mOnItemClickLitener != null) {
-                        mOnItemClickLitener.onStageClick(tv_stage, getAdapterPosition());
-                    }
-                    break;
-            }
         }
     }
 

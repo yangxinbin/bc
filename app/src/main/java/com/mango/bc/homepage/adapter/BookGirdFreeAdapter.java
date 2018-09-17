@@ -73,7 +73,6 @@ public class BookGirdFreeAdapter extends RecyclerView.Adapter {
 
         void onItemGetClick(View view, int position);
 
-
         void onPlayClick(View view, int position);
 
         void onGetClick(View view, int position);

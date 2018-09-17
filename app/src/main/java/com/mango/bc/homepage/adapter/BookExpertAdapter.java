@@ -67,8 +67,13 @@ public class BookExpertAdapter extends RecyclerView.Adapter {
     }
 
     public interface OnItemClickLitener {
-        void onItemClick(View view, int position);
-        void onStageClick(View view, int position);
+        void onItemPlayClick(View view, int position);
+
+        void onItemGetClick(View view, int position);
+
+        void onPlayClick(View view, int position);
+
+        void onGetClick(View view, int position);
     }
 
 
@@ -79,21 +84,45 @@ public class BookExpertAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof BookExpertAdapter.BookViewHolder) {
             if (((BookExpertAdapter.BookViewHolder) holder) != null && datas.get(position) != null) {
                 ((BookExpertAdapter.BookViewHolder) holder).tv_title.setText(datas.get(position).getTitle());
                 ((BookExpertAdapter.BookViewHolder) holder).tv_detail.setText(datas.get(position).getSubtitle());
                 ((BookExpertAdapter.BookViewHolder) holder).tv_time.setText("共" + datas.get(position).getChapters().size() + "节课");
                 ((BookExpertAdapter.BookViewHolder) holder).tv_buy.setText("已购买" + datas.get(position).getSold());
-
-                ((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice()+"积分");
-
                 if (datas.get(position).getCover() != null)
                     Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getCover().getFileName()).into(((BookExpertAdapter.BookViewHolder) holder).img_book);
-                    /*Picasso.with(context)
-                            .load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getCover().getFileName())
-                            .into(((BookViewHolder) holder).img_book);*/
+                ((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice()+"积分");
+                if (false) {//拿书id遍历判断
+                    ((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText("播放");//是领取
+                    ((BookExpertAdapter.BookViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mOnItemClickLitener.onPlayClick(((BookExpertAdapter.BookViewHolder) holder).tv_stage, position);
+                        }
+                    });
+                    ((BookExpertAdapter.BookViewHolder) holder).book_item.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mOnItemClickLitener.onItemPlayClick(((BookExpertAdapter.BookViewHolder) holder).tv_stage, position);
+                        }
+                    });
+                } else {
+                    ((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice() + "积分");//否领取
+                    ((BookExpertAdapter.BookViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mOnItemClickLitener.onGetClick(((BookExpertAdapter.BookViewHolder) holder).tv_stage, position);
+                        }
+                    });
+                    ((BookExpertAdapter.BookViewHolder) holder).book_item.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mOnItemClickLitener.onItemGetClick(((BookExpertAdapter.BookViewHolder) holder).tv_stage, position);
+                        }
+                    });
+                }
             }
         }
     }
@@ -103,7 +132,7 @@ public class BookExpertAdapter extends RecyclerView.Adapter {
         return datas.size();
     }
 
-    class BookViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class BookViewHolder extends RecyclerView.ViewHolder{
         TextView tv_title, tv_detail, tv_time, tv_buy, tv_stage;
         ImageView img_book;
         LinearLayout book_item;
@@ -118,26 +147,9 @@ public class BookExpertAdapter extends RecyclerView.Adapter {
 
             img_book = (ImageView) itemView.findViewById(R.id.img_book);
             book_item = (LinearLayout) itemView.findViewById(R.id.book_item);
-            book_item.setOnClickListener(this);
-            tv_stage.setOnClickListener(this);
-
+            
         }
-
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.book_item:
-                    if (mOnItemClickLitener != null) {
-                        mOnItemClickLitener.onItemClick(book_item, getAdapterPosition());
-                    }
-                    break;
-                case R.id.tv_stage:
-                    if (mOnItemClickLitener != null) {
-                        mOnItemClickLitener.onStageClick(tv_stage, getAdapterPosition());
-                    }
-                    break;
-            }
-        }
+        
     }
 
 }

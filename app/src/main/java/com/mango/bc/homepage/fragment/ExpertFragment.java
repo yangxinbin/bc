@@ -16,6 +16,7 @@ import com.mango.bc.R;
 import com.mango.bc.homepage.activity.expertbook.ExpertBookActivity;
 import com.mango.bc.homepage.adapter.BookExpertAdapter;
 import com.mango.bc.homepage.bookdetail.ExpertBookDetailActivity;
+import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
@@ -82,14 +83,28 @@ public class ExpertFragment extends Fragment implements BookView {
 
     private BookExpertAdapter.OnItemClickLitener mOnClickListenner = new BookExpertAdapter.OnItemClickLitener() {
         @Override
-        public void onItemClick(View view, int position) {
+        public void onItemPlayClick(View view, int position) {
             Intent intent = new Intent(getActivity(), ExpertBookDetailActivity.class);
+            EventBus.getDefault().postSticky(bookExpertAdapter.getItem(position));
+            intent.putExtra("foot_play",true);
+            startActivity(intent);
+        }
+
+        @Override
+        public void onItemGetClick(View view, int position) {
+            Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
+            intent.putExtra("foot_buy_get",true);
             EventBus.getDefault().postSticky(bookExpertAdapter.getItem(position));
             startActivity(intent);
         }
 
         @Override
-        public void onStageClick(View view, int position) {
+        public void onPlayClick(View view, int position) {
+
+        }
+
+        @Override
+        public void onGetClick(View view, int position) {
 
         }
     };

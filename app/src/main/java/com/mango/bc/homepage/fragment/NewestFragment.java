@@ -35,7 +35,7 @@ import butterknife.ButterKnife;
 public class NewestFragment extends Fragment implements BookView {
     @Bind(R.id.recycle)
     RecyclerView recycle;
-    private BookNewestAdapter bookAdapter;
+    private BookNewestAdapter bookNewestAdapter;
     private BookPresenter bookPresenter;
     private final int TYPE = 4;//最新课
     private int page = 0;
@@ -80,10 +80,10 @@ public class NewestFragment extends Fragment implements BookView {
     }
 
     private void initView() {
-        bookAdapter = new BookNewestAdapter(getActivity());
+        bookNewestAdapter = new BookNewestAdapter(getActivity());
         recycle.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-        recycle.setAdapter(bookAdapter);
-        bookAdapter.setOnItemClickLitener(mOnClickListenner);
+        recycle.setAdapter(bookNewestAdapter);
+        bookNewestAdapter.setOnItemClickLitener(mOnClickListenner);
     }
 
     private BookNewestAdapter.OnItemClickLitener mOnClickListenner = new BookNewestAdapter.OnItemClickLitener() {
@@ -91,7 +91,7 @@ public class NewestFragment extends Fragment implements BookView {
         public void onItemPlayClick(View view, int position) {
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
             intent.putExtra("foot_play",true);
-            EventBus.getDefault().postSticky(bookAdapter.getItem(position));
+            EventBus.getDefault().postSticky(bookNewestAdapter.getItem(position));
             startActivity(intent);
         }
 
@@ -99,7 +99,7 @@ public class NewestFragment extends Fragment implements BookView {
         public void onItemGetClick(View view, int position) {
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
             intent.putExtra("foot_buy_get",true);
-            EventBus.getDefault().postSticky(bookAdapter.getItem(position));
+            EventBus.getDefault().postSticky(bookNewestAdapter.getItem(position));
             startActivity(intent);
         }
 
@@ -153,12 +153,12 @@ public class NewestFragment extends Fragment implements BookView {
                     return;
                 }
                 if (page == 0) {
-                    bookAdapter.reMove();
-                    bookAdapter.setmDate(bookBeanList);
+                    bookNewestAdapter.reMove();
+                    bookNewestAdapter.setmDate(bookBeanList);
                 } else {
                     //加载更多
                     for (int i = 0; i < bookBeanList.size(); i++) {
-                        bookAdapter.addItem(bookBeanList.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
+                        bookNewestAdapter.addItem(bookBeanList.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
                     }
                 }
 

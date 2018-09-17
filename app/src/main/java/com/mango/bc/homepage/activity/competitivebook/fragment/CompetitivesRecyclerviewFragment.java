@@ -99,7 +99,6 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
         recycle.setLayoutManager(mLayoutManager);
         recycle.setItemAnimator(new DefaultItemAnimator());//设置默认动画
         adapter = new BookComprtitiveAdapter(getActivity());
-        adapter.setOnItemClickLitener(mOnItemClickListener);
         recycle.removeAllViews();
         recycle.setAdapter(adapter);
         bookPresenter.visitBooks(getActivity(), TYPE, mType, page, true);
@@ -108,7 +107,15 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
 
     private BookComprtitiveAdapter.OnItemClickLitener mOnClickListenner = new BookComprtitiveAdapter.OnItemClickLitener() {
         @Override
-        public void onItemClick(View view, int position) {
+        public void onItemPlayClick(View view, int position) {
+            Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
+            intent.putExtra("foot_play",true);
+            EventBus.getDefault().postSticky(adapter.getItem(position));
+            startActivity(intent);
+        }
+
+        @Override
+        public void onItemGetClick(View view, int position) {
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
             intent.putExtra("foot_buy",true);
             EventBus.getDefault().postSticky(adapter.getItem(position));
@@ -116,9 +123,15 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
         }
 
         @Override
-        public void onStageClick(View view, int position) {
+        public void onPlayClick(View view, int position) {
 
         }
+
+        @Override
+        public void onGetClick(View view, int position) {
+
+        }
+
     };
 
     private void refreshAndLoadMore() {
@@ -174,21 +187,6 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
         }
     }
 
-    private BookComprtitiveAdapter.OnItemClickLitener mOnItemClickListener = new BookComprtitiveAdapter.OnItemClickLitener() {
-        @Override
-        public void onItemClick(View view, int position) {
-            //Intent intent = new Intent(getActivity(), BusinessPlanActivity.class);
-            //intent.putExtra("type", adapter.getItem(position).getResponseObject().getContent().get(position).getStage());
-            //startActivity(intent);
-            //getActivity().finish();
-        }
-
-        @Override
-        public void onStageClick(View view, int position) {
-
-        }
-
-    };
 
     @Override
     public void onDestroyView() {

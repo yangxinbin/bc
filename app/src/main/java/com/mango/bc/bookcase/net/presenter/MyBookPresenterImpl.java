@@ -9,6 +9,7 @@ import com.mango.bc.bookcase.net.listener.OnMyBookListener;
 import com.mango.bc.bookcase.net.model.MyBookModel;
 import com.mango.bc.bookcase.net.model.MyBookModelImpl;
 import com.mango.bc.bookcase.net.view.MyBookView;
+import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 
 import java.util.List;
@@ -22,7 +23,6 @@ import static android.content.Context.MODE_PRIVATE;
 public class MyBookPresenterImpl implements MyBookPresenter, OnMyBookListener {
     private MyBookView bookView;
     private MyBookModel bookModel;
-    private SharedPreferences sharedPreferences;
 
     public MyBookPresenterImpl(MyBookView u) {
         this.bookView = u;
@@ -31,13 +31,14 @@ public class MyBookPresenterImpl implements MyBookPresenter, OnMyBookListener {
 
     @Override
     public void visitBooks(Context context, int type, int page, Boolean ifCache) {
-        sharedPreferences = context.getSharedPreferences("BC", MODE_PRIVATE);
         String url = null;
         if (type == 0) {
             url = getUrl(type, context);
         } else if (type == 1) {
             url = getUrl(type, context);
         } else if (type == 2) {
+            url = getUrl(type, context);
+        } else if (type == 3) {//所以
             url = getUrl(type, context);
         }
         Log.v("pppppppppppp", "" + url);

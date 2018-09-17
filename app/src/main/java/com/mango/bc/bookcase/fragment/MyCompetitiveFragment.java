@@ -1,5 +1,6 @@
 package com.mango.bc.bookcase.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,6 +19,8 @@ import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.bookcase.net.presenter.MyBookPresenter;
 import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
 import com.mango.bc.bookcase.net.view.MyBookView;
+import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
+import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.NetUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -25,6 +28,8 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -59,11 +64,26 @@ public class MyCompetitiveFragment extends Fragment implements MyBookView {
         refreshAndLoadMore();
         return view;
     }
+
     private void initView() {
         myBookGirdAdapter = new MyBookGirdAdapter(getActivity());
         recycle.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 3));
         recycle.setAdapter(myBookGirdAdapter);
+        myBookGirdAdapter.setOnItemClickLitener(mOnClickListenner);
     }
+
+    private MyBookGirdAdapter.OnItemClickLitener mOnClickListenner = new MyBookGirdAdapter.OnItemClickLitener() {
+        @Override
+        public void onItemClick(View view, int position) {
+            Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
+            EventBus.getDefault().removeStickyEvent(BookBean.class);
+            EventBus.getDefault().postSticky(myBookGirdAdapter.getItem(position));
+            intent.putExtra("foot_play", true);
+            startActivity(intent);
+        }
+
+    };
+
     private void refreshAndLoadMore() {
         refresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -112,6 +132,7 @@ public class MyCompetitiveFragment extends Fragment implements MyBookView {
             //mAdapter.refresh(initData());
         }
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -123,7 +144,7 @@ public class MyCompetitiveFragment extends Fragment implements MyBookView {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Log.v("doPostAll", page +"==="+bookBeanList.size());
+                Log.v("doPostAll", page + "===" + bookBeanList.size());
                 if (bookBeanList == null || bookBeanList.size() == 0) {
                     if (page == 0) {
                         refresh.setVisibility(View.GONE);

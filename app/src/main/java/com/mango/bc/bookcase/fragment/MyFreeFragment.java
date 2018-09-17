@@ -70,7 +70,6 @@ public class MyFreeFragment extends Fragment implements MyBookView {
         recycle.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 3));
         recycle.setAdapter(myBookGirdAdapter);
         myBookGirdAdapter.setOnItemClickLitener(mOnClickListenner);
-
     }
     private MyBookGirdAdapter.OnItemClickLitener mOnClickListenner = new MyBookGirdAdapter.OnItemClickLitener() {
         @Override
@@ -78,6 +77,7 @@ public class MyFreeFragment extends Fragment implements MyBookView {
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
             EventBus.getDefault().removeStickyEvent(BookBean.class);
             EventBus.getDefault().postSticky(myBookGirdAdapter.getItem(position));
+            intent.putExtra("foot_play",true);
             startActivity(intent);
         }
 

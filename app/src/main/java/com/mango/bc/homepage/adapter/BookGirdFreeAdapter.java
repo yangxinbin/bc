@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.mango.bc.R;
 import com.mango.bc.homepage.net.bean.BookBean;
+import com.mango.bc.util.RoundImageView;
 import com.mango.bc.util.Urls;
 
 import java.util.ArrayList;
@@ -131,12 +132,12 @@ public class BookGirdFreeAdapter extends RecyclerView.Adapter {
 
     class BookGirdViewHolder extends RecyclerView.ViewHolder {
         TextView tv_free_title, tv_free_stage;
-        ImageView img_free_book;
+        RoundImageView img_free_book;
         LinearLayout book_free_item;
 
         public BookGirdViewHolder(final View itemView) {
             super(itemView);
-            img_free_book = (ImageView) itemView.findViewById(R.id.img_free_book);
+            img_free_book = (RoundImageView) itemView.findViewById(R.id.img_free_book);
             tv_free_title = (TextView) itemView.findViewById(R.id.tv_free_title);
             tv_free_stage = (TextView) itemView.findViewById(R.id.tv_free_stage);
             book_free_item = (LinearLayout) itemView.findViewById(R.id.book_free_item);

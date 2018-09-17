@@ -74,6 +74,7 @@
         <activity android:name=".mine.activity.ServiceActivity" />
         <activity android:name=".homepage.bookdetail.ExpertBookDetailActivity"></activity>
         <activity android:name=".homepage.bookdetail.OtherBookDetailActivity"></activity>
+        <activity android:name=".homepage.bookdetail.SearchBookDetailActivity"></activity>
 
     </application>
 

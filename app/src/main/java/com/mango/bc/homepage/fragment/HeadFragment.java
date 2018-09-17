@@ -48,11 +48,11 @@ public class HeadFragment extends Fragment {
         etSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppUtils.hideInput(getActivity());
                 Intent intent = new Intent(getContext(), SearchActivity.class);
                 startActivity(intent);
             }
         });
+        AppUtils.hideInput(getActivity());
         initBanner();
         return view;
     }

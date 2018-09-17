@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.mango.bc.R;
 import com.mango.bc.homepage.net.bean.BookBean;
+import com.mango.bc.util.RoundImageView;
 import com.mango.bc.util.Urls;
 
 import java.util.ArrayList;
@@ -134,7 +135,7 @@ public class BookExpertAdapter extends RecyclerView.Adapter {
 
     class BookViewHolder extends RecyclerView.ViewHolder{
         TextView tv_title, tv_detail, tv_time, tv_buy, tv_stage;
-        ImageView img_book;
+        RoundImageView img_book;
         LinearLayout book_item;
 
         public BookViewHolder(final View itemView) {
@@ -145,7 +146,7 @@ public class BookExpertAdapter extends RecyclerView.Adapter {
             tv_buy = (TextView) itemView.findViewById(R.id.tv_buy);
             tv_stage = (TextView) itemView.findViewById(R.id.tv_stage);
 
-            img_book = (ImageView) itemView.findViewById(R.id.img_book);
+            img_book = (RoundImageView) itemView.findViewById(R.id.img_book);
             book_item = (LinearLayout) itemView.findViewById(R.id.book_item);
             
         }

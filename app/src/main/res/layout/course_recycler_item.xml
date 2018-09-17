@@ -73,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:background="@drawable/gray_full_circle"
+                android:background="@drawable/yellow_circle"
                 android:gravity="center"
                 android:paddingBottom="@dimen/dp_1"
                 android:paddingLeft="@dimen/dp_10"

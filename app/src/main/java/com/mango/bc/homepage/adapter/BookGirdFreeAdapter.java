@@ -86,7 +86,11 @@ public class BookGirdFreeAdapter extends RecyclerView.Adapter {
         if (holder instanceof BookGirdFreeAdapter.BookGirdViewHolder) {
             final BookGirdFreeAdapter.BookGirdViewHolder viewHolder = (BookGirdFreeAdapter.BookGirdViewHolder) holder;
             viewHolder.tv_free_title.setText(datas.get(position).getTitle());
-            viewHolder.tv_free_stage.setText("免费领取");
+            if (true) {//拿书id遍历判断
+                viewHolder.tv_free_stage.setText("播放");//是领取
+            } else {
+                viewHolder.tv_free_stage.setText("免费领取");//否领取
+            }
             if (datas.get(position).getCover() != null)
                 Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getCover().getFileName()).into(((BookGirdFreeAdapter.BookGirdViewHolder) holder).img_free_book);
         }

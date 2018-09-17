@@ -32,10 +32,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dp_5"
-        android:background="@drawable/gray_full_circle"
+        android:background="@drawable/yellow_circle"
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
         android:text="免费领取"
         android:textColor="@color/yello"
-        android:textSize="@dimen/textSize" />
+        android:textSize="@dimen/dp_14" />
 </LinearLayout>

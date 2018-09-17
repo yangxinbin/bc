@@ -69,17 +69,35 @@ public class FreeBookActivity extends BaseActivity implements BookView {
     }
 
     private BookGirdFreeAdapter.OnItemClickLitener mOnClickListenner = new BookGirdFreeAdapter.OnItemClickLitener() {
+
         @Override
-        public void onItemClick(View view, int position) {
+        public void onItemPlayClick(View view, int position) {
+            Log.v("wwwwwww","======pi");
             Intent intent = new Intent(getBaseContext(), OtherBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookGirdFreeAdapter.getItem(position));
+            intent.putExtra("foot_play",true);
             startActivity(intent);
         }
 
         @Override
-        public void onStageClick(View view, int position) {
-
+        public void onItemGetClick(View view, int position) {
+            Log.v("wwwwwww","======gi");
+            Intent intent = new Intent(getBaseContext(), OtherBookDetailActivity.class);
+            EventBus.getDefault().postSticky(bookGirdFreeAdapter.getItem(position));
+            intent.putExtra("foot_free_get",true);
+            startActivity(intent);
         }
+
+        @Override
+        public void onPlayClick(View view, int position) {//播放
+            Log.v("wwwwwww","======p");
+        }
+
+        @Override
+        public void onGetClick(View view, int position) {//领取
+            Log.v("wwwwwww","======g");
+        }
+
     };
 
     private void refreshAndLoadMore() {

@@ -69,9 +69,14 @@ public class BookGirdFreeAdapter extends RecyclerView.Adapter {
 
     public interface OnItemClickLitener {
 
-        void onItemClick(View view, int position);
+        void onItemPlayClick(View view, int position);
 
-        void onStageClick(View view, int position);
+        void onItemGetClick(View view, int position);
+
+
+        void onPlayClick(View view, int position);
+
+        void onGetClick(View view, int position);
     }
 
 
@@ -86,10 +91,34 @@ public class BookGirdFreeAdapter extends RecyclerView.Adapter {
         if (holder instanceof BookGirdFreeAdapter.BookGirdViewHolder) {
             final BookGirdFreeAdapter.BookGirdViewHolder viewHolder = (BookGirdFreeAdapter.BookGirdViewHolder) holder;
             viewHolder.tv_free_title.setText(datas.get(position).getTitle());
-            if (true) {//拿书id遍历判断
+            if (false) {//拿书id遍历判断
                 viewHolder.tv_free_stage.setText("播放");//是领取
+                viewHolder.tv_free_stage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mOnItemClickLitener.onPlayClick(viewHolder.tv_free_stage, position);
+                    }
+                });
+                viewHolder.book_free_item.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mOnItemClickLitener.onItemPlayClick(viewHolder.tv_free_stage, position);
+                    }
+                });
             } else {
                 viewHolder.tv_free_stage.setText("免费领取");//否领取
+                viewHolder.tv_free_stage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mOnItemClickLitener.onGetClick(viewHolder.tv_free_stage, position);
+                    }
+                });
+                viewHolder.book_free_item.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mOnItemClickLitener.onItemGetClick(viewHolder.tv_free_stage, position);
+                    }
+                });
             }
             if (datas.get(position).getCover() != null)
                 Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getCover().getFileName()).into(((BookGirdFreeAdapter.BookGirdViewHolder) holder).img_free_book);
@@ -101,7 +130,7 @@ public class BookGirdFreeAdapter extends RecyclerView.Adapter {
         return datas.size();
     }
 
-    class BookGirdViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class BookGirdViewHolder extends RecyclerView.ViewHolder {
         TextView tv_free_title, tv_free_stage;
         ImageView img_free_book;
         LinearLayout book_free_item;
@@ -112,25 +141,6 @@ public class BookGirdFreeAdapter extends RecyclerView.Adapter {
             tv_free_title = (TextView) itemView.findViewById(R.id.tv_free_title);
             tv_free_stage = (TextView) itemView.findViewById(R.id.tv_free_stage);
             book_free_item = (LinearLayout) itemView.findViewById(R.id.book_free_item);
-            book_free_item.setOnClickListener(this);
-            tv_free_stage.setOnClickListener(this);
-
-        }
-
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.book_free_item:
-                    if (mOnItemClickLitener != null) {
-                        mOnItemClickLitener.onItemClick(book_free_item, getAdapterPosition());
-                    }
-                    break;
-                case R.id.tv_free_stage:
-                    if (mOnItemClickLitener != null) {
-                        mOnItemClickLitener.onStageClick(tv_free_stage, getAdapterPosition());
-                    }
-                    break;
-            }
         }
     }
 

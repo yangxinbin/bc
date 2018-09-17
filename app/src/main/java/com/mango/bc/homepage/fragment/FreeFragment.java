@@ -40,7 +40,7 @@ public class FreeFragment extends Fragment implements BookView {
     TextView seeMore;
     @Bind(R.id.recycle)
     RecyclerView recycle;
-    private BookGirdFreeAdapter bookGirdAdapter;
+    private BookGirdFreeAdapter bookGirdFreeAdapter;
     private BookPresenter bookPresenter;
     private final int TYPE = 3;//免费课
     private int page = 0;
@@ -74,23 +74,39 @@ public class FreeFragment extends Fragment implements BookView {
     }
 
     private void initView() {
-        bookGirdAdapter = new BookGirdFreeAdapter(getActivity());
+        bookGirdFreeAdapter = new BookGirdFreeAdapter(getActivity());
         recycle.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 3));
-        recycle.setAdapter(bookGirdAdapter);
-        bookGirdAdapter.setOnItemClickLitener(mOnClickListenner);
+        recycle.setAdapter(bookGirdFreeAdapter);
+        bookGirdFreeAdapter.setOnItemClickLitener(mOnClickListenner);
     }
 
     private BookGirdFreeAdapter.OnItemClickLitener mOnClickListenner = new BookGirdFreeAdapter.OnItemClickLitener() {
         @Override
-        public void onItemClick(View view, int position) {
+        public void onItemPlayClick(View view, int position) {
+            Log.v("wwwwwww","======pi");
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
-            EventBus.getDefault().postSticky(bookGirdAdapter.getItem(position));
+            EventBus.getDefault().postSticky(bookGirdFreeAdapter.getItem(position));
+            intent.putExtra("foot_play",true);
             startActivity(intent);
         }
 
         @Override
-        public void onStageClick(View view, int position) {
+        public void onItemGetClick(View view, int position) {
+            Log.v("wwwwwww","======gi");
+            Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
+            EventBus.getDefault().postSticky(bookGirdFreeAdapter.getItem(position));
+            intent.putExtra("foot_free_get",true);
+            startActivity(intent);
+        }
 
+        @Override
+        public void onPlayClick(View view, int position) {//播放
+            Log.v("wwwwwww","======p");
+        }
+
+        @Override
+        public void onGetClick(View view, int position) {//领取
+            Log.v("wwwwwww","======g");
         }
     };
 
@@ -142,7 +158,7 @@ public class FreeFragment extends Fragment implements BookView {
                                 continue;
                             mData.add(bookBeanList.get(i)); //一次显示page= ? 20条数据
                         }
-                        bookGirdAdapter.setmDate(mData);
+                        bookGirdFreeAdapter.setmDate(mData);
                     }
                 }
             });

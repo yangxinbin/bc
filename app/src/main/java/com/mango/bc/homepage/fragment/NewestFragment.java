@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 
 import com.mango.bc.R;
 import com.mango.bc.homepage.adapter.BookAdapter;
-import com.mango.bc.homepage.bookdetail.CompetitiveBookDetailActivity;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;

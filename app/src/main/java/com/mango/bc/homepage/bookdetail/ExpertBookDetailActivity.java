@@ -22,6 +22,7 @@ import com.mango.bc.homepage.bookdetail.fragment.DetailFragment;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.DensityUtil;
 import com.mango.bc.util.Urls;
+import com.mango.bc.view.likeview.PraiseView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -36,7 +37,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CompetitiveBookDetailActivity extends BaseActivity {
+public class ExpertBookDetailActivity extends BaseActivity {
 
     @Bind(R.id.imageView_back)
     ImageView imageViewBack;
@@ -58,6 +59,14 @@ public class CompetitiveBookDetailActivity extends BaseActivity {
     EditText etSearch;
     @Bind(R.id.l_2)
     LinearLayout l2;
+    @Bind(R.id.l_like)
+    PraiseView lLike;
+    @Bind(R.id.l_try)
+    LinearLayout lTry;
+    @Bind(R.id.l_buy)
+    TextView lBuy;
+    @Bind(R.id.l_collage)
+    TextView lCollage;
     private ArrayList<String> mDatas;
     List<Fragment> mfragments = new ArrayList<Fragment>();
 
@@ -76,7 +85,7 @@ public class CompetitiveBookDetailActivity extends BaseActivity {
         if (bookBean == null) {
             return;
         }
-        Log.v("uuuuuuuuuuuu","--0-");
+        Log.v("uuuuuuuuuuuu", "--0-");
         if (bookBean.getAuthor() != null) {
             if (bookBean.getAuthor().getPhoto() != null)
                 Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookBean.getAuthor().getPhoto().getFileName()).into(imgCover);
@@ -186,5 +195,19 @@ public class CompetitiveBookDetailActivity extends BaseActivity {
         super.onDestroy();
         ButterKnife.unbind(this);
         EventBus.getDefault().unregister(this);
+    }
+
+    @OnClick({R.id.l_like, R.id.l_try, R.id.l_buy, R.id.l_collage})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.l_like:
+                break;
+            case R.id.l_try:
+                break;
+            case R.id.l_buy:
+                break;
+            case R.id.l_collage:
+                break;
+        }
     }
 }

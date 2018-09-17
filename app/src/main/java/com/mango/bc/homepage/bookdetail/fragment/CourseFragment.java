@@ -1,6 +1,5 @@
 package com.mango.bc.homepage.bookdetail.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,10 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mango.bc.R;
-import com.mango.bc.homepage.adapter.BookAdapter;
-import com.mango.bc.homepage.bookdetail.CompetitiveBookDetailActivity;
 import com.mango.bc.homepage.bookdetail.adapter.BookCourseAdapter;
-import com.mango.bc.homepage.bookdetail.adapter.BookDetailAdapter;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.AppUtils;
 

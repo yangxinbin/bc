@@ -100,13 +100,13 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/l_like"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
 
             <com.mango.bc.view.likeview.PraiseView
+                android:id="@+id/l_like"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_gravity="center"

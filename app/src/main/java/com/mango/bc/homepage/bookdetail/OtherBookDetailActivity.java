@@ -18,6 +18,7 @@ import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.bookdetail.adapter.BookDetailAdapter;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.Urls;
+import com.mango.bc.view.likeview.PraiseView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -39,7 +40,7 @@ public class OtherBookDetailActivity extends BaseActivity {
     @Bind(R.id.tv_buyer)
     TextView tvBuyer;
     @Bind(R.id.l_like)
-    LinearLayout lLike;
+    PraiseView lLike;
     @Bind(R.id.l_share)
     LinearLayout lShare;
     @Bind(R.id.l_txt)

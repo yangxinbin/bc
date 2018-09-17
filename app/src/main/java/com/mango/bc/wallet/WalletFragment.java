@@ -44,12 +44,12 @@ public class WalletFragment extends Fragment {
     TextView tvAllPp;
     @Bind(R.id.textView)
     TextView textView;
-    @Bind(R.id.tv_cannot_put)
-    TextView tvCannotPut;
+/*    @Bind(R.id.tv_cannot_put)
+    TextView tvCannotPut;*/
     @Bind(R.id.imageView2)
     ImageView imageView2;
-    @Bind(R.id.tv_can_put)
-    TextView tvCanPut;
+/*    @Bind(R.id.tv_can_put)
+    TextView tvCanPut;*/
     @Bind(R.id.textView4)
     TextView textView4;
     @Bind(R.id.tv_copy)

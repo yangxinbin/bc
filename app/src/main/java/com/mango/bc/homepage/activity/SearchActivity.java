@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
-import com.mango.bc.homepage.adapter.BookGirdAdapter;
+import com.mango.bc.homepage.adapter.BookGirdSearchAdapter;
 import com.mango.bc.homepage.adapter.HistorySearchAdapter;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
@@ -71,7 +71,7 @@ public class SearchActivity extends BaseActivity implements BookView {
     private StringBuilder sb;
     private SPUtils spUtils;
     private String longHistory;
-    private BookGirdAdapter bookGirdAdapter;
+    private BookGirdSearchAdapter bookGirdSearchAdapter;
     private BookPresenter bookPresenter;
     private final int TYPE = 5;//搜索课
     private int page = 0;
@@ -143,9 +143,9 @@ public class SearchActivity extends BaseActivity implements BookView {
     }
 
     private void initRecycleBook() {
-        bookGirdAdapter = new BookGirdAdapter(this);
+        bookGirdSearchAdapter = new BookGirdSearchAdapter(this);
         recycle.setLayoutManager(new GridLayoutManager(this, 3));
-        recycle.setAdapter(bookGirdAdapter);
+        recycle.setAdapter(bookGirdSearchAdapter);
     }
 
 
@@ -198,7 +198,7 @@ public class SearchActivity extends BaseActivity implements BookView {
             public void onItemClick(View view, int position) {
                 etSearch.setText(toList(longHistory).get(position));
                 lSearchBook.setVisibility(View.VISIBLE);
-                bookGirdAdapter.reMove();
+                bookGirdSearchAdapter.reMove();
                 lHistory.setVisibility(View.GONE);
                 bookPresenter.visitBooks(getBaseContext(), TYPE, etSearch.getText().toString(), page, false);
             }
@@ -245,7 +245,7 @@ public class SearchActivity extends BaseActivity implements BookView {
                 mHistorySearchAdapter.reMove();      //刷新适配器
                 break;
             case R.id.img_search:
-                bookGirdAdapter.reMove();
+                bookGirdSearchAdapter.reMove();
                 etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {//键盘
                     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                         //点击搜索按钮
@@ -366,11 +366,11 @@ public class SearchActivity extends BaseActivity implements BookView {
                     return;
                 }
                 if (page == 0) {
-                    bookGirdAdapter.setmDate(bookBeanList);
+                    bookGirdSearchAdapter.setmDate(bookBeanList);
                 } else {
                     //加载更多
                     for (int i = 0; i < bookBeanList.size(); i++) {
-                        bookGirdAdapter.addItem(bookBeanList.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
+                        bookGirdSearchAdapter.addItem(bookBeanList.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
                     }
                 }
 

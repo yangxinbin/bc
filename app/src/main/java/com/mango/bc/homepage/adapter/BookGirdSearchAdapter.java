@@ -2,7 +2,6 @@ package com.mango.bc.homepage.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,21 +21,21 @@ import java.util.List;
  * Created by admin on 2018/9/4.
  */
 
-public class BookGirdAdapter extends RecyclerView.Adapter {
+public class BookGirdSearchAdapter extends RecyclerView.Adapter {
     private Context context;
     private List<BookBean> datas = new ArrayList<>();
 
-    public BookGirdAdapter(Context context) {
+    public BookGirdSearchAdapter(Context context) {
         this.context = context;
     }
 
-    public BookGirdAdapter(List<BookBean> datas) {
+    public BookGirdSearchAdapter(List<BookBean> datas) {
         this.datas = datas;
     }
 
-    private BookGirdAdapter.OnItemClickLitener mOnItemClickLitener;
+    private BookGirdSearchAdapter.OnItemClickLitener mOnItemClickLitener;
 
-    public BookGirdAdapter() {
+    public BookGirdSearchAdapter() {
     }
 
     public void setmDate(List<BookBean> data) {
@@ -64,7 +63,7 @@ public class BookGirdAdapter extends RecyclerView.Adapter {
         return datas == null ? null : datas.get(position);
     }
 
-    public void setOnItemClickLitener(BookGirdAdapter.OnItemClickLitener mOnItemClickLitener) {
+    public void setOnItemClickLitener(BookGirdSearchAdapter.OnItemClickLitener mOnItemClickLitener) {
         this.mOnItemClickLitener = mOnItemClickLitener;
     }
 
@@ -79,17 +78,17 @@ public class BookGirdAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_free_item, parent, false);
-        return new BookGirdAdapter.BookGirdViewHolder(view);
+        return new BookGirdSearchAdapter.BookGirdViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if (holder instanceof BookGirdAdapter.BookGirdViewHolder) {
-            final BookGirdAdapter.BookGirdViewHolder viewHolder = (BookGirdAdapter.BookGirdViewHolder) holder;
+        if (holder instanceof BookGirdSearchAdapter.BookGirdViewHolder) {
+            final BookGirdSearchAdapter.BookGirdViewHolder viewHolder = (BookGirdSearchAdapter.BookGirdViewHolder) holder;
             viewHolder.tv_free_title.setText(datas.get(position).getTitle());
-            viewHolder.tv_free_stage.setText("免费领取");
+            //viewHolder.tv_free_stage.setText("免费领取");
             if (datas.get(position).getCover() != null)
-                Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getCover().getFileName()).into(((BookGirdAdapter.BookGirdViewHolder) holder).img_free_book);
+                Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getCover().getFileName()).into(((BookGirdSearchAdapter.BookGirdViewHolder) holder).img_free_book);
         }
     }
 

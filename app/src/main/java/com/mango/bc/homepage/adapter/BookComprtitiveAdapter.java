@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -124,7 +123,8 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 ((ItemViewHolder) holder).tv_detail.setText(mData.get(position).getSubtitle());
                 ((ItemViewHolder) holder).tv_time.setText("共" + mData.get(position).getChapters().size() + "节课");
                 ((ItemViewHolder) holder).tv_buy.setText("已购买" + mData.get(position).getSold());
-                ((ItemViewHolder) holder).tv_stage.setText("免费领取");
+
+                ((ItemViewHolder) holder).tv_stage.setText(mData.get(position).getPrice()+"积分");//还需要VIP状态判断  精品+上新
 
                 if (mData.get(position).getCover() != null)
                     Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + mData.get(position).getCover().getFileName()).into(((ItemViewHolder) holder).img_book);

@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.homepage.activity.expertbook.ExpertBookActivity;
-import com.mango.bc.homepage.adapter.BookAdapter;
+import com.mango.bc.homepage.adapter.BookExpertAdapter;
 import com.mango.bc.homepage.bookdetail.ExpertBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
@@ -40,7 +40,7 @@ public class ExpertFragment extends Fragment implements BookView {
     TextView seeMore;
     @Bind(R.id.recycle)
     RecyclerView recycle;
-    private BookAdapter bookAdapter;
+    private BookExpertAdapter bookExpertAdapter;
     private BookPresenter bookPresenter;
     private final int TYPE = 2;//大咖课
     private int page = 0;
@@ -74,17 +74,17 @@ public class ExpertFragment extends Fragment implements BookView {
     }
 
     private void initView() {
-        bookAdapter = new BookAdapter(getActivity());
+        bookExpertAdapter = new BookExpertAdapter(getActivity());
         recycle.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-        recycle.setAdapter(bookAdapter);
-        bookAdapter.setOnItemClickLitener(mOnClickListenner);
+        recycle.setAdapter(bookExpertAdapter);
+        bookExpertAdapter.setOnItemClickLitener(mOnClickListenner);
     }
 
-    private BookAdapter.OnItemClickLitener mOnClickListenner = new BookAdapter.OnItemClickLitener() {
+    private BookExpertAdapter.OnItemClickLitener mOnClickListenner = new BookExpertAdapter.OnItemClickLitener() {
         @Override
         public void onItemClick(View view, int position) {
             Intent intent = new Intent(getActivity(), ExpertBookDetailActivity.class);
-            EventBus.getDefault().postSticky(bookAdapter.getItem(position));
+            EventBus.getDefault().postSticky(bookExpertAdapter.getItem(position));
             startActivity(intent);
         }
 
@@ -137,7 +137,7 @@ public class ExpertFragment extends Fragment implements BookView {
                                 continue;
                             mData.add(bookBeanList.get(i)); //一次显示page= ? 20条数据
                         }
-                        bookAdapter.setmDate(mData);
+                        bookExpertAdapter.setmDate(mData);
                     }
                 }
             });

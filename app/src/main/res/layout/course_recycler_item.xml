@@ -81,7 +81,7 @@
                 android:paddingTop="@dimen/dp_1"
                 android:text="免费领取"
                 android:textColor="@color/yello"
-                android:textSize="@dimen/textSize" />
+                android:textSize="@dimen/dp_14" />
         </LinearLayout>
 
     </LinearLayout>

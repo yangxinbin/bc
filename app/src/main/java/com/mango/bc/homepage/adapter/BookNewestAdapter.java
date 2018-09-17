@@ -21,22 +21,22 @@ import java.util.List;
  * Created by admin on 2018/9/4.
  */
 
-public class BookAdapter extends RecyclerView.Adapter {
+public class BookNewestAdapter extends RecyclerView.Adapter {
     private Context context;
-    private BookAdapter.OnItemClickLitener mOnItemClickLitener;
+    private BookNewestAdapter.OnItemClickLitener mOnItemClickLitener;
 
     private List<BookBean> datas = new ArrayList<>();
 
-    public BookAdapter(List<BookBean> datas) {
+    public BookNewestAdapter(List<BookBean> datas) {
         this.datas = datas;
     }
 
 
-    public BookAdapter(Context context) {
+    public BookNewestAdapter(Context context) {
         this.context = context;
     }
 
-    public BookAdapter() {
+    public BookNewestAdapter() {
     }
 
     public void setmDate(List<BookBean> data) {
@@ -62,7 +62,7 @@ public class BookAdapter extends RecyclerView.Adapter {
         this.notifyDataSetChanged();
     }
 
-    public void setOnItemClickLitener(BookAdapter.OnItemClickLitener mOnItemClickLitener) {
+    public void setOnItemClickLitener(BookNewestAdapter.OnItemClickLitener mOnItemClickLitener) {
         this.mOnItemClickLitener = mOnItemClickLitener;
     }
 
@@ -75,21 +75,22 @@ public class BookAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_recycler_item, parent, false);
-        return new BookAdapter.BookViewHolder(view);
+        return new BookNewestAdapter.BookViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if (holder instanceof BookAdapter.BookViewHolder) {
-            if (((BookAdapter.BookViewHolder) holder) != null && datas.get(position) != null) {
-                ((BookAdapter.BookViewHolder) holder).tv_title.setText(datas.get(position).getTitle());
-                ((BookAdapter.BookViewHolder) holder).tv_detail.setText(datas.get(position).getSubtitle());
-                ((BookAdapter.BookViewHolder) holder).tv_time.setText("共" + datas.get(position).getChapters().size() + "节课");
-                ((BookAdapter.BookViewHolder) holder).tv_buy.setText("已购买" + datas.get(position).getSold());
-                ((BookAdapter.BookViewHolder) holder).tv_stage.setText("免费领取");
+        if (holder instanceof BookNewestAdapter.BookViewHolder) {
+            if (((BookNewestAdapter.BookViewHolder) holder) != null && datas.get(position) != null) {
+                ((BookNewestAdapter.BookViewHolder) holder).tv_title.setText(datas.get(position).getTitle());
+                ((BookNewestAdapter.BookViewHolder) holder).tv_detail.setText(datas.get(position).getSubtitle());
+                ((BookNewestAdapter.BookViewHolder) holder).tv_time.setText("共" + datas.get(position).getChapters().size() + "节课");
+                ((BookNewestAdapter.BookViewHolder) holder).tv_buy.setText("已购买" + datas.get(position).getSold());
+
+                ((BookNewestAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice()+"积分");//还需要VIP状态判断  精品+上新
 
                 if (datas.get(position).getCover() != null)
-                    Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getCover().getFileName()).into(((BookAdapter.BookViewHolder) holder).img_book);
+                    Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getCover().getFileName()).into(((BookNewestAdapter.BookViewHolder) holder).img_book);
                     /*Picasso.with(context)
                             .load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getCover().getFileName())
                             .into(((BookViewHolder) holder).img_book);*/

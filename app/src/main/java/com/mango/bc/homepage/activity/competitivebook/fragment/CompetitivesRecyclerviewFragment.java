@@ -110,7 +110,7 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
         @Override
         public void onItemClick(View view, int position) {
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
-            intent.putExtra("foot",true);
+            intent.putExtra("foot_buy",true);
             EventBus.getDefault().postSticky(adapter.getItem(position));
             startActivity(intent);
         }

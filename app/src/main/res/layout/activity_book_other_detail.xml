@@ -92,7 +92,8 @@
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/l_foot"
+        android:visibility="gone"
+        android:id="@+id/l_get"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
         android:layout_alignParentBottom="true"
@@ -106,7 +107,7 @@
             android:orientation="vertical">
 
             <com.mango.bc.view.likeview.PraiseView
-                android:id="@+id/l_like"
+                android:id="@+id/l_like_get"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_gravity="center"
@@ -124,7 +125,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/l_share"
+            android:id="@+id/l_share_get"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -149,7 +150,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/l_txt"
+            android:id="@+id/l_txt_get"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -174,7 +175,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/book_stage"
+            android:id="@+id/book_stage_play"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
@@ -185,4 +186,129 @@
             android:textSize="@dimen/textSize" />
 
     </LinearLayout>
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/l_free"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_alignParentBottom="true"
+        android:background="@color/common_gray"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.mango.bc.view.likeview.PraiseView
+                android:id="@+id/l_like_free"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="14"
+                android:textColor="@color/common_black"
+                android:textSize="@dimen/dp_14" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/l_share_free"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/gift" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="免费送朋友"
+                android:textColor="@color/common_black"
+                android:textSize="@dimen/dp_14" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/book_stage_free"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@color/yello"
+            android:gravity="center"
+            android:text="@string/free_get"
+            android:textColor="@color/common_black"
+            android:textSize="@dimen/textSize" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/l_needbuy"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_alignParentBottom="true"
+        android:background="@color/common_gray"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.mango.bc.view.likeview.PraiseView
+                android:id="@+id/l_like_needbuy"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="14"
+                android:textColor="@color/common_black"
+                android:textSize="@dimen/dp_14" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/book_stage_needbuy_vip"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@color/common_yello"
+            android:gravity="center"
+            android:text="4.9积分免费读"
+            android:textColor="@color/common_black"
+            android:textSize="@dimen/textSize" />
+        <TextView
+            android:id="@+id/book_stage_needbuy_money"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@color/yello"
+            android:gravity="center"
+            android:text="开通VIP免费读"
+            android:textColor="@color/common_black"
+            android:textSize="@dimen/textSize" />
+
+    </LinearLayout>
+
 </LinearLayout>

@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mango.bc.R;
-import com.mango.bc.homepage.adapter.BookAdapter;
+import com.mango.bc.homepage.adapter.BookNewestAdapter;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
@@ -35,7 +35,7 @@ import butterknife.ButterKnife;
 public class NewestFragment extends Fragment implements BookView {
     @Bind(R.id.recycle)
     RecyclerView recycle;
-    private BookAdapter bookAdapter;
+    private BookNewestAdapter bookAdapter;
     private BookPresenter bookPresenter;
     private final int TYPE = 4;//最新课
     private int page = 0;
@@ -80,13 +80,13 @@ public class NewestFragment extends Fragment implements BookView {
     }
 
     private void initView() {
-        bookAdapter = new BookAdapter(getActivity());
+        bookAdapter = new BookNewestAdapter(getActivity());
         recycle.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         recycle.setAdapter(bookAdapter);
         bookAdapter.setOnItemClickLitener(mOnClickListenner);
     }
 
-    private BookAdapter.OnItemClickLitener mOnClickListenner = new BookAdapter.OnItemClickLitener() {
+    private BookNewestAdapter.OnItemClickLitener mOnClickListenner = new BookNewestAdapter.OnItemClickLitener() {
         @Override
         public void onItemClick(View view, int position) {
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);

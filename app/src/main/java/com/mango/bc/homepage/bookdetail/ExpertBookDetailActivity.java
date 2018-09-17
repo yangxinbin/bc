@@ -92,6 +92,8 @@ public class ExpertBookDetailActivity extends BaseActivity {
         }
         tvBuyer.setText(bookBean.getSold() + "");
         tvCourse.setText(bookBean.getChapters().size() + "");
+        lBuy.setText(bookBean.getPrice()+"币购买\n"+"会员"+bookBean.getVipPrice()+"币");
+        lCollage.setText(bookBean.getGroupBuy2Price()+"-"+bookBean.getGroupBuy3Price()+"币\n拼团购买");
     }
 
     private void initDatas() {

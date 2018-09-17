@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.homepage.activity.freebook.FreeBookActivity;
-import com.mango.bc.homepage.adapter.BookGirdAdapter;
+import com.mango.bc.homepage.adapter.BookGirdFreeAdapter;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
@@ -40,7 +40,7 @@ public class FreeFragment extends Fragment implements BookView {
     TextView seeMore;
     @Bind(R.id.recycle)
     RecyclerView recycle;
-    private BookGirdAdapter bookGirdAdapter;
+    private BookGirdFreeAdapter bookGirdAdapter;
     private BookPresenter bookPresenter;
     private final int TYPE = 3;//免费课
     private int page = 0;
@@ -74,13 +74,13 @@ public class FreeFragment extends Fragment implements BookView {
     }
 
     private void initView() {
-        bookGirdAdapter = new BookGirdAdapter(getActivity());
+        bookGirdAdapter = new BookGirdFreeAdapter(getActivity());
         recycle.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 3));
         recycle.setAdapter(bookGirdAdapter);
         bookGirdAdapter.setOnItemClickLitener(mOnClickListenner);
     }
 
-    private BookGirdAdapter.OnItemClickLitener mOnClickListenner = new BookGirdAdapter.OnItemClickLitener() {
+    private BookGirdFreeAdapter.OnItemClickLitener mOnClickListenner = new BookGirdFreeAdapter.OnItemClickLitener() {
         @Override
         public void onItemClick(View view, int position) {
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);

@@ -11,7 +11,7 @@ import android.widget.ImageView;
 
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
-import com.mango.bc.homepage.adapter.BookAdapter;
+import com.mango.bc.homepage.adapter.BookExpertAdapter;
 import com.mango.bc.homepage.bookdetail.ExpertBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
@@ -44,7 +44,7 @@ public class ExpertBookActivity extends BaseActivity implements BookView {
     SmartRefreshLayout refresh;
     @Bind(R.id.img_no_book)
     ImageView imgNoBook;
-    private BookAdapter bookAdapter;
+    private BookExpertAdapter bookExpertAdapter;
     private boolean isFirstEnter;
     private BookPresenter bookPresenter;
     private final int TYPE = 2;//大咖课
@@ -62,17 +62,17 @@ public class ExpertBookActivity extends BaseActivity implements BookView {
     }
 
     private void initView() {
-        bookAdapter = new BookAdapter(this);
+        bookExpertAdapter = new BookExpertAdapter(this);
         recycle.setLayoutManager(new LinearLayoutManager(this.getApplicationContext()));
-        recycle.setAdapter(bookAdapter);
-        bookAdapter.setOnItemClickLitener(mOnClickListenner);
+        recycle.setAdapter(bookExpertAdapter);
+        bookExpertAdapter.setOnItemClickLitener(mOnClickListenner);
     }
 
-    private BookAdapter.OnItemClickLitener mOnClickListenner = new BookAdapter.OnItemClickLitener() {
+    private BookExpertAdapter.OnItemClickLitener mOnClickListenner = new BookExpertAdapter.OnItemClickLitener() {
         @Override
         public void onItemClick(View view, int position) {
             Intent intent = new Intent(getBaseContext(), ExpertBookDetailActivity.class);
-            EventBus.getDefault().postSticky(bookAdapter.getItem(position));
+            EventBus.getDefault().postSticky(bookExpertAdapter.getItem(position));
             startActivity(intent);
         }
 
@@ -167,12 +167,12 @@ public class ExpertBookActivity extends BaseActivity implements BookView {
                     imgNoBook.setVisibility(View.GONE);
                 }
                 if (page == 0) {
-                    bookAdapter.reMove();
-                    bookAdapter.setmDate(bookBeanList);
+                    bookExpertAdapter.reMove();
+                    bookExpertAdapter.setmDate(bookBeanList);
                 } else {
                     //加载更多
                     for (int i = 0; i < bookBeanList.size(); i++) {
-                        bookAdapter.addItem(bookBeanList.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
+                        bookExpertAdapter.addItem(bookBeanList.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
                     }
                 }
 

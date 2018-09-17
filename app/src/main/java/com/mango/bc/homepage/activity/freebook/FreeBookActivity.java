@@ -11,7 +11,7 @@ import android.widget.ImageView;
 
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
-import com.mango.bc.homepage.adapter.BookGirdAdapter;
+import com.mango.bc.homepage.adapter.BookGirdFreeAdapter;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
@@ -44,7 +44,7 @@ public class FreeBookActivity extends BaseActivity implements BookView {
     SmartRefreshLayout refresh;
     @Bind(R.id.img_no_book)
     ImageView imgNoBook;
-    private BookGirdAdapter bookGirdAdapter;
+    private BookGirdFreeAdapter bookGirdFreeAdapter;
     private boolean isFirstEnter = true;
     private BookPresenter bookPresenter;
     private final int TYPE = 3;//免费
@@ -62,17 +62,17 @@ public class FreeBookActivity extends BaseActivity implements BookView {
     }
 
     private void initView() {
-        bookGirdAdapter = new BookGirdAdapter(this);
+        bookGirdFreeAdapter = new BookGirdFreeAdapter(this);
         recycle.setLayoutManager(new GridLayoutManager(this.getApplicationContext(), 3));
-        recycle.setAdapter(bookGirdAdapter);
-        bookGirdAdapter.setOnItemClickLitener(mOnClickListenner);
+        recycle.setAdapter(bookGirdFreeAdapter);
+        bookGirdFreeAdapter.setOnItemClickLitener(mOnClickListenner);
     }
 
-    private BookGirdAdapter.OnItemClickLitener mOnClickListenner = new BookGirdAdapter.OnItemClickLitener() {
+    private BookGirdFreeAdapter.OnItemClickLitener mOnClickListenner = new BookGirdFreeAdapter.OnItemClickLitener() {
         @Override
         public void onItemClick(View view, int position) {
             Intent intent = new Intent(getBaseContext(), OtherBookDetailActivity.class);
-            EventBus.getDefault().postSticky(bookGirdAdapter.getItem(position));
+            EventBus.getDefault().postSticky(bookGirdFreeAdapter.getItem(position));
             startActivity(intent);
         }
 
@@ -172,12 +172,12 @@ public class FreeBookActivity extends BaseActivity implements BookView {
                     imgNoBook.setVisibility(View.GONE);
                 }
                 if (page == 0) {
-                    bookGirdAdapter.reMove();
-                    bookGirdAdapter.setmDate(bookBeanList);
+                    bookGirdFreeAdapter.reMove();
+                    bookGirdFreeAdapter.setmDate(bookBeanList);
                 } else {
                     //加载更多
                     for (int i = 0; i < bookBeanList.size(); i++) {
-                        bookGirdAdapter.addItem(bookBeanList.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
+                        bookGirdFreeAdapter.addItem(bookBeanList.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
                     }
                 }
 

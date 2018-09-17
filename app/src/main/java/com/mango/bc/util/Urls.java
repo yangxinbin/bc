@@ -17,6 +17,7 @@ public class Urls {
     public static final String SEARCH = "/book/list/keyword";
     public static final String COMMENT = "/book/comments";
     public static final String LIBRARY = "/book/my/library";
+    public static final String AUTH = "/user/weixin/app/auth";
 
 
     public static final String HOST_BOOKCATEGORIES = HOST+BOOKCATEGORIES;
@@ -27,5 +28,6 @@ public class Urls {
     public static final String HOST_SEARCH = HOST+SEARCH;
     public static final String HOST_COMMENT = HOST+COMMENT;
     public static final String HOST_LIBRARY = HOST+LIBRARY;
+    public static final String HOST_AUTH = HOST+AUTH;
 
 }

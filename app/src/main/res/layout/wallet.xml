@@ -60,7 +60,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:text="9999.23"
                     android:textColor="@color/white"
                     android:textSize="@dimen/dp_30"
                     android:textStyle="bold" />
@@ -169,12 +168,12 @@
                         android:textSize="@dimen/textSize" />
 
                     <TextView
+                        android:id="@+id/tv_walletadress"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="Ga8D7fdDc67a8Dsdf7y7dSl6fFe8s69aB7t4d2K"
                         android:textColor="@color/white"
                         android:textSize="@dimen/textSize" />
                 </LinearLayout>

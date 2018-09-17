@@ -93,85 +93,85 @@ public class MineFragment extends Fragment {
         return view;
     }
 
-/*
-    private void loadUser(final Boolean ifCache) {
-        final ACache mCache = ACache.get(getActivity().getApplicationContext());
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final HashMap<String, String> mapParams = new HashMap<String, String>();
-                mapParams.clear();
-                mapParams.put("openId", "oXhi94jQkXPovBsqEs0B8QKsbM0A");
-                if (ifCache) {//读取缓存数据
-                    String newString = mCache.getAsString("cache_auth");
-                    if (newString != null) {
-                        UserBean userBean = AuthJsonUtils.readUserBean(newString);
-                        Message msg = mHandler.obtainMessage();
-                        msg.obj = userBean;
-                        msg.what = 1;
-                        msg.sendToTarget();
-                        return;
-                    }
-                } else {
-                    mCache.remove("cache_auth");//刷新之后缓存也更新过来
-                }
-                HttpUtils.doPost(Urls.HOST_AUTH, mapParams, new Callback() {
-                    @Override
-
-                    public void onFailure(Call call, IOException e) {
-                        mHandler.sendEmptyMessage(0);
-                    }
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        try {
-                            String string = response.body().string();
-                            mCache.put("cache_auth");
-                            UserBean userBean = AuthJsonUtils.readUserBean(string);
+    /*
+        private void loadUser(final Boolean ifCache) {
+            final ACache mCache = ACache.get(getActivity().getApplicationContext());
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    final HashMap<String, String> mapParams = new HashMap<String, String>();
+                    mapParams.clear();
+                    mapParams.put("openId", "oXhi94jQkXPovBsqEs0B8QKsbM0A");
+                    if (ifCache) {//读取缓存数据
+                        String newString = mCache.getAsString("cache_auth");
+                        if (newString != null) {
+                            UserBean userBean = AuthJsonUtils.readUserBean(newString);
                             Message msg = mHandler.obtainMessage();
                             msg.obj = userBean;
                             msg.what = 1;
                             msg.sendToTarget();
-                        } catch (Exception e) {
-                            Log.v("doPostAll", "^^^^^Exception^^^^^" + e);
+                            return;
+                        }
+                    } else {
+                        mCache.remove("cache_auth");//刷新之后缓存也更新过来
+                    }
+                    HttpUtils.doPost(Urls.HOST_AUTH, mapParams, new Callback() {
+                        @Override
+
+                        public void onFailure(Call call, IOException e) {
                             mHandler.sendEmptyMessage(0);
                         }
-                    }
-                });
-            }
-        }).start();
-    }
 
-    private MyHandler mHandler = new MyHandler();
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            try {
+                                String string = response.body().string();
+                                mCache.put("cache_auth");
+                                UserBean userBean = AuthJsonUtils.readUserBean(string);
+                                Message msg = mHandler.obtainMessage();
+                                msg.obj = userBean;
+                                msg.what = 1;
+                                msg.sendToTarget();
+                            } catch (Exception e) {
+                                Log.v("doPostAll", "^^^^^Exception^^^^^" + e);
+                                mHandler.sendEmptyMessage(0);
+                            }
+                        }
+                    });
+                }
+            }).start();
+        }
 
-    private class MyHandler extends Handler {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 0:
-                    AppUtils.showToast(getActivity(), "获取失败");
-                    break;
-                case 1:
-                    UserBean userBean = (UserBean) msg.obj;
-                    initView(userBean);
-                    break;
-                default:
-                    break;
+        private MyHandler mHandler = new MyHandler();
+
+        private class MyHandler extends Handler {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what) {
+                    case 0:
+                        AppUtils.showToast(getActivity(), "获取失败");
+                        break;
+                    case 1:
+                        UserBean userBean = (UserBean) msg.obj;
+                        initView(userBean);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
-    }
-*/
+    */
     private void initView(UserBean userBean) {
         if (userBean == null)
             return;
         tvAuthNName.setText(userBean.getAlias());
         if (userBean.getAvator() != null)
             Glide.with(getActivity()).load(Urls.HOST_GETFILE + "?name=" + userBean.getAvator().getFileName()).into(imageViePic);
-        tvClass.setText(userBean.getStats().getPaidBooks()+"本");
-        tvGet.setText(userBean.getStats().getVipGetBooks()+"本");
-        tvTime.setText(userBean.getStats().getTotalDuration()+"小时");
-        tvCode.setText(userBean.getStats().getPpCoinEarned()+"积分");
+        tvClass.setText(userBean.getStats().getPaidBooks() + "本");
+        tvGet.setText(userBean.getStats().getVipGetBooks() + "本");
+        tvTime.setText(userBean.getStats().getTotalDuration() + "小时");
+        tvCode.setText(userBean.getStats().getPpCoinEarned() + "积分");
     }
 
     @Override

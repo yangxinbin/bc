@@ -69,7 +69,6 @@ public class OtherBookDetailActivity extends BaseActivity {
     LinearLayout lNeedbuy;
     private BookDetailAdapter bookDetailAdapter;
     private MyBookDetailAdapter myBookDetailAdapter;
-    private String contentImages;
 
 
     @Override
@@ -115,7 +114,6 @@ public class OtherBookDetailActivity extends BaseActivity {
             recycle.setAdapter(bookDetailAdapter);
             Log.v("uuuuuuuuuuuu", "--?--");
         }
-        contentImages = bookBean.getChapters().get(0).getContentImages().get(0).getFileName();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
@@ -135,7 +133,6 @@ public class OtherBookDetailActivity extends BaseActivity {
             recycle.setAdapter(myBookDetailAdapter);
             Log.v("uuuuuuuuuuuu", "--?--");
         }
-        contentImages = bookBean.getBook().getChapters().get(0).getContentImages().get(0).getFileName();
     }
 
     @Override

@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mango.bc.R;
+import com.mango.bc.bookcase.adapter.MyBookCourseAdapter;
+import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.bookdetail.adapter.BookCommentAdapter;
 import com.mango.bc.homepage.bookdetail.adapter.BookCourseAdapter;
 import com.mango.bc.homepage.bookdetail.bean.CommentBean;
@@ -76,6 +78,15 @@ public class CommentFragment extends Fragment {
         bookId = bookBean.getId();
         Log.v("uuuuuuuuuuuu", "--3--");
         //EventBus.getDefault().removeStickyEvent(MyBookBean.class);//展示完删除
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void MyBookBeanEventBus(MyBookBean bookBean) {  //书架进来  不需要判断 直接可以播放
+        if (bookBean == null) {
+            return;
+        }
+        if (bookBean.getBook() != null) {
+            bookId = bookBean.getBook().getId();
+        }
     }
 
     private void initView() {

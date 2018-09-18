@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,8 @@ import com.bumptech.glide.Glide;
 import com.mango.bc.R;
 import com.mango.bc.adapter.ViewPageAdapter;
 import com.mango.bc.base.BaseActivity;
+import com.mango.bc.bookcase.adapter.MyBookDetailAdapter;
+import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.bookdetail.fragment.CommentFragment;
 import com.mango.bc.homepage.bookdetail.fragment.CourseFragment;
 import com.mango.bc.homepage.bookdetail.fragment.DetailFragment;
@@ -103,7 +106,20 @@ public class ExpertBookDetailActivity extends BaseActivity {
         lBuy.setText(bookBean.getPrice() + "币购买\n" + "会员" + bookBean.getVipPrice() + "币");
         lCollage.setText(bookBean.getGroupBuy2Price() + "-" + bookBean.getGroupBuy3Price() + "币\n拼团购买");
     }
-
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void MyBookBeanEventBus(MyBookBean bookBean) {  //书架进来  不需要判断 直接可以播放
+        if (bookBean == null) {
+            return;
+        }
+        if (bookBean.getBook() != null) {
+            if (bookBean.getBook().getCover() != null)
+                Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookBean.getBook().getCover().getFileName()).into(imgCover);
+            tvBuyer.setText(bookBean.getBook().getSold() + "");
+            tvCourse.setText(bookBean.getBook().getChapters().size() + "");
+            lBuy.setText(bookBean.getBook().getPrice() + "币购买\n" + "会员" + bookBean.getBook().getVipPrice() + "币");
+            lCollage.setText(bookBean.getBook().getGroupBuy2Price() + "-" + bookBean.getBook().getGroupBuy3Price() + "币\n拼团购买");
+        }
+    }
     private void initDatas() {
         //  mDatas = new ArrayList<String>(Arrays.asList("       我的事件       ", "       全部事件       "));
         mDatas = new ArrayList<String>(Arrays.asList("详情", "课程", "评论"));

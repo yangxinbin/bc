@@ -12,6 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mango.bc.R;
+import com.mango.bc.bookcase.adapter.MyBookCourseAdapter;
+import com.mango.bc.bookcase.adapter.MyBookDetailAdapter;
+import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.bookdetail.TxtActivity;
 import com.mango.bc.homepage.bookdetail.adapter.BookCourseAdapter;
 import com.mango.bc.homepage.net.bean.BookBean;
@@ -32,6 +35,7 @@ public class CourseFragment extends Fragment {
     @Bind(R.id.recycle)
     RecyclerView recycle;
     private BookCourseAdapter bookCourseAdapter;
+    private MyBookCourseAdapter myBookCourseAdapter;
 
     @Nullable
     @Override
@@ -55,6 +59,18 @@ public class CourseFragment extends Fragment {
             bookCourseAdapter.setOnItemClickLitener(mOnClickListenner);
         }
         //EventBus.getDefault().removeStickyEvent(MyBookBean.class);//展示完删除
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void MyBookBeanEventBus(MyBookBean bookBean) {  //书架进来  不需要判断 直接可以播放
+        if (bookBean == null) {
+            return;
+        }
+        if (bookBean.getBook() != null) {
+            myBookCourseAdapter = new MyBookCourseAdapter(bookBean.getBook().getChapters(), getActivity());
+            recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recycle.setAdapter(myBookCourseAdapter);
+            bookCourseAdapter.setOnItemClickLitener(mOnClickListenner);
+        }
     }
 
     private BookCourseAdapter.OnItemClickLitener mOnClickListenner = new BookCourseAdapter.OnItemClickLitener() {

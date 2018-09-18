@@ -2,6 +2,7 @@ package com.mango.bc.homepage.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +11,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.mango.bc.R;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.RoundImageView;
+import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +30,10 @@ import java.util.List;
 public class BookGirdFreeAdapter extends RecyclerView.Adapter {
     private Context context;
     private List<BookBean> datas = new ArrayList<>();
+    private SPUtils spUtilsAllMyBook;
 
     public BookGirdFreeAdapter(Context context) {
+        spUtilsAllMyBook = SPUtils.getInstance("allMyBook", context);
         this.context = context;
     }
 
@@ -90,8 +97,10 @@ public class BookGirdFreeAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof BookGirdFreeAdapter.BookGirdViewHolder) {
             final BookGirdFreeAdapter.BookGirdViewHolder viewHolder = (BookGirdFreeAdapter.BookGirdViewHolder) holder;
+            if (datas.get(position) == null)
+                return;
             viewHolder.tv_free_title.setText(datas.get(position).getTitle());
-            if (true) {//拿书id遍历判断
+            if (chechState(datas.get(position).getId())) {//拿书id遍历判断
                 viewHolder.tv_free_stage.setText("播放");//是领取
                 viewHolder.tv_free_stage.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -122,6 +131,21 @@ public class BookGirdFreeAdapter extends RecyclerView.Adapter {
             }
             if (datas.get(position).getCover() != null)
                 Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getCover().getFileName()).into(((BookGirdFreeAdapter.BookGirdViewHolder) holder).img_free_book);
+        }
+    }
+
+    private boolean chechState(String bookId) {
+        String data = spUtilsAllMyBook.getString("allMyBook", "");
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<String>>() {
+        }.getType();
+        List<String> list = gson.fromJson(data, listType);
+        if (list == null)
+            return false;
+        if (list.contains(bookId)){
+            return true;
+        }else {
+            return false;
         }
     }
 

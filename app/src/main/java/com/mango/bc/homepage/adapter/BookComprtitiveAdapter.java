@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +14,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.mango.bc.R;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.RoundImageView;
+import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +31,7 @@ import java.util.List;
  */
 
 public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private SPUtils spUtilsAllMyBook;
     private Context context;
     private OnItemClickLitener mOnItemClickLitener;//自注册的接口给调用者用于点击逻辑
     private List<BookBean> mData = new ArrayList<>();
@@ -56,6 +62,7 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
 
     public BookComprtitiveAdapter(Context context) {
+        spUtilsAllMyBook = SPUtils.getInstance("allMyBook", context);
         this.context = context;
     }
 
@@ -116,7 +123,7 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 ((HeadViewHolder) holder).tv_head_bc.setText(mData.get(position).getPrice() + "BC积分");
                 if (mData.get(position).getCover() != null)
                     Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + mData.get(position).getCover().getFileName()).into(((HeadViewHolder) holder).img_head_book);
-                if (true) {//拿书id遍历判断
+                if (chechState(mData.get(position).getId())) {//拿书id遍历判断
                     ((HeadViewHolder) holder).tv_head_stage.setText("播放");//是领取
                     ((HeadViewHolder) holder).tv_head_stage.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -154,7 +161,7 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 ((ItemViewHolder) holder).tv_buy.setText("已购买" + mData.get(position).getSold());
                 if (mData.get(position).getCover() != null)
                     Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + mData.get(position).getCover().getFileName()).into(((ItemViewHolder) holder).img_book);
-                if (true) {//拿书id遍历判断
+                if (chechState(mData.get(position).getId())) {//拿书id遍历判断
                     ((ItemViewHolder) holder).tv_stage.setText("播放");//是领取
                     ((ItemViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -184,6 +191,21 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     });
                 }
             }
+        }
+    }
+
+    private boolean chechState(String bookId) {
+        String data = spUtilsAllMyBook.getString("allMyBook", "");
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<String>>() {
+        }.getType();
+        List<String> list = gson.fromJson(data, listType);
+        if (list == null)
+            return false;
+        if (list.contains(bookId)) {
+            return true;
+        } else {
+            return false;
         }
     }
 

@@ -4,14 +4,17 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.bookcase.net.jsonutils.MyBookJsonUtils;
 import com.mango.bc.bookcase.net.listener.OnMyBookListener;
 import com.mango.bc.util.ACache;
+import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.SPUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,10 +30,12 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class MyBookModelImpl implements MyBookModel {
     private SPUtils spUtils;
+    private SPUtils spUtilsAllMyBook;
 
     @Override
     public void visitBooks(final Context context, final int type, final String url, final int page, final Boolean ifCache, final OnMyBookListener listener) {
         spUtils = SPUtils.getInstance("authToken", context);
+        spUtilsAllMyBook = SPUtils.getInstance("allMyBook", context);
         final ACache mCache = ACache.get(context.getApplicationContext());
         if (type == 0) {//大咖课
             new Thread(new Runnable() {
@@ -40,7 +45,7 @@ public class MyBookModelImpl implements MyBookModel {
                     mapParams.clear();
                     mapParams.put("authToken", spUtils.getString("authToken", ""));
                     mapParams.put("type", "paid");
-                    mapParams.put("page", ""+page);
+                    mapParams.put("page", "" + page);
                     if (ifCache) {//读取缓存数据
                         String newString = mCache.getAsString("cache_my" + type + page);
                         if (newString != null) {
@@ -52,10 +57,10 @@ public class MyBookModelImpl implements MyBookModel {
                     } else {
                         mCache.remove("cache_my" + type + page);//刷新之后缓存也更新过来
                     }
-                    HttpUtils.doPost(url, mapParams,new Callback() {
+                    HttpUtils.doPost(url, mapParams, new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
-                            Log.v("doPostAll", "^^^^^onFailure^^^^^"+e);
+                            Log.v("doPostAll", "^^^^^onFailure^^^^^" + e);
                             listener.onCompetitiveFailMes("FAILURE", e);
                         }
 
@@ -68,8 +73,8 @@ public class MyBookModelImpl implements MyBookModel {
                                 listener.onSuccessExpertBook(beanList);
                                 listener.onExpertBookSuccessMes("请求成功");
                             } catch (Exception e) {
-                                Log.v("doPostAll", "^^^^^Exception^^^^^"+e);
-                                listener.onExpertFailMes("请求失败",e);//java.lang.IllegalStateException: Not a JSON Object: null
+                                Log.v("doPostAll", "^^^^^Exception^^^^^" + e);
+                                listener.onExpertFailMes("请求失败", e);//java.lang.IllegalStateException: Not a JSON Object: null
                             }
                         }
                     });
@@ -83,7 +88,7 @@ public class MyBookModelImpl implements MyBookModel {
                     mapParams.clear();
                     mapParams.put("authToken", spUtils.getString("authToken", ""));
                     mapParams.put("type", "member");
-                    mapParams.put("page", ""+page);
+                    mapParams.put("page", "" + page);
                     if (ifCache) {//读取缓存数据
                         String newString = mCache.getAsString("cache_my" + type + page);
                         if (newString != null) {
@@ -95,10 +100,10 @@ public class MyBookModelImpl implements MyBookModel {
                     } else {
                         mCache.remove("cache_my" + type + page);//刷新之后缓存也更新过来
                     }
-                    HttpUtils.doPost(url, mapParams,new Callback() {
+                    HttpUtils.doPost(url, mapParams, new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
-                            Log.v("doPostAll", "^^^^^onFailure^^^^^"+e);
+                            Log.v("doPostAll", "^^^^^onFailure^^^^^" + e);
                             listener.onCompetitiveFailMes("FAILURE", e);
                         }
 
@@ -111,14 +116,14 @@ public class MyBookModelImpl implements MyBookModel {
                                 listener.onSuccessCompetitiveBook(beanList);
                                 listener.onCompetitiveBookSuccessMes("请求成功");
                             } catch (Exception e) {
-                                Log.v("doPostAll", "^^^^^Exception^^^^^"+e);
-                                listener.onCompetitiveFailMes("请求失败",e);//java.lang.IllegalStateException: Not a JSON Object: null
+                                Log.v("doPostAll", "^^^^^Exception^^^^^" + e);
+                                listener.onCompetitiveFailMes("请求失败", e);//java.lang.IllegalStateException: Not a JSON Object: null
                             }
                         }
                     });
                 }
             }).start();
-        }else if (type == 2) {//免费课
+        } else if (type == 2) {//免费课
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -126,7 +131,7 @@ public class MyBookModelImpl implements MyBookModel {
                     mapParams.clear();
                     mapParams.put("authToken", spUtils.getString("authToken", ""));
                     mapParams.put("type", "free");
-                    mapParams.put("page", ""+page);
+                    mapParams.put("page", "" + page);
                     if (ifCache) {//读取缓存数据
                         String newString = mCache.getAsString("cache_my" + type + page);
                         if (newString != null) {
@@ -138,10 +143,10 @@ public class MyBookModelImpl implements MyBookModel {
                     } else {
                         mCache.remove("cache_my" + type + page);//刷新之后缓存也更新过来
                     }
-                    HttpUtils.doPost(url, mapParams,new Callback() {
+                    HttpUtils.doPost(url, mapParams, new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
-                            Log.v("doPostAll", "^^^^^onFailure^^^^^"+e);
+                            Log.v("doPostAll", "^^^^^onFailure^^^^^" + e);
                             listener.onFreeBookFailMes("FAILURE", e);
                         }
 
@@ -154,38 +159,46 @@ public class MyBookModelImpl implements MyBookModel {
                                 listener.onSuccessFreeBook(beanList);
                                 listener.onFreeBookSuccessMes("请求成功");
                             } catch (Exception e) {
-                                Log.v("doPostAll", "^^^^^Exception^^^^^"+e);
-                                listener.onFreeBookFailMes("请求失败",e);//java.lang.IllegalStateException: Not a JSON Object: null
+                                Log.v("doPostAll", "^^^^^Exception^^^^^" + e);
+                                listener.onFreeBookFailMes("请求失败", e);//java.lang.IllegalStateException: Not a JSON Object: null
                             }
                         }
                     });
                 }
             }).start();
-        }else if (type == 3) {//所有领取
+        } else if (type == 3) {//所有领取
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     final HashMap<String, String> mapParams = new HashMap<String, String>();
+                    final List<String> list = new ArrayList<String>();
                     mapParams.clear();
+                    list.clear();
+                    spUtilsAllMyBook.remove("allMyBook");
                     mapParams.put("authToken", spUtils.getString("authToken", ""));
                     mapParams.put("type", "all");
-                    mapParams.put("page", ""+page);
+                    mapParams.put("page", "" + page);
                     if (ifCache) {//读取缓存数据
                         String newString = mCache.getAsString("cache_my" + type + page);
                         if (newString != null) {
                             List<MyBookBean> beanList = MyBookJsonUtils.readMyBookBean(newString);//data是json字段获得data的值即对象数组
-                            listener.onSuccessFreeBook(beanList);
-                            listener.onAllBookSuccessMes("SUCCESS");
+                            for (int i = 0; i < beanList.size(); i++) {
+                                list.add(beanList.get(i).getBook().getId());
+                            }
+                            Log.v("llllllll", "-----" + list.size());
+                            Gson gson = new Gson();
+                            String data = gson.toJson(list);
+                            spUtilsAllMyBook.put("allMyBook", data);
+                            listener.onAllBookSuccessMes("请求成功");
                             return;
                         }
                     } else {
                         mCache.remove("cache_my" + type + page);//刷新之后缓存也更新过来
                     }
-                    HttpUtils.doPost(url, mapParams,new Callback() {
+                    HttpUtils.doPost(url, mapParams, new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
-                            Log.v("doPostAll", "^^^^^onFailure^^^^^"+e);
-                            listener.onAllBookFailMes("FAILURE", e);
+                            listener.onAllBookFailMes("请求失败", e);//java.lang.IllegalStateException: Not a JSON Object: null
                         }
 
                         @Override
@@ -194,11 +207,16 @@ public class MyBookModelImpl implements MyBookModel {
                                 String string = response.body().string();
                                 mCache.put("cache_my" + type + page, string);
                                 List<MyBookBean> beanList = MyBookJsonUtils.readMyBookBean(string);
-                                listener.onSuccessFreeBook(beanList);
+                                for (int i = 0; i < beanList.size(); i++) {
+                                    list.add(beanList.get(i).getBook().getId());
+                                }
+                                Log.v("llllllll", "-----" + list.size());
+                                Gson gson = new Gson();
+                                String data = gson.toJson(list);
+                                spUtilsAllMyBook.put("allMyBook", data);
                                 listener.onAllBookSuccessMes("请求成功");
                             } catch (Exception e) {
-                                Log.v("doPostAll", "^^^^^Exception^^^^^"+e);
-                                listener.onAllBookFailMes("请求失败",e);//java.lang.IllegalStateException: Not a JSON Object: null
+                                listener.onAllBookFailMes("请求失败", e);//java.lang.IllegalStateException: Not a JSON Object: null
                             }
                         }
                     });

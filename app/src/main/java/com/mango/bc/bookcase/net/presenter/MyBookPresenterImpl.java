@@ -55,7 +55,7 @@ public class MyBookPresenterImpl implements MyBookPresenter, OnMyBookListener {
             url = getUrl(type, context);
         } else if (type == 2) {
             url = getUrl(type, context);
-        } else if (type == 3) {//所以
+        } else if (type == 3) {//所有
             url = getUrl(type, context);
         }
         Log.v("pppppppppppp", "" + url);
@@ -72,6 +72,9 @@ public class MyBookPresenterImpl implements MyBookPresenter, OnMyBookListener {
                 sburl.append(Urls.HOST_LIBRARY);
                 break;
             case 2:
+                sburl.append(Urls.HOST_LIBRARY);
+                break;
+            case 3:
                 sburl.append(Urls.HOST_LIBRARY);
                 break;
         }

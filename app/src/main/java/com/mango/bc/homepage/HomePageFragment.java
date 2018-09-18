@@ -11,13 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
 import com.mango.bc.R;
+import com.mango.bc.bookcase.net.bean.MyBookBean;
+import com.mango.bc.bookcase.net.presenter.MyBookPresenter;
+import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
+import com.mango.bc.bookcase.net.view.MyAllBookView;
 import com.mango.bc.homepage.adapter.HomePageAdapter;
 import com.mango.bc.homepage.net.bean.LoadStageBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.NetUtil;
+import com.mango.bc.util.SPUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -26,6 +32,9 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -33,7 +42,7 @@ import butterknife.ButterKnife;
  * Created by admin on 2018/9/3.
  */
 
-public class HomePageFragment extends Fragment{
+public class HomePageFragment extends Fragment implements MyAllBookView {
     @Bind(R.id.recycle)
     RecyclerView recycle;
     @Bind(R.id.refresh)
@@ -41,14 +50,17 @@ public class HomePageFragment extends Fragment{
     private boolean isFirstEnter = true;
     private HomePageAdapter homePageAdapter;
     private BookPresenter bookPresenter;
-    private final int TYPE = -1;
+    private final int TYPE = 3;
     private int page = 0;
+    private MyBookPresenter myBookPresenter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.homepage, container, false);
+        myBookPresenter = new MyBookPresenterImpl(this);
         ButterKnife.bind(this, view);
+        myBookPresenter.visitBooks(getActivity(), TYPE, 0, false);//获取书架的所有书
         initView();
         refreshAndLoadMore();
         return view;
@@ -70,10 +82,10 @@ public class HomePageFragment extends Fragment{
                         page = 0;
                         if (NetUtil.isNetConnect(getActivity())) {
                             RefreshStageBean refreshStageBean = new RefreshStageBean(true, true, true, true, true);
-                            Log.v("yyyyyyy","=====all--"+refreshStageBean.toString());
+                            Log.v("yyyyyyy", "=====all--" + refreshStageBean.toString());
                             EventBus.getDefault().postSticky(refreshStageBean);
                         } else {
-                            AppUtils.showToast(getActivity(),getString(R.string.check_net));
+                            AppUtils.showToast(getActivity(), getString(R.string.check_net));
                             RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, false, false);
                             EventBus.getDefault().postSticky(refreshStageBean);
                         }
@@ -111,5 +123,19 @@ public class HomePageFragment extends Fragment{
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void addAllBook(final List<MyBookBean> bookBeanList) {
+    }
+
+    @Override
+    public void addSuccess(String s) {
+
+    }
+
+    @Override
+    public void addFail(String f) {
+
     }
 }

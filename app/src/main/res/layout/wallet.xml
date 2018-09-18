@@ -326,6 +326,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv_1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -333,6 +334,7 @@
                         android:text="+1" />
 
                     <TextView
+                        android:id="@+id/tv_2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -340,6 +342,7 @@
                         android:text="+1" />
 
                     <TextView
+                        android:id="@+id/tv_3"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -347,6 +350,7 @@
                         android:text="+1" />
 
                     <TextView
+                        android:id="@+id/tv_4"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -354,6 +358,7 @@
                         android:text="+1" />
 
                     <TextView
+                        android:id="@+id/tv_5"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -361,6 +366,7 @@
                         android:text="+1" />
 
                     <TextView
+                        android:id="@+id/tv_6"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -368,11 +374,12 @@
                         android:text="+1" />
 
                     <TextView
+                        android:id="@+id/tv_7"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="+6" />
+                        android:text="+1+5" />
                 </LinearLayout>
 
                 <io.victoralbertos.breadcumbs_view.BreadcrumbsView
@@ -401,6 +408,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv_d1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -408,6 +416,7 @@
                         android:text="1天" />
 
                     <TextView
+                        android:id="@+id/tv_d2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -415,6 +424,7 @@
                         android:text="2天" />
 
                     <TextView
+                        android:id="@+id/tv_d3"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -422,6 +432,7 @@
                         android:text="3天" />
 
                     <TextView
+                        android:id="@+id/tv_d4"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -429,6 +440,7 @@
                         android:text="4天" />
 
                     <TextView
+                        android:id="@+id/tv_d5"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -436,6 +448,7 @@
                         android:text="5天" />
 
                     <TextView
+                        android:id="@+id/tv_d6"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -443,6 +456,7 @@
                         android:text="6天" />
 
                     <TextView
+                        android:id="@+id/tv_d7"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

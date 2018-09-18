@@ -1,5 +1,6 @@
 package com.mango.bc.homepage.bookdetail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,32 +33,44 @@ public class TxtActivity extends BaseActivity {
     RecyclerView recycle;
     private TxtDetailAdapter txtDetailAdapter;
     private MyTxtDetailAdapter myTxtDetailAdapter;
+    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_txt);
         ButterKnife.bind(this);
+        position = getIntent().getIntExtra("position", -1);//-1 代表除大咖课其它课跳过来的
         EventBus.getDefault().register(this);
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void BookBeanEventBus(BookBean bookBean) {
         if (bookBean == null) {
             return;
         }
         if (bookBean.getChapters() != null) {
-            txtDetailAdapter = new TxtDetailAdapter(bookBean.getChapters().get(0).getContentImages(),this);
+            if (position == -1) {
+                txtDetailAdapter = new TxtDetailAdapter(bookBean.getChapters().get(0).getContentImages(), this);
+            }else {
+                txtDetailAdapter = new TxtDetailAdapter(bookBean.getChapters().get(position).getContentImages(), this);
+            }
             recycle.setLayoutManager(new LinearLayoutManager(this));
             recycle.setAdapter(txtDetailAdapter);
         }
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void MyBookBeanEventBus(MyBookBean bookBean) {  //书架进来  不需要判断 直接可以播放
         if (bookBean == null) {
             return;
         }
         if (bookBean.getBook().getDescriptionImages() != null) {
-            myTxtDetailAdapter = new MyTxtDetailAdapter(bookBean.getBook().getChapters().get(0).getContentImages(),this);
+            if (position == -1) {
+                myTxtDetailAdapter = new MyTxtDetailAdapter(bookBean.getBook().getChapters().get(0).getContentImages(), this);
+            }else {
+                myTxtDetailAdapter = new MyTxtDetailAdapter(bookBean.getBook().getChapters().get(position).getContentImages(), this);
+            }
             recycle.setLayoutManager(new LinearLayoutManager(this));
             recycle.setAdapter(myTxtDetailAdapter);
         }

@@ -1,5 +1,6 @@
 package com.mango.bc.homepage.bookdetail.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mango.bc.R;
+import com.mango.bc.homepage.bookdetail.TxtActivity;
 import com.mango.bc.homepage.bookdetail.adapter.BookCourseAdapter;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.AppUtils;
@@ -39,33 +41,39 @@ public class CourseFragment extends Fragment {
         EventBus.getDefault().register(this);
         return view;
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void BookBeanEventBus(BookBean bookBean) {
         if (bookBean == null) {
             return;
         }
-        Log.v("uuuuuuuuuuuu","--2--");
+        Log.v("uuuuuuuuuuuu", "--2--");
         if (bookBean.getDescriptionImages() != null) {
-            bookCourseAdapter = new BookCourseAdapter(bookBean.getChapters(),getActivity());
+            bookCourseAdapter = new BookCourseAdapter(bookBean.getChapters(), getActivity());
             recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
             recycle.setAdapter(bookCourseAdapter);
             bookCourseAdapter.setOnItemClickLitener(mOnClickListenner);
         }
         //EventBus.getDefault().removeStickyEvent(MyBookBean.class);//展示完删除
     }
+
     private BookCourseAdapter.OnItemClickLitener mOnClickListenner = new BookCourseAdapter.OnItemClickLitener() {
+        Intent intent;
 
         @Override
         public void onReadClick(View view, int position) {
-            AppUtils.showToast(getContext(),"播放");
+            AppUtils.showToast(getContext(), "播放");
         }
 
         @Override
         public void onTxtClick(View view, int position) {
-            AppUtils.showToast(getContext(),"阅读");
-
+            AppUtils.showToast(getContext(), "阅读");
+            intent = new Intent(getActivity(), TxtActivity.class);
+            intent.putExtra("position",position);
+            startActivity(intent);
         }
     };
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

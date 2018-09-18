@@ -19,7 +19,6 @@ import com.mango.bc.homepage.net.bean.LoadStageBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
-import com.mango.bc.homepage.net.view.BookView;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.NetUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -39,7 +38,7 @@ import butterknife.ButterKnife;
  * Created by admin on 2018/9/3.
  */
 
-public class HomePageFragment extends Fragment implements BookView {
+public class HomePageFragment extends Fragment{
     @Bind(R.id.recycle)
     RecyclerView recycle;
     @Bind(R.id.refresh)
@@ -54,7 +53,6 @@ public class HomePageFragment extends Fragment implements BookView {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.homepage, container, false);
-        bookPresenter = new BookPresenterImpl(this);
         ButterKnife.bind(this, view);
         initView();
         refreshAndLoadMore();
@@ -118,38 +116,5 @@ public class HomePageFragment extends Fragment implements BookView {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-    }
-
-    @Override
-    public void addCompetitiveField(List<CompetitiveFieldBean> competitiveFieldBeanList) {
-    }
-
-    @Override
-    public void addCompetitiveBook(List<BookBean> bookBeanList) {
-    }
-
-    @Override
-    public void addExpertBook(List<BookBean> bookBeanList) {
-    }
-
-    @Override
-    public void addFreeBook(List<BookBean> bookBeen) {
-    }
-
-    @Override
-    public void addNewestBook(List<BookBean> bookBeanList) {
-    }
-
-    @Override
-    public void addSearchBook(List<BookBean> bookBeanList) {
-
-    }
-
-    @Override
-    public void addSuccess(String s) {
-    }
-
-    @Override
-    public void addFail(String f) {
     }
 }

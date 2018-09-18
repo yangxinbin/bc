@@ -17,12 +17,11 @@ import com.mango.bc.homepage.activity.competitivebook.CompetitiveBookActivity;
 import com.mango.bc.homepage.adapter.CompetitiveFieldAdapter;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
-import com.mango.bc.homepage.net.bean.BookBean;
-import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
-import com.mango.bc.homepage.net.view.BookView;
+import com.mango.bc.homepage.net.view.BookCompetitiveFieldView;
+import com.mango.bc.homepage.net.view.BookCompetitiveView;
 import com.mango.bc.util.AppUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -36,7 +35,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CompetitiveFragment extends Fragment implements BookView {
+public class CompetitiveFieldFragment extends Fragment implements BookCompetitiveFieldView {
     @Bind(R.id.see_more)
     TextView seeMore;
     @Bind(R.id.recycle)
@@ -123,32 +122,7 @@ public class CompetitiveFragment extends Fragment implements BookView {
     }
 
     @Override
-    public void addCompetitiveBook(List<BookBean> bookBeanList) {
-
-    }
-
-    @Override
-    public void addExpertBook(List<BookBean> bookBeanList) {
-
-    }
-
-    @Override
-    public void addFreeBook(List<BookBean> bookBeanList) {
-
-    }
-
-    @Override
-    public void addNewestBook(List<BookBean> bookBeanList) {
-
-    }
-
-    @Override
-    public void addSearchBook(List<BookBean> bookBeanList) {
-
-    }
-
-    @Override
-    public void addSuccess(String s) {
+    public void addSuccessCompetitiveField(String s) {
         if (getActivity() != null) getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -158,11 +132,11 @@ public class CompetitiveFragment extends Fragment implements BookView {
     }
 
     @Override
-    public void addFail(String f) {
+    public void addFailCompetitiveField(String f) {
         if (getActivity() != null) getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                AppUtils.showToast(getActivity(), "精品课程请求失败");
+                AppUtils.showToast(getActivity(), "精品类型请求失败");
             }
         });
     }

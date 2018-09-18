@@ -42,7 +42,7 @@ public class BookModelImpl implements BookModel {
                         if (newString != null) {
                             List<CompetitiveFieldBean> beanList = JsonUtils.readCompetitiveFieldBean(newString);//data是json字段获得data的值即对象数组
                             listener.onSuccessCompetitiveField(beanList);
-                            listener.onSuccessMes("SUCCESS");
+                            listener.onSuccessMesCompetitiveField("SUCCESS");
                             Log.v("yyyyyy", "---cache---" + type);
                             return;
                         }
@@ -53,7 +53,7 @@ public class BookModelImpl implements BookModel {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             Log.v("yyyyyyyyy", e + "*****onFailure*****" + url);
-                            listener.onFailMes("FAILURE", e);
+                            listener.onFailMesCompetitiveField("FAILURE", e);
                         }
 
                         @Override
@@ -64,10 +64,10 @@ public class BookModelImpl implements BookModel {
                                 mCache.put("cache" + type, string);
                                 List<CompetitiveFieldBean> beanList = JsonUtils.readCompetitiveFieldBean(string);//data是json字段获得data的值即对象数组
                                 listener.onSuccessCompetitiveField(beanList);
-                                listener.onSuccessMes("SUCCESS");
+                                listener.onSuccessMesCompetitiveField("SUCCESS");
                             } catch (Exception e) {
                                 Log.v("yyyyyyyyy", "*****e*****" + response.code());
-                                listener.onFailMes("FAILURE", e);
+                                listener.onFailMesCompetitiveField("FAILURE", e);
                             }
                         }
                     });
@@ -84,7 +84,7 @@ public class BookModelImpl implements BookModel {
                         if (newString != null) {
                             List<BookBean> beanList = JsonUtils.readBookBean(newString);//data是json字段获得data的值即对象数组
                             listener.onSuccessCompetitiveBook(beanList);
-                            listener.onSuccessMes("SUCCESS");
+                            listener.onSuccessMesCompetitiveBook("SUCCESS");
                             Log.v("yyyyyy", "---cache---" + type);
                             return;
                         }
@@ -94,7 +94,7 @@ public class BookModelImpl implements BookModel {
                     HttpUtils.doGet(url, new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
-                            listener.onFailMes("FAILURE", e);
+                            listener.onFailMesCompetitiveBook("FAILURE", e);
                             Log.v("yyyyyyyyy", url + "*****1*****" + e);
                         }
 
@@ -106,10 +106,10 @@ public class BookModelImpl implements BookModel {
                                 Log.v("yyyyyyyyy", url + "*****1*****" + string);
                                 List<BookBean> beanList = JsonUtils.readBookBean(string);//data是json字段获得data的值即对象数组
                                 listener.onSuccessCompetitiveBook(beanList);
-                                listener.onSuccessMes("SUCCESS");
+                                listener.onSuccessMesCompetitiveBook("SUCCESS");
                             } catch (Exception e) {
                                 Log.v("yyyyyyyyy", "*****Exception*****" + e);
-                                listener.onFailMes("FAILURE", e);
+                                listener.onFailMesCompetitiveBook("FAILURE", e);
                             }
                         }
                     });
@@ -126,7 +126,7 @@ public class BookModelImpl implements BookModel {
                         if (newString != null) {
                             List<BookBean> beanList = JsonUtils.readBookBean(newString);//data是json字段获得data的值即对象数组
                             listener.onSuccessExpertBook(beanList);
-                            listener.onSuccessMes("SUCCESS");
+                            listener.onSuccessMesExpertBook("SUCCESS");
                             return;
                         }
                     } else {
@@ -135,7 +135,7 @@ public class BookModelImpl implements BookModel {
                     HttpUtils.doGet(url, new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
-                            listener.onFailMes("FAILURE", e);
+                            listener.onFailMesExpertBook("FAILURE", e);
                         }
 
                         @Override
@@ -146,9 +146,9 @@ public class BookModelImpl implements BookModel {
                                 mCache.put("cache" + type + page, string);
                                 List<BookBean> beanList = JsonUtils.readBookBean(string);
                                 listener.onSuccessExpertBook(beanList);
-                                listener.onSuccessMes("请求成功");
+                                listener.onSuccessMesExpertBook("请求成功");
                             } catch (Exception e) {
-                                listener.onSuccessMes("请求失败");//java.lang.IllegalStateException: Not a JSON Object: null
+                                listener.onFailMesExpertBook("请求失败",e);//java.lang.IllegalStateException: Not a JSON Object: null
                             }
                         }
                     });
@@ -164,7 +164,7 @@ public class BookModelImpl implements BookModel {
                         if (newString != null) {
                             List<BookBean> beanList = JsonUtils.readBookBean(newString);//data是json字段获得data的值即对象数组
                             listener.onSuccessFreeBook(beanList);
-                            listener.onSuccessMes("SUCCESS");
+                            listener.onSuccessMesFreeBook("SUCCESS");
                             return;
                         }
                     } else {
@@ -173,7 +173,7 @@ public class BookModelImpl implements BookModel {
                     HttpUtils.doGet(url, new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
-                            listener.onFailMes("FAILURE", e);
+                            listener.onFailMesFreeBook("FAILURE", e);
                         }
 
                         @Override
@@ -184,9 +184,9 @@ public class BookModelImpl implements BookModel {
                                 mCache.put("cache" + type + page, string);
                                 List<BookBean> beanList = JsonUtils.readBookBean(string);
                                 listener.onSuccessFreeBook(beanList);
-                                listener.onSuccessMes("请求成功");
+                                listener.onSuccessMesFreeBook("请求成功");
                             } catch (Exception e) {
-                                listener.onSuccessMes("请求失败");//java.lang.IllegalStateException: Not a JSON Object: null
+                                listener.onFailMesFreeBook("请求失败",e);//java.lang.IllegalStateException: Not a JSON Object: null
                             }
                         }
                     });
@@ -203,7 +203,7 @@ public class BookModelImpl implements BookModel {
                         if (newString != null) {
                             List<BookBean> beanList = JsonUtils.readBookBean(newString);//data是json字段获得data的值即对象数组
                             listener.onSuccessNewestBook(beanList);
-                            listener.onSuccessMes("SUCCESS");
+                            listener.onSuccessMesNewestBook("SUCCESS");
                             return;
                         }
                     } else {
@@ -212,7 +212,7 @@ public class BookModelImpl implements BookModel {
                     HttpUtils.doGet(url, new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
-                            listener.onFailMes("FAILURE", e);
+                            listener.onFailMesNewestBook("FAILURE", e);
                         }
 
                         @Override
@@ -223,9 +223,9 @@ public class BookModelImpl implements BookModel {
                                 mCache.put("cache" + type + page, string);
                                 List<BookBean> beanList = JsonUtils.readBookBean(string);
                                 listener.onSuccessNewestBook(beanList);
-                                listener.onSuccessMes("请求成功");
+                                listener.onSuccessMesNewestBook("请求成功");
                             } catch (Exception e) {
-                                listener.onSuccessMes("请求失败");//java.lang.IllegalStateException: Not a JSON Object: null
+                                listener.onFailMesNewestBook("请求失败",e);//java.lang.IllegalStateException: Not a JSON Object: null
                             }
                         }
                     });
@@ -241,7 +241,7 @@ public class BookModelImpl implements BookModel {
                         if (newString != null) {
                             List<BookBean> beanList = JsonUtils.readBookBean(newString);//data是json字段获得data的值即对象数组
                             listener.onSuccessSearchBook(beanList);
-                            listener.onSuccessMes("SUCCESS");
+                            listener.onSuccessMesSearchBook("SUCCESS");
                             return;
                         }
                     } else {
@@ -250,7 +250,7 @@ public class BookModelImpl implements BookModel {
                     HttpUtils.doGet(url, new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
-                            listener.onFailMes("FAILURE", e);
+                            listener.onFailMesSearchBook("FAILURE", e);
                         }
 
                         @Override
@@ -261,9 +261,9 @@ public class BookModelImpl implements BookModel {
                                 mCache.put("cache" + type + page, string);
                                 List<BookBean> beanList = JsonUtils.readBookBean(string);
                                 listener.onSuccessSearchBook(beanList);
-                                listener.onSuccessMes("请求成功");
+                                listener.onSuccessMesSearchBook("请求成功");
                             } catch (Exception e) {
-                                listener.onSuccessMes("请求失败");//java.lang.IllegalStateException: Not a JSON Object: null
+                                listener.onFailMesSearchBook("请求失败",e);//java.lang.IllegalStateException: Not a JSON Object: null
                             }
                         }
                     });

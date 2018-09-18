@@ -21,7 +21,7 @@ import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
-import com.mango.bc.homepage.net.view.BookView;
+import com.mango.bc.homepage.net.view.BookFreeView;
 import com.mango.bc.util.AppUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -35,7 +35,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class FreeFragment extends Fragment implements BookView {
+public class FreeFragment extends Fragment implements BookFreeView {
     @Bind(R.id.see_more)
     TextView seeMore;
     @Bind(R.id.recycle)
@@ -124,21 +124,6 @@ public class FreeFragment extends Fragment implements BookView {
     }
 
     @Override
-    public void addCompetitiveField(List<CompetitiveFieldBean> competitiveFieldBeanList) {
-
-    }
-
-    @Override
-    public void addCompetitiveBook(List<BookBean> bookBeanList) {
-
-    }
-
-    @Override
-    public void addExpertBook(List<BookBean> bookBeanList) {
-
-    }
-
-    @Override
     public void addFreeBook(final List<BookBean> bookBeanList) {
         if (getActivity() != null)
             getActivity().runOnUiThread(new Runnable() {
@@ -165,22 +150,12 @@ public class FreeFragment extends Fragment implements BookView {
     }
 
     @Override
-    public void addNewestBook(List<BookBean> bookBeanList) {
+    public void addSuccessFreeBook(String s) {
 
     }
 
     @Override
-    public void addSearchBook(List<BookBean> bookBeanList) {
-
-    }
-
-    @Override
-    public void addSuccess(String s) {
-
-    }
-
-    @Override
-    public void addFail(String f) {
+    public void addFailFreeBook(String f) {
         if (getActivity() != null) getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

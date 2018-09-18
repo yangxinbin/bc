@@ -6,12 +6,15 @@ import android.util.Log;
 
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
-import com.mango.bc.homepage.net.bean.BookBean;
-import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.listener.OnBookListener;
 import com.mango.bc.homepage.net.model.BookModel;
 import com.mango.bc.homepage.net.model.BookModelImpl;
-import com.mango.bc.homepage.net.view.BookView;
+import com.mango.bc.homepage.net.view.BookCompetitiveFieldView;
+import com.mango.bc.homepage.net.view.BookCompetitiveView;
+import com.mango.bc.homepage.net.view.BookExpertView;
+import com.mango.bc.homepage.net.view.BookFreeView;
+import com.mango.bc.homepage.net.view.BookNewestView;
+import com.mango.bc.homepage.net.view.BookSearchView;
 import com.mango.bc.util.URLEncoderURI;
 import com.mango.bc.util.Urls;
 
@@ -25,15 +28,40 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class BookPresenterImpl implements BookPresenter, OnBookListener {
-    private BookView bookView;
+    private BookCompetitiveFieldView bookCompetitiveFieldView;
+    private BookCompetitiveView bookCompetitiveView;
+    private BookExpertView bookExpertView;
+    private BookFreeView bookFreeView;
+    private BookNewestView bookNewestView;
+    private BookSearchView bookSearchView;
+
     private BookModel bookModel;
     private SharedPreferences sharedPreferences;
 
-    public BookPresenterImpl(BookView u) {
-        this.bookView = u;
+    public BookPresenterImpl(BookCompetitiveFieldView u) {
+        this.bookCompetitiveFieldView = u;
         this.bookModel = new BookModelImpl();
     }
-
+    public BookPresenterImpl(BookCompetitiveView u) {
+        this.bookCompetitiveView = u;
+        this.bookModel = new BookModelImpl();
+    }
+    public BookPresenterImpl(BookExpertView u) {
+        this.bookExpertView = u;
+        this.bookModel = new BookModelImpl();
+    }
+    public BookPresenterImpl(BookFreeView u) {
+        this.bookFreeView = u;
+        this.bookModel = new BookModelImpl();
+    }
+    public BookPresenterImpl(BookNewestView u) {
+        this.bookNewestView = u;
+        this.bookModel = new BookModelImpl();
+    }
+    public BookPresenterImpl(BookSearchView u) {
+        this.bookSearchView = u;
+        this.bookModel = new BookModelImpl();
+    }
     @Override
     public void visitBooks(Context context, int type, String keyWordString, int page, Boolean ifCache) {
         sharedPreferences = context.getSharedPreferences("BC", MODE_PRIVATE);
@@ -86,41 +114,100 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
 
     @Override
     public void onSuccessCompetitiveBook(List<BookBean> bookBeanList) {
-        bookView.addCompetitiveBook(bookBeanList);
+        bookCompetitiveView.addCompetitiveBook(bookBeanList);
     }
 
     @Override
     public void onSuccessCompetitiveField(List<CompetitiveFieldBean> competitiveFieldBeanList) {
-        bookView.addCompetitiveField(competitiveFieldBeanList);
+        bookCompetitiveFieldView.addCompetitiveField(competitiveFieldBeanList);
     }
 
     @Override
     public void onSuccessExpertBook(List<BookBean> bookBeanList) {
-        bookView.addExpertBook(bookBeanList);
+        bookExpertView.addExpertBook(bookBeanList);
     }
 
     @Override
     public void onSuccessFreeBook(List<BookBean> bookBeanList) {
-        bookView.addFreeBook(bookBeanList);
+        bookFreeView.addFreeBook(bookBeanList);
     }
 
     @Override
     public void onSuccessNewestBook(List<BookBean> bookBeanList) {
-        bookView.addNewestBook(bookBeanList);
+        bookNewestView.addNewestBook(bookBeanList);
     }
 
     @Override
     public void onSuccessSearchBook(List<BookBean> bookBeanList) {
-        bookView.addSearchBook(bookBeanList);
+        bookSearchView.addSearchBook(bookBeanList);
     }
 
     @Override
-    public void onSuccessMes(String msg) {
-        bookView.addSuccess(msg);
+    public void onSuccessMesCompetitiveField(String msg) {
+        bookCompetitiveFieldView.addSuccessCompetitiveField(msg);
     }
 
     @Override
-    public void onFailMes(String msg, Exception e) {
-        bookView.addFail(msg);
+    public void onSuccessMesCompetitiveBook(String msg) {
+        bookCompetitiveView.addSuccessCompetitiveBook(msg);
+    }
+
+    @Override
+    public void onSuccessMesExpertBook(String msg) {
+        bookExpertView.addSuccessExpertBook(msg);
+    }
+
+    @Override
+    public void onSuccessMesFreeBook(String msg) {
+        bookFreeView.addSuccessFreeBook(msg);
+
+    }
+
+    @Override
+    public void onSuccessMesNewestBook(String msg) {
+        bookNewestView.addSuccessNewestBook(msg);
+
+    }
+
+    @Override
+    public void onSuccessMesSearchBook(String msg) {
+        bookSearchView.addSuccessSearchBook(msg);
+
+    }
+
+    @Override
+    public void onFailMesCompetitiveField(String msg, Exception e) {
+        bookCompetitiveFieldView.addFailCompetitiveField(msg);
+
+    }
+
+    @Override
+    public void onFailMesCompetitiveBook(String msg, Exception e) {
+        bookCompetitiveView.addFailCompetitiveBook(msg);
+
+    }
+
+    @Override
+    public void onFailMesExpertBook(String msg, Exception e) {
+        bookExpertView.addFailExpertBook(msg);
+
+    }
+
+    @Override
+    public void onFailMesFreeBook(String msg, Exception e) {
+        bookFreeView.addFailFreeBook(msg);
+
+    }
+
+    @Override
+    public void onFailMesNewestBook(String msg, Exception e) {
+        bookNewestView.addFailNewestBook(msg);
+
+    }
+
+    @Override
+    public void onFailMesSearchBook(String msg, Exception e) {
+        bookSearchView.addFailSearchBook(msg);
+
     }
 }

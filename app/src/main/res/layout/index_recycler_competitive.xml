@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    android:name="com.mango.bc.homepage.fragment.CompetitiveFragment"
+    android:name="com.mango.bc.homepage.fragment.CompetitiveFieldFragment"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />
 

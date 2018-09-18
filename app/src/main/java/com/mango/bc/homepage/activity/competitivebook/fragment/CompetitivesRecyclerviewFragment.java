@@ -24,7 +24,7 @@ import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
-import com.mango.bc.homepage.net.view.BookView;
+import com.mango.bc.homepage.net.view.BookCompetitiveView;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.NetUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -46,7 +46,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by admin on 2018/5/21.
  */
 
-public class CompetitivesRecyclerviewFragment extends Fragment implements BookView {
+public class CompetitivesRecyclerviewFragment extends Fragment implements BookCompetitiveView {
     @Bind(R.id.recycle)
     RecyclerView recycle;
     @Bind(R.id.refresh)
@@ -194,12 +194,6 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
         ButterKnife.unbind(this);
         EventBus.getDefault().unregister(this);
     }
-
-    @Override
-    public void addCompetitiveField(List<CompetitiveFieldBean> competitiveFieldBeanList) {
-
-    }
-
     @Override
     public void addCompetitiveBook(final List<BookBean> bookBeanList) {
         if (getActivity() != null)
@@ -234,37 +228,12 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookVi
     }
 
     @Override
-    public void addExpertBook(List<BookBean> bookBeanList) {
+    public void addSuccessCompetitiveBook(String s) {
 
     }
 
     @Override
-    public void addFreeBook(List<BookBean> bookBeanList) {
-
-    }
-
-    @Override
-    public void addNewestBook(List<BookBean> bookBeanList) {
-
-    }
-
-    @Override
-    public void addSearchBook(List<BookBean> bookBeanList) {
-
-    }
-
-    @Override
-    public void addSuccess(String s) {
-/*                if (getActivity() != null)            getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                AppUtils.showToast(getActivity(), "SUCCESS");
-            }
-        });*/
-    }
-
-    @Override
-    public void addFail(String f) {
+    public void addFailCompetitiveBook(String f) {
         if (getActivity() != null) getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

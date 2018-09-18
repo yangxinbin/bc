@@ -17,7 +17,7 @@ import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
-import com.mango.bc.homepage.net.view.BookView;
+import com.mango.bc.homepage.net.view.BookFreeView;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.NetUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -34,7 +34,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class FreeBookActivity extends BaseActivity implements BookView {
+public class FreeBookActivity extends BaseActivity implements BookFreeView {
 
     @Bind(R.id.imageView_back)
     ImageView imageViewBack;
@@ -158,21 +158,6 @@ public class FreeBookActivity extends BaseActivity implements BookView {
     }
 
     @Override
-    public void addCompetitiveField(List<CompetitiveFieldBean> competitiveFieldBeanList) {
-
-    }
-
-    @Override
-    public void addCompetitiveBook(List<BookBean> bookBeanList) {
-
-    }
-
-    @Override
-    public void addExpertBook(List<BookBean> bookBeanList) {
-
-    }
-
-    @Override
     public void addFreeBook(final List<BookBean> bookBeanList) {
         runOnUiThread(new Runnable() {
             @Override
@@ -205,27 +190,19 @@ public class FreeBookActivity extends BaseActivity implements BookView {
     }
 
     @Override
-    public void addNewestBook(List<BookBean> bookBeanList) {
+    public void addSuccessFreeBook(String s) {
 
     }
 
     @Override
-    public void addSearchBook(List<BookBean> bookBeanList) {
-
-    }
-
-    @Override
-    public void addSuccess(String s) {
-
-    }
-
-    @Override
-    public void addFail(String f) {
+    public void addFailFreeBook(String f) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 AppUtils.showToast(getBaseContext(), "免费课程请求失败");
             }
         });
+
     }
+
 }

@@ -16,13 +16,11 @@ import com.mango.bc.R;
 import com.mango.bc.homepage.activity.expertbook.ExpertBookActivity;
 import com.mango.bc.homepage.adapter.BookExpertAdapter;
 import com.mango.bc.homepage.bookdetail.ExpertBookDetailActivity;
-import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
-import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
-import com.mango.bc.homepage.net.view.BookView;
+import com.mango.bc.homepage.net.view.BookExpertView;
 import com.mango.bc.util.AppUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -36,7 +34,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ExpertFragment extends Fragment implements BookView {
+public class ExpertFragment extends Fragment implements BookExpertView {
     @Bind(R.id.see_more)
     TextView seeMore;
     @Bind(R.id.recycle)
@@ -123,16 +121,6 @@ public class ExpertFragment extends Fragment implements BookView {
     }
 
     @Override
-    public void addCompetitiveField(List<CompetitiveFieldBean> competitiveFieldBeanList) {
-
-    }
-
-    @Override
-    public void addCompetitiveBook(List<BookBean> bookBeanList) {
-
-    }
-
-    @Override
     public void addExpertBook(final List<BookBean> bookBeanList) {
         if (getActivity() != null)
             getActivity().runOnUiThread(new Runnable() {
@@ -159,27 +147,12 @@ public class ExpertFragment extends Fragment implements BookView {
     }
 
     @Override
-    public void addFreeBook(List<BookBean> bookBeanList) {
+    public void addSuccessExpertBook(String s) {
 
     }
 
     @Override
-    public void addNewestBook(List<BookBean> bookBeanList) {
-
-    }
-
-    @Override
-    public void addSearchBook(List<BookBean> bookBeanList) {
-
-    }
-
-    @Override
-    public void addSuccess(String s) {
-
-    }
-
-    @Override
-    public void addFail(String f) {
+    public void addFailExpertBook(String f) {
         if (getActivity() != null) getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -187,4 +160,5 @@ public class ExpertFragment extends Fragment implements BookView {
             }
         });
     }
+
 }

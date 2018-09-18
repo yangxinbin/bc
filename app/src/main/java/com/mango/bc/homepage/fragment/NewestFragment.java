@@ -20,7 +20,7 @@ import com.mango.bc.homepage.net.bean.LoadStageBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
-import com.mango.bc.homepage.net.view.BookView;
+import com.mango.bc.homepage.net.view.BookNewestView;
 import com.mango.bc.util.AppUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -32,7 +32,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class NewestFragment extends Fragment implements BookView {
+public class NewestFragment extends Fragment implements BookNewestView {
     @Bind(R.id.recycle)
     RecyclerView recycle;
     private BookNewestAdapter bookNewestAdapter;
@@ -90,7 +90,7 @@ public class NewestFragment extends Fragment implements BookView {
         @Override
         public void onItemPlayClick(View view, int position) {
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
-            intent.putExtra("foot_play",true);
+            intent.putExtra("foot_play", true);
             EventBus.getDefault().postSticky(bookNewestAdapter.getItem(position));
             startActivity(intent);
         }
@@ -98,7 +98,7 @@ public class NewestFragment extends Fragment implements BookView {
         @Override
         public void onItemGetClick(View view, int position) {
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
-            intent.putExtra("foot_buy_get",true);
+            intent.putExtra("foot_buy_get", true);
             EventBus.getDefault().postSticky(bookNewestAdapter.getItem(position));
             startActivity(intent);
         }
@@ -123,61 +123,36 @@ public class NewestFragment extends Fragment implements BookView {
     }
 
     @Override
-    public void addCompetitiveField(List<CompetitiveFieldBean> competitiveFieldBeanList) {
-
-    }
-
-    @Override
-    public void addCompetitiveBook(List<BookBean> bookBeanList) {
-
-    }
-
-    @Override
-    public void addExpertBook(List<BookBean> bookBeanList) {
-
-    }
-
-    @Override
-    public void addFreeBook(List<BookBean> bookBeanList) {
-
-    }
-
-    @Override
     public void addNewestBook(final List<BookBean> bookBeanList) {
         if (getActivity() != null)
             getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (bookBeanList == null || bookBeanList.size() == 0) {
-                    AppUtils.showToast(getActivity(), getString(R.string.date_over));
-                    return;
-                }
-                if (page == 0) {
-                    bookNewestAdapter.reMove();
-                    bookNewestAdapter.setmDate(bookBeanList);
-                } else {
-                    //加载更多
-                    for (int i = 0; i < bookBeanList.size(); i++) {
-                        bookNewestAdapter.addItem(bookBeanList.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
+                @Override
+                public void run() {
+                    if (bookBeanList == null || bookBeanList.size() == 0) {
+                        AppUtils.showToast(getActivity(), getString(R.string.date_over));
+                        return;
                     }
+                    if (page == 0) {
+                        bookNewestAdapter.reMove();
+                        bookNewestAdapter.setmDate(bookBeanList);
+                    } else {
+                        //加载更多
+                        for (int i = 0; i < bookBeanList.size(); i++) {
+                            bookNewestAdapter.addItem(bookBeanList.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
+                        }
+                    }
+
                 }
-
-            }
-        });
+            });
     }
 
     @Override
-    public void addSearchBook(List<BookBean> bookBeanList) {
-
-    }
-
-    @Override
-    public void addSuccess(String s) {
+    public void addSuccessNewestBook(String s) {
 
     }
 
     @Override
-    public void addFail(String f) {
+    public void addFailNewestBook(String f) {
         if (getActivity() != null) getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

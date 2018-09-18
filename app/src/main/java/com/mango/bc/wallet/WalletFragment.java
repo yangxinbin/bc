@@ -1,6 +1,9 @@
 package com.mango.bc.wallet;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +21,7 @@ import com.mango.bc.R;
 import com.mango.bc.adapter.ViewPageAdapter;
 import com.mango.bc.mine.bean.UserBean;
 import com.mango.bc.mine.jsonutil.AuthJsonUtils;
+import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.DensityUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.wallet.activity.CurrencyActivity;
@@ -203,6 +207,16 @@ public class WalletFragment extends Fragment {
                 startActivity(intent);
                 break;
             case R.id.tv_copy:
+                //添加到剪切板
+                ClipboardManager clipboardManager =
+                        (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                /**之前的应用过期的方法，clipboardManager.setText(copy);*/
+                assert clipboardManager != null;
+                clipboardManager.setPrimaryClip(ClipData.newPlainText(null,tvWalletadress.getText().toString()));
+                if (clipboardManager.hasPrimaryClip()){
+                    clipboardManager.getPrimaryClip().getItemAt(0).getText();
+                }
+                AppUtils.showToast(getActivity(), "复制成功");
                 break;
             case R.id.l_recharge:
                 intent = new Intent(getActivity(), RechargeActivity.class);

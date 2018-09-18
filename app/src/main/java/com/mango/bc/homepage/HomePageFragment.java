@@ -13,12 +13,9 @@ import android.view.ViewGroup;
 
 import com.mango.bc.R;
 import com.mango.bc.homepage.adapter.HomePageAdapter;
-import com.mango.bc.homepage.net.bean.BookBean;
-import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.bean.LoadStageBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
-import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.NetUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -28,8 +25,6 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

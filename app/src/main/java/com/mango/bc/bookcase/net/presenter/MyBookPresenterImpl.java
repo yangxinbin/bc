@@ -1,31 +1,48 @@
 package com.mango.bc.bookcase.net.presenter;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.bookcase.net.listener.OnMyBookListener;
 import com.mango.bc.bookcase.net.model.MyBookModel;
 import com.mango.bc.bookcase.net.model.MyBookModelImpl;
-import com.mango.bc.bookcase.net.view.MyBookView;
-import com.mango.bc.util.SPUtils;
+import com.mango.bc.bookcase.net.view.MyAllBookView;
+import com.mango.bc.bookcase.net.view.MyCompetitiveBookView;
+import com.mango.bc.bookcase.net.view.MyExpertBookView;
+import com.mango.bc.bookcase.net.view.MyFreeBookView;
 import com.mango.bc.util.Urls;
 
 import java.util.List;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by admin on 2018/5/21.
  */
 
 public class MyBookPresenterImpl implements MyBookPresenter, OnMyBookListener {
-    private MyBookView bookView;
+    private MyCompetitiveBookView myCompetitiveBookView;
+    private MyExpertBookView myExpertBookView;
+    private MyFreeBookView myFreeBookView;
+    private MyAllBookView myAllBookView;
     private MyBookModel bookModel;
 
-    public MyBookPresenterImpl(MyBookView u) {
-        this.bookView = u;
+    public MyBookPresenterImpl(MyCompetitiveBookView u) {
+        this.myCompetitiveBookView = u;
+        this.bookModel = new MyBookModelImpl();
+    }
+
+    public MyBookPresenterImpl(MyExpertBookView u) {
+        this.myExpertBookView = u;
+        this.bookModel = new MyBookModelImpl();
+    }
+
+    public MyBookPresenterImpl(MyFreeBookView u) {
+        this.myFreeBookView = u;
+        this.bookModel = new MyBookModelImpl();
+    }
+
+    public MyBookPresenterImpl(MyAllBookView u) {
+        this.myAllBookView = u;
         this.bookModel = new MyBookModelImpl();
     }
 
@@ -63,28 +80,63 @@ public class MyBookPresenterImpl implements MyBookPresenter, OnMyBookListener {
 
     @Override
     public void onSuccessCompetitiveBook(List<MyBookBean> bookBeanList) {
-        bookView.addCompetitiveBook(bookBeanList);
+        myCompetitiveBookView.addCompetitiveBook(bookBeanList);
     }
 
 
     @Override
     public void onSuccessExpertBook(List<MyBookBean> bookBeanList) {
-        bookView.addExpertBook(bookBeanList);
+        myExpertBookView.addExpertBook(bookBeanList);
     }
 
     @Override
     public void onSuccessFreeBook(List<MyBookBean> bookBeanList) {
-        bookView.addFreeBook(bookBeanList);
-    }
-
-
-    @Override
-    public void onSuccessMes(String msg) {
-        bookView.addSuccess(msg);
+        myFreeBookView.addFreeBook(bookBeanList);
     }
 
     @Override
-    public void onFailMes(String msg, Exception e) {
-        bookView.addFail(msg);
+    public void onSuccessAllBook(List<MyBookBean> bookBeanList) {
+        myAllBookView.addAllBook(bookBeanList);
     }
+
+    @Override
+    public void onCompetitiveBookSuccessMes(String msg) {
+        myCompetitiveBookView.addSuccess(msg);
+    }
+
+    @Override
+    public void onExpertBookSuccessMes(String msg) {
+        myExpertBookView.addSuccess(msg);
+    }
+
+    @Override
+    public void onFreeBookSuccessMes(String msg) {
+        myFreeBookView.addSuccess(msg);
+    }
+
+    @Override
+    public void onAllBookSuccessMes(String msg) {
+        myAllBookView.addSuccess(msg);
+    }
+
+    @Override
+    public void onCompetitiveFailMes(String msg, Exception e) {
+        myCompetitiveBookView.addFail(msg);
+    }
+
+    @Override
+    public void onExpertFailMes(String msg, Exception e) {
+        myExpertBookView.addFail(msg);
+    }
+
+    @Override
+    public void onFreeBookFailMes(String msg, Exception e) {
+        myFreeBookView.addFail(msg);
+    }
+
+    @Override
+    public void onAllBookFailMes(String msg, Exception e) {
+        myAllBookView.addFail(msg);
+    }
+
 }

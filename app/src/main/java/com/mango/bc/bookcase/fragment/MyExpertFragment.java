@@ -18,7 +18,7 @@ import com.mango.bc.bookcase.adapter.MyBookGirdAdapter;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.bookcase.net.presenter.MyBookPresenter;
 import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
-import com.mango.bc.bookcase.net.view.MyBookView;
+import com.mango.bc.bookcase.net.view.MyExpertBookView;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.AppUtils;
@@ -40,7 +40,7 @@ import butterknife.ButterKnife;
  * Created by admin on 2018/9/5.
  */
 
-public class MyExpertFragment extends Fragment implements MyBookView {
+public class MyExpertFragment extends Fragment implements MyExpertBookView {
     @Bind(R.id.recycle)
     RecyclerView recycle;
     @Bind(R.id.refresh)
@@ -137,11 +137,6 @@ public class MyExpertFragment extends Fragment implements MyBookView {
     }
 
     @Override
-    public void addCompetitiveBook(List<MyBookBean> bookBeanList) {
-
-    }
-
-    @Override
     public void addExpertBook(final List<MyBookBean> bookBeanList) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -170,11 +165,6 @@ public class MyExpertFragment extends Fragment implements MyBookView {
                 }
             }
         });
-    }
-
-    @Override
-    public void addFreeBook(List<MyBookBean> bookBeanList) {
-
     }
 
     @Override

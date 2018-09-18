@@ -142,6 +142,7 @@ public class BookExpertAdapter extends RecyclerView.Adapter {
         Type listType = new TypeToken<List<String>>() {
         }.getType();
         List<String> list = gson.fromJson(data, listType);
+
         if (list == null)
             return false;
         if (list.contains(bookId)) {

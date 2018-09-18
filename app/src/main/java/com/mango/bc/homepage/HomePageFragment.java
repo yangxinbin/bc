@@ -59,8 +59,12 @@ public class HomePageFragment extends Fragment implements MyAllBookView {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.homepage, container, false);
         myBookPresenter = new MyBookPresenterImpl(this);
+        if (NetUtil.isNetConnect(getActivity())){
+            myBookPresenter.visitBooks(getActivity(), TYPE, 0, false);//获取书架的所有书
+        }else {
+            myBookPresenter.visitBooks(getActivity(), TYPE, 0, true);//获取书架的所有书
+        }
         ButterKnife.bind(this, view);
-        myBookPresenter.visitBooks(getActivity(), TYPE, 0, false);//获取书架的所有书
         initView();
         refreshAndLoadMore();
         return view;
@@ -113,7 +117,7 @@ public class HomePageFragment extends Fragment implements MyAllBookView {
         //触发自动刷新
         if (isFirstEnter) {
             isFirstEnter = false;
-            //refresh.autoRefresh();
+            refresh.autoRefresh();//进来自动刷新
         } else {
             //mAdapter.refresh(initData());
         }
@@ -127,6 +131,7 @@ public class HomePageFragment extends Fragment implements MyAllBookView {
 
     @Override
     public void addAllBook(final List<MyBookBean> bookBeanList) {
+
     }
 
     @Override

@@ -48,7 +48,7 @@ public class NewestFragment extends Fragment implements BookNewestView {
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         initView();
-        bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);
+        bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);
         return view;
     }
 

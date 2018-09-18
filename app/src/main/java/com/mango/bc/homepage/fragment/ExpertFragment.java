@@ -53,7 +53,7 @@ public class ExpertFragment extends Fragment implements BookExpertView {
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         initView();
-        bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);
+        bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);
         return view;
     }
 

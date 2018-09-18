@@ -101,7 +101,7 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
         adapter = new BookComprtitiveAdapter(getActivity());
         recycle.removeAllViews();
         recycle.setAdapter(adapter);
-        bookPresenter.visitBooks(getActivity(), TYPE, mType, page, true);
+        bookPresenter.visitBooks(getActivity(), TYPE, mType, page, false);
         adapter.setOnItemClickLitener(mOnClickListenner);
     }
 

@@ -57,7 +57,7 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView {
         bookPresenter = new BookPresenterImpl(this);
         ButterKnife.bind(this);
         initView();
-        bookPresenter.visitBooks(this, TYPE, "", page, true);
+        bookPresenter.visitBooks(this, TYPE, "", page, false);
         refreshAndLoadMore();
     }
 
@@ -95,10 +95,14 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView {
 
         @Override
         public void onGetClick(View view, int position) {//领取
-            Log.v("wwwwwww","======g");
+            getFreeBook();
         }
 
     };
+
+    private void getFreeBook() {
+
+    }
 
     private void refreshAndLoadMore() {
         refresh.setOnRefreshListener(new OnRefreshListener() {

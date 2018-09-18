@@ -54,7 +54,7 @@ public class FreeFragment extends Fragment implements BookFreeView {
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         initView();
-        bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);
+        bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);
         return view;
     }
 
@@ -106,9 +106,13 @@ public class FreeFragment extends Fragment implements BookFreeView {
 
         @Override
         public void onGetClick(View view, int position) {//领取
-            Log.v("wwwwwww","======g");
+            getFreeBook();
         }
     };
+
+    private void getFreeBook() {
+
+    }
 
     @Override
     public void onDestroyView() {

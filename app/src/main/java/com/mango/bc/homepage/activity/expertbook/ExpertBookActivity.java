@@ -58,7 +58,7 @@ public class ExpertBookActivity extends BaseActivity implements BookExpertView {
         bookPresenter = new BookPresenterImpl(this);
         ButterKnife.bind(this);
         initView();
-        bookPresenter.visitBooks(this, TYPE, "", page, true);
+        bookPresenter.visitBooks(this, TYPE, "", page, false);
         refreshAndLoadMore();
     }
 

@@ -61,7 +61,7 @@ public class MyExpertFragment extends Fragment implements MyExpertBookView {
         myBookPresenter = new MyBookPresenterImpl(this);
         ButterKnife.bind(this, view);
         initView();
-        myBookPresenter.visitBooks(getActivity(), TYPE, page, true);
+        myBookPresenter.visitBooks(getActivity(), TYPE, page, false);
         refreshAndLoadMore();
         return view;
     }

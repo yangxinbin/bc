@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import com.mango.bc.R;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.net.bean.BookBean;
+import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.Urls;
 
@@ -37,6 +38,7 @@ public class MyBookDetailAdapter extends RecyclerView.Adapter {
     private Handler mHandler = new Handler(Looper.getMainLooper()); //获取主线程的Handler
 
     public MyBookDetailAdapter(List<MyBookBean.BookBean.DescriptionImagesBean> datas, Context context) {
+        AppUtils.createLoadDailog(context);
         this.context = context;
         this.datas = datas;
     }
@@ -54,12 +56,12 @@ public class MyBookDetailAdapter extends RecyclerView.Adapter {
             if (datas.get(position).getFileName() != null) {
                 //Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName()).into(viewHolder.img_book_detail);
                 Log.v("uuuuuuuuuuuu", "----" + Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName());
-                setIamge(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName(), viewHolder.img_book_detail,viewHolder.img_load);
+                setIamge(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName(), viewHolder.img_book_detail);
             }
         }
     }
 
-    private void setIamge(String url, final ImageView imageView,final ProgressBar imageView_load) {
+    private void setIamge(String url, final ImageView imageView) {
         HttpUtils.doGet(url, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -75,7 +77,7 @@ public class MyBookDetailAdapter extends RecyclerView.Adapter {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        imageView_load.setVisibility(View.GONE);
+                        AppUtils.dissmissLoadDailog(context);
                         imageView.setImageBitmap(bitmap);
                     }
                 });
@@ -90,12 +92,10 @@ public class MyBookDetailAdapter extends RecyclerView.Adapter {
 
     class MyBookDetailViewHolder extends RecyclerView.ViewHolder {
         ImageView img_book_detail;
-        ProgressBar img_load;
 
         public MyBookDetailViewHolder(final View itemView) {
             super(itemView);
             img_book_detail = (ImageView) itemView.findViewById(R.id.img_book_detail);
-            img_load = (ProgressBar) itemView.findViewById(R.id.img_load);
 
         }
 

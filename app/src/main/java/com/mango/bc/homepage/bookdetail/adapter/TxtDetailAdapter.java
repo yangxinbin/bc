@@ -31,12 +31,12 @@ import okhttp3.Response;
  * Created by admin on 2018/9/4.
  */
 
-public class BookDetailAdapter extends RecyclerView.Adapter {
+public class TxtDetailAdapter extends RecyclerView.Adapter {
     private Context context;
-    private List<BookBean.DescriptionImagesBean> datas = new ArrayList<>();
+    private List<BookBean.ChaptersBean.ContentImagesBean> datas = new ArrayList<>();
     private Handler mHandler = new Handler(Looper.getMainLooper()); //获取主线程的Handler
 
-    public BookDetailAdapter(List<BookBean.DescriptionImagesBean> datas, Context context) {
+    public TxtDetailAdapter(List<BookBean.ChaptersBean.ContentImagesBean> datas, Context context) {
         AppUtils.createLoadDailog(context);
         this.context = context;
         this.datas = datas;
@@ -44,23 +44,23 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_detail_item, parent, false);
-        return new BookDetailAdapter.BookDetailViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_txt_item, parent, false);
+        return new TxtDetailAdapter.BookDetailViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if (holder instanceof BookDetailAdapter.BookDetailViewHolder) {
-            final BookDetailAdapter.BookDetailViewHolder viewHolder = (BookDetailAdapter.BookDetailViewHolder) holder;
+        if (holder instanceof TxtDetailAdapter.BookDetailViewHolder) {
+            final TxtDetailAdapter.BookDetailViewHolder viewHolder = (TxtDetailAdapter.BookDetailViewHolder) holder;
             if (datas.get(position).getFileName() != null) {
                 //Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName()).into(viewHolder.img_book_detail);
                 Log.v("uuuuuuuuuuuu", "----" + Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName());
-                setIamge(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName(), viewHolder.img_book_detail);
+                setIamge(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName(), viewHolder.img_txt_detail);
             }
         }
     }
 
-    private void setIamge(String url, final ImageView imageView ) {
+    private void setIamge(String url, final ImageView imageView) {
         HttpUtils.doGet(url, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -90,11 +90,12 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
     }
 
     class BookDetailViewHolder extends RecyclerView.ViewHolder {
-        ImageView img_book_detail;
+        ImageView img_txt_detail;
 
         public BookDetailViewHolder(final View itemView) {
             super(itemView);
-            img_book_detail = (ImageView) itemView.findViewById(R.id.img_book_detail);
+            img_txt_detail = (ImageView) itemView.findViewById(R.id.img_txt_detail);
+
         }
 
     }

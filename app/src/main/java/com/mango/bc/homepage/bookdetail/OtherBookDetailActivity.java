@@ -1,5 +1,6 @@
 package com.mango.bc.homepage.bookdetail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -68,6 +69,7 @@ public class OtherBookDetailActivity extends BaseActivity {
     LinearLayout lNeedbuy;
     private BookDetailAdapter bookDetailAdapter;
     private MyBookDetailAdapter myBookDetailAdapter;
+    private String contentImages;
 
 
     @Override
@@ -113,8 +115,7 @@ public class OtherBookDetailActivity extends BaseActivity {
             recycle.setAdapter(bookDetailAdapter);
             Log.v("uuuuuuuuuuuu", "--?--");
         }
-
-        EventBus.getDefault().removeStickyEvent(BookBean.class);
+        contentImages = bookBean.getChapters().get(0).getContentImages().get(0).getFileName();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
@@ -134,8 +135,7 @@ public class OtherBookDetailActivity extends BaseActivity {
             recycle.setAdapter(myBookDetailAdapter);
             Log.v("uuuuuuuuuuuu", "--?--");
         }
-
-        EventBus.getDefault().removeStickyEvent(MyBookBean.class);
+        contentImages = bookBean.getBook().getChapters().get(0).getContentImages().get(0).getFileName();
     }
 
     @Override
@@ -143,10 +143,14 @@ public class OtherBookDetailActivity extends BaseActivity {
         super.onDestroy();
         ButterKnife.unbind(this);
         EventBus.getDefault().unregister(this);
+        EventBus.getDefault().removeStickyEvent(BookBean.class);//展示完删除
+        EventBus.getDefault().removeStickyEvent(MyBookBean.class);
+
     }
 
     @OnClick({R.id.imageView_back, R.id.l_like_get, R.id.l_share_get, R.id.l_txt_get, R.id.book_stage_play, R.id.l_get, R.id.l_like_free, R.id.l_share_free, R.id.book_stage_free, R.id.l_free, R.id.l_like_needbuy, R.id.book_stage_needbuy_vip, R.id.book_stage_needbuy_money, R.id.l_needbuy})
     public void onViewClicked(View view) {
+        Intent intent;
         switch (view.getId()) {
             case R.id.imageView_back:
                 finish();
@@ -156,6 +160,8 @@ public class OtherBookDetailActivity extends BaseActivity {
             case R.id.l_share_get:
                 break;
             case R.id.l_txt_get:
+                intent = new Intent(this, TxtActivity.class);
+                startActivity(intent);
                 break;
             case R.id.book_stage_play:
                 break;

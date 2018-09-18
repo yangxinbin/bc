@@ -97,7 +97,7 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
                 if (datas.get(position).getCover() != null)
                     Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getCover().getFileName()).into(((BookNewestAdapter.BookViewHolder) holder).img_book);
 
-                if (false) {//拿书id遍历判断
+                if (true) {//拿书id遍历判断
                     ((BookViewHolder) holder).tv_stage.setText("播放");//是领取
                     ((BookNewestAdapter.BookViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
                         @Override

@@ -45,6 +45,7 @@ public class HeadFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home, container, false);
         ButterKnife.bind(this, view);
+        etSearch.setFocusable(false);
         etSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

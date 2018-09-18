@@ -76,6 +76,8 @@ public class SearchBookDetailActivity extends BaseActivity {
     TextView lCollageBuyexpert;
     @Bind(R.id.l_buy_expert)
     LinearLayout lBuyExpert;
+    @Bind(R.id.l_play_expert)
+    LinearLayout lPlayExpert;
     private BookDetailAdapter bookDetailAdapter;
     private MyBookDetailAdapter myBookDetailAdapter;
 
@@ -96,24 +98,34 @@ public class SearchBookDetailActivity extends BaseActivity {
             lFree.setVisibility(View.GONE);//进去免费领取界面
             lNeedbuy.setVisibility(View.GONE);//进去购买领取界面
             lBuyExpert.setVisibility(View.GONE);
+            lPlayExpert.setVisibility(View.GONE);
+        } else if (getIntent().getBooleanExtra("foot_expert_play", false)) {
+            lGet.setVisibility(View.GONE);
+            lFree.setVisibility(View.GONE);
+            lNeedbuy.setVisibility(View.GONE);
+            lBuyExpert.setVisibility(View.GONE);
+            lPlayExpert.setVisibility(View.VISIBLE);
 
         } else if (getIntent().getBooleanExtra("foot_free_get", false)) {
             lGet.setVisibility(View.GONE);
             lFree.setVisibility(View.VISIBLE);
             lNeedbuy.setVisibility(View.GONE);
             lBuyExpert.setVisibility(View.GONE);
+            lPlayExpert.setVisibility(View.GONE);
 
         } else if (getIntent().getBooleanExtra("foot_buy_get", false)) {
             lGet.setVisibility(View.GONE);
             lFree.setVisibility(View.GONE);
             lNeedbuy.setVisibility(View.VISIBLE);
             lBuyExpert.setVisibility(View.GONE);
-        }
-        else if (getIntent().getBooleanExtra("foot_buyexpert_get", false)) {
+            lPlayExpert.setVisibility(View.GONE);
+
+        } else if (getIntent().getBooleanExtra("foot_buyexpert_get", false)) {
             lGet.setVisibility(View.GONE);
             lFree.setVisibility(View.GONE);
             lNeedbuy.setVisibility(View.GONE);
             lBuyExpert.setVisibility(View.VISIBLE);
+            lPlayExpert.setVisibility(View.GONE);
 
         }
     }
@@ -167,7 +179,7 @@ public class SearchBookDetailActivity extends BaseActivity {
         EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.imageView_back, R.id.l_like_get, R.id.l_share_get, R.id.l_txt_get, R.id.book_stage_play, R.id.l_get, R.id.l_like_free, R.id.l_share_free, R.id.book_stage_free, R.id.l_free, R.id.l_like_needbuy, R.id.book_stage_needbuy_vip, R.id.book_stage_needbuy_money, R.id.l_needbuy,R.id.l_like_buyexpert, R.id.l_try_buyexpert, R.id.l_buy_buyexpert, R.id.l_collage_buyexpert})
+    @OnClick({R.id.l_like_expert_play, R.id.l_share_play_expert, R.id.book_stage_expert_play, R.id.imageView_back, R.id.l_like_get, R.id.l_share_get, R.id.l_txt_get, R.id.book_stage_play, R.id.l_get, R.id.l_like_free, R.id.l_share_free, R.id.book_stage_free, R.id.l_free, R.id.l_like_needbuy, R.id.book_stage_needbuy_vip, R.id.book_stage_needbuy_money, R.id.l_needbuy, R.id.l_like_buyexpert, R.id.l_try_buyexpert, R.id.l_buy_buyexpert, R.id.l_collage_buyexpert})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView_back:
@@ -183,6 +195,12 @@ public class SearchBookDetailActivity extends BaseActivity {
                 break;
             case R.id.l_get:
                 break;//以上领取可以播放状态
+            case R.id.l_like_expert_play:
+                break;
+            case R.id.l_share_play_expert:
+                break;
+            case R.id.book_stage_expert_play:
+                break;//以上是大咖领取可以播放
             case R.id.l_like_free:
                 break;
             case R.id.l_share_free:

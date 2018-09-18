@@ -79,6 +79,8 @@ public class BookGirdSearchAdapter extends RecyclerView.Adapter {
 
         void onItemPlayClick(View view, int position);
 
+        void onItemExpertPlayClick(View view, int position);
+
         void onItemFreeGetClick(View view, int position);
 
         void onItemBuyGetClick(View view, int position);
@@ -102,12 +104,21 @@ public class BookGirdSearchAdapter extends RecyclerView.Adapter {
             if (datas.get(position).getCover() != null)
                 Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getCover().getFileName()).into(((BookGirdSearchAdapter.BookGirdViewHolder) holder).img_search_book);
             if (chechState(datas.get(position).getId())) {//拿书id遍历判断
-                viewHolder.book_search_item.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mOnItemClickLitener.onItemPlayClick(viewHolder.book_search_item, position);
-                    }
-                });
+                if (datas.get(position).getType().equals("paid")){
+                    viewHolder.book_search_item.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mOnItemClickLitener.onItemExpertPlayClick(viewHolder.book_search_item, position);
+                        }
+                    });
+                }else {
+                    viewHolder.book_search_item.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mOnItemClickLitener.onItemPlayClick(viewHolder.book_search_item, position);
+                        }
+                    });
+                }
             } else {
                 if (datas.get(position).getType().equals("free")) {
                     viewHolder.book_search_item.setOnClickListener(new View.OnClickListener() {

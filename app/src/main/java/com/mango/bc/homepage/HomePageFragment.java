@@ -95,7 +95,7 @@ public class HomePageFragment extends Fragment implements MyAllBookView {
                         }
                         refreshLayout.finishRefresh();
                     }
-                }, 200);
+                }, 400);
             }
         });
         refresh.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -108,7 +108,7 @@ public class HomePageFragment extends Fragment implements MyAllBookView {
                         EventBus.getDefault().postSticky(loadStageBean);
                         refreshLayout.finishLoadMore();
                     }
-                }, 200);
+                }, 400);
             }
         });
         refresh.setRefreshHeader(new ClassicsHeader(getActivity()));

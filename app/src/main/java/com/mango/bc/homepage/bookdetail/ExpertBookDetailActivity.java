@@ -53,8 +53,8 @@ public class ExpertBookDetailActivity extends BaseActivity {
     TabLayout tabLayout;
     @Bind(R.id.viewpager)
     ViewPager viewPager;
-    @Bind(R.id.l_01)
-    LinearLayout l01;
+    @Bind(R.id.l_get)
+    LinearLayout lGet;
     @Bind(R.id.et_search)
     EditText etSearch;
     @Bind(R.id.l_2)
@@ -67,13 +67,21 @@ public class ExpertBookDetailActivity extends BaseActivity {
     TextView lBuy;
     @Bind(R.id.l_collage)
     TextView lCollage;
+    @Bind(R.id.l_like_expert_play)
+    PraiseView lLikeExpertPlay;
+    @Bind(R.id.l_share_play_expert)
+    LinearLayout lSharePlayExpert;
+    @Bind(R.id.book_stage_expert_play)
+    TextView bookStageExpertPlay;
+    @Bind(R.id.l_play_expert)
+    LinearLayout lPlayExpert;
     private ArrayList<String> mDatas;
     List<Fragment> mfragments = new ArrayList<Fragment>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_book_detail);
+        setContentView(R.layout.activity_book_expert_detail);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         initDatas();
@@ -92,14 +100,20 @@ public class ExpertBookDetailActivity extends BaseActivity {
         }
         tvBuyer.setText(bookBean.getSold() + "");
         tvCourse.setText(bookBean.getChapters().size() + "");
-        lBuy.setText(bookBean.getPrice()+"币购买\n"+"会员"+bookBean.getVipPrice()+"币");
-        lCollage.setText(bookBean.getGroupBuy2Price()+"-"+bookBean.getGroupBuy3Price()+"币\n拼团购买");
+        lBuy.setText(bookBean.getPrice() + "币购买\n" + "会员" + bookBean.getVipPrice() + "币");
+        lCollage.setText(bookBean.getGroupBuy2Price() + "-" + bookBean.getGroupBuy3Price() + "币\n拼团购买");
     }
 
     private void initDatas() {
         //  mDatas = new ArrayList<String>(Arrays.asList("       我的事件       ", "       全部事件       "));
         mDatas = new ArrayList<String>(Arrays.asList("详情", "课程", "评论"));
-
+        if (getIntent().getBooleanExtra("foot_buy_get", false)) {
+            lGet.setVisibility(View.VISIBLE);//进去播放界面
+            lPlayExpert.setVisibility(View.GONE);
+        } else if (getIntent().getBooleanExtra("foot_play", false)) {
+            lGet.setVisibility(View.GONE);
+            lPlayExpert.setVisibility(View.VISIBLE);
+        }
     }
 
     private void init() {
@@ -119,10 +133,17 @@ public class ExpertBookDetailActivity extends BaseActivity {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (position == 2) {
                     l2.setVisibility(View.VISIBLE);
-                    l01.setVisibility(View.GONE);
+                    lGet.setVisibility(View.GONE);
+                    lPlayExpert.setVisibility(View.GONE);
                 } else {
                     l2.setVisibility(View.GONE);
-                    l01.setVisibility(View.VISIBLE);
+                    if (getIntent().getBooleanExtra("foot_buy_get", false)) {
+                        lGet.setVisibility(View.VISIBLE);//进去播放界面
+                        lPlayExpert.setVisibility(View.GONE);
+                    } else if (getIntent().getBooleanExtra("foot_play", false)) {
+                        lGet.setVisibility(View.GONE);
+                        lPlayExpert.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 
@@ -199,7 +220,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
         EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.l_like, R.id.l_try, R.id.l_buy, R.id.l_collage})
+    @OnClick({R.id.l_like_expert_play, R.id.l_share_play_expert, R.id.book_stage_expert_play,R.id.l_like, R.id.l_try, R.id.l_buy, R.id.l_collage})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.l_like:
@@ -209,7 +230,14 @@ public class ExpertBookDetailActivity extends BaseActivity {
             case R.id.l_buy:
                 break;
             case R.id.l_collage:
+                break;//以上是购买foot
+            case R.id.l_like_expert_play:
                 break;
+            case R.id.l_share_play_expert:
+                break;
+            case R.id.book_stage_expert_play:
+                break;//以上是播放foot
         }
     }
+
 }

@@ -18,6 +18,8 @@ public class Urls {
     public static final String COMMENT = "/book/comments";
     public static final String LIBRARY = "/book/my/library";
     public static final String AUTH = "/user/weixin/app/auth";
+    public static final String IFCHECK = "/task/can/i/check/in";
+    public static final String CHECK = "/task/check/in";
 
 
     public static final String HOST_BOOKCATEGORIES = HOST+BOOKCATEGORIES;
@@ -29,5 +31,7 @@ public class Urls {
     public static final String HOST_COMMENT = HOST+COMMENT;
     public static final String HOST_LIBRARY = HOST+LIBRARY;
     public static final String HOST_AUTH = HOST+AUTH;
+    public static final String HOST_IFCHECK = HOST+IFCHECK;
+    public static final String HOST_CHECK = HOST+CHECK;
 
 }

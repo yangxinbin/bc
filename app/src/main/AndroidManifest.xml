@@ -75,6 +75,7 @@
         <activity android:name=".homepage.bookdetail.ExpertBookDetailActivity" />
         <activity android:name=".homepage.bookdetail.OtherBookDetailActivity" />
         <activity android:name=".homepage.bookdetail.TxtActivity"></activity>
+
     </application>
 
 </manifest>

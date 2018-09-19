@@ -165,7 +165,7 @@ public class NewestFragment extends Fragment implements BookNewestView {
         if (getActivity() != null) getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                AppUtils.showToast(getActivity(), "免费课程请求失败");
+                AppUtils.showToast(getActivity(), "最新上新课程请求失败");
             }
         });
     }

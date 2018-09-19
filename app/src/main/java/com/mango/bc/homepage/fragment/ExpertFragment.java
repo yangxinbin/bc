@@ -164,7 +164,7 @@ public class ExpertFragment extends Fragment implements BookExpertView {
         if (getActivity() != null) getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                AppUtils.showToast(getActivity(), "免费课程请求失败");
+                AppUtils.showToast(getActivity(), "大咖课程请求失败");
             }
         });
     }

@@ -10,13 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
 import com.mango.bc.R;
-import com.mango.bc.bookcase.adapter.MyBookDetailAdapter;
-import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.bookdetail.adapter.BookDetailAdapter;
-import com.mango.bc.homepage.net.bean.BookBean;
-import com.mango.bc.util.Urls;
+import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,7 +29,6 @@ public class DetailFragment extends Fragment {
     @Bind(R.id.recycle)
     RecyclerView recycle;
     private BookDetailAdapter bookDetailAdapter;
-    private MyBookDetailAdapter myBookDetailAdapter;
 
     @Nullable
     @Override
@@ -45,7 +40,7 @@ public class DetailFragment extends Fragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void BookBeanEventBus(BookBean bookBean) {
+    public void BookBeanEventBus(BookDetailBean bookBean) {
         if (bookBean == null) {
             return;
         }
@@ -56,18 +51,6 @@ public class DetailFragment extends Fragment {
             recycle.setAdapter(bookDetailAdapter);
         }
         //EventBus.getDefault().removeStickyEvent(MyBookBean.class);//展示完删除
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void MyBookBeanEventBus(MyBookBean bookBean) {  //书架进来  不需要判断 直接可以播放
-        if (bookBean == null) {
-            return;
-        }
-        if (bookBean.getBook() != null) {
-            myBookDetailAdapter = new MyBookDetailAdapter(bookBean.getBook().getDescriptionImages(), getActivity());
-            recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
-            recycle.setAdapter(myBookDetailAdapter);
-        }
     }
 
     @Override

@@ -1,22 +1,15 @@
 package com.mango.bc.homepage.bookdetail;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
-import com.bumptech.glide.Glide;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
-import com.mango.bc.bookcase.adapter.MyBookDetailAdapter;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
-import com.mango.bc.homepage.bookdetail.adapter.BookDetailAdapter;
 import com.mango.bc.homepage.bookdetail.adapter.MyTxtDetailAdapter;
 import com.mango.bc.homepage.bookdetail.adapter.TxtDetailAdapter;
 import com.mango.bc.homepage.net.bean.BookBean;
-import com.mango.bc.util.AppUtils;
-import com.mango.bc.util.Urls;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

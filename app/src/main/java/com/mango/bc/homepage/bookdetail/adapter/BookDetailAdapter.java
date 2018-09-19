@@ -1,5 +1,6 @@
 package com.mango.bc.homepage.bookdetail.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,13 +8,17 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.mango.bc.R;
+import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
@@ -33,15 +38,29 @@ import okhttp3.Response;
 
 public class BookDetailAdapter extends RecyclerView.Adapter {
     private Context context;
-    private List<BookBean.DescriptionImagesBean> datas = new ArrayList<>();
+    private List<BookDetailBean.DescriptionImagesBean> datas = new ArrayList<>();
     private Handler mHandler = new Handler(Looper.getMainLooper()); //获取主线程的Handler
+    private Dialog dialog_load;
 
-    public BookDetailAdapter(List<BookBean.DescriptionImagesBean> datas, Context context) {
-        AppUtils.createLoadDailog(context);
+    public BookDetailAdapter(List<BookDetailBean.DescriptionImagesBean> datas, Context context) {
+        createLoadDailog(context);
         this.context = context;
         this.datas = datas;
     }
-
+    public void createLoadDailog(final Context context) {
+        View view = LayoutInflater.from(context).inflate(R.layout.alert_dialog_loading, null);
+        dialog_load = new Dialog(context, R.style.dialog);
+        dialog_load.setContentView(view);
+        Window window = dialog_load.getWindow();
+        //设置弹出窗口大小
+        window.setLayout(WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        //设置显示位置
+        window.setGravity(Gravity.CENTER);
+        //设置动画效果
+        //window.setWindowAnimations(R.style.AnimBottom);
+        dialog_load.setCanceledOnTouchOutside(true);
+        dialog_load.show();
+    }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_detail_item, parent, false);
@@ -76,7 +95,7 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        AppUtils.dissmissLoadDailog(context);
+                        dialog_load.dismiss();
                         imageView.setImageBitmap(bitmap);
                     }
                 });

@@ -2,6 +2,7 @@ package com.mango.bc.homepage.bookdetail.jsonutil;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
 import com.mango.bc.homepage.bookdetail.bean.CommentBean;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
@@ -19,5 +20,11 @@ public class JsonBookDetailUtils {
         List<CommentBean> commentBeans = gson.fromJson(res, new TypeToken<List<CommentBean>>() {
         }.getType());
         return commentBeans;
+    }
+    public static BookDetailBean readBookDetailBean(String res) {
+        Gson gson = new Gson();
+        BookDetailBean bookDetailBean = gson.fromJson(res, new TypeToken<BookDetailBean>() {
+        }.getType());
+        return bookDetailBean;
     }
 }

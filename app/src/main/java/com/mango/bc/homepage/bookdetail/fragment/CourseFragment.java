@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 
 import com.mango.bc.R;
 import com.mango.bc.bookcase.adapter.MyBookCourseAdapter;
-import com.mango.bc.bookcase.adapter.MyBookDetailAdapter;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.bookdetail.TxtActivity;
 import com.mango.bc.homepage.bookdetail.adapter.BookCourseAdapter;

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -17,14 +18,19 @@ import com.mango.bc.R;
 import com.mango.bc.adapter.ViewPageAdapter;
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
+import com.mango.bc.homepage.bookdetail.adapter.BookDetailAdapter;
+import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
 import com.mango.bc.homepage.bookdetail.fragment.CommentFragment;
 import com.mango.bc.homepage.bookdetail.fragment.CourseFragment;
 import com.mango.bc.homepage.bookdetail.fragment.DetailFragment;
+import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
+import com.mango.bc.util.ACache;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.DensityUtil;
 import com.mango.bc.util.HttpUtils;
+import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 import com.mango.bc.view.likeview.PraiseView;
@@ -94,18 +100,81 @@ public class ExpertBookDetailActivity extends BaseActivity {
     private SPUtils spUtilsAuthToken;
     private String bookId;
     private int likeNum;
+    private ACache mCache;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_expert_detail);
         spUtilsAuthToken = SPUtils.getInstance("authToken", this);
+        mCache = ACache.get(this.getApplicationContext());
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         initDatas();
         init();
     }
+    private void loadBookDetail(final Boolean ifCache, final String bookId) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (ifCache) {//读取缓存数据
+                    String newString = mCache.getAsString("bookDetail" + bookId);
+                    Log.v("yyyyyy", "---cache5---" + newString);
+                    if (newString != null) {
+                        final BookDetailBean bookDetailBean = JsonBookDetailUtils.readBookDetailBean(newString);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initBookDetailView(bookDetailBean);
+                                    }
+                                });
+                            }
+                        });
+                        return;
+                    }
+                } else {
+                    mCache.remove("bookDetail" + bookId);//刷新之后缓存也更新过来
+                }
+                HttpUtils.doGet(Urls.HOST_BOOKDETAIL + "/" + bookId, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                AppUtils.showToast(getBaseContext(), "课程详情加载失败");
+                            }
+                        });
+                    }
 
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            String string = response.body().string();
+                            mCache.put("bookDetail" + bookId, string);
+                            final BookDetailBean bookDetailBean = JsonBookDetailUtils.readBookDetailBean(string);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    initBookDetailView(bookDetailBean);
+                                }
+                            });
+                        } catch (Exception e) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AppUtils.showToast(getBaseContext(), "课程详情加载失败");
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }).start();
+
+    }
     private void checkLike(final String bookId) {
         new Thread(new Runnable() {
             @Override
@@ -166,7 +235,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                AppUtils.showToast(getBaseContext(),"请检查网络");
+                                AppUtils.showToast(getBaseContext(),getResources().getString(R.string.check_net));
                             }
                         });
                     }
@@ -199,7 +268,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    AppUtils.showToast(getBaseContext(),"请检查网络");
+                                    AppUtils.showToast(getBaseContext(),getResources().getString(R.string.check_net));
                                 }
                             });
                             e.printStackTrace();
@@ -209,25 +278,36 @@ public class ExpertBookDetailActivity extends BaseActivity {
             }
         }).start();
     }
+
+    private void initBookDetailView(BookDetailBean bookDetailBean) {
+        if (bookDetailBean == null)
+            return;
+        EventBus.getDefault().postSticky(bookDetailBean);
+        if (bookDetailBean.getAuthor() != null) {
+            if (bookDetailBean.getAuthor().getPhoto() != null)
+                Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookDetailBean.getAuthor().getPhoto().getFileName()).into(imgCover);
+        }
+        tvBuyer.setText(bookDetailBean.getSold() + "");
+        tvCourse.setText(bookDetailBean.getChapters().size() + "");
+        likeNum = bookDetailBean.getLikes();
+        tvLikeGet.setText(bookDetailBean.getLikes() + "");
+        tvLikePlay.setText(bookDetailBean.getLikes() + "");
+        lBuy.setText(bookDetailBean.getPrice() + "币购买\n" + "会员" + bookDetailBean.getVipPrice() + "币");
+        lCollage.setText(bookDetailBean.getGroupBuy2Price() + "-" + bookDetailBean.getGroupBuy3Price() + "币\n拼团购买");
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true, priority = 1)
     public void BookBeanEventBus(BookBean bookBean) {
         if (bookBean == null) {
             return;
         }
-        Log.v("uuuuuuuuuuuu", "--0-");
-        if (bookBean.getAuthor() != null) {
-            if (bookBean.getAuthor().getPhoto() != null)
-                Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookBean.getAuthor().getPhoto().getFileName()).into(imgCover);
-        }
         bookId = bookBean.getId();
         checkLike(bookId);
-        tvBuyer.setText(bookBean.getSold() + "");
-        tvCourse.setText(bookBean.getChapters().size() + "");
-        likeNum = bookBean.getLikes();
-        tvLikeGet.setText(bookBean.getLikes() + "");
-        tvLikePlay.setText(bookBean.getLikes() + "");
-        lBuy.setText(bookBean.getPrice() + "币购买\n" + "会员" + bookBean.getVipPrice() + "币");
-        lCollage.setText(bookBean.getGroupBuy2Price() + "-" + bookBean.getGroupBuy3Price() + "币\n拼团购买");
+        if (NetUtil.isNetConnect(this)) {
+            loadBookDetail(false, bookId);
+        } else {
+            loadBookDetail(true, bookId);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
@@ -236,17 +316,13 @@ public class ExpertBookDetailActivity extends BaseActivity {
             return;
         }
         if (bookBean.getBook() != null) {
-            if (bookBean.getBook().getCover() != null)
-                Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookBean.getBook().getCover().getFileName()).into(imgCover);
             bookId = bookBean.getBook().getId();
             checkLike(bookId);
-            tvBuyer.setText(bookBean.getBook().getSold() + "");
-            tvCourse.setText(bookBean.getBook().getChapters().size() + "");
-            likeNum = bookBean.getBook().getLikes();
-            tvLikeGet.setText(bookBean.getBook().getLikes() + "");
-            tvLikePlay.setText(bookBean.getBook().getLikes() + "");
-            lBuy.setText(bookBean.getBook().getPrice() + "币购买\n" + "会员" + bookBean.getBook().getVipPrice() + "币");
-            lCollage.setText(bookBean.getBook().getGroupBuy2Price() + "-" + bookBean.getBook().getGroupBuy3Price() + "币\n拼团购买");
+            if (NetUtil.isNetConnect(this)) {
+                loadBookDetail(false, bookId);
+            } else {
+                loadBookDetail(true, bookId);
+            }
         }
     }
 

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
+import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.adapter.BookGirdFreeAdapter;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
@@ -75,6 +76,7 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView {
             Log.v("wwwwwww","======pi");
             Intent intent = new Intent(getBaseContext(), OtherBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookGirdFreeAdapter.getItem(position));
+            EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             intent.putExtra("foot_play",true);
             startActivity(intent);
         }
@@ -84,6 +86,7 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView {
             Log.v("wwwwwww","======gi");
             Intent intent = new Intent(getBaseContext(), OtherBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookGirdFreeAdapter.getItem(position));
+            EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             intent.putExtra("foot_free_get",true);
             startActivity(intent);
         }

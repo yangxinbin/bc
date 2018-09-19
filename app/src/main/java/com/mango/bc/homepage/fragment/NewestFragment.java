@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mango.bc.R;
+import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.adapter.BookNewestAdapter;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
@@ -92,6 +93,7 @@ public class NewestFragment extends Fragment implements BookNewestView {
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
             intent.putExtra("foot_play", true);
             EventBus.getDefault().postSticky(bookNewestAdapter.getItem(position));
+            EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             startActivity(intent);
         }
 
@@ -100,6 +102,7 @@ public class NewestFragment extends Fragment implements BookNewestView {
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
             intent.putExtra("foot_buy_get", true);
             EventBus.getDefault().postSticky(bookNewestAdapter.getItem(position));
+            EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             startActivity(intent);
         }
 

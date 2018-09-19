@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mango.bc.R;
+import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.activity.expertbook.ExpertBookActivity;
 import com.mango.bc.homepage.adapter.BookExpertAdapter;
 import com.mango.bc.homepage.bookdetail.ExpertBookDetailActivity;
@@ -84,6 +85,7 @@ public class ExpertFragment extends Fragment implements BookExpertView {
         public void onItemPlayClick(View view, int position) {
             Intent intent = new Intent(getActivity(), ExpertBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookExpertAdapter.getItem(position));
+            EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             intent.putExtra("foot_play",true);
             startActivity(intent);
         }
@@ -93,6 +95,7 @@ public class ExpertFragment extends Fragment implements BookExpertView {
             Intent intent = new Intent(getActivity(), ExpertBookDetailActivity.class);
             intent.putExtra("foot_buy_get",true);
             EventBus.getDefault().postSticky(bookExpertAdapter.getItem(position));
+            EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             startActivity(intent);
         }
 

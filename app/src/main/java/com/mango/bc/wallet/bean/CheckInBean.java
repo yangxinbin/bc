@@ -6,15 +6,18 @@ package com.mango.bc.wallet.bean;
 
 public class CheckInBean {
 
+
     /**
      * id : 5b8a3d4b04440c0a48a33a05
      * count : 1
      * date : 20180918
+     * canCheckIn : true
      */
 
     private String id;
     private int count;
     private int date;
+    private boolean canCheckIn;
 
     public String getId() {
         return id;
@@ -38,5 +41,13 @@ public class CheckInBean {
 
     public void setDate(int date) {
         this.date = date;
+    }
+
+    public boolean isCanCheckIn() {
+        return canCheckIn;
+    }
+
+    public void setCanCheckIn(boolean canCheckIn) {
+        this.canCheckIn = canCheckIn;
     }
 }

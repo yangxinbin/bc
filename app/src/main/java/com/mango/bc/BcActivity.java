@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -23,18 +25,25 @@ import okhttp3.Response;
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.bookcase.BookcaseFragment;
 import com.mango.bc.homepage.HomePageFragment;
+import com.mango.bc.homepage.bookdetail.bean.CommentBean;
+import com.mango.bc.homepage.bookdetail.fragment.CommentFragment;
 import com.mango.bc.mine.MineFragment;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
+import com.mango.bc.util.JsonUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 import com.mango.bc.view.BottomBar;
 import com.mango.bc.wallet.WalletFragment;
+import com.mango.bc.wallet.bean.CheckInBean;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
-public class BcActivity extends BaseActivity{
+public class BcActivity extends BaseActivity {
 
     private static Dialog dialog;
     @Bind(R.id.container)
@@ -43,17 +52,20 @@ public class BcActivity extends BaseActivity{
     BottomBar bottomBar;
     private SPUtils spUtilsAuthToken;
     private SPUtils spUtilsAuth;
+    private SPUtils spUtilsCheckIf;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bc);
-        ButterKnife.bind(this);
-        ifCheckIn(this);
-        loadUser(); //个人信息从网络拿数据
         spUtilsAuthToken = SPUtils.getInstance("authToken", this);
+        spUtilsAuth = SPUtils.getInstance("auth", this);
+        spUtilsCheckIf = SPUtils.getInstance("checkIf", this);
         spUtilsAuthToken.put("authToken", "eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1MzY5MDk3MjI5MzksImFsaWFzIjoi5p2o6ZGr5paMIiwiaWQiOiI1YjhhM2Q0YjA0NDQwYzBhNDhhMzNhMDUiLCJ0eXBlIjoiZ2VuZXJhbCIsIndhbGxldEFkZHJlc3MiOiIweGU3MmUzODdhZjEyZTA4NmFlZWNjOGVmMTljNzcxY2M4IiwiZXhwIjo0MTI4OTA5NzIyLCJ1c2VybmFtZSI6Im9YaGk5NGpRa1hQb3ZCc3FFczBCOFFLc2JNMEEifQ.m6rVYWnsxxogOAVmOLQ1HEC5bv0YzAwPhqGOlQ0tOP1CVec8XBRytgEFo_0rMlgSW42u2F199y3WAOr8XE2yYA");
+        ButterKnife.bind(this);
+        ifCheckIn();
+        loadUser(); //个人信息从网络拿数据
         bottomBar.setContainer(R.id.container)
                 .setTitleBeforeAndAfterColor("#333333", "#ffac00")
                 .addItem(HomePageFragment.class,
@@ -75,12 +87,63 @@ public class BcActivity extends BaseActivity{
                 .build();
     }
 
-    private void ifCheckIn(BcActivity bcActivity) {
-        showCheckInWindow(bcActivity);
-    }
+    private void ifCheckIn() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("authToken", spUtilsAuthToken.getString("authToken", ""));
+                HttpUtils.doPost(Urls.HOST_IFCHECK, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        mHandler.sendEmptyMessage(0);
+                    }
 
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            String string = response.body().string();
+                            CheckInBean checkInBean = JsonUtil.readCheckInBean(string);
+                            spUtilsCheckIf.put("checkIf", string);
+                            Message msg = mHandler.obtainMessage();
+                            msg.obj = checkInBean;
+                            msg.what = 1;
+                            msg.sendToTarget();
+                        } catch (Exception e) {
+                            mHandler.sendEmptyMessage(0);
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
+    private void checkIn() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("authToken", spUtilsAuthToken.getString("authToken", ""));
+                HttpUtils.doPost(Urls.HOST_CHECK, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        mHandler.sendEmptyMessage(4);
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            mHandler.sendEmptyMessage(5);
+                        } catch (Exception e) {
+                            mHandler.sendEmptyMessage(4);
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
     private void loadUser() {
-        spUtilsAuth = SPUtils.getInstance("auth", this);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -90,7 +153,7 @@ public class BcActivity extends BaseActivity{
                 HttpUtils.doPost(Urls.HOST_AUTH, mapParams, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
-                        AppUtils.showToast(getBaseContext(), "信息获取失败");
+                        mHandler.sendEmptyMessage(2);
                     }
 
                     @Override
@@ -98,8 +161,7 @@ public class BcActivity extends BaseActivity{
                         try {
                             spUtilsAuth.put("auth", response.body().string());
                         } catch (Exception e) {
-                            AppUtils.showToast(getBaseContext(), "信息获取失败");
-
+                            mHandler.sendEmptyMessage(2);
                         }
                     }
                 });
@@ -107,11 +169,13 @@ public class BcActivity extends BaseActivity{
         }).start();
     }
 
-    private void showCheckInWindow(Context context) {
+    private void showCheckInWindow(Context context, CheckInBean checkInBean) {
         View view = LayoutInflater.from(context).inflate(R.layout.check_in, null);
         //此处可按需求为各控件设置属性
         ImageView close_check_in = view.findViewById(R.id.close_check_in);
         TextView tv_check = view.findViewById(R.id.tv_check);
+        TextView tv_check_day = view.findViewById(R.id.tv_check_day);
+        TextView tv_check_num = view.findViewById(R.id.tv_check_num);
         close_check_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,9 +185,20 @@ public class BcActivity extends BaseActivity{
         tv_check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                checkIn();
                 dialog.dismiss();
             }
         });
+        if (checkInBean == null)
+            return;
+        if (checkInBean.getCount() == 7) {
+            tv_check.setText("签到+5币");
+        } else {
+            tv_check.setText("签到+1币");
+        }
+        tv_check_num.setText(checkInBean.getCount() + "");
+        tv_check_day.setText("已签到" + checkInBean.getCount() + "天");
+
         dialog = new Dialog(context, R.style.dialog);
         dialog.setContentView(view);
         Window window = dialog.getWindow();
@@ -137,4 +212,41 @@ public class BcActivity extends BaseActivity{
         dialog.show();
     }
 
+
+    private BcActivity.MyHandler mHandler = new BcActivity.MyHandler();
+
+    private class MyHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0://检查签到失败
+                    break;
+                case 1://检查签到成功
+                    CheckInBean checkInBean = (CheckInBean) msg.obj;
+                    if (checkInBean == null)
+                        return;
+                    if (checkInBean.isCanCheckIn()){
+                        showCheckInWindow(BcActivity.this, checkInBean);
+                    }else {
+                        EventBus.getDefault().postSticky(checkInBean);
+                    }
+                    break;
+                case 2://获取信息失败
+
+                    break;
+                case 3://获取信息成功
+                    break;
+                case 4://签到失败
+                    AppUtils.showToast(getBaseContext(), "签到失败");
+                    break;
+                case 5://签到成功
+                    AppUtils.showToast(getBaseContext(), "签到成功");
+                    ifCheckIn();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 }

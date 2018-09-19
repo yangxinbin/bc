@@ -6,6 +6,8 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -17,28 +19,43 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.mango.bc.BcActivity;
 import com.mango.bc.R;
 import com.mango.bc.adapter.ViewPageAdapter;
 import com.mango.bc.mine.bean.UserBean;
 import com.mango.bc.mine.jsonutil.AuthJsonUtils;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.DensityUtil;
+import com.mango.bc.util.HttpUtils;
+import com.mango.bc.util.JsonUtil;
 import com.mango.bc.util.SPUtils;
+import com.mango.bc.util.Urls;
 import com.mango.bc.wallet.activity.CurrencyActivity;
 import com.mango.bc.wallet.activity.RechargeActivity;
 import com.mango.bc.wallet.activity.TransactionActivity;
 import com.mango.bc.wallet.activity.TransferActivity;
+import com.mango.bc.wallet.bean.CheckInBean;
 import com.mango.bc.wallet.fragment.AlreadyObtainedFragment;
 import com.mango.bc.wallet.fragment.DailyTasksFragment;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.victoralbertos.breadcumbs_view.BreadcrumbsView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * Created by admin on 2018/9/3.
@@ -49,14 +66,6 @@ public class WalletFragment extends Fragment {
     TextView tvTransactionRecord;
     @Bind(R.id.tv_all_pp)
     TextView tvAllPp;
-    /*    @Bind(R.id.textView)
-        TextView textView;
-        @Bind(R.id.tv_cannot_put)
-        TextView tvCannotPut;
-        @Bind(R.id.tv_can_put)
-        TextView tvCanPut;
-        @Bind(R.id.textView4)
-        TextView textView4;*/
     @Bind(R.id.tv_copy)
     TextView tvCopy;
     @Bind(R.id.l_recharge)
@@ -75,27 +84,70 @@ public class WalletFragment extends Fragment {
     ViewPager viewPager;
     @Bind(R.id.tv_walletadress)
     TextView tvWalletadress;
+    @Bind(R.id.tv_1)
+    TextView tv1;
+    @Bind(R.id.tv_2)
+    TextView tv2;
+    @Bind(R.id.tv_3)
+    TextView tv3;
+    @Bind(R.id.tv_4)
+    TextView tv4;
+    @Bind(R.id.tv_5)
+    TextView tv5;
+    @Bind(R.id.tv_6)
+    TextView tv6;
+    @Bind(R.id.tv_7)
+    TextView tv7;
+    @Bind(R.id.breadcrumbs)
+    BreadcrumbsView breadcrumbs;
+    @Bind(R.id.tv_d1)
+    TextView tvD1;
+    @Bind(R.id.tv_d2)
+    TextView tvD2;
+    @Bind(R.id.tv_d3)
+    TextView tvD3;
+    @Bind(R.id.tv_d4)
+    TextView tvD4;
+    @Bind(R.id.tv_d5)
+    TextView tvD5;
+    @Bind(R.id.tv_d6)
+    TextView tvD6;
+    @Bind(R.id.tv_d7)
+    TextView tvD7;
     private ArrayList<String> mDatas;
     List<Fragment> mfragments = new ArrayList<Fragment>();
-    private SPUtils spUtils;
+    private SPUtils spUtilsAuth;
+    private SPUtils spUtilsCheckIf;
+    private SPUtils spUtilsAuthToken;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.wallet, container, false);
         ButterKnife.bind(this, view);
-        spUtils = SPUtils.getInstance("auth", getActivity());
+        EventBus.getDefault().register(this);
+        spUtilsAuth = SPUtils.getInstance("auth", getActivity());
+        spUtilsAuthToken = SPUtils.getInstance("authToken", getActivity());
+        spUtilsCheckIf = SPUtils.getInstance("checkIf", getActivity());
         initDatas();
         init();
-        initView(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));
+        initAuth(AuthJsonUtils.readUserBean(spUtilsAuth.getString("auth", "")));
+        initChechIf(JsonUtil.readCheckInBean(spUtilsCheckIf.getString("checkIf", "")));
         return view;
     }
-
-    private void initView(UserBean userBean) {
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true, priority = 1)
+    public void CheckEventBus(CheckInBean checkInBean) {
+        Log.v("cccccccccc","-----ccc----");
+        if (checkInBean == null)
+            return;
+        initChechIf(JsonUtil.readCheckInBean(spUtilsCheckIf.getString("checkIf", "")));
+        EventBus.getDefault().removeStickyEvent(CheckInBean.class);
+    }
+    private void initAuth(UserBean userBean) {
         if (userBean == null)
             return;
-        if (userBean.getWallet() !=null){
-            tvAllPp.setText(userBean.getWallet().getPpCoins()+"");
+        if (userBean.getWallet() != null) {
+            tvAllPp.setText(userBean.getWallet().getPpCoins() + "");
             tvWalletadress.setText(userBean.getWallet().getWalletAddress());
         }
     }
@@ -212,8 +264,8 @@ public class WalletFragment extends Fragment {
                         (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
                 /**之前的应用过期的方法，clipboardManager.setText(copy);*/
                 assert clipboardManager != null;
-                clipboardManager.setPrimaryClip(ClipData.newPlainText(null,tvWalletadress.getText().toString()));
-                if (clipboardManager.hasPrimaryClip()){
+                clipboardManager.setPrimaryClip(ClipData.newPlainText(null, tvWalletadress.getText().toString()));
+                if (clipboardManager.hasPrimaryClip()) {
                     clipboardManager.getPrimaryClip().getItemAt(0).getText();
                 }
                 AppUtils.showToast(getActivity(), "复制成功");
@@ -231,6 +283,154 @@ public class WalletFragment extends Fragment {
                 startActivity(intent);
                 break;
             case R.id.tv_sign:
+
+                break;
+        }
+    }
+    private void checkIn() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("authToken", spUtilsAuthToken.getString("authToken", ""));
+                HttpUtils.doPost(Urls.HOST_CHECK, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        mHandler.sendEmptyMessage(0);
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            String string = response.body().string();
+                            CheckInBean checkInBean = JsonUtil.readCheckInBean(string);
+                            spUtilsCheckIf.put("checkIf", string);
+                            Message msg = mHandler.obtainMessage();
+                            msg.obj = checkInBean;
+                            msg.what = 1;
+                            msg.sendToTarget();
+                        } catch (Exception e) {
+                            mHandler.sendEmptyMessage(0);
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
+    private WalletFragment.MyHandler mHandler = new WalletFragment.MyHandler();
+
+    private class MyHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0://签到失败
+                    AppUtils.showToast(getActivity(), "签到失败");
+                    break;
+                case 1://签到成功
+                    CheckInBean checkInBean = (CheckInBean) msg.obj;
+                    EventBus.getDefault().postSticky(checkInBean);
+                    AppUtils.showToast(getActivity(), "签到成功");
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    private void initChechIf(CheckInBean checkInBean) {
+        if (checkInBean == null)
+            return;
+        tvSignDay.setText("已签到" + checkInBean.getCount() + "天");
+        if (checkInBean.isCanCheckIn()) {
+            tvSign.setText("立即签到");
+            tvSign.setEnabled(true);
+        } else {
+            tvSign.setText("已签到");
+            tvSign.setEnabled(false);
+        }
+        switch (checkInBean.getCount()) {
+            case 0:
+                breadcrumbs.setCurrentStep(-1);
+                break;
+            case 1:
+                breadcrumbs.setCurrentStep(0);
+                tv1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                break;
+            case 2:
+                breadcrumbs.setCurrentStep(1);
+                tv1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv2.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD2.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                break;
+            case 3:
+                breadcrumbs.setCurrentStep(2);
+                tv1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv2.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD2.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv3.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD3.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                break;
+            case 4:
+                breadcrumbs.setCurrentStep(3);
+                tv1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv2.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD2.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv3.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD3.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv4.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD4.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                break;
+            case 5:
+                breadcrumbs.setCurrentStep(4);
+                tv1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv2.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD2.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv3.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD3.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv4.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD4.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv5.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD5.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                break;
+
+            case 6:
+                breadcrumbs.setCurrentStep(5);
+                tv1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv2.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD2.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv3.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD3.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv4.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD4.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv5.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD5.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv6.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD6.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                break;
+            case 7:
+                breadcrumbs.setCurrentStep(6);
+                tv1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv2.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD2.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv3.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD3.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv4.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD4.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv5.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD5.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv6.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD6.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv7.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD7.setTextColor(getActivity().getResources().getColor(R.color.yello));
                 break;
         }
     }

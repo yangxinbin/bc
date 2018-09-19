@@ -297,7 +297,6 @@
                     android:id="@+id/tv_sign_day"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="已签到3天"
                     android:textColor="@color/yello"
                     android:textSize="@dimen/textSize" />
 

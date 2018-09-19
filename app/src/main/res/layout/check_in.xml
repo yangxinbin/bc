@@ -1,69 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/qiandao">
+    android:gravity="center"
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/close_check_in"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="@dimen/dp_30"
-        android:layout_marginRight="@dimen/dp_30"
-        android:layout_marginTop="@dimen/dp_30"
-        app:srcCompat="@drawable/x" />
+        android:background="@drawable/qiandao"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_check_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:textSize="@dimen/dp_30"
-        android:text="3" />
+        <ImageView
+            android:id="@+id/close_check_in"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:paddingBottom="@dimen/dp_80"
+            android:paddingRight="@dimen/dp_30"
+            app:srcCompat="@drawable/x" />
 
-    <TextView
-        android:id="@+id/tv_check_day"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_check_num"
-        android:layout_centerHorizontal="true"
-        android:textSize="@dimen/title"
-        android:textColor="@color/common_black"
-        android:layout_marginTop="40dp"
-        android:text="已签到3天" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_check_day"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:textSize="@dimen/textSize"
-        android:textColor="@color/grayBlack"
-        android:text="连续签到七天额外奖励5币" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/common_black" />
 
-    <TextView
-        android:id="@+id/tv_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView6"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_50"
-        android:background="@drawable/common_yellow_full_circle"
-        android:textColor="@color/yello"
-        android:paddingTop="@dimen/dp_10"
-        android:paddingBottom="@dimen/dp_10"
-        android:paddingLeft="@dimen/dp_30"
-        android:paddingRight="@dimen/dp_30"
-        android:textSize="@dimen/title"
-        android:text="签到+1币" />
+            <TextView
+                android:id="@+id/tv_check_num"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_30"
+                android:textStyle="bold" />
 
-</RelativeLayout>
+            <TextView
+                android:id="@+id/tv_check_day"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/common_black"
+                android:textSize="@dimen/title" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_check_day"
+                android:gravity="center_horizontal"
+                android:text="连续签到七天额外奖励5币"
+                android:textColor="@color/grayBlack"
+                android:textSize="@dimen/textSize" />
+
+            <TextView
+                android:id="@+id/tv_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp_30"
+                android:background="@drawable/common_yellow_full_circle"
+                android:paddingBottom="@dimen/dp_10"
+                android:paddingLeft="@dimen/dp_30"
+                android:paddingRight="@dimen/dp_30"
+                android:paddingTop="@dimen/dp_10"
+                android:textColor="@color/yello"
+                android:textSize="@dimen/title" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

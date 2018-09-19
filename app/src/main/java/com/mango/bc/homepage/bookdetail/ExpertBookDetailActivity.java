@@ -223,7 +223,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, true, false, false);
+                //final RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, true, false, false);
                 final HashMap<String, String> mapParams = new HashMap<String, String>();
                 mapParams.clear();
                 mapParams.put("authToken", spUtilsAuthToken.getString("authToken", ""));
@@ -256,7 +256,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
                                         l_like_get.setClickable(false);
                                         tvLikePlay.setText(likeNum+1 + "");
                                         tvLikeGet.setText(likeNum+1 + "");
-                                        EventBus.getDefault().postSticky(refreshStageBean);
+                                        //EventBus.getDefault().postSticky(refreshStageBean);
                                     }/*else {
                                     l_like_play.setChecked(false);
                                     lLikeFree.setChecked(false);

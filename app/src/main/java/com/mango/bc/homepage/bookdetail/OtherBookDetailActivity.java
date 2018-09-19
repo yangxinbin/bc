@@ -219,7 +219,7 @@ public class OtherBookDetailActivity extends BaseActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final RefreshStageBean refreshStageBean = new RefreshStageBean(true, true, true, true, true);
+                //final RefreshStageBean refreshStageBean = new RefreshStageBean(true, true, true, true, true);
                 final HashMap<String, String> mapParams = new HashMap<String, String>();
                 mapParams.clear();
                 mapParams.put("authToken", spUtilsAuthToken.getString("authToken", ""));
@@ -255,7 +255,7 @@ public class OtherBookDetailActivity extends BaseActivity {
                                         tvLikePlay.setText(likeNum + 1 + "");
                                         tvLikeFree.setText(likeNum + 1 + "");
                                         tvLikeNeedbuy.setText(likeNum + 1 + "");
-                                        EventBus.getDefault().postSticky(refreshStageBean);
+                                        //EventBus.getDefault().postSticky(refreshStageBean);
                                     }/*else {
                                     l_like_play.setChecked(false);
                                     lLikeFree.setChecked(false);

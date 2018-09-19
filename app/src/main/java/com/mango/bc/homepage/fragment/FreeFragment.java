@@ -24,6 +24,7 @@ import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookFreeView;
 import com.mango.bc.util.AppUtils;
+import com.mango.bc.util.NetUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -55,7 +56,11 @@ public class FreeFragment extends Fragment implements BookFreeView {
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         initView();
-        bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);
+        if (NetUtil.isNetConnect(getActivity())){
+            bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);
+        }else {
+            bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);
+        }
         return view;
     }
 

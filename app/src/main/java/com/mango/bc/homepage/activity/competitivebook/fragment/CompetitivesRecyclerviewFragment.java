@@ -22,6 +22,8 @@ import com.mango.bc.homepage.adapter.BookComprtitiveAdapter;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
+import com.mango.bc.homepage.net.bean.LoadStageBean;
+import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookCompetitiveView;
@@ -34,6 +36,8 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -88,11 +92,23 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.competitive_items, null);
         ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
         initView();
         refreshAndLoadMore();
         return view;
     }
-
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true,priority = 5)
+    public void RefreshStageBeanEventBus(RefreshStageBean bean) {
+        if (bean == null) {
+            return;
+        }
+        if (bean.getCompetitiveBook()) {
+            EventBus.getDefault().removeStickyEvent(bean);
+            refresh.autoRefresh();
+        } else {
+            //bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//缓存。
+        }
+    }
     private void initView() {
         recycle.setHasFixedSize(true);//固定宽高
         mLayoutManager = new LinearLayoutManager(getActivity());
@@ -101,7 +117,11 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
         adapter = new BookComprtitiveAdapter(getActivity());
         recycle.removeAllViews();
         recycle.setAdapter(adapter);
-        bookPresenter.visitBooks(getActivity(), TYPE, mType, page, false);
+        if (NetUtil.isNetConnect(getActivity())){
+            bookPresenter.visitBooks(getActivity(), TYPE, mType, page, false);
+        }else {
+            bookPresenter.visitBooks(getActivity(), TYPE, mType, page, true);
+        }
         adapter.setOnItemClickLitener(mOnClickListenner);
     }
 

@@ -60,7 +60,11 @@ public class MyCompetitiveFragment extends Fragment implements MyCompetitiveBook
         myBookPresenter = new MyBookPresenterImpl(this);
         ButterKnife.bind(this, view);
         initView();
-        myBookPresenter.visitBooks(getActivity(), TYPE, page, true);
+        if (NetUtil.isNetConnect(getActivity())) {
+            myBookPresenter.visitBooks(getActivity(), TYPE, page, false);
+        } else {
+            myBookPresenter.visitBooks(getActivity(), TYPE, page, true);
+        }
         refreshAndLoadMore();
         return view;
     }

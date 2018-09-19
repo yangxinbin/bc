@@ -23,6 +23,7 @@ import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookExpertView;
 import com.mango.bc.util.AppUtils;
+import com.mango.bc.util.NetUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -54,7 +55,11 @@ public class ExpertFragment extends Fragment implements BookExpertView {
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         initView();
-        bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);
+        if (NetUtil.isNetConnect(getActivity())) {
+            bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);
+        } else {
+            bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);
+        }
         return view;
     }
 
@@ -86,14 +91,14 @@ public class ExpertFragment extends Fragment implements BookExpertView {
             Intent intent = new Intent(getActivity(), ExpertBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookExpertAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
-            intent.putExtra("foot_play",true);
+            intent.putExtra("foot_play", true);
             startActivity(intent);
         }
 
         @Override
         public void onItemGetClick(View view, int position) {
             Intent intent = new Intent(getActivity(), ExpertBookDetailActivity.class);
-            intent.putExtra("foot_buy_get",true);
+            intent.putExtra("foot_buy_get", true);
             EventBus.getDefault().postSticky(bookExpertAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             startActivity(intent);

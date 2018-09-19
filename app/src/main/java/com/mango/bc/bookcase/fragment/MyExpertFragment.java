@@ -61,23 +61,29 @@ public class MyExpertFragment extends Fragment implements MyExpertBookView {
         myBookPresenter = new MyBookPresenterImpl(this);
         ButterKnife.bind(this, view);
         initView();
-        myBookPresenter.visitBooks(getActivity(), TYPE, page, false);
+        if (NetUtil.isNetConnect(getActivity())) {
+            myBookPresenter.visitBooks(getActivity(), TYPE, page, false);
+        } else {
+            myBookPresenter.visitBooks(getActivity(), TYPE, page, true);
+        }
         refreshAndLoadMore();
         return view;
     }
+
     private void initView() {
         myBookGirdAdapter = new MyBookGirdAdapter(getActivity());
         recycle.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 3));
         recycle.setAdapter(myBookGirdAdapter);
         myBookGirdAdapter.setOnItemClickLitener(mOnClickListenner);
     }
+
     private MyBookGirdAdapter.OnItemClickLitener mOnClickListenner = new MyBookGirdAdapter.OnItemClickLitener() {
         @Override
         public void onItemClick(View view, int position) {
             Intent intent = new Intent(getActivity(), ExpertBookDetailActivity.class);
             EventBus.getDefault().removeStickyEvent(BookBean.class);
             EventBus.getDefault().postSticky(myBookGirdAdapter.getItem(position));
-            intent.putExtra("foot_play",true);
+            intent.putExtra("foot_play", true);
             startActivity(intent);
         }
 
@@ -131,6 +137,7 @@ public class MyExpertFragment extends Fragment implements MyExpertBookView {
             //mAdapter.refresh(initData());
         }
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -142,7 +149,7 @@ public class MyExpertFragment extends Fragment implements MyExpertBookView {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Log.v("doPostAll", page +"==="+bookBeanList.size());
+                Log.v("doPostAll", page + "===" + bookBeanList.size());
                 if (bookBeanList == null || bookBeanList.size() == 0) {
                     if (page == 0) {
                         refresh.setVisibility(View.GONE);

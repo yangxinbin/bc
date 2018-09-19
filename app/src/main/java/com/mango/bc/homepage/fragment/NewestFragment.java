@@ -23,6 +23,7 @@ import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookNewestView;
 import com.mango.bc.util.AppUtils;
+import com.mango.bc.util.NetUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -49,7 +50,11 @@ public class NewestFragment extends Fragment implements BookNewestView {
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         initView();
-        bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);
+        if (NetUtil.isNetConnect(getActivity())){
+            bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);
+        }else {
+            bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);
+        }
         return view;
     }
 
@@ -63,7 +68,7 @@ public class NewestFragment extends Fragment implements BookNewestView {
             page = 0;
             bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);//刷新从网络。
             bean.setNewestBook(false);//刷新完修改状态
-            Log.v("yyyyyyy", "=====4--" + bean.toString());
+            Log.v("yyyyyyy", "==?===4--" + bean.toString());
             EventBus.getDefault().postSticky(bean);
         } else {
             //bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//缓存。
@@ -136,6 +141,7 @@ public class NewestFragment extends Fragment implements BookNewestView {
                         return;
                     }
                     if (page == 0) {
+                        Log.v("yyyyyyy", "==?like===4--"+bookBeanList.get(4).getLikes());
                         bookNewestAdapter.reMove();
                         bookNewestAdapter.setmDate(bookBeanList);
                     } else {

@@ -16,6 +16,7 @@ import com.mango.bc.homepage.adapter.BookGirdFreeAdapter;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
+import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookFreeView;
@@ -28,6 +29,8 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -57,11 +60,27 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView {
         setContentView(R.layout.activity_free_book);
         bookPresenter = new BookPresenterImpl(this);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
         initView();
-        bookPresenter.visitBooks(this, TYPE, "", page, false);
+        if (NetUtil.isNetConnect(this)){
+            bookPresenter.visitBooks(this, TYPE, "", page, false);
+        }else {
+            bookPresenter.visitBooks(this, TYPE, "", page, true);
+        }
         refreshAndLoadMore();
     }
-
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true,priority = 5)
+    public void RefreshStageBeanEventBus(RefreshStageBean bean) {
+        if (bean == null) {
+            return;
+        }
+        if (bean.getFreeBook()) {
+            EventBus.getDefault().removeStickyEvent(bean);
+            refresh.autoRefresh();
+        } else {
+            //bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//缓存。
+        }
+    }
     private void initView() {
         bookGirdFreeAdapter = new BookGirdFreeAdapter(this);
         recycle.setLayoutManager(new GridLayoutManager(this.getApplicationContext(), 3));
@@ -212,4 +231,10 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+        EventBus.getDefault().unregister(this);
+    }
 }

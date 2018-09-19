@@ -31,6 +31,7 @@ import com.mango.bc.mine.MineFragment;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.JsonUtil;
+import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 import com.mango.bc.view.BottomBar;
@@ -59,6 +60,8 @@ public class BcActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bc);
+        if (!NetUtil.isNetConnect(this))
+            AppUtils.showToast(this, getResources().getString(R.string.check_net));
         spUtilsAuthToken = SPUtils.getInstance("authToken", this);
         spUtilsAuth = SPUtils.getInstance("auth", this);
         spUtilsCheckIf = SPUtils.getInstance("checkIf", this);
@@ -118,6 +121,7 @@ public class BcActivity extends BaseActivity {
             }
         }).start();
     }
+
     private void checkIn() {
         new Thread(new Runnable() {
             @Override
@@ -143,6 +147,7 @@ public class BcActivity extends BaseActivity {
             }
         }).start();
     }
+
     private void loadUser() {
         new Thread(new Runnable() {
             @Override
@@ -226,9 +231,9 @@ public class BcActivity extends BaseActivity {
                     CheckInBean checkInBean = (CheckInBean) msg.obj;
                     if (checkInBean == null)
                         return;
-                    if (checkInBean.isCanCheckIn()){
+                    if (checkInBean.isCanCheckIn()) {
                         showCheckInWindow(BcActivity.this, checkInBean);
-                    }else {
+                    } else {
                         EventBus.getDefault().postSticky(checkInBean);
                     }
                     break;

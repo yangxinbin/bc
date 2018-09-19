@@ -23,6 +23,7 @@ import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookCompetitiveFieldView;
 import com.mango.bc.homepage.net.view.BookCompetitiveView;
 import com.mango.bc.util.AppUtils;
+import com.mango.bc.util.NetUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -53,7 +54,11 @@ public class CompetitiveFieldFragment extends Fragment implements BookCompetitiv
         bookPresenter = new BookPresenterImpl(this);
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
-        bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//true从缓存读数据，false从网络读数据。
+        if (NetUtil.isNetConnect(getActivity())){
+            bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);//true从缓存读数据，false从网络读数据。
+        }else {
+            bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//true从缓存读数据，false从网络读数据。
+        }
         return view;
     }
 

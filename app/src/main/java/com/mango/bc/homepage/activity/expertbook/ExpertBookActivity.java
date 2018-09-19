@@ -17,6 +17,7 @@ import com.mango.bc.homepage.bookdetail.ExpertBookDetailActivity;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
+import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookExpertView;
@@ -29,6 +30,8 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -58,9 +61,27 @@ public class ExpertBookActivity extends BaseActivity implements BookExpertView {
         setContentView(R.layout.activity_expert_book);
         bookPresenter = new BookPresenterImpl(this);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
         initView();
-        bookPresenter.visitBooks(this, TYPE, "", page, false);
+        if (NetUtil.isNetConnect(this)) {
+            bookPresenter.visitBooks(this, TYPE, "", page, false);
+        } else {
+            bookPresenter.visitBooks(this, TYPE, "", page, true);
+        }
         refreshAndLoadMore();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true, priority = 5)
+    public void RefreshStageBeanEventBus(RefreshStageBean bean) {
+        if (bean == null) {
+            return;
+        }
+        if (bean.getExpertBook()) {
+            EventBus.getDefault().removeStickyEvent(bean);
+            refresh.autoRefresh();
+        } else {
+            //bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//缓存。
+        }
     }
 
     private void initView() {
@@ -76,14 +97,14 @@ public class ExpertBookActivity extends BaseActivity implements BookExpertView {
             Intent intent = new Intent(getBaseContext(), ExpertBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookExpertAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
-            intent.putExtra("foot_play",true);
+            intent.putExtra("foot_play", true);
             startActivity(intent);
         }
 
         @Override
         public void onItemGetClick(View view, int position) {
             Intent intent = new Intent(getBaseContext(), OtherBookDetailActivity.class);
-            intent.putExtra("foot_buy_get",true);
+            intent.putExtra("foot_buy_get", true);
             EventBus.getDefault().postSticky(bookExpertAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             startActivity(intent);
@@ -205,4 +226,10 @@ public class ExpertBookActivity extends BaseActivity implements BookExpertView {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+        EventBus.getDefault().unregister(this);
+    }
 }

@@ -17,6 +17,10 @@ import com.mango.bc.bookcase.adapter.MyBookDetailAdapter;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.bookdetail.adapter.BookDetailAdapter;
 import com.mango.bc.homepage.net.bean.BookBean;
+import com.mango.bc.homepage.net.bean.RefreshStageBean;
+import com.mango.bc.util.AppUtils;
+import com.mango.bc.util.HttpUtils;
+import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 import com.mango.bc.view.likeview.PraiseView;
 
@@ -24,9 +28,15 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.IOException;
+import java.util.HashMap;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class OtherBookDetailActivity extends BaseActivity {
 
@@ -75,16 +85,129 @@ public class OtherBookDetailActivity extends BaseActivity {
     TextView tvLikeNeedbuy;
     private BookDetailAdapter bookDetailAdapter;
     private MyBookDetailAdapter myBookDetailAdapter;
+    private SPUtils spUtilsAuthToken;
+    private String bookId;
+    private int likeNum;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {   //精品+上新+免费 详情共用  判断：是否领取   是否购买  三种 精品上新一样
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_other_detail);
+        spUtilsAuthToken = SPUtils.getInstance("authToken", this);
         ButterKnife.bind(this);
         recycle.setNestedScrollingEnabled(false);
         initState();
         EventBus.getDefault().register(this);
+    }
+
+    private void checkLike(final String bookId) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("authToken", spUtilsAuthToken.getString("authToken", ""));
+                mapParams.put("bookId", bookId);
+                HttpUtils.doPost(Urls.HOST_IFLIKE, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        //mHandler.sendEmptyMessage(4);
+                    }
+
+                    @Override
+                    public void onResponse(Call call, final Response response) {
+                        final String string;
+                        try {
+                            string = response.body().string();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Log.v("tttttttttt", "------" + string);
+                                    if (string.equals("true")) {
+                                        l_like_play.setChecked(true);
+                                        lLikeFree.setChecked(true);
+                                        lLikeNeedbuy.setChecked(true);
+                                        l_like_play.setClickable(false);
+                                        lLikeFree.setClickable(false);
+                                        lLikeNeedbuy.setClickable(false);
+                                    }/*else {
+                                    l_like_play.setChecked(false);
+                                    lLikeFree.setChecked(false);
+                                    lLikeNeedbuy.setChecked(false);
+                                }*/
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void like(final String bookId) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final RefreshStageBean refreshStageBean = new RefreshStageBean(true, true, true, true, true);
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("authToken", spUtilsAuthToken.getString("authToken", ""));
+                mapParams.put("bookId", bookId);
+                HttpUtils.doPost(Urls.HOST_LIKE, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        //mHandler.sendEmptyMessage(4);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                AppUtils.showToast(getBaseContext(),"请检查网络");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onResponse(Call call, final Response response) {
+                        final String string;
+                        try {
+                            string = response.body().string();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Log.v("tttttttttt", "------" + string);
+                                    if (string.equals("ok")) {
+                                        l_like_play.setChecked(true);
+                                        lLikeFree.setChecked(true);
+                                        lLikeNeedbuy.setChecked(true);
+                                        l_like_play.setClickable(false);
+                                        lLikeFree.setClickable(false);
+                                        lLikeNeedbuy.setClickable(false);
+                                        tvLikePlay.setText(likeNum+1 + "");
+                                        tvLikeFree.setText(likeNum+1 + "");
+                                        tvLikeNeedbuy.setText(likeNum+1 + "");
+                                        EventBus.getDefault().postSticky(refreshStageBean);
+                                    }/*else {
+                                    l_like_play.setChecked(false);
+                                    lLikeFree.setChecked(false);
+                                    lLikeNeedbuy.setChecked(false);
+                                }*/
+                                }
+                            });
+                        } catch (IOException e) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AppUtils.showToast(getBaseContext(),"请检查网络");
+                                }
+                            });
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        }).start();
     }
 
     private void initState() {
@@ -112,11 +235,14 @@ public class OtherBookDetailActivity extends BaseActivity {
             if (bookBean.getAuthor().getPhoto() != null)
                 Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookBean.getAuthor().getPhoto().getFileName()).into(imgCover);
         }
+        bookId = bookBean.getId();
+        checkLike(bookId);
         tvTitle.setText(bookBean.getTitle());
         tvBuyer.setText(bookBean.getSold() + "人已购买");
-        tvLikePlay.setText(bookBean.getLikes()+"");
-        tvLikeFree.setText(bookBean.getLikes()+"");
-        tvLikeNeedbuy.setText(bookBean.getLikes()+"");
+        likeNum = bookBean.getLikes();
+        tvLikePlay.setText(bookBean.getLikes() + "");
+        tvLikeFree.setText(bookBean.getLikes() + "");
+        tvLikeNeedbuy.setText(bookBean.getLikes() + "");
 
         if (bookBean.getDescriptionImages() != null) {
             bookDetailAdapter = new BookDetailAdapter(bookBean.getDescriptionImages(), this);
@@ -136,9 +262,12 @@ public class OtherBookDetailActivity extends BaseActivity {
                 Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookBean.getBook().getCover().getFileName()).into(imgCover);
             tvTitle.setText(bookBean.getBook().getTitle());
             tvBuyer.setText(bookBean.getBook().getSold() + "人已购买");
-            tvLikePlay.setText(bookBean.getBook().getLikes()+"");
-            tvLikeFree.setText(bookBean.getBook().getLikes()+"");
-            tvLikeNeedbuy.setText(bookBean.getBook().getLikes()+"");
+            likeNum = bookBean.getBook().getLikes();
+            tvLikePlay.setText(bookBean.getBook().getLikes() + "");
+            tvLikeFree.setText(bookBean.getBook().getLikes() + "");
+            tvLikeNeedbuy.setText(bookBean.getBook().getLikes() + "");
+            bookId = bookBean.getBook().getId();
+            checkLike(bookId);
         }
         if (bookBean.getBook().getDescriptionImages() != null) {
             myBookDetailAdapter = new MyBookDetailAdapter(bookBean.getBook().getDescriptionImages(), this);
@@ -166,6 +295,7 @@ public class OtherBookDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.l_like_play://播放点赞
+                like(bookId);
                 break;
             case R.id.l_share_get:
                 break;
@@ -178,6 +308,7 @@ public class OtherBookDetailActivity extends BaseActivity {
             case R.id.l_get:
                 break;//以上领取可以播放状态
             case R.id.l_like_free://免费领取点赞
+                like(bookId);
                 break;
             case R.id.l_share_free:
                 break;
@@ -186,6 +317,8 @@ public class OtherBookDetailActivity extends BaseActivity {
             case R.id.l_free:
                 break;//以上免费需要领取
             case R.id.l_like_needbuy://购买领取点赞
+                like(bookId);
+                Log.v("yyyyyyy", "==?===4--");
                 break;
             case R.id.book_stage_needbuy_vip:
                 break;

@@ -41,8 +41,8 @@ public class OtherBookDetailActivity extends BaseActivity {
     TextView tvBuyer;
     @Bind(R.id.recycle)
     RecyclerView recycle;
-    @Bind(R.id.l_like_get)
-    PraiseView lLikeGet;
+    @Bind(R.id.l_like_play)
+    PraiseView l_like_play;
     @Bind(R.id.l_share_get)
     LinearLayout lShareGet;
     @Bind(R.id.l_txt_get)
@@ -67,6 +67,12 @@ public class OtherBookDetailActivity extends BaseActivity {
     TextView bookStageNeedbuyMoney;
     @Bind(R.id.l_needbuy)
     LinearLayout lNeedbuy;
+    @Bind(R.id.tv_like_play)
+    TextView tvLikePlay;
+    @Bind(R.id.tv_like_free)
+    TextView tvLikeFree;
+    @Bind(R.id.tv_like_needbuy)
+    TextView tvLikeNeedbuy;
     private BookDetailAdapter bookDetailAdapter;
     private MyBookDetailAdapter myBookDetailAdapter;
 
@@ -108,6 +114,10 @@ public class OtherBookDetailActivity extends BaseActivity {
         }
         tvTitle.setText(bookBean.getTitle());
         tvBuyer.setText(bookBean.getSold() + "人已购买");
+        tvLikePlay.setText(bookBean.getLikes()+"");
+        tvLikeFree.setText(bookBean.getLikes()+"");
+        tvLikeNeedbuy.setText(bookBean.getLikes()+"");
+
         if (bookBean.getDescriptionImages() != null) {
             bookDetailAdapter = new BookDetailAdapter(bookBean.getDescriptionImages(), this);
             recycle.setLayoutManager(new LinearLayoutManager(this));
@@ -126,6 +136,9 @@ public class OtherBookDetailActivity extends BaseActivity {
                 Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookBean.getBook().getCover().getFileName()).into(imgCover);
             tvTitle.setText(bookBean.getBook().getTitle());
             tvBuyer.setText(bookBean.getBook().getSold() + "人已购买");
+            tvLikePlay.setText(bookBean.getBook().getLikes()+"");
+            tvLikeFree.setText(bookBean.getBook().getLikes()+"");
+            tvLikeNeedbuy.setText(bookBean.getBook().getLikes()+"");
         }
         if (bookBean.getBook().getDescriptionImages() != null) {
             myBookDetailAdapter = new MyBookDetailAdapter(bookBean.getBook().getDescriptionImages(), this);
@@ -145,14 +158,14 @@ public class OtherBookDetailActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.imageView_back, R.id.l_like_get, R.id.l_share_get, R.id.l_txt_get, R.id.book_stage_play, R.id.l_get, R.id.l_like_free, R.id.l_share_free, R.id.book_stage_free, R.id.l_free, R.id.l_like_needbuy, R.id.book_stage_needbuy_vip, R.id.book_stage_needbuy_money, R.id.l_needbuy})
+    @OnClick({R.id.imageView_back, R.id.l_like_play, R.id.l_share_get, R.id.l_txt_get, R.id.book_stage_play, R.id.l_get, R.id.l_like_free, R.id.l_share_free, R.id.book_stage_free, R.id.l_free, R.id.l_like_needbuy, R.id.book_stage_needbuy_vip, R.id.book_stage_needbuy_money, R.id.l_needbuy})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
             case R.id.imageView_back:
                 finish();
                 break;
-            case R.id.l_like_get:
+            case R.id.l_like_play://播放点赞
                 break;
             case R.id.l_share_get:
                 break;
@@ -164,15 +177,15 @@ public class OtherBookDetailActivity extends BaseActivity {
                 break;
             case R.id.l_get:
                 break;//以上领取可以播放状态
-            case R.id.l_like_free:
+            case R.id.l_like_free://免费领取点赞
                 break;
             case R.id.l_share_free:
                 break;
             case R.id.book_stage_free:
                 break;
             case R.id.l_free:
-                break;//以上免费需要播放
-            case R.id.l_like_needbuy:
+                break;//以上免费需要领取
+            case R.id.l_like_needbuy://购买领取点赞
                 break;
             case R.id.book_stage_needbuy_vip:
                 break;

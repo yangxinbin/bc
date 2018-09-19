@@ -165,7 +165,7 @@
             android:orientation="vertical">
 
             <com.mango.bc.view.likeview.PraiseView
-                android:id="@+id/l_like"
+                android:id="@+id/l_like_get"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_gravity="center"
@@ -177,7 +177,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="14"
+                android:id="@+id/tv_like_get"
                 android:textColor="@color/common_black"
                 android:textSize="@dimen/dp_14" />
 
@@ -280,7 +280,7 @@
             android:orientation="vertical">
 
             <com.mango.bc.view.likeview.PraiseView
-                android:id="@+id/l_like_expert_play"
+                android:id="@+id/l_like_play"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_gravity="center"
@@ -291,7 +291,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="14"
+                android:id="@+id/tv_like_play"
                 android:textColor="@color/common_black"
                 android:textSize="@dimen/dp_14" />
 

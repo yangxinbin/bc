@@ -78,6 +78,18 @@ public class SearchBookDetailActivity extends BaseActivity {
     LinearLayout lBuyExpert;
     @Bind(R.id.l_play_expert)
     LinearLayout lPlayExpert;
+    @Bind(R.id.tv_like_get)
+    TextView tvLikeGet;
+    @Bind(R.id.tv_like_expert_play)
+    TextView tvLikeExpertPlay;
+    @Bind(R.id.book_stage_expert_play)
+    TextView bookStageExpertPlay;
+    @Bind(R.id.tv_like_free)
+    TextView tvLikeFree;
+    @Bind(R.id.tv_like_needbuy)
+    TextView tvLikeNeedbuy;
+    @Bind(R.id.tv_like_buyexpert)
+    TextView tvLikeBuyexpert;
     private BookDetailAdapter bookDetailAdapter;
     private MyBookDetailAdapter myBookDetailAdapter;
 
@@ -151,7 +163,7 @@ public class SearchBookDetailActivity extends BaseActivity {
         EventBus.getDefault().removeStickyEvent(BookBean.class);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+/*    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void MyBookBeanEventBus(MyBookBean bookBean) {  //书架进来  不需要判断 直接可以播放
         if (bookBean == null) {
             return;
@@ -170,7 +182,7 @@ public class SearchBookDetailActivity extends BaseActivity {
         }
 
         EventBus.getDefault().removeStickyEvent(MyBookBean.class);
-    }
+    }*/
 
     @Override
     protected void onDestroy() {

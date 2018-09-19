@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -17,7 +16,6 @@ import com.bumptech.glide.Glide;
 import com.mango.bc.R;
 import com.mango.bc.adapter.ViewPageAdapter;
 import com.mango.bc.base.BaseActivity;
-import com.mango.bc.bookcase.adapter.MyBookDetailAdapter;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.bookdetail.fragment.CommentFragment;
 import com.mango.bc.homepage.bookdetail.fragment.CourseFragment;
@@ -62,22 +60,26 @@ public class ExpertBookDetailActivity extends BaseActivity {
     EditText etSearch;
     @Bind(R.id.l_2)
     LinearLayout l2;
-    @Bind(R.id.l_like)
-    PraiseView lLike;
+    @Bind(R.id.l_like_get)
+    PraiseView l_like_get;
     @Bind(R.id.l_try)
     LinearLayout lTry;
     @Bind(R.id.l_buy)
     TextView lBuy;
     @Bind(R.id.l_collage)
     TextView lCollage;
-    @Bind(R.id.l_like_expert_play)
-    PraiseView lLikeExpertPlay;
+    @Bind(R.id.l_like_play)
+    PraiseView l_like_play;
     @Bind(R.id.l_share_play_expert)
     LinearLayout lSharePlayExpert;
     @Bind(R.id.book_stage_expert_play)
     TextView bookStageExpertPlay;
     @Bind(R.id.l_play_expert)
     LinearLayout lPlayExpert;
+    @Bind(R.id.tv_like_get)
+    TextView tvLikeGet;
+    @Bind(R.id.tv_like_play)
+    TextView tvLikePlay;
     private ArrayList<String> mDatas;
     List<Fragment> mfragments = new ArrayList<Fragment>();
 
@@ -103,9 +105,12 @@ public class ExpertBookDetailActivity extends BaseActivity {
         }
         tvBuyer.setText(bookBean.getSold() + "");
         tvCourse.setText(bookBean.getChapters().size() + "");
+        tvLikeGet.setText(bookBean.getLikes()+"");
+        tvLikePlay.setText(bookBean.getLikes()+"");
         lBuy.setText(bookBean.getPrice() + "币购买\n" + "会员" + bookBean.getVipPrice() + "币");
         lCollage.setText(bookBean.getGroupBuy2Price() + "-" + bookBean.getGroupBuy3Price() + "币\n拼团购买");
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void MyBookBeanEventBus(MyBookBean bookBean) {  //书架进来  不需要判断 直接可以播放
         if (bookBean == null) {
@@ -116,10 +121,13 @@ public class ExpertBookDetailActivity extends BaseActivity {
                 Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookBean.getBook().getCover().getFileName()).into(imgCover);
             tvBuyer.setText(bookBean.getBook().getSold() + "");
             tvCourse.setText(bookBean.getBook().getChapters().size() + "");
+            tvLikeGet.setText(bookBean.getBook().getLikes()+"");
+            tvLikePlay.setText(bookBean.getBook().getLikes()+"");
             lBuy.setText(bookBean.getBook().getPrice() + "币购买\n" + "会员" + bookBean.getBook().getVipPrice() + "币");
             lCollage.setText(bookBean.getBook().getGroupBuy2Price() + "-" + bookBean.getBook().getGroupBuy3Price() + "币\n拼团购买");
         }
     }
+
     private void initDatas() {
         //  mDatas = new ArrayList<String>(Arrays.asList("       我的事件       ", "       全部事件       "));
         mDatas = new ArrayList<String>(Arrays.asList("详情", "课程", "评论"));
@@ -236,10 +244,10 @@ public class ExpertBookDetailActivity extends BaseActivity {
         EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.l_like_expert_play, R.id.l_share_play_expert, R.id.book_stage_expert_play,R.id.l_like, R.id.l_try, R.id.l_buy, R.id.l_collage})
+    @OnClick({R.id.l_like_play, R.id.l_share_play_expert, R.id.book_stage_expert_play, R.id.l_like_get, R.id.l_try, R.id.l_buy, R.id.l_collage})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.l_like:
+            case R.id.l_like_get:
                 break;
             case R.id.l_try:
                 break;
@@ -247,7 +255,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
                 break;
             case R.id.l_collage:
                 break;//以上是购买foot
-            case R.id.l_like_expert_play:
+            case R.id.l_like_play:
                 break;
             case R.id.l_share_play_expert:
                 break;

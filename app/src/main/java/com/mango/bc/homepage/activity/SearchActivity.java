@@ -20,11 +20,12 @@ import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
+import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.adapter.BookGirdSearchAdapter;
 import com.mango.bc.homepage.adapter.HistorySearchAdapter;
-import com.mango.bc.homepage.bookdetail.SearchBookDetailActivity;
+import com.mango.bc.homepage.bookdetail.ExpertBookDetailActivity;
+import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
-import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookSearchView;
@@ -157,42 +158,48 @@ public class SearchActivity extends BaseActivity implements BookSearchView {
 
         @Override
         public void onItemPlayClick(View view, int position) {
-            Intent intent = new Intent(getBaseContext(), SearchBookDetailActivity.class);
+            Log.v("wwwwwww","======pi");
+            Intent intent = new Intent(getBaseContext(), OtherBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookGirdSearchAdapter.getItem(position));
+            EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             intent.putExtra("foot_play",true);
             startActivity(intent);
         }
 
         @Override
         public void onItemExpertPlayClick(View view, int position) {
-            Intent intent = new Intent(getBaseContext(), SearchBookDetailActivity.class);
+            Intent intent = new Intent(getBaseContext(), ExpertBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookGirdSearchAdapter.getItem(position));
-            intent.putExtra("foot_expert_play",true);
+            EventBus.getDefault().removeStickyEvent(MyBookBean.class);
+            intent.putExtra("foot_play",true);
             startActivity(intent);
         }
 
         @Override
         public void onItemFreeGetClick(View view, int position) {
-            Intent intent = new Intent(getBaseContext(), SearchBookDetailActivity.class);
+            Log.v("wwwwwww","======gi");
+            Intent intent = new Intent(getBaseContext(), OtherBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookGirdSearchAdapter.getItem(position));
+            EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             intent.putExtra("foot_free_get",true);
             startActivity(intent);
         }
 
         @Override
         public void onItemBuyGetClick(View view, int position) {
-            Intent intent = new Intent(getBaseContext(), SearchBookDetailActivity.class);
+            Intent intent = new Intent(getBaseContext(), OtherBookDetailActivity.class);
+            intent.putExtra("foot_buy_get", true);
             EventBus.getDefault().postSticky(bookGirdSearchAdapter.getItem(position));
-            intent.putExtra("foot_buy_get",true);
+            EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             startActivity(intent);
         }
 
         @Override
         public void onItemExpertGetClick(View view, int position) {
-            Log.v("wwwwwww","======gi");
-            Intent intent = new Intent(getBaseContext(), SearchBookDetailActivity.class);
+            Intent intent = new Intent(getBaseContext(), ExpertBookDetailActivity.class);
+            intent.putExtra("foot_buy_get",true);
             EventBus.getDefault().postSticky(bookGirdSearchAdapter.getItem(position));
-            intent.putExtra("foot_buyexpert_get",true);
+            EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             startActivity(intent);
         }
 

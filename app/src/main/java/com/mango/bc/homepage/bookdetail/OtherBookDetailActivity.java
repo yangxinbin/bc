@@ -43,6 +43,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -99,6 +100,7 @@ public class OtherBookDetailActivity extends BaseActivity {
     private ACache mCache;
     private SPUtils spUtilsAllMyBook;
     private String type;
+    private BookDetailBean mBookDetailBean;
 
 
     @Override
@@ -316,6 +318,7 @@ public class OtherBookDetailActivity extends BaseActivity {
     private void initBookDetailView(BookDetailBean bookDetailBean) {
         if (bookDetailBean == null)
             return;
+        this.mBookDetailBean = bookDetailBean;
         if (bookDetailBean.getAuthor() != null) {
             if (bookDetailBean.getAuthor().getPhoto() != null)
                 Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookDetailBean.getAuthor().getPhoto().getFileName()).into(imgCover);
@@ -390,6 +393,7 @@ public class OtherBookDetailActivity extends BaseActivity {
                 like(bookId);
                 break;
             case R.id.l_share_get:
+                showShare();
                 break;
             case R.id.l_txt_get:
                 intent = new Intent(this, TxtActivity.class);
@@ -403,6 +407,7 @@ public class OtherBookDetailActivity extends BaseActivity {
                 like(bookId);
                 break;
             case R.id.l_share_free:
+                showShare();
                 break;
             case R.id.book_stage_free:
                 break;
@@ -419,5 +424,30 @@ public class OtherBookDetailActivity extends BaseActivity {
             case R.id.l_needbuy:
                 break;//以上需要购买播放
         }
+    }
+    private void showShare() {
+        OnekeyShare oks = new OnekeyShare();
+        //关闭sso授权
+        oks.disableSSOWhenAuthorize();
+
+        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间等使用
+        oks.setTitle(mBookDetailBean.getTitle());
+        // titleUrl是标题的网络链接，QQ和QQ空间等使用
+        oks.setTitleUrl("http://sharesdk.cn");
+        // text是分享文本，所有平台都需要这个字段
+        oks.setText(mBookDetailBean.getSubtitle());
+        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+        oks.setImageUrl(Urls.HOST_GETFILE + "?name=" + mBookDetailBean.getCover().getFileName());//确保SDcard下面存在此张图片
+        // url在微信、微博，Facebook等平台中使用
+        oks.setUrl(Urls.HOST_GETFILE + "?name=" + mBookDetailBean.getDescriptionImages().get(0).getFileName());
+        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+        oks.setComment("我是测试评论文本");
+        // site是分享此内容的网站名称，仅在QQ空间使用
+        oks.setSite(getString(R.string.app_name));
+        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+        oks.setSiteUrl("http://sharesdk.cn");
+
+        // 启动分享GUI
+        oks.show(getApplicationContext());
     }
 }

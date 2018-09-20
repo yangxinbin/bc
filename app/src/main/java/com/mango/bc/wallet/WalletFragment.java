@@ -35,6 +35,7 @@ import com.mango.bc.wallet.activity.RechargeActivity;
 import com.mango.bc.wallet.activity.TransactionActivity;
 import com.mango.bc.wallet.activity.TransferActivity;
 import com.mango.bc.wallet.bean.CheckInBean;
+import com.mango.bc.wallet.bean.RefreshPpgBean;
 import com.mango.bc.wallet.bean.RefreshTaskBean;
 import com.mango.bc.wallet.fragment.AlreadyObtainedFragment;
 import com.mango.bc.wallet.fragment.DailyTasksFragment;
@@ -136,14 +137,27 @@ public class WalletFragment extends Fragment {
         initChechIf(JsonUtil.readCheckInBean(spUtilsCheckIf.getString("checkIf", "")));
         return view;
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true, priority = 1)
     public void CheckEventBus(CheckInBean checkInBean) {
-        Log.v("cccccccccc","-----ccc----");
         if (checkInBean == null)
             return;
         initChechIf(JsonUtil.readCheckInBean(spUtilsCheckIf.getString("checkIf", "")));
         EventBus.getDefault().removeStickyEvent(CheckInBean.class);
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void RefreshPpgEventBus(RefreshPpgBean refreshPpgBean) {
+        if (refreshPpgBean == null)
+            return;
+        Log.v("cccccccccc", "-----RefreshPpgEventBus----"+refreshPpgBean.getIfRefreshPpg());
+
+        if (refreshPpgBean.getIfRefreshPpg()){
+            initAuth(AuthJsonUtils.readUserBean(spUtilsAuth.getString("auth", "")));
+        }
+        EventBus.getDefault().removeStickyEvent(RefreshPpgBean.class);
+    }
+
     private void initAuth(UserBean userBean) {
         if (userBean == null)
             return;
@@ -288,6 +302,7 @@ public class WalletFragment extends Fragment {
                 break;
         }
     }
+
     private void checkIn() {
         new Thread(new Runnable() {
             @Override
@@ -319,6 +334,7 @@ public class WalletFragment extends Fragment {
             }
         }).start();
     }
+
     private WalletFragment.MyHandler mHandler = new WalletFragment.MyHandler();
 
     private class MyHandler extends Handler {

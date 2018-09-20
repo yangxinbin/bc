@@ -16,6 +16,9 @@ import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
+import com.mango.bc.wallet.bean.RefreshPpgBean;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -41,6 +44,7 @@ public class TransferActivity extends BaseActivity {
     Button buSure;
     private SPUtils spUtilsAuthToken;
     private SPUtils spUtilsAuth;
+    private SPUtils spUtilsOpenId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,7 @@ public class TransferActivity extends BaseActivity {
             AppUtils.showToast(this, getResources().getString(R.string.check_net));
         spUtilsAuthToken = SPUtils.getInstance("authToken", this);
         spUtilsAuth = SPUtils.getInstance("auth", this);
+        spUtilsOpenId = SPUtils.getInstance("openId", this);
         ButterKnife.bind(this);
         initAuth(AuthJsonUtils.readUserBean(spUtilsAuth.getString("auth", "")));
 
@@ -59,7 +64,7 @@ public class TransferActivity extends BaseActivity {
         if (userBean == null)
             return;
         if (userBean.getWallet() != null) {
-            tvAllPp.setText("（当前余额："+userBean.getWallet().getPpCoins() + "积分）");
+            tvAllPp.setText("（当前余额：" + userBean.getWallet().getPpCoins() + "积分）");
         }
     }
 
@@ -73,6 +78,40 @@ public class TransferActivity extends BaseActivity {
                 transfer();
                 break;
         }
+    }
+
+    private void loadUser() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("openId", spUtilsOpenId.getString("openId", ""));
+                HttpUtils.doPost(Urls.HOST_AUTH, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                    }
+
+                    @Override
+                    public void onResponse(Call call, final Response response) {
+                        try {
+                            final String string = response.body().string();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    spUtilsAuth.put("auth", string);
+                                    initAuth(AuthJsonUtils.readUserBean(spUtilsAuth.getString("auth", "")));//刷新
+                                    EventBus.getDefault().postSticky(new RefreshPpgBean(true));//刷新
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+            }
+        }).start();
     }
 
     private void transfer() {
@@ -102,6 +141,7 @@ public class TransferActivity extends BaseActivity {
                                 @Override
                                 public void run() {
                                     AppUtils.showToast(getBaseContext(), "转账成功");
+                                    loadUser();
                                 }
                             });
                         } catch (Exception e) {

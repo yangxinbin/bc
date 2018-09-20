@@ -28,6 +28,7 @@ import com.mango.bc.homepage.HomePageFragment;
 import com.mango.bc.homepage.bookdetail.bean.CommentBean;
 import com.mango.bc.homepage.bookdetail.fragment.CommentFragment;
 import com.mango.bc.mine.MineFragment;
+import com.mango.bc.mine.jsonutil.AuthJsonUtils;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.JsonUtil;
@@ -37,6 +38,7 @@ import com.mango.bc.util.Urls;
 import com.mango.bc.view.BottomBar;
 import com.mango.bc.wallet.WalletFragment;
 import com.mango.bc.wallet.bean.CheckInBean;
+import com.mango.bc.wallet.bean.RefreshPpgBean;
 import com.mango.bc.wallet.bean.RefreshTaskBean;
 
 import org.greenrobot.eventbus.EventBus;
@@ -55,6 +57,7 @@ public class BcActivity extends BaseActivity {
     private SPUtils spUtilsAuthToken;
     private SPUtils spUtilsAuth;
     private SPUtils spUtilsCheckIf;
+    private SPUtils spUtilsOpenId;
 
 
     @Override
@@ -67,6 +70,8 @@ public class BcActivity extends BaseActivity {
         spUtilsAuth = SPUtils.getInstance("auth", this);
         spUtilsCheckIf = SPUtils.getInstance("checkIf", this);
         spUtilsAuthToken.put("authToken", "eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1MzY5MDk3MjI5MzksImFsaWFzIjoi5p2o6ZGr5paMIiwiaWQiOiI1YjhhM2Q0YjA0NDQwYzBhNDhhMzNhMDUiLCJ0eXBlIjoiZ2VuZXJhbCIsIndhbGxldEFkZHJlc3MiOiIweGU3MmUzODdhZjEyZTA4NmFlZWNjOGVmMTljNzcxY2M4IiwiZXhwIjo0MTI4OTA5NzIyLCJ1c2VybmFtZSI6Im9YaGk5NGpRa1hQb3ZCc3FFczBCOFFLc2JNMEEifQ.m6rVYWnsxxogOAVmOLQ1HEC5bv0YzAwPhqGOlQ0tOP1CVec8XBRytgEFo_0rMlgSW42u2F199y3WAOr8XE2yYA");
+        spUtilsOpenId = SPUtils.getInstance("openId", this);
+        spUtilsOpenId.put("openId", "oXhi94jQkXPovBsqEs0B8QKsbM0A");
         ButterKnife.bind(this);
         ifCheckIn();
         loadUser(); //个人信息从网络拿数据
@@ -155,7 +160,7 @@ public class BcActivity extends BaseActivity {
             public void run() {
                 final HashMap<String, String> mapParams = new HashMap<String, String>();
                 mapParams.clear();
-                mapParams.put("openId", "oXhi94jQkXPovBsqEs0B8QKsbM0A");
+                mapParams.put("openId", spUtilsOpenId.getString("openId", ""));
                 HttpUtils.doPost(Urls.HOST_AUTH, mapParams, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -163,12 +168,20 @@ public class BcActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onResponse(Call call, Response response) throws IOException {
+                    public void onResponse(Call call, final Response response) {
+                        final String string;
                         try {
-                            spUtilsAuth.put("auth", response.body().string());
-                        } catch (Exception e) {
-                            mHandler.sendEmptyMessage(2);
+                            string = response.body().string();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    spUtilsAuth.put("auth", string);
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
+
                     }
                 });
             }

@@ -37,6 +37,7 @@ import com.mango.bc.util.Urls;
 import com.mango.bc.view.BottomBar;
 import com.mango.bc.wallet.WalletFragment;
 import com.mango.bc.wallet.bean.CheckInBean;
+import com.mango.bc.wallet.bean.RefreshTaskBean;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -247,6 +248,7 @@ public class BcActivity extends BaseActivity {
                     break;
                 case 5://签到成功
                     AppUtils.showToast(getBaseContext(), "签到成功");
+                    EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
                     ifCheckIn();
                     break;
                 default:

@@ -35,6 +35,7 @@ import com.mango.bc.wallet.activity.RechargeActivity;
 import com.mango.bc.wallet.activity.TransactionActivity;
 import com.mango.bc.wallet.activity.TransferActivity;
 import com.mango.bc.wallet.bean.CheckInBean;
+import com.mango.bc.wallet.bean.RefreshTaskBean;
 import com.mango.bc.wallet.fragment.AlreadyObtainedFragment;
 import com.mango.bc.wallet.fragment.DailyTasksFragment;
 
@@ -331,6 +332,7 @@ public class WalletFragment extends Fragment {
                 case 1://签到成功
                     CheckInBean checkInBean = (CheckInBean) msg.obj;
                     EventBus.getDefault().postSticky(checkInBean);
+                    EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
                     AppUtils.showToast(getActivity(), "签到成功");
                     break;
                 default:

@@ -20,8 +20,13 @@ import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 import com.mango.bc.wallet.bean.CheckInBean;
+import com.mango.bc.wallet.bean.RefreshTaskBean;
 import com.mango.bc.wallet.bean.TaskAndRewardBean;
 import com.mango.bc.wallet.walletjsonutil.WalletJsonUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -78,6 +83,7 @@ public class AlreadyObtainedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.already_obtained, container, false);
         ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
         spUtilsAuthToken = SPUtils.getInstance("authToken", getActivity());
         mCache = ACache.get(getActivity());
         if (NetUtil.isNetConnect(getActivity())) {
@@ -87,7 +93,22 @@ public class AlreadyObtainedFragment extends Fragment {
         }
         return view;
     }
-
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void RefreshTaskEventBus(RefreshTaskBean bean) {
+        if (bean == null) {
+            return;
+        }
+        if (bean.getIfTaskRefresh()){
+            if (NetUtil.isNetConnect(getActivity())) {
+                Log.v("ttttttttt", "-----rr");
+                loadReward(false);
+            } else {
+                loadReward(true);
+            }
+        }else {
+            loadReward(true);
+        }
+    }
     private void loadReward(final Boolean ifCache) {
         new Thread(new Runnable() {
             @Override
@@ -169,5 +190,6 @@ public class AlreadyObtainedFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        EventBus.getDefault().unregister(this);
     }
 }

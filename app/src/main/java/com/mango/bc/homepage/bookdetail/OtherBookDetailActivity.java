@@ -118,14 +118,10 @@ public class OtherBookDetailActivity extends BaseActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        initBookDetailView(bookDetailBean);
-                                    }
-                                });
+                                initBookDetailView(bookDetailBean);
                             }
                         });
+
                         return;
                     }
                 } else {
@@ -307,7 +303,7 @@ public class OtherBookDetailActivity extends BaseActivity {
         tvLikePlay.setText(bookDetailBean.getLikes() + "");
         tvLikeFree.setText(bookDetailBean.getLikes() + "");
         tvLikeNeedbuy.setText(bookDetailBean.getLikes() + "");
-        bookStageNeedbuyVip.setText(bookDetailBean.getPrice()+"积分免费读");//还要判断是否是VIP
+        bookStageNeedbuyVip.setText(bookDetailBean.getPrice() + "积分免费读");//还要判断是否是VIP
         if (bookDetailBean.getDescriptionImages() != null) {
             bookDetailAdapter = new BookDetailAdapter(bookDetailBean.getDescriptionImages(), this);
             recycle.setLayoutManager(new LinearLayoutManager(this));

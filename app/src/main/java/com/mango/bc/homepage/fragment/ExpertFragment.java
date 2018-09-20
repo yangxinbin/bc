@@ -91,14 +91,12 @@ public class ExpertFragment extends Fragment implements BookExpertView {
             Intent intent = new Intent(getActivity(), ExpertBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookExpertAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
-            intent.putExtra("foot_play", true);
             startActivity(intent);
         }
 
         @Override
         public void onItemGetClick(View view, int position) {
             Intent intent = new Intent(getActivity(), ExpertBookDetailActivity.class);
-            intent.putExtra("foot_buy_get", true);
             EventBus.getDefault().postSticky(bookExpertAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             startActivity(intent);

@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.mango.bc.R;
 import com.mango.bc.adapter.ViewPageAdapter;
 import com.mango.bc.base.BaseActivity;
@@ -42,6 +44,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -102,17 +105,46 @@ public class ExpertBookDetailActivity extends BaseActivity {
     private String bookId;
     private int likeNum;
     private ACache mCache;
+    private SPUtils spUtilsAllMyBook;
+    private String type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_expert_detail);
         spUtilsAuthToken = SPUtils.getInstance("authToken", this);
+        spUtilsAllMyBook = SPUtils.getInstance("allMyBook", this);
         mCache = ACache.get(this.getApplicationContext());
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         initDatas();
         init();
+    }
+
+    private void initState(String bookId, String type) {
+        if (chechState(bookId)) {
+            lGet.setVisibility(View.GONE);
+            lPlayExpert.setVisibility(View.VISIBLE);//进去播放界面
+        } else {
+            lGet.setVisibility(View.VISIBLE);//购买状态
+            lPlayExpert.setVisibility(View.GONE);
+
+        }
+    }
+
+    private boolean chechState(String bookId) {
+        String data = spUtilsAllMyBook.getString("allMyBook", "");
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<String>>() {
+        }.getType();
+        List<String> list = gson.fromJson(data, listType);
+        if (list == null)
+            return false;
+        if (list.contains(bookId)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void loadBookDetail(final Boolean ifCache, final String bookId) {
@@ -301,6 +333,8 @@ public class ExpertBookDetailActivity extends BaseActivity {
             return;
         }
         bookId = bookBean.getId();
+        type = bookBean.getType();
+        initState(bookId, type);
         checkLike(bookId);
         if (NetUtil.isNetConnect(this)) {
             loadBookDetail(false, bookId);
@@ -316,6 +350,8 @@ public class ExpertBookDetailActivity extends BaseActivity {
         }
         if (bookBean.getBook() != null) {
             bookId = bookBean.getBook().getId();
+            type = bookBean.getBook().getType();
+            initState(bookId, type);
             checkLike(bookId);
             if (NetUtil.isNetConnect(this)) {
                 loadBookDetail(false, bookId);
@@ -326,15 +362,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
     }
 
     private void initDatas() {
-        //  mDatas = new ArrayList<String>(Arrays.asList("       我的事件       ", "       全部事件       "));
         mDatas = new ArrayList<String>(Arrays.asList("详情", "课程", "评论"));
-        if (getIntent().getBooleanExtra("foot_buy_get", false)) {
-            lGet.setVisibility(View.VISIBLE);//进去播放界面
-            lPlayExpert.setVisibility(View.GONE);
-        } else if (getIntent().getBooleanExtra("foot_play", false)) {
-            lGet.setVisibility(View.GONE);
-            lPlayExpert.setVisibility(View.VISIBLE);
-        }
     }
 
     private void init() {

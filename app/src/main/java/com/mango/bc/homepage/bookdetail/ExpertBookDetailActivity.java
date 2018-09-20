@@ -113,6 +113,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
         initDatas();
         init();
     }
+
     private void loadBookDetail(final Boolean ifCache, final String bookId) {
         new Thread(new Runnable() {
             @Override
@@ -125,12 +126,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        initBookDetailView(bookDetailBean);
-                                    }
-                                });
+                                initBookDetailView(bookDetailBean);
                             }
                         });
                         return;
@@ -175,6 +171,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
         }).start();
 
     }
+
     private void checkLike(final String bookId) {
         new Thread(new Runnable() {
             @Override
@@ -219,6 +216,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
             }
         }).start();
     }
+
     private void like(final String bookId) {
         new Thread(new Runnable() {
             @Override
@@ -235,7 +233,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                AppUtils.showToast(getBaseContext(),getResources().getString(R.string.check_net));
+                                AppUtils.showToast(getBaseContext(), getResources().getString(R.string.check_net));
                             }
                         });
                     }
@@ -254,8 +252,8 @@ public class ExpertBookDetailActivity extends BaseActivity {
                                         l_like_play.setChecked(true);
                                         l_like_play.setClickable(false);
                                         l_like_get.setClickable(false);
-                                        tvLikePlay.setText(likeNum+1 + "");
-                                        tvLikeGet.setText(likeNum+1 + "");
+                                        tvLikePlay.setText(likeNum + 1 + "");
+                                        tvLikeGet.setText(likeNum + 1 + "");
                                         //EventBus.getDefault().postSticky(refreshStageBean);
                                     }/*else {
                                     l_like_play.setChecked(false);
@@ -268,7 +266,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    AppUtils.showToast(getBaseContext(),getResources().getString(R.string.check_net));
+                                    AppUtils.showToast(getBaseContext(), getResources().getString(R.string.check_net));
                                 }
                             });
                             e.printStackTrace();

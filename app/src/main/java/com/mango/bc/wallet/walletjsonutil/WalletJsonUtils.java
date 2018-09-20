@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.wallet.bean.TaskAndRewardBean;
+import com.mango.bc.wallet.bean.TransactionBean;
 
 import java.util.List;
 
@@ -20,5 +21,11 @@ public class WalletJsonUtils {
         List<TaskAndRewardBean> taskAndRewardBeans = gson.fromJson(res, new TypeToken<List<TaskAndRewardBean>>() {
         }.getType());
         return taskAndRewardBeans;
+    }
+    public static List<TransactionBean> readTransactionBean(String res) {
+        Gson gson = new Gson();
+        List<TransactionBean> transactionBeans = gson.fromJson(res, new TypeToken<List<TransactionBean>>() {
+        }.getType());
+        return transactionBeans;
     }
 }

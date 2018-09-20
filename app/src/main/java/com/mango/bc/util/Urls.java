@@ -25,6 +25,8 @@ public class Urls {
     public static final String BOOKDETAIL = "/book";
     public static final String REWARDS = "/task/my/rewards";
     public static final String TASKS = "/task/my/tasks";
+    public static final String TRANSACTIONS = "/wallet/transactions";
+
 
     public static final String HOST_BOOKCATEGORIES = HOST+BOOKCATEGORIES;
     public static final String HOST_BOOKLISTCATEGORIES = HOST+BOOKLISTCATEGORIES;
@@ -42,5 +44,6 @@ public class Urls {
     public static final String HOST_BOOKDETAIL = HOST+BOOKDETAIL;
     public static final String HOST_REWARDS = HOST+REWARDS;
     public static final String HOST_TASKS = HOST+TASKS;
+    public static final String HOST_TRANSACTIONS = HOST+TRANSACTIONS;
 
 }

@@ -5,22 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@color/common_gray"
     tools:context="com.mango.bc.wallet.activity.TransactionActivity">
     <RelativeLayout
+        android:layout_marginBottom="@dimen/dp_1"
+        android:background="@color/white"
         android:layout_width="match_parent"
-        android:padding="@dimen/dp_15"
         android:gravity="center_vertical"
         android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:textSize="@dimen/title"
+            android:layout_centerVertical="true"
+            android:text="@string/transaction_record"
             android:textColor="@color/black"
-            android:text="@string/transaction_record" />
+            android:textSize="@dimen/title" />
 
         <ImageView
             android:id="@+id/imageView_back"

@@ -20,4 +20,6 @@
     <color name="common_yello">#fde09a</color>
     <color name="buy_vip">#FFE7B8</color>
     <color name="unbuy_vip">#FFF8E8</color>
+    <color name="red">#fc1d28</color>
+
 </resources>

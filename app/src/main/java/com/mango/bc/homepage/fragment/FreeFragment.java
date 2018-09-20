@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
+import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
 import com.mango.bc.bookcase.net.view.MyAllBookView;
 import com.mango.bc.homepage.activity.freebook.FreeBookActivity;
 import com.mango.bc.homepage.adapter.BookGirdFreeAdapter;
@@ -57,12 +58,14 @@ public class FreeFragment extends Fragment implements BookFreeView,MyAllBookView
     private ArrayList<BookBean> mData = new ArrayList<BookBean>();
     private SPUtils spUtilsAuthToken;
     private TextView tv_free_stage;
+    private MyBookPresenterImpl myBookPresenter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.free, container, false);
         bookPresenter = new BookPresenterImpl(this);
+        myBookPresenter = new MyBookPresenterImpl(this);
         spUtilsAuthToken = SPUtils.getInstance("authToken", getActivity());
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
@@ -125,7 +128,7 @@ public class FreeFragment extends Fragment implements BookFreeView,MyAllBookView
 
         @Override
         public void onGetClick(View view, int position) {//领取  adapter 里面对应点击控件
-            //tv_free_stage = view.findViewById(R.id.tv_free_stage);
+            tv_free_stage = view.findViewById(R.id.tv_free_stage);
             getFreeBook(bookGirdFreeAdapter.getItem(position).getId());
         }
     };
@@ -155,12 +158,12 @@ public class FreeFragment extends Fragment implements BookFreeView,MyAllBookView
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    //tv_free_stage.setText("播放");//领取成功
+                                    tv_free_stage.setText("播放");//领取成功
                                     if (NetUtil.isNetConnect(getActivity())) {
-                                        bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);//更新书架
+                                        myBookPresenter.visitBooks(getActivity(), 3, 0, false);//获取书架的所有书(加入刷新)
                                     } else {
-                                        bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);
-                                    }
+                                        myBookPresenter.visitBooks(getActivity(), 3, 0, true);//获取书架的所有书(加入刷新)
+                                    }  //要不点击详情页还是显现领取
 /*                                    RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, true, false);
                                     EventBus.getDefault().postSticky(refreshStageBean);*/
                                 }

@@ -182,7 +182,7 @@ public class WalletFragment extends Fragment {
                         linearParams.height = DensityUtil.dip2px(getActivity(), 810);// 当控件的高强制设成50象素
                         break;
                     case 1:
-                        linearParams.height = DensityUtil.dip2px(getActivity(), 650);// 当控件的高强制设成50象素
+                        linearParams.height = DensityUtil.dip2px(getActivity(), 730);// 当控件的高强制设成50象素
                         break;
                 }
                 viewPager.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件myGrid

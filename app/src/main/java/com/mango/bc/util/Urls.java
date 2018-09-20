@@ -26,6 +26,8 @@ public class Urls {
     public static final String REWARDS = "/task/my/rewards";
     public static final String TASKS = "/task/my/tasks";
     public static final String TRANSACTIONS = "/wallet/transactions";
+    public static final String TRANSFER = "/wallet/transfer";
+
 
 
     public static final String HOST_BOOKCATEGORIES = HOST+BOOKCATEGORIES;
@@ -45,5 +47,6 @@ public class Urls {
     public static final String HOST_REWARDS = HOST+REWARDS;
     public static final String HOST_TASKS = HOST+TASKS;
     public static final String HOST_TRANSACTIONS = HOST+TRANSACTIONS;
+    public static final String HOST_TRANSFER = HOST+TRANSFER;
 
 }

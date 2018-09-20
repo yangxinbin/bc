@@ -163,7 +163,7 @@ public class FreeFragment extends Fragment implements BookFreeView,MyAllBookView
                                         myBookPresenter.visitBooks(getActivity(), 3, 0, false);//获取书架的所有书(加入刷新)
                                     } else {
                                         myBookPresenter.visitBooks(getActivity(), 3, 0, true);//获取书架的所有书(加入刷新)
-                                    }  //要不点击详情页还是显现领取
+                                    }  //要不点击详情页还是显现领取，详情书的状态在adapter里面控制
 /*                                    RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, true, false);
                                     EventBus.getDefault().postSticky(refreshStageBean);*/
                                 }

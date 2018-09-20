@@ -298,7 +298,7 @@ public class WalletFragment extends Fragment {
                 startActivity(intent);
                 break;
             case R.id.tv_sign:
-
+                checkIn();
                 break;
         }
     }
@@ -347,7 +347,7 @@ public class WalletFragment extends Fragment {
                     break;
                 case 1://签到成功
                     CheckInBean checkInBean = (CheckInBean) msg.obj;
-                    EventBus.getDefault().postSticky(checkInBean);
+                    EventBus.getDefault().postSticky(checkInBean);//刷新
                     EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
                     AppUtils.showToast(getActivity(), "签到成功");
                     break;

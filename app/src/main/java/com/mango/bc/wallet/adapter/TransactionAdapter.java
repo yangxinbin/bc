@@ -84,6 +84,12 @@ public class TransactionAdapter extends RecyclerView.Adapter {
                     viewHolder.tv_time.setText(DateUtil.getDateToString(datas.get(position).getTimestamp(),"yyyy-MM-dd HH:mm:ss"));
                     viewHolder.tv_pp.setText("+"+datas.get(position).getPpCoin()+"积分");
                     viewHolder.tv_pp.setTextColor(context.getResources().getColor(R.color.red));
+                }else if (datas.get(position).getType().equals("transfer")){
+                    viewHolder.img_transaction.setImageResource(R.drawable.record_transfer);
+                    viewHolder.tv_title.setText("转账给"+datas.get(position).getMeta());
+                    viewHolder.tv_time.setText(DateUtil.getDateToString(datas.get(position).getTimestamp(),"yyyy-MM-dd HH:mm:ss"));
+                    viewHolder.tv_pp.setText(datas.get(position).getPpCoin()+"积分");
+                    viewHolder.tv_pp.setTextColor(context.getResources().getColor(R.color.common_black));
                 }
             }
         }

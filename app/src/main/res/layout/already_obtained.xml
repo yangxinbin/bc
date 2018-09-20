@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_80"
@@ -11,10 +12,10 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/tv_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="签到所得"
             android:textColor="@color/black"
             android:textSize="@dimen/textSize" />
 
@@ -28,50 +29,11 @@
             android:textSize="@dimen/dp_14" />
 
         <TextView
+            android:id="@+id/tv_like_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginRight="@dimen/dp_20"
-            android:text="进度"
-            android:textColor="@color/yello"
-            android:textSize="@dimen/dp_14" />
-    </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="@dimen/dp_15"
-        android:layout_marginRight="@dimen/dp_15"
-        android:background="@color/gray"></View>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_80"
-        android:layout_marginLeft="@dimen/dp_15"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="已点赞1次"
-            android:textColor="@color/black"
-            android:textSize="@dimen/textSize" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginRight="@dimen/dp_20"
-            android:text="已获得"
-            android:textColor="@color/plan_gray"
-            android:textSize="@dimen/dp_14" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginRight="@dimen/dp_20"
-            android:text="进度"
             android:textColor="@color/yello"
             android:textSize="@dimen/dp_14" />
     </LinearLayout>
@@ -91,6 +53,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/tv_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -108,11 +71,11 @@
             android:textSize="@dimen/dp_14" />
 
         <TextView
+            android:id="@+id/tv_share_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginRight="@dimen/dp_20"
-            android:text="进度"
             android:textColor="@color/yello"
             android:textSize="@dimen/dp_14" />
     </LinearLayout>
@@ -132,10 +95,10 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/tv_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="已评论次数"
             android:textColor="@color/black"
             android:textSize="@dimen/textSize" />
 
@@ -149,11 +112,11 @@
             android:textSize="@dimen/dp_14" />
 
         <TextView
+            android:id="@+id/tv_comment_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginRight="@dimen/dp_20"
-            android:text="进度"
             android:textColor="@color/yello"
             android:textSize="@dimen/dp_14" />
     </LinearLayout>
@@ -173,10 +136,10 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/tv_online"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="总共阅读50分钟"
             android:textColor="@color/black"
             android:textSize="@dimen/textSize" />
 
@@ -190,11 +153,11 @@
             android:textSize="@dimen/dp_14" />
 
         <TextView
+            android:id="@+id/tv_online_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginRight="@dimen/dp_20"
-            android:text="进度"
             android:textColor="@color/yello"
             android:textSize="@dimen/dp_14" />
     </LinearLayout>
@@ -214,10 +177,10 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/tv_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="已完成拼团1次"
             android:textColor="@color/black"
             android:textSize="@dimen/textSize" />
 
@@ -231,11 +194,11 @@
             android:textSize="@dimen/dp_14" />
 
         <TextView
+            android:id="@+id/tv_group_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginRight="@dimen/dp_20"
-            android:text="进度"
             android:textColor="@color/yello"
             android:textSize="@dimen/dp_14" />
     </LinearLayout>
@@ -254,15 +217,14 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-
         <TextView
+            android:id="@+id/tv_menber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="邀请开通VIP"
+            android:text="推荐精品课"
             android:textColor="@color/black"
             android:textSize="@dimen/textSize" />
-
 
         <TextView
             android:layout_width="wrap_content"
@@ -274,11 +236,53 @@
             android:textSize="@dimen/dp_14" />
 
         <TextView
+            android:id="@+id/tv_member_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginRight="@dimen/dp_20"
-            android:text="进度"
+            android:textColor="@color/yello"
+            android:textSize="@dimen/dp_14" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_15"
+        android:background="@color/gray"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_80"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_paid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="推荐大咖课"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSize" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/dp_20"
+            android:text="已获得"
+            android:textColor="@color/plan_gray"
+            android:textSize="@dimen/dp_14" />
+
+        <TextView
+            android:id="@+id/tv_paid_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/dp_20"
             android:textColor="@color/yello"
             android:textSize="@dimen/dp_14" />
     </LinearLayout>
@@ -342,9 +346,52 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="推荐大咖课"
+            android:text="签到所得"
             android:textColor="@color/black"
             android:textSize="@dimen/textSize" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/dp_20"
+            android:text="已获得"
+            android:textColor="@color/plan_gray"
+            android:textSize="@dimen/dp_14" />
+
+        <TextView
+            android:id="@+id/tv_sign_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/dp_20"
+            android:textColor="@color/yello"
+            android:textSize="@dimen/dp_14" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_15"
+        android:background="@color/gray"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_80"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="邀请开通VIP"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSize" />
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -360,15 +407,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginRight="@dimen/dp_20"
-            android:text="进度"
+            android:id="@+id/tv_vip_num"
             android:textColor="@color/yello"
             android:textSize="@dimen/dp_14" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="@dimen/dp_15"
-        android:layout_marginRight="@dimen/dp_15"
-        android:background="@color/gray"></View>
 </LinearLayout>

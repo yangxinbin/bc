@@ -23,6 +23,8 @@ public class Urls {
     public static final String IFLIKE = "/task/do/i/like";
     public static final String LIKE = "/task/like";
     public static final String BOOKDETAIL = "/book";
+    public static final String REWARDS = "/task/my/rewards";
+    public static final String TASKS = "/task/my/tasks";
 
     public static final String HOST_BOOKCATEGORIES = HOST+BOOKCATEGORIES;
     public static final String HOST_BOOKLISTCATEGORIES = HOST+BOOKLISTCATEGORIES;
@@ -38,5 +40,7 @@ public class Urls {
     public static final String HOST_IFLIKE = HOST+IFLIKE;
     public static final String HOST_LIKE = HOST+LIKE;
     public static final String HOST_BOOKDETAIL = HOST+BOOKDETAIL;
+    public static final String HOST_REWARDS = HOST+REWARDS;
+    public static final String HOST_TASKS = HOST+TASKS;
 
 }

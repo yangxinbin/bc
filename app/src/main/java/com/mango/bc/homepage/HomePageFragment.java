@@ -129,18 +129,4 @@ public class HomePageFragment extends Fragment implements MyAllBookView {
         ButterKnife.unbind(this);
     }
 
-    @Override
-    public void addAllBook(final List<MyBookBean> bookBeanList) {
-
-    }
-
-    @Override
-    public void addSuccess(String s) {
-
-    }
-
-    @Override
-    public void addFail(String f) {
-
-    }
 }

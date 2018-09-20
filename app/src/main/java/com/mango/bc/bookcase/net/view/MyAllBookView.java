@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public interface MyAllBookView {
-    void addAllBook(List<MyBookBean> bookBeanList);
+/*    void addAllBook(List<MyBookBean> bookBeanList);
     void addSuccess(String s);
-    void addFail(String f);
+    void addFail(String f);*/
 }

@@ -14,30 +14,38 @@ import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
+import com.mango.bc.bookcase.net.view.MyAllBookView;
 import com.mango.bc.homepage.activity.freebook.FreeBookActivity;
 import com.mango.bc.homepage.adapter.BookGirdFreeAdapter;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
-import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookFreeView;
 import com.mango.bc.util.AppUtils;
+import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.NetUtil;
+import com.mango.bc.util.SPUtils;
+import com.mango.bc.util.Urls;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
-public class FreeFragment extends Fragment implements BookFreeView {
+public class FreeFragment extends Fragment implements BookFreeView,MyAllBookView {
     @Bind(R.id.see_more)
     TextView seeMore;
     @Bind(R.id.recycle)
@@ -47,18 +55,21 @@ public class FreeFragment extends Fragment implements BookFreeView {
     private final int TYPE = 3;//免费课
     private int page = 0;
     private ArrayList<BookBean> mData = new ArrayList<BookBean>();
+    private SPUtils spUtilsAuthToken;
+    private TextView tv_free_stage;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.free, container, false);
         bookPresenter = new BookPresenterImpl(this);
+        spUtilsAuthToken = SPUtils.getInstance("authToken", getActivity());
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         initView();
-        if (NetUtil.isNetConnect(getActivity())){
+        if (NetUtil.isNetConnect(getActivity())) {
             bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);
-        }else {
+        } else {
             bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);
         }
         return view;
@@ -89,37 +100,83 @@ public class FreeFragment extends Fragment implements BookFreeView {
     private BookGirdFreeAdapter.OnItemClickLitener mOnClickListenner = new BookGirdFreeAdapter.OnItemClickLitener() {
         @Override
         public void onItemPlayClick(View view, int position) {
-            Log.v("wwwwwww","======pi");
+            Log.v("wwwwwww", "======pi");
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookGirdFreeAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
-            intent.putExtra("foot_play",true);
+            intent.putExtra("foot_play", true);
             startActivity(intent);
         }
 
         @Override
         public void onItemGetClick(View view, int position) {
-            Log.v("wwwwwww","======gi");
+            Log.v("wwwwwww", "======gi");
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookGirdFreeAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
-            intent.putExtra("foot_free_get",true);
+            intent.putExtra("foot_free_get", true);
             startActivity(intent);
         }
 
         @Override
         public void onPlayClick(View view, int position) {//播放
-            Log.v("wwwwwww","======p");
+            Log.v("wwwwwww", "======p");
         }
 
         @Override
-        public void onGetClick(View view, int position) {//领取
-            getFreeBook();
+        public void onGetClick(View view, int position) {//领取  adapter 里面对应点击控件
+            //tv_free_stage = view.findViewById(R.id.tv_free_stage);
+            getFreeBook(bookGirdFreeAdapter.getItem(position).getId());
         }
     };
 
-    private void getFreeBook() {
+    private void getFreeBook(final String bookId) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("authToken", spUtilsAuthToken.getString("authToken", ""));
+                mapParams.put("bookId", bookId);
+                HttpUtils.doPost(Urls.HOST_BUYBOOK, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                AppUtils.showToast(getActivity(), "领取失败");
+                            }
+                        });
+                    }
 
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //tv_free_stage.setText("播放");//领取成功
+                                    if (NetUtil.isNetConnect(getActivity())) {
+                                        bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);//更新书架
+                                    } else {
+                                        bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);
+                                    }
+/*                                    RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, true, false);
+                                    EventBus.getDefault().postSticky(refreshStageBean);*/
+                                }
+                            });
+                        } catch (Exception e) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AppUtils.showToast(getActivity(), "领取失败");
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }).start();
     }
 
     @Override
@@ -175,4 +232,5 @@ public class FreeFragment extends Fragment implements BookFreeView {
             }
         });
     }
+
 }

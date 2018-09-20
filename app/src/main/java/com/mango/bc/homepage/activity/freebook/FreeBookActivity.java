@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
+import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
+import com.mango.bc.bookcase.net.view.MyAllBookView;
 import com.mango.bc.homepage.adapter.BookGirdFreeAdapter;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
@@ -38,7 +40,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class FreeBookActivity extends BaseActivity implements BookFreeView {
+public class FreeBookActivity extends BaseActivity implements BookFreeView,MyAllBookView {
 
     @Bind(R.id.imageView_back)
     ImageView imageViewBack;
@@ -53,12 +55,14 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView {
     private BookPresenter bookPresenter;
     private final int TYPE = 3;//免费
     private int page = 0;
+    private MyBookPresenterImpl myBookPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_free_book);
         bookPresenter = new BookPresenterImpl(this);
+        myBookPresenter = new MyBookPresenterImpl(this);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         initView();
@@ -137,6 +141,7 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView {
                         if (NetUtil.isNetConnect(getBaseContext())) {
                             Log.v("zzzzzzzzz", "-------onRefresh y-------" + page);
                             bookPresenter.visitBooks(getBaseContext(), TYPE, "", page, false);
+                            myBookPresenter.visitBooks(getBaseContext(), 3, 0, false);//获取书架的所有书(加入刷新)
                         } else {
                             Log.v("zzzzzzzzz", "-------onRefresh n-------" + page);
                             bookPresenter.visitBooks(getBaseContext(), TYPE, "", page, true);

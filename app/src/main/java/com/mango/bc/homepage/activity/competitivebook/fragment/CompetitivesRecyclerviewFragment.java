@@ -129,7 +129,6 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
         @Override
         public void onItemPlayClick(View view, int position) {
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
-            intent.putExtra("foot_play",true);
             EventBus.getDefault().postSticky(adapter.getItem(position));
             startActivity(intent);
         }
@@ -137,7 +136,6 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
         @Override
         public void onItemGetClick(View view, int position) {
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
-            intent.putExtra("foot_buy",true);
             EventBus.getDefault().postSticky(adapter.getItem(position));
             startActivity(intent);
         }

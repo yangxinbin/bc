@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
@@ -34,6 +36,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 
@@ -94,6 +97,8 @@ public class OtherBookDetailActivity extends BaseActivity {
     private String bookId;
     private int likeNum;
     private ACache mCache;
+    private SPUtils spUtilsAllMyBook;
+    private String type;
 
 
     @Override
@@ -101,10 +106,25 @@ public class OtherBookDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_other_detail);
         spUtilsAuthToken = SPUtils.getInstance("authToken", this);
+        spUtilsAllMyBook = SPUtils.getInstance("allMyBook", this);
         mCache = ACache.get(this.getApplicationContext());
         ButterKnife.bind(this);
-        initState();
         EventBus.getDefault().register(this);
+    }
+
+    private boolean chechState(String bookId) {
+        String data = spUtilsAllMyBook.getString("allMyBook", "");
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<String>>() {
+        }.getType();
+        List<String> list = gson.fromJson(data, listType);
+        if (list == null)
+            return false;
+        if (list.contains(bookId)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void loadBookDetail(final Boolean ifCache, final String bookId) {
@@ -275,19 +295,21 @@ public class OtherBookDetailActivity extends BaseActivity {
         }).start();
     }
 
-    private void initState() {
-        if (getIntent().getBooleanExtra("foot_play", false)) {
+    private void initState(String bookId, String type) {
+        if (chechState(bookId)) {
             lGet.setVisibility(View.VISIBLE);//进去播放界面
             lFree.setVisibility(View.GONE);//进去免费领取界面
             lNeedbuy.setVisibility(View.GONE);//进去购买领取界面
-        } else if (getIntent().getBooleanExtra("foot_free_get", false)) {
-            lGet.setVisibility(View.GONE);
-            lFree.setVisibility(View.VISIBLE);
-            lNeedbuy.setVisibility(View.GONE);
-        } else if (getIntent().getBooleanExtra("foot_buy_get", false)) {
-            lGet.setVisibility(View.GONE);
-            lFree.setVisibility(View.GONE);
-            lNeedbuy.setVisibility(View.VISIBLE);
+        } else {
+            if (type.equals("free")) {
+                lGet.setVisibility(View.GONE);
+                lFree.setVisibility(View.VISIBLE);
+                lNeedbuy.setVisibility(View.GONE);
+            } else if (type.equals("member")) {
+                lGet.setVisibility(View.GONE);
+                lFree.setVisibility(View.GONE);
+                lNeedbuy.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -319,6 +341,8 @@ public class OtherBookDetailActivity extends BaseActivity {
             return;
         }
         bookId = bookBean.getId();
+        type = bookBean.getType();
+        initState(bookId,type);
         checkLike(bookId);
         if (NetUtil.isNetConnect(this)) {
             loadBookDetail(false, bookId);
@@ -334,6 +358,8 @@ public class OtherBookDetailActivity extends BaseActivity {
         }
         if (bookBean.getBook() != null) {
             bookId = bookBean.getBook().getId();
+            type = bookBean.getBook().getType();
+            initState(bookId,type);
             checkLike(bookId);
             if (NetUtil.isNetConnect(this)) {
                 loadBookDetail(false, bookId);

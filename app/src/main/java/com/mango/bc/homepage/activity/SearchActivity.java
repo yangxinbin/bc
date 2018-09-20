@@ -162,7 +162,6 @@ public class SearchActivity extends BaseActivity implements BookSearchView {
             Intent intent = new Intent(getBaseContext(), OtherBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookGirdSearchAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
-            intent.putExtra("foot_play",true);
             startActivity(intent);
         }
 
@@ -181,14 +180,12 @@ public class SearchActivity extends BaseActivity implements BookSearchView {
             Intent intent = new Intent(getBaseContext(), OtherBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookGirdSearchAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
-            intent.putExtra("foot_free_get",true);
             startActivity(intent);
         }
 
         @Override
         public void onItemBuyGetClick(View view, int position) {
             Intent intent = new Intent(getBaseContext(), OtherBookDetailActivity.class);
-            intent.putExtra("foot_buy_get", true);
             EventBus.getDefault().postSticky(bookGirdSearchAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             startActivity(intent);

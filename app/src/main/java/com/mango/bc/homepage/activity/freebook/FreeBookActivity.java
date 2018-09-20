@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
@@ -23,7 +24,10 @@ import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookFreeView;
 import com.mango.bc.util.AppUtils;
+import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.NetUtil;
+import com.mango.bc.util.SPUtils;
+import com.mango.bc.util.Urls;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -34,11 +38,16 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class FreeBookActivity extends BaseActivity implements BookFreeView,MyAllBookView {
 
@@ -56,6 +65,8 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView,MyAll
     private final int TYPE = 3;//免费
     private int page = 0;
     private MyBookPresenterImpl myBookPresenter;
+    private SPUtils spUtilsAuthToken;
+    private TextView tv_free_stage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +74,7 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView,MyAll
         setContentView(R.layout.activity_free_book);
         bookPresenter = new BookPresenterImpl(this);
         myBookPresenter = new MyBookPresenterImpl(this);
+        spUtilsAuthToken = SPUtils.getInstance("authToken", this);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         initView();
@@ -100,7 +112,6 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView,MyAll
             Intent intent = new Intent(getBaseContext(), OtherBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookGirdFreeAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
-            intent.putExtra("foot_play",true);
             startActivity(intent);
         }
 
@@ -110,7 +121,6 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView,MyAll
             Intent intent = new Intent(getBaseContext(), OtherBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookGirdFreeAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
-            intent.putExtra("foot_free_get",true);
             startActivity(intent);
         }
 
@@ -121,13 +131,59 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView,MyAll
 
         @Override
         public void onGetClick(View view, int position) {//领取
-            getFreeBook();
+            tv_free_stage = view.findViewById(R.id.tv_free_stage);
+            getFreeBook(bookGirdFreeAdapter.getItem(position).getId());
         }
 
     };
 
-    private void getFreeBook() {
+    private void getFreeBook(final String bookId) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("authToken", spUtilsAuthToken.getString("authToken", ""));
+                mapParams.put("bookId", bookId);
+                HttpUtils.doPost(Urls.HOST_BUYBOOK, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                AppUtils.showToast(getBaseContext(), "领取失败");
+                            }
+                        });
+                    }
 
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    tv_free_stage.setText("播放");//领取成功
+                                    if (NetUtil.isNetConnect(getBaseContext())) {
+                                        myBookPresenter.visitBooks(getBaseContext(), 3, 0, false);//获取书架的所有书(加入刷新)
+                                    } else {
+                                        myBookPresenter.visitBooks(getBaseContext(), 3, 0, true);//获取书架的所有书(加入刷新)
+                                    }  //要不点击详情页还是显现领取，详情书的状态在adapter里面控制
+/*                                    RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, true, false);
+                                    EventBus.getDefault().postSticky(refreshStageBean);*/
+                                }
+                            });
+                        } catch (Exception e) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AppUtils.showToast(getBaseContext(), "领取失败");
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }).start();
     }
 
     private void refreshAndLoadMore() {

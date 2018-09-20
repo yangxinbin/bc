@@ -96,7 +96,6 @@ public class NewestFragment extends Fragment implements BookNewestView {
         @Override
         public void onItemPlayClick(View view, int position) {
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
-            intent.putExtra("foot_play", true);
             EventBus.getDefault().postSticky(bookNewestAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             startActivity(intent);
@@ -105,7 +104,6 @@ public class NewestFragment extends Fragment implements BookNewestView {
         @Override
         public void onItemGetClick(View view, int position) {
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
-            intent.putExtra("foot_buy_get", true);
             EventBus.getDefault().postSticky(bookNewestAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             startActivity(intent);

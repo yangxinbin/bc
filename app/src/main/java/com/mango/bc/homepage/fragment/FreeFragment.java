@@ -107,7 +107,6 @@ public class FreeFragment extends Fragment implements BookFreeView,MyAllBookView
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookGirdFreeAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
-            intent.putExtra("foot_play", true);
             startActivity(intent);
         }
 
@@ -117,7 +116,6 @@ public class FreeFragment extends Fragment implements BookFreeView,MyAllBookView
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookGirdFreeAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
-            intent.putExtra("foot_free_get", true);
             startActivity(intent);
         }
 

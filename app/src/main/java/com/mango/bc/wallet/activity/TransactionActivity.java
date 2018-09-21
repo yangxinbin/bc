@@ -47,7 +47,7 @@ public class TransactionActivity extends BaseActivity {
     SmartRefreshLayout refresh;
     private int page = 0;
     private boolean isFirstEnter = true;
-    private SPUtils spUtilsAuthToken;
+    private SPUtils spUtils;
     private ACache mCache;
     private LinearLayoutManager mLayoutManager;
     private TransactionAdapter adapter;
@@ -56,7 +56,7 @@ public class TransactionActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction);
-        spUtilsAuthToken = SPUtils.getInstance("authToken", this);
+        spUtils = SPUtils.getInstance("bc", this);
         mCache = ACache.get(this);
         ButterKnife.bind(this);
         if (NetUtil.isNetConnect(this)) {
@@ -85,7 +85,7 @@ public class TransactionActivity extends BaseActivity {
             public void run() {
                 final HashMap<String, String> mapParams = new HashMap<String, String>();
                 mapParams.clear();
-                mapParams.put("authToken", spUtilsAuthToken.getString("authToken", ""));
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
                 mapParams.put("page", page + "");
                 if (ifCache) {//读取缓存数据
                     String newString = mCache.getAsString("transaction" + 0);

@@ -31,7 +31,7 @@ import java.util.List;
  */
 
 public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private SPUtils spUtilsAllMyBook;
+    private SPUtils spUtils;
     private Context context;
     private OnItemClickLitener mOnItemClickLitener;//自注册的接口给调用者用于点击逻辑
     private List<BookBean> mData = new ArrayList<>();
@@ -62,7 +62,7 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
 
     public BookComprtitiveAdapter(Context context) {
-        spUtilsAllMyBook = SPUtils.getInstance("allMyBook", context);
+        spUtils = SPUtils.getInstance("bc", context);
         this.context = context;
     }
 
@@ -195,7 +195,7 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     private boolean chechState(String bookId) {
-        String data = spUtilsAllMyBook.getString("allMyBook", "");
+        String data = spUtils.getString("allMyBook", "");
         Gson gson = new Gson();
         Type listType = new TypeToken<List<String>>() {
         }.getType();

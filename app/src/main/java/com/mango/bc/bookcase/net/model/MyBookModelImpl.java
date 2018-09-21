@@ -30,12 +30,10 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class MyBookModelImpl implements MyBookModel {
     private SPUtils spUtils;
-    private SPUtils spUtilsAllMyBook;
 
     @Override
     public void visitBooks(final Context context, final int type, final String url, final int page, final Boolean ifCache, final OnMyBookListener listener) {
-        spUtils = SPUtils.getInstance("authToken", context);
-        spUtilsAllMyBook = SPUtils.getInstance("allMyBook", context);
+        spUtils = SPUtils.getInstance("bc", context);
         final ACache mCache = ACache.get(context.getApplicationContext());
         if (type == 0) {//大咖课
             new Thread(new Runnable() {
@@ -175,7 +173,7 @@ public class MyBookModelImpl implements MyBookModel {
                     final List<String> list = new ArrayList<String>();
                     mapParams.clear();
                     list.clear();
-                    spUtilsAllMyBook.remove("allMyBook");
+                    spUtils.remove("allMyBook");
                     mapParams.put("authToken", spUtils.getString("authToken", ""));
                     mapParams.put("type", "all");
                     mapParams.put("page", "" + page);
@@ -189,7 +187,7 @@ public class MyBookModelImpl implements MyBookModel {
                             Log.v("llllllll", "-----" + list.size());
                             Gson gson = new Gson();
                             String data = gson.toJson(list);
-                            spUtilsAllMyBook.put("allMyBook", data);
+                            spUtils.put("allMyBook", data);
                             //listener.onAllBookSuccessMes("请求成功");
                             return;
                         }
@@ -216,7 +214,7 @@ public class MyBookModelImpl implements MyBookModel {
                                 Log.v("llllllll", "---up_my--"+beanList.size());
                                 Gson gson = new Gson();
                                 String data = gson.toJson(list);
-                                spUtilsAllMyBook.put("allMyBook", data);
+                                spUtils.put("allMyBook", data);
                                 //listener.onAllBookSuccessMes("请求成功");
                             } catch (Exception e) {
                                 //listener.onAllBookFailMes("请求失败", e);//java.lang.IllegalStateException: Not a JSON Object: null

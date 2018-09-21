@@ -104,23 +104,19 @@ public class ExpertBookDetailActivity extends BaseActivity {
     TextView tvLikePlay;
     private ArrayList<String> mDatas;
     List<Fragment> mfragments = new ArrayList<Fragment>();
-    private SPUtils spUtilsAuthToken;
+    private SPUtils spUtils;
     private String bookId;
     private int likeNum;
     private ACache mCache;
-    private SPUtils spUtilsAllMyBook;
     private String type;
     private BookDetailBean mBookDetailBean;
-    private SPUtils spUtilsIsFree;
     private BookBean mBookBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_expert_detail);
-        spUtilsAuthToken = SPUtils.getInstance("authToken", this);
-        spUtilsAllMyBook = SPUtils.getInstance("allMyBook", this);
-        spUtilsIsFree = SPUtils.getInstance("isFree", this);
+        spUtils = SPUtils.getInstance("bc", this);
         mCache = ACache.get(this.getApplicationContext());
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
@@ -130,11 +126,11 @@ public class ExpertBookDetailActivity extends BaseActivity {
 
     private void initState(String bookId, String type) {
         if (chechState(bookId)) {
-            spUtilsIsFree.put("isFree",true);
+            spUtils.put("isFree",true);
             lGet.setVisibility(View.GONE);
             lPlayExpert.setVisibility(View.VISIBLE);//进去播放界面
         } else {
-            spUtilsIsFree.put("isFree",false);
+            spUtils.put("isFree",false);
             lGet.setVisibility(View.VISIBLE);//购买状态
             lPlayExpert.setVisibility(View.GONE);
 
@@ -142,7 +138,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
     }
 
     private boolean chechState(String bookId) {
-        String data = spUtilsAllMyBook.getString("allMyBook", "");
+        String data = spUtils.getString("allMyBook", "");
         Gson gson = new Gson();
         Type listType = new TypeToken<List<String>>() {
         }.getType();
@@ -220,7 +216,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
             public void run() {
                 final HashMap<String, String> mapParams = new HashMap<String, String>();
                 mapParams.clear();
-                mapParams.put("authToken", spUtilsAuthToken.getString("authToken", ""));
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
                 mapParams.put("bookId", bookId);
                 HttpUtils.doPost(Urls.HOST_IFLIKE, mapParams, new Callback() {
                     @Override
@@ -266,7 +262,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
                 //final RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, true, false, false);
                 final HashMap<String, String> mapParams = new HashMap<String, String>();
                 mapParams.clear();
-                mapParams.put("authToken", spUtilsAuthToken.getString("authToken", ""));
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
                 mapParams.put("bookId", bookId);
                 HttpUtils.doPost(Urls.HOST_LIKE, mapParams, new Callback() {
                     @Override
@@ -511,7 +507,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 2 && resultCode == 1){
-            spUtilsIsFree.put("isFree",true);
+            spUtils.put("isFree",true);
             lGet.setVisibility(View.GONE);
             lPlayExpert.setVisibility(View.VISIBLE);//进去播放界面
         }

@@ -28,7 +28,7 @@ import java.util.List;
  */
 
 public class BookNewestAdapter extends RecyclerView.Adapter {
-    private SPUtils spUtilsAllMyBook;
+    private SPUtils spUtils;
     private Context context;
     private BookNewestAdapter.OnItemClickLitener mOnItemClickLitener;
 
@@ -40,7 +40,7 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
 
 
     public BookNewestAdapter(Context context) {
-        spUtilsAllMyBook = SPUtils.getInstance("allMyBook", context);
+        spUtils = SPUtils.getInstance("bc", context);
         this.context = context;
     }
 
@@ -140,7 +140,7 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
     }
 
     private boolean chechState(String bookId) {
-        String data = spUtilsAllMyBook.getString("allMyBook", "");
+        String data = spUtils.getString("allMyBook", "");
         Gson gson = new Gson();
         Type listType = new TypeToken<List<String>>() {
         }.getType();

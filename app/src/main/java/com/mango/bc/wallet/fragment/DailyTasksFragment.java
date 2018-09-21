@@ -72,7 +72,7 @@ public class DailyTasksFragment extends Fragment {
     TextView tvVipNum;
     @Bind(R.id.tv_vip)
     TextView tvVip;
-    private SPUtils spUtilsAuthToken;
+    private SPUtils spUtils;
     private ACache mCache;
 
     @Nullable
@@ -81,7 +81,7 @@ public class DailyTasksFragment extends Fragment {
         View view = inflater.inflate(R.layout.daily_tasks, container, false);
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
-        spUtilsAuthToken = SPUtils.getInstance("authToken", getActivity());
+        spUtils = SPUtils.getInstance("bc", getActivity());
         mCache = ACache.get(getActivity());
         if (NetUtil.isNetConnect(getActivity())) {
             loadReward(false);
@@ -114,7 +114,7 @@ public class DailyTasksFragment extends Fragment {
             public void run() {
                 final HashMap<String, String> mapParams = new HashMap<String, String>();
                 mapParams.clear();
-                mapParams.put("authToken", spUtilsAuthToken.getString("authToken", ""));
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
                 if (ifCache) {//读取缓存数据
                     String newString = mCache.getAsString("task");
                     if (newString != null) {

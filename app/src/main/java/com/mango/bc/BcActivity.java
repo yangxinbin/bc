@@ -58,10 +58,7 @@ public class BcActivity extends BaseActivity implements MyAllBookView {
     FrameLayout container;
     @Bind(R.id.bottom_bar)
     BottomBar bottomBar;
-    private SPUtils spUtilsAuthToken;
-    private SPUtils spUtilsAuth;
-    private SPUtils spUtilsCheckIf;
-    private SPUtils spUtilsOpenId;
+    private SPUtils spUtils;
     private MyBookPresenter myBookPresenter;
 
 
@@ -76,12 +73,9 @@ public class BcActivity extends BaseActivity implements MyAllBookView {
             AppUtils.showToast(this, getResources().getString(R.string.check_net));
             //myBookPresenter.visitBooks(this, 3, 0, true);//获取书架的所有书
         }
-        spUtilsAuthToken = SPUtils.getInstance("authToken", this);
-        spUtilsAuth = SPUtils.getInstance("auth", this);
-        spUtilsCheckIf = SPUtils.getInstance("checkIf", this);
-        spUtilsAuthToken.put("authToken", "eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1MzY5MDk3MjI5MzksImFsaWFzIjoi5p2o6ZGr5paMIiwiaWQiOiI1YjhhM2Q0YjA0NDQwYzBhNDhhMzNhMDUiLCJ0eXBlIjoiZ2VuZXJhbCIsIndhbGxldEFkZHJlc3MiOiIweGU3MmUzODdhZjEyZTA4NmFlZWNjOGVmMTljNzcxY2M4IiwiZXhwIjo0MTI4OTA5NzIyLCJ1c2VybmFtZSI6Im9YaGk5NGpRa1hQb3ZCc3FFczBCOFFLc2JNMEEifQ.m6rVYWnsxxogOAVmOLQ1HEC5bv0YzAwPhqGOlQ0tOP1CVec8XBRytgEFo_0rMlgSW42u2F199y3WAOr8XE2yYA");
-        spUtilsOpenId = SPUtils.getInstance("openId", this);
-        spUtilsOpenId.put("openId", "oXhi94jQkXPovBsqEs0B8QKsbM0A");
+        spUtils = SPUtils.getInstance("bc", this);
+        spUtils.put("authToken", "eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1MzY5MDk3MjI5MzksImFsaWFzIjoi5p2o6ZGr5paMIiwiaWQiOiI1YjhhM2Q0YjA0NDQwYzBhNDhhMzNhMDUiLCJ0eXBlIjoiZ2VuZXJhbCIsIndhbGxldEFkZHJlc3MiOiIweGU3MmUzODdhZjEyZTA4NmFlZWNjOGVmMTljNzcxY2M4IiwiZXhwIjo0MTI4OTA5NzIyLCJ1c2VybmFtZSI6Im9YaGk5NGpRa1hQb3ZCc3FFczBCOFFLc2JNMEEifQ.m6rVYWnsxxogOAVmOLQ1HEC5bv0YzAwPhqGOlQ0tOP1CVec8XBRytgEFo_0rMlgSW42u2F199y3WAOr8XE2yYA");
+        spUtils.put("openId", "oXhi94jQkXPovBsqEs0B8QKsbM0A");
         ButterKnife.bind(this);
         //进来刷新可以屏蔽
 
@@ -114,7 +108,7 @@ public class BcActivity extends BaseActivity implements MyAllBookView {
             public void run() {
                 final HashMap<String, String> mapParams = new HashMap<String, String>();
                 mapParams.clear();
-                mapParams.put("authToken", spUtilsAuthToken.getString("authToken", ""));
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
                 HttpUtils.doPost(Urls.HOST_IFCHECK, mapParams, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -126,7 +120,7 @@ public class BcActivity extends BaseActivity implements MyAllBookView {
                         try {
                             String string = response.body().string();
                             CheckInBean checkInBean = JsonUtil.readCheckInBean(string);
-                            spUtilsCheckIf.put("checkIf", string);
+                            spUtils.put("checkIf", string);
                             Message msg = mHandler.obtainMessage();
                             msg.obj = checkInBean;
                             msg.what = 1;
@@ -146,7 +140,7 @@ public class BcActivity extends BaseActivity implements MyAllBookView {
             public void run() {
                 final HashMap<String, String> mapParams = new HashMap<String, String>();
                 mapParams.clear();
-                mapParams.put("authToken", spUtilsAuthToken.getString("authToken", ""));
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
                 HttpUtils.doPost(Urls.HOST_CHECK, mapParams, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -172,7 +166,7 @@ public class BcActivity extends BaseActivity implements MyAllBookView {
             public void run() {
                 final HashMap<String, String> mapParams = new HashMap<String, String>();
                 mapParams.clear();
-                mapParams.put("openId", spUtilsOpenId.getString("openId", ""));
+                mapParams.put("openId", spUtils.getString("openId", ""));
                 HttpUtils.doPost(Urls.HOST_AUTH, mapParams, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -187,7 +181,7 @@ public class BcActivity extends BaseActivity implements MyAllBookView {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    spUtilsAuth.put("auth", string);
+                                    spUtils.put("auth", string);
                                 }
                             });
                         } catch (IOException e) {

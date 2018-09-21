@@ -75,7 +75,7 @@ public class AlreadyObtainedFragment extends Fragment {
     TextView tvSignNum;
     @Bind(R.id.tv_vip_num)
     TextView tvVipNum;
-    private SPUtils spUtilsAuthToken;
+    private SPUtils spUtils;
     private ACache mCache;
 
     @Nullable
@@ -84,7 +84,7 @@ public class AlreadyObtainedFragment extends Fragment {
         View view = inflater.inflate(R.layout.already_obtained, container, false);
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
-        spUtilsAuthToken = SPUtils.getInstance("authToken", getActivity());
+        spUtils = SPUtils.getInstance("bc", getActivity());
         mCache = ACache.get(getActivity());
         if (NetUtil.isNetConnect(getActivity())) {
             loadReward(false);
@@ -115,7 +115,7 @@ public class AlreadyObtainedFragment extends Fragment {
             public void run() {
                 final HashMap<String, String> mapParams = new HashMap<String, String>();
                 mapParams.clear();
-                mapParams.put("authToken", spUtilsAuthToken.getString("authToken", ""));
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
                 if (ifCache) {//读取缓存数据
                     String newString = mCache.getAsString("reward");
                     if (newString != null) {

@@ -55,8 +55,7 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
     TextView tvNeedPpg;
     @Bind(R.id.tv_buy)
     TextView tvBuy;
-    private SPUtils spUtilsAuth;
-    private SPUtils spUtilsAuthToken;
+    private SPUtils spUtils;
     private MyBookPresenterImpl myBookPresenter;
     private String bookId;
 
@@ -64,12 +63,11 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_book);
-        spUtilsAuth = SPUtils.getInstance("auth", this);
-        spUtilsAuthToken = SPUtils.getInstance("authToken", this);
+        spUtils = SPUtils.getInstance("bc", this);
         myBookPresenter = new MyBookPresenterImpl(this);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
-        initAuth(AuthJsonUtils.readUserBean(spUtilsAuth.getString("auth", "")));
+        initAuth(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));
     }
     private void initAuth(UserBean userBean) {
         if (userBean == null)
@@ -114,7 +112,7 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
             public void run() {
                 final HashMap<String, String> mapParams = new HashMap<String, String>();
                 mapParams.clear();
-                mapParams.put("authToken", spUtilsAuthToken.getString("authToken", ""));
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
                 mapParams.put("bookId", bookId);
                 HttpUtils.doPost(Urls.HOST_BUYBOOK, mapParams, new Callback() {
                     @Override

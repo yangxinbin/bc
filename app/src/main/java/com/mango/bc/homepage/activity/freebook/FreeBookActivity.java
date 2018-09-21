@@ -65,7 +65,7 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView,MyAll
     private final int TYPE = 3;//免费
     private int page = 0;
     private MyBookPresenterImpl myBookPresenter;
-    private SPUtils spUtilsAuthToken;
+    private SPUtils spUtils;
     private TextView tv_free_stage;
 
     @Override
@@ -74,7 +74,7 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView,MyAll
         setContentView(R.layout.activity_free_book);
         bookPresenter = new BookPresenterImpl(this);
         myBookPresenter = new MyBookPresenterImpl(this);
-        spUtilsAuthToken = SPUtils.getInstance("authToken", this);
+        spUtils = SPUtils.getInstance("bc", this);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         initView();
@@ -143,7 +143,7 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView,MyAll
             public void run() {
                 final HashMap<String, String> mapParams = new HashMap<String, String>();
                 mapParams.clear();
-                mapParams.put("authToken", spUtilsAuthToken.getString("authToken", ""));
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
                 mapParams.put("bookId", bookId);
                 HttpUtils.doPost(Urls.HOST_BUYBOOK, mapParams, new Callback() {
                     @Override

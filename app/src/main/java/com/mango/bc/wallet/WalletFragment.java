@@ -118,9 +118,7 @@ public class WalletFragment extends Fragment {
     TextView tvD7;
     private ArrayList<String> mDatas;
     List<Fragment> mfragments = new ArrayList<Fragment>();
-    private SPUtils spUtilsAuth;
-    private SPUtils spUtilsCheckIf;
-    private SPUtils spUtilsAuthToken;
+    private SPUtils spUtils;
 
     @Nullable
     @Override
@@ -128,13 +126,11 @@ public class WalletFragment extends Fragment {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.wallet, container, false);
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
-        spUtilsAuth = SPUtils.getInstance("auth", getActivity());
-        spUtilsAuthToken = SPUtils.getInstance("authToken", getActivity());
-        spUtilsCheckIf = SPUtils.getInstance("checkIf", getActivity());
+        spUtils = SPUtils.getInstance("bc", getActivity());
         initDatas();
         init();
-        initAuth(AuthJsonUtils.readUserBean(spUtilsAuth.getString("auth", "")));
-        initChechIf(JsonUtil.readCheckInBean(spUtilsCheckIf.getString("checkIf", "")));
+        initAuth(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));
+        initChechIf(JsonUtil.readCheckInBean(spUtils.getString("checkIf", "")));
         return view;
     }
 
@@ -142,7 +138,7 @@ public class WalletFragment extends Fragment {
     public void CheckEventBus(CheckInBean checkInBean) {
         if (checkInBean == null)
             return;
-        initChechIf(JsonUtil.readCheckInBean(spUtilsCheckIf.getString("checkIf", "")));
+        initChechIf(JsonUtil.readCheckInBean(spUtils.getString("checkIf", "")));
         EventBus.getDefault().removeStickyEvent(CheckInBean.class);
     }
 
@@ -153,7 +149,7 @@ public class WalletFragment extends Fragment {
         Log.v("cccccccccc", "-----RefreshPpgEventBus----"+refreshPpgBean.getIfRefreshPpg());
 
         if (refreshPpgBean.getIfRefreshPpg()){
-            initAuth(AuthJsonUtils.readUserBean(spUtilsAuth.getString("auth", "")));
+            initAuth(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));
         }
         EventBus.getDefault().removeStickyEvent(RefreshPpgBean.class);
     }
@@ -309,7 +305,7 @@ public class WalletFragment extends Fragment {
             public void run() {
                 final HashMap<String, String> mapParams = new HashMap<String, String>();
                 mapParams.clear();
-                mapParams.put("authToken", spUtilsAuthToken.getString("authToken", ""));
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
                 HttpUtils.doPost(Urls.HOST_CHECK, mapParams, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -321,7 +317,7 @@ public class WalletFragment extends Fragment {
                         try {
                             String string = response.body().string();
                             CheckInBean checkInBean = JsonUtil.readCheckInBean(string);
-                            spUtilsCheckIf.put("checkIf", string);
+                            spUtils.put("checkIf", string);
                             Message msg = mHandler.obtainMessage();
                             msg.obj = checkInBean;
                             msg.what = 1;

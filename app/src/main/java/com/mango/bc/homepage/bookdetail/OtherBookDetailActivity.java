@@ -95,11 +95,10 @@ public class OtherBookDetailActivity extends BaseActivity {
     @Bind(R.id.tv_like_needbuy)
     TextView tvLikeNeedbuy;
     private BookDetailAdapter bookDetailAdapter;
-    private SPUtils spUtilsAuthToken;
+    private SPUtils spUtils;
     private String bookId;
     private int likeNum;
     private ACache mCache;
-    private SPUtils spUtilsAllMyBook;
     private String type;
     private BookDetailBean mBookDetailBean;
     private BookBean mBookBean;
@@ -109,15 +108,14 @@ public class OtherBookDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {   //精品+上新+免费 详情共用  判断：是否领取   是否购买  三种 精品上新一样
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_other_detail);
-        spUtilsAuthToken = SPUtils.getInstance("authToken", this);
-        spUtilsAllMyBook = SPUtils.getInstance("allMyBook", this);
+        spUtils = SPUtils.getInstance("bc", this);
         mCache = ACache.get(this.getApplicationContext());
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
     }
 
     private boolean chechState(String bookId) {
-        String data = spUtilsAllMyBook.getString("allMyBook", "");
+        String data = spUtils.getString("allMyBook", "");
         Gson gson = new Gson();
         Type listType = new TypeToken<List<String>>() {
         }.getType();
@@ -196,7 +194,7 @@ public class OtherBookDetailActivity extends BaseActivity {
             public void run() {
                 final HashMap<String, String> mapParams = new HashMap<String, String>();
                 mapParams.clear();
-                mapParams.put("authToken", spUtilsAuthToken.getString("authToken", ""));
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
                 mapParams.put("bookId", bookId);
                 HttpUtils.doPost(Urls.HOST_IFLIKE, mapParams, new Callback() {
                     @Override
@@ -243,7 +241,7 @@ public class OtherBookDetailActivity extends BaseActivity {
                 //final RefreshStageBean refreshStageBean = new RefreshStageBean(true, true, true, true, true);
                 final HashMap<String, String> mapParams = new HashMap<String, String>();
                 mapParams.clear();
-                mapParams.put("authToken", spUtilsAuthToken.getString("authToken", ""));
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
                 mapParams.put("bookId", bookId);
                 HttpUtils.doPost(Urls.HOST_LIKE, mapParams, new Callback() {
                     @Override

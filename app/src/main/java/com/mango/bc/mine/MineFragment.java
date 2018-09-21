@@ -88,7 +88,7 @@ public class MineFragment extends Fragment {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.mine, container, false);
         ButterKnife.bind(this, view);
         //loadUser(false); //从网络拿数据
-        spUtils = SPUtils.getInstance("auth", getActivity());
+        spUtils = SPUtils.getInstance("bc", getActivity());
         initView(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));
         return view;
     }

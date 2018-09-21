@@ -42,9 +42,7 @@ public class TransferActivity extends BaseActivity {
     EditText etPurseTo;
     @Bind(R.id.bu_sure)
     Button buSure;
-    private SPUtils spUtilsAuthToken;
-    private SPUtils spUtilsAuth;
-    private SPUtils spUtilsOpenId;
+    private SPUtils spUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +50,9 @@ public class TransferActivity extends BaseActivity {
         setContentView(R.layout.activity_transfer);
         if (!NetUtil.isNetConnect(this))
             AppUtils.showToast(this, getResources().getString(R.string.check_net));
-        spUtilsAuthToken = SPUtils.getInstance("authToken", this);
-        spUtilsAuth = SPUtils.getInstance("auth", this);
-        spUtilsOpenId = SPUtils.getInstance("openId", this);
+        spUtils = SPUtils.getInstance("bc", this);
         ButterKnife.bind(this);
-        initAuth(AuthJsonUtils.readUserBean(spUtilsAuth.getString("auth", "")));
+        initAuth(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));
 
     }
 
@@ -86,7 +82,7 @@ public class TransferActivity extends BaseActivity {
             public void run() {
                 final HashMap<String, String> mapParams = new HashMap<String, String>();
                 mapParams.clear();
-                mapParams.put("openId", spUtilsOpenId.getString("openId", ""));
+                mapParams.put("openId", spUtils.getString("openId", ""));
                 HttpUtils.doPost(Urls.HOST_AUTH, mapParams, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -99,8 +95,8 @@ public class TransferActivity extends BaseActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    spUtilsAuth.put("auth", string);
-                                    initAuth(AuthJsonUtils.readUserBean(spUtilsAuth.getString("auth", "")));//刷新
+                                    spUtils.put("auth", string);
+                                    initAuth(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));//刷新
                                     EventBus.getDefault().postSticky(new RefreshPpgBean(true));//刷新
                                 }
                             });
@@ -120,7 +116,7 @@ public class TransferActivity extends BaseActivity {
             public void run() {
                 final HashMap<String, String> mapParams = new HashMap<String, String>();
                 mapParams.clear();
-                mapParams.put("authToken", spUtilsAuthToken.getString("authToken", ""));
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
                 mapParams.put("toWalletAddress", etPurseAdress.getText().toString());
                 mapParams.put("ppCoin", etPurseTo.getText().toString());
                 HttpUtils.doPost(Urls.HOST_TRANSFER, mapParams, new Callback() {

@@ -30,10 +30,10 @@ import java.util.List;
 public class BookGirdSearchAdapter extends RecyclerView.Adapter {
     private Context context;
     private List<BookBean> datas = new ArrayList<>();
-    private SPUtils spUtilsAllMyBook;
+    private SPUtils spUtils;
 
     public BookGirdSearchAdapter(Context context) {
-        spUtilsAllMyBook = SPUtils.getInstance("allMyBook", context);
+        spUtils = SPUtils.getInstance("bc", context);
         this.context = context;
     }
 
@@ -147,7 +147,7 @@ public class BookGirdSearchAdapter extends RecyclerView.Adapter {
         }
     }
     private boolean chechState(String bookId) {
-        String data = spUtilsAllMyBook.getString("allMyBook", "");
+        String data = spUtils.getString("allMyBook", "");
         Gson gson = new Gson();
         Type listType = new TypeToken<List<String>>() {
         }.getType();

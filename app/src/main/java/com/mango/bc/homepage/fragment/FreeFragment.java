@@ -56,7 +56,7 @@ public class FreeFragment extends Fragment implements BookFreeView,MyAllBookView
     private final int TYPE = 3;//免费课
     private int page = 0;
     private ArrayList<BookBean> mData = new ArrayList<BookBean>();
-    private SPUtils spUtilsAuthToken;
+    private SPUtils spUtils;
     private TextView tv_free_stage;
     private MyBookPresenterImpl myBookPresenter;
 
@@ -66,7 +66,7 @@ public class FreeFragment extends Fragment implements BookFreeView,MyAllBookView
         View view = inflater.inflate(R.layout.free, container, false);
         bookPresenter = new BookPresenterImpl(this);
         myBookPresenter = new MyBookPresenterImpl(this);
-        spUtilsAuthToken = SPUtils.getInstance("authToken", getActivity());
+        spUtils = SPUtils.getInstance("bc", getActivity());
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         initView();
@@ -137,7 +137,7 @@ public class FreeFragment extends Fragment implements BookFreeView,MyAllBookView
             public void run() {
                 final HashMap<String, String> mapParams = new HashMap<String, String>();
                 mapParams.clear();
-                mapParams.put("authToken", spUtilsAuthToken.getString("authToken", ""));
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
                 mapParams.put("bookId", bookId);
                 HttpUtils.doPost(Urls.HOST_BUYBOOK, mapParams, new Callback() {
                     @Override

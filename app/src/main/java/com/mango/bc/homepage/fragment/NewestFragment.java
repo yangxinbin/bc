@@ -107,6 +107,7 @@ public class NewestFragment extends Fragment implements BookNewestView,MyAllBook
             EventBus.getDefault().postSticky(bookNewestAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             startActivity(intent);
+
         }
 
         @Override

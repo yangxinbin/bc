@@ -170,6 +170,7 @@ public class MyBookModelImpl implements MyBookModel {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    Log.v("llllllll", "---s--");
                     final HashMap<String, String> mapParams = new HashMap<String, String>();
                     final List<String> list = new ArrayList<String>();
                     mapParams.clear();
@@ -207,10 +208,12 @@ public class MyBookModelImpl implements MyBookModel {
                                 String string = response.body().string();
                                 mCache.put("cache_my" + type + page, string);
                                 List<MyBookBean> beanList = MyBookJsonUtils.readMyBookBean(string);
+                                Log.v("llllllll", "--2---");
+
                                 for (int i = 0; i < beanList.size(); i++) {
                                     list.add(beanList.get(i).getBook().getId());
                                 }
-                                Log.v("bbbbbbbb", "---up_my--");
+                                Log.v("llllllll", "---up_my--"+beanList.size());
                                 Gson gson = new Gson();
                                 String data = gson.toJson(list);
                                 spUtilsAllMyBook.put("allMyBook", data);

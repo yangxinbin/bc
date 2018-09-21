@@ -59,12 +59,6 @@ public class HomePageFragment extends Fragment implements MyAllBookView {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.homepage, container, false);
         myBookPresenter = new MyBookPresenterImpl(this);
-        //进来刷新可以屏蔽
-/*        if (NetUtil.isNetConnect(getActivity())){
-            myBookPresenter.visitBooks(getActivity(), TYPE, 0, false);//获取书架的所有书
-        }else {
-            myBookPresenter.visitBooks(getActivity(), TYPE, 0, true);//获取书架的所有书
-        }*/
         ButterKnife.bind(this, view);
         initView();
         refreshAndLoadMore();
@@ -81,6 +75,7 @@ public class HomePageFragment extends Fragment implements MyAllBookView {
         refresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
+                myBookPresenter.visitBooks(getActivity(), 3, 0, false);//刷新书架的所有书(比其它先访问)
                 refreshLayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -88,7 +83,6 @@ public class HomePageFragment extends Fragment implements MyAllBookView {
                         if (NetUtil.isNetConnect(getActivity())) {
                             RefreshStageBean refreshStageBean = new RefreshStageBean(true, true, true, true, true);
                             Log.v("yyyyyyy", "=====all--" + refreshStageBean.toString());
-                            myBookPresenter.visitBooks(getActivity(), 3, 0, false);//刷新书架的所有书
                             EventBus.getDefault().postSticky(refreshStageBean);
                         } else {
                             AppUtils.showToast(getActivity(), getString(R.string.check_net));
@@ -98,7 +92,7 @@ public class HomePageFragment extends Fragment implements MyAllBookView {
                         }
                         refreshLayout.finishRefresh();
                     }
-                }, 400);
+                }, 500);
             }
         });
         refresh.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -111,7 +105,7 @@ public class HomePageFragment extends Fragment implements MyAllBookView {
                         EventBus.getDefault().postSticky(loadStageBean);
                         refreshLayout.finishLoadMore();
                     }
-                }, 400);
+                }, 500);
             }
         });
         refresh.setRefreshHeader(new ClassicsHeader(getActivity()));

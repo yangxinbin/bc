@@ -55,7 +55,7 @@ public class CompetitiveFieldFragment extends Fragment implements BookCompetitiv
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         if (NetUtil.isNetConnect(getActivity())){
-            bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);//true从缓存读数据，false从网络读数据。
+            //bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);//true从缓存读数据，false从网络读数据。
         }else {
             bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//true从缓存读数据，false从网络读数据。
         }

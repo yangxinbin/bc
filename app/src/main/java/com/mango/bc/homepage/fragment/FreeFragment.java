@@ -71,7 +71,7 @@ public class FreeFragment extends Fragment implements BookFreeView,MyAllBookView
         EventBus.getDefault().register(this);
         initView();
         if (NetUtil.isNetConnect(getActivity())) {
-            bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);
+            //bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);
         } else {
             bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);
         }

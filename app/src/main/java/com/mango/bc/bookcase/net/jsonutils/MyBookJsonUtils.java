@@ -1,5 +1,7 @@
 package com.mango.bc.bookcase.net.jsonutils;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
@@ -17,6 +19,7 @@ public class MyBookJsonUtils {
     public static List<MyBookBean> readMyBookBean(String res) {
         Gson gson = new Gson();
         List<MyBookBean> myBookBeans = gson.fromJson(res, new TypeToken<List<MyBookBean>>(){}.getType());
+        Log.v("llllll","===l==");
         return myBookBeans;
     }
 }

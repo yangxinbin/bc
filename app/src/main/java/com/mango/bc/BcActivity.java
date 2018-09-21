@@ -24,6 +24,10 @@ import okhttp3.Response;
 
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.bookcase.BookcaseFragment;
+import com.mango.bc.bookcase.net.model.MyBookModel;
+import com.mango.bc.bookcase.net.presenter.MyBookPresenter;
+import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
+import com.mango.bc.bookcase.net.view.MyAllBookView;
 import com.mango.bc.homepage.HomePageFragment;
 import com.mango.bc.homepage.bookdetail.bean.CommentBean;
 import com.mango.bc.homepage.bookdetail.fragment.CommentFragment;
@@ -47,7 +51,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-public class BcActivity extends BaseActivity {
+public class BcActivity extends BaseActivity implements MyAllBookView {
 
     private static Dialog dialog;
     @Bind(R.id.container)
@@ -58,14 +62,20 @@ public class BcActivity extends BaseActivity {
     private SPUtils spUtilsAuth;
     private SPUtils spUtilsCheckIf;
     private SPUtils spUtilsOpenId;
+    private MyBookPresenter myBookPresenter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bc);
-        if (!NetUtil.isNetConnect(this))
+        myBookPresenter = new MyBookPresenterImpl(this);
+        if (NetUtil.isNetConnect(this)){
+            //myBookPresenter.visitBooks(this,3,0,false);//获取书架的所有书
+        }else {
             AppUtils.showToast(this, getResources().getString(R.string.check_net));
+            //myBookPresenter.visitBooks(this, 3, 0, true);//获取书架的所有书
+        }
         spUtilsAuthToken = SPUtils.getInstance("authToken", this);
         spUtilsAuth = SPUtils.getInstance("auth", this);
         spUtilsCheckIf = SPUtils.getInstance("checkIf", this);
@@ -73,6 +83,8 @@ public class BcActivity extends BaseActivity {
         spUtilsOpenId = SPUtils.getInstance("openId", this);
         spUtilsOpenId.put("openId", "oXhi94jQkXPovBsqEs0B8QKsbM0A");
         ButterKnife.bind(this);
+        //进来刷新可以屏蔽
+
         ifCheckIn();
         loadUser(); //个人信息从网络拿数据
         bottomBar.setContainer(R.id.container)

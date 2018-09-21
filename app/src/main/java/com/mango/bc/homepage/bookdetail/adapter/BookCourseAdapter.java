@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.mango.bc.R;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.AppUtils;
+import com.mango.bc.util.SPUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,12 +21,14 @@ import java.util.List;
  */
 
 public class BookCourseAdapter extends RecyclerView.Adapter {
+    private final SPUtils spUtilsIsFree;
     private Context context;
     private List<BookBean.ChaptersBean> datas = new ArrayList<>();
     private BookCourseAdapter.OnItemClickLitener mOnItemClickLitener;
 
 
     public BookCourseAdapter(List<BookBean.ChaptersBean> datas, Context context) {
+        spUtilsIsFree = SPUtils.getInstance("isFree", context);
         this.context = context;
         this.datas = datas;
     }
@@ -52,33 +55,34 @@ public class BookCourseAdapter extends RecyclerView.Adapter {
             final BookCourseAdapter.BookCourseViewHolder viewHolder = (BookCourseAdapter.BookCourseViewHolder) holder;
             if (datas.get(position) != null) {
                 viewHolder.tv_title.setText(datas.get(position).getTitle());
-                viewHolder.tv_time.setText("时长："+secToTime(datas.get(position).getDuration()));
-                if (!datas.get(position).isFree()){
+                viewHolder.tv_time.setText("时长：" + secToTime(datas.get(position).getDuration()));
+                if (!(datas.get(position).isFree() || spUtilsIsFree.getBoolean("isFree", false))) {
                     viewHolder.img_txt.setImageResource(R.drawable.lock);
                 }
                 viewHolder.img_read.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (datas.get(position).isFree()){
+                        if (datas.get(position).isFree() || spUtilsIsFree.getBoolean("isFree", false)) {
                             mOnItemClickLitener.onReadClick(viewHolder.img_read, position);
-                        }else {
-                            AppUtils.showToast(context,"请购买");
+                        } else {
+                            AppUtils.showToast(context, "请购买");
                         }
                     }
                 });
                 viewHolder.img_txt.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (datas.get(position).isFree()){
+                        if (datas.get(position).isFree() || spUtilsIsFree.getBoolean("isFree", false)) {
                             mOnItemClickLitener.onTxtClick(viewHolder.img_txt, position);
-                        }else {
-                            AppUtils.showToast(context,"请购买");
+                        } else {
+                            AppUtils.showToast(context, "请购买");
                         }
                     }
                 });
             }
         }
     }
+
     // a integer to xx:xx:xx
     public static String secToTime(int time) {
         String timeStr = null;
@@ -112,6 +116,7 @@ public class BookCourseAdapter extends RecyclerView.Adapter {
             retStr = "" + i;
         return retStr;
     }
+
     @Override
     public int getItemCount() {
         return datas.size();

@@ -109,6 +109,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
     private SPUtils spUtilsAllMyBook;
     private String type;
     private BookDetailBean mBookDetailBean;
+    private SPUtils spUtilsIsFree;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +117,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_book_expert_detail);
         spUtilsAuthToken = SPUtils.getInstance("authToken", this);
         spUtilsAllMyBook = SPUtils.getInstance("allMyBook", this);
+        spUtilsIsFree = SPUtils.getInstance("isFree", this);
         mCache = ACache.get(this.getApplicationContext());
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
@@ -125,9 +127,11 @@ public class ExpertBookDetailActivity extends BaseActivity {
 
     private void initState(String bookId, String type) {
         if (chechState(bookId)) {
+            spUtilsIsFree.put("isFree",true);
             lGet.setVisibility(View.GONE);
             lPlayExpert.setVisibility(View.VISIBLE);//进去播放界面
         } else {
+            spUtilsIsFree.put("isFree",false);
             lGet.setVisibility(View.VISIBLE);//购买状态
             lPlayExpert.setVisibility(View.GONE);
 

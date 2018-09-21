@@ -16,6 +16,7 @@ import com.google.gson.reflect.TypeToken;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
+import com.mango.bc.homepage.activity.BuyBookActivity;
 import com.mango.bc.homepage.bookdetail.adapter.BookDetailAdapter;
 import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
 import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
@@ -101,6 +102,7 @@ public class OtherBookDetailActivity extends BaseActivity {
     private SPUtils spUtilsAllMyBook;
     private String type;
     private BookDetailBean mBookDetailBean;
+    private BookBean mBookBean;
 
 
     @Override
@@ -343,6 +345,7 @@ public class OtherBookDetailActivity extends BaseActivity {
         if (bookBean == null) {
             return;
         }
+        this.mBookBean = bookBean;
         bookId = bookBean.getId();
         type = bookBean.getType();
         initState(bookId,type);
@@ -420,11 +423,26 @@ public class OtherBookDetailActivity extends BaseActivity {
             case R.id.book_stage_needbuy_vip:
                 break;
             case R.id.book_stage_needbuy_money:
+                intent = new Intent(this, BuyBookActivity.class);
+                EventBus.getDefault().postSticky(mBookBean);
+                EventBus.getDefault().removeStickyEvent(MyBookBean.class);
+                startActivityForResult(intent,0);
                 break;
             case R.id.l_needbuy:
                 break;//以上需要购买播放
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0 && resultCode == 1){
+            lGet.setVisibility(View.VISIBLE);//进去播放界面
+            lFree.setVisibility(View.GONE);//进去免费领取界面
+            lNeedbuy.setVisibility(View.GONE);//进去购买领取界面
+        }
+    }
+
     private void showShare() {
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权

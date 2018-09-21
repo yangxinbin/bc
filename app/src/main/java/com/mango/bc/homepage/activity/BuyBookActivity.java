@@ -100,8 +100,9 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
                 finish();
                 break;
             case R.id.tv_buy:
-/*                BuySuccessBean buySuccessBean = new BuySuccessBean(true);
+/*              BuySuccessBean buySuccessBean = new BuySuccessBean(true);
                 EventBus.getDefault().postSticky(buySuccessBean);
+                setResult(1);
                 finish();*/
                 getFreeBook(bookId);
                 break;

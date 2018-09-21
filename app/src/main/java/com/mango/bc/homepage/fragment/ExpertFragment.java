@@ -14,8 +14,10 @@ import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
+import com.mango.bc.homepage.activity.BuyBookActivity;
 import com.mango.bc.homepage.activity.expertbook.ExpertBookActivity;
 import com.mango.bc.homepage.adapter.BookExpertAdapter;
+import com.mango.bc.homepage.bean.BuySuccessBean;
 import com.mango.bc.homepage.bookdetail.ExpertBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
@@ -46,6 +48,7 @@ public class ExpertFragment extends Fragment implements BookExpertView {
     private final int TYPE = 2;//大咖课
     private int page = 0;
     private ArrayList<BookBean> mData = new ArrayList<BookBean>();
+    public TextView tv_stage;
 
     @Nullable
     @Override
@@ -62,7 +65,19 @@ public class ExpertFragment extends Fragment implements BookExpertView {
         }
         return view;
     }
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void BuySuccessBeanEventBus(BuySuccessBean bean) {
+        if (bean == null) {
+            return;
+        }
+        Log.v("bbbbb","---1----"+bean.getBuySuccess());
 
+        if (bean.getBuySuccess()){
+            Log.v("bbbbb","----2---");
+            tv_stage.setText("播放");
+        }
+        EventBus.getDefault().removeStickyEvent(BuySuccessBean.class);
+    }
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void RefreshStageBeanEventBus(RefreshStageBean bean) {
         if (bean == null) {
@@ -86,6 +101,7 @@ public class ExpertFragment extends Fragment implements BookExpertView {
     }
 
     private BookExpertAdapter.OnItemClickLitener mOnClickListenner = new BookExpertAdapter.OnItemClickLitener() {
+
         @Override
         public void onItemPlayClick(View view, int position) {
             Intent intent = new Intent(getActivity(), ExpertBookDetailActivity.class);
@@ -109,7 +125,15 @@ public class ExpertFragment extends Fragment implements BookExpertView {
 
         @Override
         public void onGetClick(View view, int position) {
-
+            tv_stage = view.findViewById(R.id.tv_stage);
+            if (tv_stage.getText().equals("播放")){
+                Log.v("bbbbbbbb","-----"+tv_stage.getText());
+            }else {
+                Intent intent = new Intent(getActivity(), BuyBookActivity.class);
+                EventBus.getDefault().postSticky(bookExpertAdapter.getItem(position));
+                EventBus.getDefault().removeStickyEvent(MyBookBean.class);
+                startActivity(intent);
+            }
         }
     };
 

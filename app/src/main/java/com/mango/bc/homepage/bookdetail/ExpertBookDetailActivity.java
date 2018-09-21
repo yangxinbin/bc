@@ -1,5 +1,6 @@
 package com.mango.bc.homepage.bookdetail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import com.mango.bc.R;
 import com.mango.bc.adapter.ViewPageAdapter;
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
+import com.mango.bc.homepage.activity.BuyBookActivity;
 import com.mango.bc.homepage.bookdetail.adapter.BookDetailAdapter;
 import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
 import com.mango.bc.homepage.bookdetail.fragment.CommentFragment;
@@ -110,6 +112,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
     private String type;
     private BookDetailBean mBookDetailBean;
     private SPUtils spUtilsIsFree;
+    private BookBean mBookBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -339,6 +342,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
         if (bookBean == null) {
             return;
         }
+        this.mBookBean = bookBean;
         bookId = bookBean.getId();
         type = bookBean.getType();
         initState(bookId, type);
@@ -478,6 +482,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
 
     @OnClick({R.id.l_like_play, R.id.l_share_play_expert, R.id.book_stage_expert_play, R.id.l_like_get, R.id.l_try, R.id.l_buy, R.id.l_collage})
     public void onViewClicked(View view) {
+        Intent intent;
         switch (view.getId()) {
             case R.id.l_like_get:
                 like(bookId);
@@ -485,6 +490,10 @@ public class ExpertBookDetailActivity extends BaseActivity {
             case R.id.l_try:
                 break;
             case R.id.l_buy:
+                intent = new Intent(this, BuyBookActivity.class);
+                EventBus.getDefault().postSticky(mBookBean);
+                EventBus.getDefault().removeStickyEvent(MyBookBean.class);
+                startActivityForResult(intent,2);
                 break;
             case R.id.l_collage:
                 break;//以上是购买foot
@@ -496,6 +505,15 @@ public class ExpertBookDetailActivity extends BaseActivity {
                 break;
             case R.id.book_stage_expert_play:
                 break;//以上是播放foot
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 2 && resultCode == 1){
+            spUtilsIsFree.put("isFree",true);
+            lGet.setVisibility(View.GONE);
+            lPlayExpert.setVisibility(View.VISIBLE);//进去播放界面
         }
     }
     private void showShare() {

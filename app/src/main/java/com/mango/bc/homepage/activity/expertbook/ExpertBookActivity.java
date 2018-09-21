@@ -8,10 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
+import com.mango.bc.homepage.activity.BuyBookActivity;
 import com.mango.bc.homepage.adapter.BookExpertAdapter;
 import com.mango.bc.homepage.bookdetail.ExpertBookDetailActivity;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
@@ -54,6 +56,7 @@ public class ExpertBookActivity extends BaseActivity implements BookExpertView {
     private BookPresenter bookPresenter;
     private final int TYPE = 2;//大咖课
     private int page = 0;
+    public TextView tv_stage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,10 +105,11 @@ public class ExpertBookActivity extends BaseActivity implements BookExpertView {
 
         @Override
         public void onItemGetClick(View view, int position) {
-            Intent intent = new Intent(getBaseContext(), OtherBookDetailActivity.class);
+            Intent intent = new Intent(getBaseContext(), ExpertBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookExpertAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             startActivity(intent);
+
         }
 
         @Override
@@ -115,10 +119,24 @@ public class ExpertBookActivity extends BaseActivity implements BookExpertView {
 
         @Override
         public void onGetClick(View view, int position) {
-
+            tv_stage = view.findViewById(R.id.tv_stage);
+            if (tv_stage.getText().equals("播放")) {//用户没有刷新没有加载时临时调用（刷新与加载会重新与书架匹配）
+                Log.v("bbbbbbbb", "---tv_stage--" + tv_stage.getText());
+            } else {
+                Intent intent = new Intent(ExpertBookActivity.this, BuyBookActivity.class);
+                EventBus.getDefault().postSticky(bookExpertAdapter.getItem(position));
+                EventBus.getDefault().removeStickyEvent(MyBookBean.class);
+                startActivityForResult(intent,1);
+            }
         }
     };
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == 1){
+            tv_stage.setText("播放");
+        }
+    }
     private void refreshAndLoadMore() {
         refresh.setOnRefreshListener(new OnRefreshListener() {
             @Override

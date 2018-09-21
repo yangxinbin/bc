@@ -329,7 +329,7 @@ public class OtherBookDetailActivity extends BaseActivity {
         tvLikePlay.setText(bookDetailBean.getLikes() + "");
         tvLikeFree.setText(bookDetailBean.getLikes() + "");
         tvLikeNeedbuy.setText(bookDetailBean.getLikes() + "");
-        bookStageNeedbuyVip.setText(bookDetailBean.getPrice() + "积分免费读");//还要判断是否是VIP
+        bookStageNeedbuyMoney.setText(bookDetailBean.getPrice() + "积分免费读");//还要判断是否是VIP
         if (bookDetailBean.getDescriptionImages() != null) {
             bookDetailAdapter = new BookDetailAdapter(bookDetailBean.getDescriptionImages(), this);
             recycle.setLayoutManager(new LinearLayoutManager(this));

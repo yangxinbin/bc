@@ -77,12 +77,12 @@ public class CourseFragment extends Fragment {
 
         @Override
         public void onReadClick(View view, int position) {
-            AppUtils.showToast(getContext(), "播放");
+            //AppUtils.showToast(getContext(), "播放");
         }
 
         @Override
         public void onTxtClick(View view, int position) {
-            AppUtils.showToast(getContext(), "阅读");
+            //AppUtils.showToast(getContext(), "阅读");
             intent = new Intent(getActivity(), TxtActivity.class);
             intent.putExtra("position",position);
             startActivity(intent);

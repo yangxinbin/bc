@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
+import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
+import com.mango.bc.bookcase.net.view.MyAllBookView;
 import com.mango.bc.homepage.activity.BuyBookActivity;
 import com.mango.bc.homepage.adapter.BookNewestAdapter;
 import com.mango.bc.homepage.bean.BuySuccessBean;
@@ -37,7 +39,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class NewestFragment extends Fragment implements BookNewestView {
+public class NewestFragment extends Fragment implements BookNewestView,MyAllBookView {
     @Bind(R.id.recycle)
     RecyclerView recycle;
     private BookNewestAdapter bookNewestAdapter;
@@ -45,12 +47,14 @@ public class NewestFragment extends Fragment implements BookNewestView {
     private final int TYPE = 4;//最新课
     private int page = 0;
     private TextView tv_stage;
+    private MyBookPresenterImpl myBookPresenter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.newest, container, false);
         bookPresenter = new BookPresenterImpl(this);
+        myBookPresenter = new MyBookPresenterImpl(this);
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         initView();

@@ -47,6 +47,7 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
         this.context = context;
         this.datas = datas;
     }
+
     public void createLoadDailog(final Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.alert_dialog_loading, null);
         dialog_load = new Dialog(context, R.style.dialog);
@@ -61,6 +62,7 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
         dialog_load.setCanceledOnTouchOutside(true);
         dialog_load.show();
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_detail_item, parent, false);
@@ -79,30 +81,36 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
         }
     }
 
-    private void setIamge(String url, final ImageView imageView ) {
-        HttpUtils.doGet(url, new Callback() {
+    private void setIamge(final String url, final ImageView imageView) {
+        new Thread(new Runnable() {
             @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                byte[] Picture = response.body().bytes();
-                //使用BitmapFactory工厂，把字节数组转化为bitmap
-                //java.lang.OutOfMemoryError: Failed to allocate a 14445012 byte allocation with 3456152 free bytes and 3MB until OOM
-                //待优化
-                final Bitmap bitmap = BitmapFactory.decodeByteArray(Picture, 0, Picture.length);
-                //通过imageview，设置图片
-                mHandler.post(new Runnable() {
+            public void run() {
+                HttpUtils.doGet(url, new Callback() {
                     @Override
-                    public void run() {
-                        dialog_load.dismiss();
-                        imageView.setImageBitmap(bitmap);
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        byte[] Picture = response.body().bytes();
+                        //使用BitmapFactory工厂，把字节数组转化为bitmap
+                        //java.lang.OutOfMemoryError: Failed to allocate a 14445012 byte allocation with 3456152 free bytes and 3MB until OOM
+                        //待优化
+                        final Bitmap bitmap = BitmapFactory.decodeByteArray(Picture, 0, Picture.length);
+                        //通过imageview，设置图片
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog_load.dismiss();
+                                imageView.setImageBitmap(bitmap);
+                            }
+                        });
                     }
                 });
             }
-        });
+        }).start();
+
     }
 
     @Override

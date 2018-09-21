@@ -16,9 +16,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.mango.bc.R;
+import com.mango.bc.bookcase.net.bean.MyBookBean;
+import com.mango.bc.homepage.activity.BuyBookActivity;
 import com.mango.bc.homepage.adapter.BookComprtitiveAdapter;
+import com.mango.bc.homepage.bean.BuySuccessBean;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
@@ -60,12 +64,12 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
     private BookPresenter bookPresenter;
     private BookComprtitiveAdapter adapter;
     private LinearLayoutManager mLayoutManager;
-    private SharedPreferences sharedPreferences;
-    private static SharedPreferences.Editor editor;
     private boolean isFirstEnter;
     private String mType = "";
     private final int TYPE = 1;
     private int page = 0;
+    public TextView tv_stage;
+    private TextView tv_head_stage;
 
 
     public static CompetitivesRecyclerviewFragment newInstance(String type) {
@@ -81,8 +85,6 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
         super.onCreate(savedInstanceState);
         bookPresenter = new BookPresenterImpl(this);
         mType = getArguments().getString("type");
-        sharedPreferences = getActivity().getSharedPreferences("CIFIT", MODE_PRIVATE);
-        editor = sharedPreferences.edit();
         Log.v("yyyyy", "====mType======" + mType);
 
     }
@@ -97,7 +99,8 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
         refreshAndLoadMore();
         return view;
     }
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true,priority = 5)
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true, priority = 5)
     public void RefreshStageBeanEventBus(RefreshStageBean bean) {
         if (bean == null) {
             return;
@@ -109,6 +112,7 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
             //bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//缓存。
         }
     }
+
     private void initView() {
         recycle.setHasFixedSize(true);//固定宽高
         mLayoutManager = new LinearLayoutManager(getActivity());
@@ -117,40 +121,81 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
         adapter = new BookComprtitiveAdapter(getActivity());
         recycle.removeAllViews();
         recycle.setAdapter(adapter);
-        if (NetUtil.isNetConnect(getActivity())){
+        if (NetUtil.isNetConnect(getActivity())) {
             bookPresenter.visitBooks(getActivity(), TYPE, mType, page, false);
-        }else {
+        } else {
             bookPresenter.visitBooks(getActivity(), TYPE, mType, page, true);
         }
         adapter.setOnItemClickLitener(mOnClickListenner);
     }
 
     private BookComprtitiveAdapter.OnItemClickLitener mOnClickListenner = new BookComprtitiveAdapter.OnItemClickLitener() {
+
         @Override
-        public void onItemPlayClick(View view, int position) {
+        public void onItemPlayClick(View view, int position) {//播放
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
             EventBus.getDefault().postSticky(adapter.getItem(position));
             startActivity(intent);
         }
 
         @Override
-        public void onItemGetClick(View view, int position) {
+        public void onItemGetClick(View view, int position) {//购买界面
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
             EventBus.getDefault().postSticky(adapter.getItem(position));
             startActivity(intent);
         }
 
         @Override
-        public void onPlayClick(View view, int position) {
+        public void onPlayClick(View view, int position) {//播放按钮
+            Log.v("bbbbbbbb", "---onPlayClick--");
 
         }
 
         @Override
-        public void onGetClick(View view, int position) {
+        public void onGetClick(View view, int position) {//购买按钮
+            tv_stage = view.findViewById(R.id.tv_stage);
+            if (tv_stage.getText().equals("播放")) {//用户没有刷新没有加载时临时调用（刷新与加载会重新与书架匹配）
+                Log.v("bbbbbbbb", "---tv_stage--" + tv_stage.getText());
+            } else {
+                Intent intent = new Intent(getActivity(), BuyBookActivity.class);
+                EventBus.getDefault().postSticky(adapter.getItem(position));
+                EventBus.getDefault().removeStickyEvent(MyBookBean.class);
+                startActivity(intent);
+            }
+        }
 
+        @Override
+        public void onHeadGetClick(View view, int position) {
+            tv_head_stage = view.findViewById(R.id.tv_head_stage);
+            if (tv_head_stage.getText().equals("播放")) {
+                Log.v("bbbbbbbb", "---tv_head_stage--" + tv_head_stage.getText());
+            } else {
+                Intent intent = new Intent(getActivity(), BuyBookActivity.class);
+                EventBus.getDefault().postSticky(adapter.getItem(position));
+                EventBus.getDefault().removeStickyEvent(MyBookBean.class);
+                startActivity(intent);
+            }
         }
 
     };
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void BuySuccessBeanEventBus(BuySuccessBean bean) {
+        if (bean == null) {
+            return;
+        }
+        Log.v("bbbbb", "---1----" + bean.getBuySuccess());
+
+        if (bean.getBuySuccess()) {
+            Log.v("bbbbb", "----2---");
+            if (tv_stage != null)
+                tv_stage.setText("播放");
+            if (tv_head_stage != null)
+                tv_head_stage.setText("播放");
+
+        }
+        EventBus.getDefault().removeStickyEvent(BuySuccessBean.class);
+    }
 
     private void refreshAndLoadMore() {
         refresh.setOnRefreshListener(new OnRefreshListener() {
@@ -212,6 +257,7 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
         ButterKnife.unbind(this);
         EventBus.getDefault().unregister(this);
     }
+
     @Override
     public void addCompetitiveBook(final List<BookBean> bookBeanList) {
         if (getActivity() != null)

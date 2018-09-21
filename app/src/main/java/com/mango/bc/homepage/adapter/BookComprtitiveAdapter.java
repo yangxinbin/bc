@@ -142,7 +142,7 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     ((HeadViewHolder) holder).tv_head_stage.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            mOnItemClickLitener.onGetClick(((HeadViewHolder) holder).book_head_item, position);
+                            mOnItemClickLitener.onHeadGetClick(((HeadViewHolder) holder).book_head_item, position);
                         }
                     });
                     ((HeadViewHolder) holder).book_head_item.setOnClickListener(new View.OnClickListener() {
@@ -226,6 +226,9 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         void onPlayClick(View view, int position);
 
         void onGetClick(View view, int position);
+
+        void onHeadGetClick(View view, int position);
+
     }
 
 

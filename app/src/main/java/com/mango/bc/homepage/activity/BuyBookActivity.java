@@ -100,6 +100,9 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
                 finish();
                 break;
             case R.id.tv_buy:
+/*                BuySuccessBean buySuccessBean = new BuySuccessBean(true);
+                EventBus.getDefault().postSticky(buySuccessBean);
+                finish();*/
                 getFreeBook(bookId);
                 break;
         }
@@ -132,7 +135,7 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
                                     BuySuccessBean buySuccessBean = new BuySuccessBean(true);
                                     EventBus.getDefault().postSticky(buySuccessBean);
                                     if (NetUtil.isNetConnect(getBaseContext())) {
-                                        myBookPresenter.visitBooks(getBaseContext(), 3, 0, false);//获取书架的所有书(加入刷新)
+                                        myBookPresenter.visitBooks(getBaseContext(), 3, 0, false);//获取书架的所有书(加入刷新  加载条目会notify)
                                     } else {
                                         myBookPresenter.visitBooks(getBaseContext(), 3, 0, true);//获取书架的所有书(加入刷新)
                                     }  //要不点击详情页还是显现领取，详情书的状态在adapter里面控制

@@ -210,7 +210,7 @@ public class MyBookModelImpl implements MyBookModel {
                                 for (int i = 0; i < beanList.size(); i++) {
                                     list.add(beanList.get(i).getBook().getId());
                                 }
-                                Log.v("llllllll", "-----" + list.size());
+                                Log.v("bbbbbbbb", "---up_my--");
                                 Gson gson = new Gson();
                                 String data = gson.toJson(list);
                                 spUtilsAllMyBook.put("allMyBook", data);

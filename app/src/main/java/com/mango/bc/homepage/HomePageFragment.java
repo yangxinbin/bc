@@ -59,11 +59,12 @@ public class HomePageFragment extends Fragment implements MyAllBookView {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.homepage, container, false);
         myBookPresenter = new MyBookPresenterImpl(this);
-        if (NetUtil.isNetConnect(getActivity())){
+        //进来刷新可以屏蔽
+/*        if (NetUtil.isNetConnect(getActivity())){
             myBookPresenter.visitBooks(getActivity(), TYPE, 0, false);//获取书架的所有书
         }else {
             myBookPresenter.visitBooks(getActivity(), TYPE, 0, true);//获取书架的所有书
-        }
+        }*/
         ButterKnife.bind(this, view);
         initView();
         refreshAndLoadMore();

@@ -203,7 +203,7 @@ public class SearchActivity extends BaseActivity implements BookSearchView {
 
 
     private void init() {
-        spUtils = SPUtils.getInstance(SEARCH_HISTORY, this);
+        spUtils = SPUtils.getInstance("bc", this);
         longHistory = (String) spUtils.getString(SEARCH_HISTORY, "");
         String[] tmpHistory = longHistory.split(",");                            //split后长度为1有一个空串对象
         historyList = new ArrayList<String>(Arrays.asList(tmpHistory));

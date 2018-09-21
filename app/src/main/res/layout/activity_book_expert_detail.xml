@@ -58,8 +58,7 @@
                     <ImageView
                         android:id="@+id/img_cover"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_180"
-                        android:src="@drawable/book_pic1" />
+                        android:layout_height="@dimen/dp_180" />
 
                     <LinearLayout
                         android:layout_width="match_parent"

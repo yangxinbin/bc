@@ -87,6 +87,7 @@ public class HomePageFragment extends Fragment implements MyAllBookView {
                         if (NetUtil.isNetConnect(getActivity())) {
                             RefreshStageBean refreshStageBean = new RefreshStageBean(true, true, true, true, true);
                             Log.v("yyyyyyy", "=====all--" + refreshStageBean.toString());
+                            myBookPresenter.visitBooks(getActivity(), 3, 0, false);//刷新书架的所有书
                             EventBus.getDefault().postSticky(refreshStageBean);
                         } else {
                             AppUtils.showToast(getActivity(), getString(R.string.check_net));
@@ -104,6 +105,7 @@ public class HomePageFragment extends Fragment implements MyAllBookView {
                 refreshLayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        myBookPresenter.visitBooks(getActivity(), 3, 0, false);//刷新书架的所有书
                         LoadStageBean loadStageBean = new LoadStageBean(++page);
                         EventBus.getDefault().postSticky(loadStageBean);
                         refreshLayout.finishLoadMore();

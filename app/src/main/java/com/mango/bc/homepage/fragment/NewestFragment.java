@@ -10,10 +10,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
+import com.mango.bc.homepage.activity.BuyBookActivity;
 import com.mango.bc.homepage.adapter.BookNewestAdapter;
+import com.mango.bc.homepage.bean.BuySuccessBean;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
@@ -41,6 +44,7 @@ public class NewestFragment extends Fragment implements BookNewestView {
     private BookPresenter bookPresenter;
     private final int TYPE = 4;//最新课
     private int page = 0;
+    private TextView tv_stage;
 
     @Nullable
     @Override
@@ -116,12 +120,33 @@ public class NewestFragment extends Fragment implements BookNewestView {
 
         @Override
         public void onGetClick(View view, int position) {
+            tv_stage = view.findViewById(R.id.tv_stage);
+            if (tv_stage.getText().equals("播放")){
+                Log.v("bbbbbbbb","-----"+tv_stage.getText());
+            }else {
+                Intent intent = new Intent(getActivity(), BuyBookActivity.class);
+                EventBus.getDefault().postSticky(bookNewestAdapter.getItem(position));
+                EventBus.getDefault().removeStickyEvent(MyBookBean.class);
+                startActivity(intent);
+            }
 
         }
 
-
     };
 
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void BuySuccessBeanEventBus(BuySuccessBean bean) {
+        if (bean == null) {
+            return;
+        }
+        Log.v("bbbbb","---1----"+bean.getBuySuccess());
+
+        if (bean.getBuySuccess()){
+            Log.v("bbbbb","----2---");
+            tv_stage.setText("播放");
+        }
+        EventBus.getDefault().removeStickyEvent(BuySuccessBean.class);
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

@@ -24,7 +24,10 @@ import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.Urls;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,17 +96,25 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
-                        byte[] Picture = response.body().bytes();
+                        InputStream input = response.body().byteStream();
                         //使用BitmapFactory工厂，把字节数组转化为bitmap
                         //java.lang.OutOfMemoryError: Failed to allocate a 14445012 byte allocation with 3456152 free bytes and 3MB until OOM
                         //待优化
-                        final Bitmap bitmap = BitmapFactory.decodeByteArray(Picture, 0, Picture.length);
+                        //final Bitmap bitmap = BitmapFactory.decodeByteArray(Picture, 0, Picture.length);
                         //通过imageview，设置图片
+                        final Bitmap bitmap = streamToBitmap(input);
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
                                 dialog_load.dismiss();
                                 imageView.setImageBitmap(bitmap);
+                                mHandler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        bitmap.recycle();  //一秒之后回收
+                                        System.gc();//提醒系统即时回收
+                                    }
+                                },1000);
                             }
                         });
                     }
@@ -111,6 +122,46 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
             }
         }).start();
 
+    }
+
+    public static Bitmap streamToBitmap(InputStream input) {
+        Bitmap bitmap = null;
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = getinSampleSize(options);
+        //options.inPreferredConfig = Bitmap.Config.RGB_565;//颜色要求不高
+        //options.inPurgeable = true;
+        //options.inInputShareable = true;
+        SoftReference softRef = new SoftReference(BitmapFactory.decodeStream(
+                input, null, options));
+        bitmap = (Bitmap) softRef.get();
+        try {
+            if (input != null) {
+                input.close();
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
+
+    //获取option采样率inSampleSize
+    private static int getinSampleSize(BitmapFactory.Options options) {
+        int inSampleSize = 1;
+        int imageWidth = options.outWidth;//取出bitmap的原始高宽
+        int imageHeight = options.outHeight;
+        //个人认为intent，bundle传递图片的时候，当图片内存大于1024KB的时候，会发生内存溢出，
+        // 所以为解决内存溢出问题，此处选择通过计算图片大小来查找缩放比例系数小于1024KB时，找到inSampleSize
+        while (getImageMemory(imageWidth, imageHeight, inSampleSize) > 1024) {
+            inSampleSize *= 2;
+        }
+        Log.v("sssssss","--1--"+inSampleSize);
+        return inSampleSize;
+    }
+
+    private static int getImageMemory(int imagewidth, int imageheight, int inSampleSize) {
+        Log.v("sssssss","--2--"+(imagewidth / inSampleSize) * (imageheight / inSampleSize) * 3 / 1024);
+        return (imagewidth / inSampleSize) * (imageheight / inSampleSize) * 3 / 1024;
     }
 
     @Override

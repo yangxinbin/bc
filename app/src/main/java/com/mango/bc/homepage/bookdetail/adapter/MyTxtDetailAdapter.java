@@ -86,13 +86,13 @@ public class MyTxtDetailAdapter extends RecyclerView.Adapter {
                     public void run() {
                         dialog_load.dismiss();
                         imageView.setImageBitmap(bitmap);
-                        mHandler.postDelayed(new Runnable() {
+/*                        mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 bitmap.recycle();  //一秒之后回收
                                 System.gc();//提醒系统即时回收
                             }
-                        }, 1000);
+                        }, 1000);*/
                     }
                 });
             }

@@ -7,13 +7,17 @@ import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
 import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
+import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
 import com.mango.bc.homepage.bookdetail.play.enums.PlayModeEnum;
 import com.mango.bc.homepage.bookdetail.play.global.Notifier;
 import com.mango.bc.homepage.bookdetail.play.preference.Preferences;
 import com.mango.bc.homepage.bookdetail.play.receiver.NoisyAudioStreamReceiver;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.AppUtils;
+import com.mango.bc.util.SPUtils;
+import com.mango.bc.util.Urls;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,9 +42,10 @@ public class AudioPlayer {
     private Handler handler;
     private NoisyAudioStreamReceiver noisyReceiver;
     private IntentFilter noisyFilter;
-    private List<BookMusicDetailBean> musicList;
+    private List<BookMusicDetailBean> musicList = new ArrayList<>();
     private final List<OnPlayerEventListener> listeners = new ArrayList<>();
     private int state = STATE_IDLE;
+    private SPUtils spUtils;
 
     public static AudioPlayer get() {
         return SingletonHolder.instance;
@@ -51,11 +56,23 @@ public class AudioPlayer {
     }
 
     private AudioPlayer() {
+        spUtils = SPUtils.getInstance("bc", context);
     }
 
     public void init(Context context) {
         this.context = context.getApplicationContext();
-        //musicList = DBManager.get().getMusicDao().queryBuilder().build().list();
+        BookDetailBean bookBean = JsonBookDetailUtils.readBookDetailBean(spUtils.getString("bookDetail", ""));
+        for (int i = 0; i < bookBean.getChapters().size(); i++) {
+            BookMusicDetailBean bookMusicDetailBean = new BookMusicDetailBean();
+            bookMusicDetailBean.setName(bookBean.getAuthor().getName());
+            bookMusicDetailBean.setTitle(bookBean.getTitle());
+            bookMusicDetailBean.setIsFree(bookBean.getChapters().get(i).isFree());
+            bookMusicDetailBean.setMp3Name(bookBean.getChapters().get(i).getTitle());
+            if (bookBean.getChapters().get(i).getAudio() != null)
+                bookMusicDetailBean.setMp3Path(Urls.HOST_GETFILE + "?name=" + bookBean.getChapters().get(i).getAudio().getFileName());
+            bookMusicDetailBean.setDuration(bookBean.getChapters().get(i).getDuration());
+            musicList.add(bookMusicDetailBean);
+        }
         audioFocusManager = new AudioFocusManager(context);
         mediaPlayer = new MediaPlayer();
         handler = new Handler(Looper.getMainLooper());

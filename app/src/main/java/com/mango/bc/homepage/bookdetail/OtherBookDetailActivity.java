@@ -137,6 +137,7 @@ public class OtherBookDetailActivity extends BaseActivity {
                     String newString = mCache.getAsString("bookDetail" + bookId);
                     Log.v("yyyyyy", "---cache5---" + newString);
                     if (newString != null) {
+                        spUtils.put("bookDetail", newString);
                         final BookDetailBean bookDetailBean = JsonBookDetailUtils.readBookDetailBean(newString);
                         runOnUiThread(new Runnable() {
                             @Override
@@ -166,6 +167,7 @@ public class OtherBookDetailActivity extends BaseActivity {
                         try {
                             String string = response.body().string();
                             mCache.put("bookDetail" + bookId, string);
+                            spUtils.put("bookDetail", string);
                             final BookDetailBean bookDetailBean = JsonBookDetailUtils.readBookDetailBean(string);
                             runOnUiThread(new Runnable() {
                                 @Override

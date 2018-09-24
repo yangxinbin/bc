@@ -54,6 +54,7 @@
     <string name="play">播放 ▶</string>
     <string name="txt">文稿</string>
     <string name="transaction">没有更多交易记录</string>
+    <string name="cancel">取消</string>
 
     <string name="setting_key_mobile_network_play">mobile_network_play</string>
     <string name="setting_key_mobile_network_download">mobile_network_download</string>

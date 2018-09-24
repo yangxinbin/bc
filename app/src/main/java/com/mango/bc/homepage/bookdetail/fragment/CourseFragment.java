@@ -20,6 +20,7 @@ import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.bookdetail.play.service.OnPlayerEventListener;
 import com.mango.bc.homepage.net.bean.BookBean;
+import com.mango.bc.util.SPUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -39,12 +40,14 @@ public class CourseFragment extends Fragment implements AdapterView.OnItemClickL
     @Bind(R.id.recycle)
     RecyclerView recycle;
     private BookCourseAdapter bookCourseAdapter;
+    private SPUtils spUtils;
     //private BookCourseAdapter myBookCourseAdapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.course_book, container, false);
+        spUtils = SPUtils.getInstance("bc", getActivity());
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         return view;

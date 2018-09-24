@@ -96,6 +96,18 @@
             android:exported="true"
             android:launchMode="singleTop" />
         <activity android:name=".homepage.activity.BuyBookActivity"></activity>
+
+        <service android:name=".homepage.bookdetail.play.service.PlayService" />
+        <receiver android:name=".homepage.bookdetail.play.receiver.RemoteControlReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".homepage.bookdetail.play.receiver.StatusBarReceiver">
+            <intent-filter>
+                <action android:name="me.bc.music.STATUS_BAR_ACTIONS" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

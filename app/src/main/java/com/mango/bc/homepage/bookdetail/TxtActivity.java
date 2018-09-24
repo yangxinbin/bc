@@ -45,7 +45,7 @@ public class TxtActivity extends BaseActivity {
         if (bookBean.getChapters() != null) {
             if (position == -1) {
                 txtDetailAdapter = new TxtDetailAdapter(bookBean.getChapters().get(0).getContentImages(), this);
-            }else {
+            } else {
                 txtDetailAdapter = new TxtDetailAdapter(bookBean.getChapters().get(position).getContentImages(), this);
             }
             recycle.setLayoutManager(new LinearLayoutManager(this));
@@ -61,7 +61,7 @@ public class TxtActivity extends BaseActivity {
         if (bookBean.getBook().getDescriptionImages() != null) {
             if (position == -1) {
                 myTxtDetailAdapter = new MyTxtDetailAdapter(bookBean.getBook().getChapters().get(0).getContentImages(), this);
-            }else {
+            } else {
                 myTxtDetailAdapter = new MyTxtDetailAdapter(bookBean.getBook().getChapters().get(position).getContentImages(), this);
             }
             recycle.setLayoutManager(new LinearLayoutManager(this));
@@ -77,8 +77,10 @@ public class TxtActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        txtDetailAdapter.recycleBitmap();
-        myTxtDetailAdapter.recycleBitmap();
+        if (txtDetailAdapter != null)
+            txtDetailAdapter.recycleBitmap();
+        if (myTxtDetailAdapter != null)
+            myTxtDetailAdapter.recycleBitmap();
         ButterKnife.unbind(this);
         EventBus.getDefault().unregister(this);
     }

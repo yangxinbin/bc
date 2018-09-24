@@ -39,7 +39,7 @@ public class CourseFragment extends Fragment implements AdapterView.OnItemClickL
     @Bind(R.id.recycle)
     RecyclerView recycle;
     private BookCourseAdapter bookCourseAdapter;
-    private BookCourseAdapter myBookCourseAdapter;
+    //private BookCourseAdapter myBookCourseAdapter;
 
     @Nullable
     @Override
@@ -97,9 +97,9 @@ public class CourseFragment extends Fragment implements AdapterView.OnItemClickL
                 bookMusicDetailBean.setDuration(bookBean.getBook().getChapters().get(i).getDuration());
                 bookMusicDetailBeanList.add(bookMusicDetailBean);
             }
-            myBookCourseAdapter = new BookCourseAdapter(bookMusicDetailBeanList, getActivity());
+            bookCourseAdapter = new BookCourseAdapter(bookMusicDetailBeanList, getActivity());
             recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
-            recycle.setAdapter(myBookCourseAdapter);
+            recycle.setAdapter(bookCourseAdapter);
             bookCourseAdapter.setOnItemClickLitener(mOnClickListenner);
         }
     }

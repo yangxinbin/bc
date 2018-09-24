@@ -400,6 +400,7 @@ public class OtherBookDetailActivity extends BaseActivity {
                 break;
             case R.id.l_txt_get:
                 intent = new Intent(this, TxtActivity.class);
+                intent.putExtra("position", -1);
                 startActivity(intent);
                 break;
             case R.id.book_stage_play:

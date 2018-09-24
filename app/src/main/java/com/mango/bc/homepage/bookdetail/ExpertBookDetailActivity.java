@@ -26,6 +26,7 @@ import com.mango.bc.homepage.bookdetail.fragment.CommentFragment;
 import com.mango.bc.homepage.bookdetail.fragment.CourseFragment;
 import com.mango.bc.homepage.bookdetail.fragment.DetailFragment;
 import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
+import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.ACache;
 import com.mango.bc.util.AppUtils;
@@ -318,6 +319,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
     private void initBookDetailView(BookDetailBean bookDetailBean) {
         if (bookDetailBean == null)
             return;
+        AudioPlayer.get().init(this);
         this.mBookDetailBean = bookDetailBean;
         EventBus.getDefault().postSticky(bookDetailBean);
         if (bookDetailBean.getAuthor() != null) {

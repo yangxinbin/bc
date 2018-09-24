@@ -128,7 +128,8 @@ public class DailyTasksFragment extends Fragment {
                         return;
                     }
                 } else {
-                    mCache.remove("task");//刷新之后缓存也更新过来
+                    if (mCache != null)
+                        mCache.remove("task");//刷新之后缓存也更新过来
                 }
                 HttpUtils.doPost(Urls.HOST_TASKS, mapParams, new Callback() {
                     @Override

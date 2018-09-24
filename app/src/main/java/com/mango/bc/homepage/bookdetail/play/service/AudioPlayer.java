@@ -6,6 +6,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
 import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
@@ -61,7 +62,9 @@ public class AudioPlayer {
 
     public void init(Context context) {
         this.context = context.getApplicationContext();
+        musicList.clear();
         BookDetailBean bookBean = JsonBookDetailUtils.readBookDetailBean(spUtils.getString("bookDetail", ""));
+        Log.v("bbbbbbb","-----"+spUtils.getString("bookDetail", ""));
         for (int i = 0; i < bookBean.getChapters().size(); i++) {
             BookMusicDetailBean bookMusicDetailBean = new BookMusicDetailBean();
             bookMusicDetailBean.setName(bookBean.getAuthor().getName());

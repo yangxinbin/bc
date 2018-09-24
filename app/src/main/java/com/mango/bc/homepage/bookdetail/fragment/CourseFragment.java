@@ -22,6 +22,7 @@ import com.mango.bc.homepage.bookdetail.play.global.Notifier;
 import com.mango.bc.homepage.bookdetail.play.receiver.StatusBarReceiver;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.bookdetail.play.service.OnPlayerEventListener;
+import com.mango.bc.homepage.bookdetail.play.service.PlayService;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.SPUtils;
 
@@ -115,12 +116,6 @@ public class CourseFragment extends Fragment implements AdapterView.OnItemClickL
 
         @Override
         public void onReadClick(View view, int position) {
-            //AppUtils.showToast(getContext(), "播放");
-            //AudioPlayer.get().playPause();
-            //Notifier.get().cancelAll();
-/*            Intent playIntent = new Intent(StatusBarReceiver.ACTION_STATUS_BAR);
-            playIntent.putExtra(StatusBarReceiver.EXTRA, StatusBarReceiver.EXTRA_PLAY_PAUSE);
-            getActivity().sendBroadcast(playIntent);*/
             AudioPlayer.get().play(position);
         }
 

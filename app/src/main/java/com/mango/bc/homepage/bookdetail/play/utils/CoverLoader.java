@@ -8,12 +8,16 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v4.util.LruCache;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.mango.bc.R;
 import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -126,6 +130,7 @@ public class CoverLoader {
             return null;
         }
         if (!TextUtils.isEmpty(music.getCoverPath())) {
+            Log.v("ccccccc","-----"+music.getCoverPath());
             return music.getCoverPath();
         } else {
             return null;
@@ -182,9 +187,23 @@ public class CoverLoader {
      * 从下载的图片加载封面<br>
      * 网络音乐
      */
-    private Bitmap loadCoverFromFile(String path) {
+    public Bitmap loadCoverFromFile(String path) {
+        Log.v("pppppp","=="+path);
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.RGB_565;
         return BitmapFactory.decodeFile(path, options);
+/*        Bitmap map = null;
+        try {
+            URL url = new URL(path);
+            URLConnection conn = url.openConnection();
+            conn.connect();
+            InputStream in;
+            in = conn.getInputStream();
+            map = BitmapFactory.decodeStream(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return map;*/
+
     }
 }

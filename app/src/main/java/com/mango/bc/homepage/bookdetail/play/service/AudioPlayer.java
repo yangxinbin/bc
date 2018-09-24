@@ -64,13 +64,15 @@ public class AudioPlayer {
         this.context = context.getApplicationContext();
         musicList.clear();
         BookDetailBean bookBean = JsonBookDetailUtils.readBookDetailBean(spUtils.getString("bookDetail", ""));
-        Log.v("bbbbbbb","-----"+spUtils.getString("bookDetail", ""));
+        Log.v("bbbbbbb", "-----" + spUtils.getString("bookDetail", ""));
         for (int i = 0; i < bookBean.getChapters().size(); i++) {
             BookMusicDetailBean bookMusicDetailBean = new BookMusicDetailBean();
             bookMusicDetailBean.setName(bookBean.getAuthor().getName());
             bookMusicDetailBean.setTitle(bookBean.getTitle());
             bookMusicDetailBean.setIsFree(bookBean.getChapters().get(i).isFree());
             bookMusicDetailBean.setMp3Name(bookBean.getChapters().get(i).getTitle());
+            if (bookBean.getCover() != null)
+                bookMusicDetailBean.setCoverPath(Urls.HOST_GETFILE + "?name=" + bookBean.getCover().getFileName());
             if (bookBean.getChapters().get(i).getAudio() != null)
                 bookMusicDetailBean.setMp3Path(Urls.HOST_GETFILE + "?name=" + bookBean.getChapters().get(i).getAudio().getFileName());
             bookMusicDetailBean.setDuration(bookBean.getChapters().get(i).getDuration());
@@ -152,7 +154,7 @@ public class AudioPlayer {
             MediaSessionManager.get().updatePlaybackState();
         } catch (IOException e) {
             e.printStackTrace();
-            AppUtils.showToast(context,"当前歌曲无法播放");
+            AppUtils.showToast(context, "当前歌曲无法播放");
         }
     }
 
@@ -207,7 +209,7 @@ public class AudioPlayer {
     }
 
     public void pausePlayer() {
-        pausePlayer2(true);
+        pausePlayer(true);
     }
 
     public void pausePlayer(boolean abandonAudioFocus) {
@@ -229,6 +231,7 @@ public class AudioPlayer {
             listener.onPlayerPause();
         }
     }
+
     public void pausePlayer2(boolean abandonAudioFocus) {
         if (!isPlaying()) {
             return;
@@ -247,6 +250,7 @@ public class AudioPlayer {
             listener.onPlayerPause();
         }
     }
+
     public void stopPlayer() {
         if (isIdle()) {
             return;

@@ -90,10 +90,13 @@ public class Notifier {
         String title = music.getName() + "：" + music.getTitle();
         String subtitle = music.getMp3Name();
         Bitmap cover = CoverLoader.get().loadThumb(music);
+        //Bitmap cover = CoverLoader.get().loadCoverFromFile(music.getCoverPath());
+        Log.v("pppppp","=cover="+cover);
 
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.notification);
         if (cover != null) {
             remoteViews.setImageViewBitmap(R.id.iv_icon, cover);
+            Log.v("pppppp","=yyyyycover=");
         } else {
             remoteViews.setImageViewResource(R.id.iv_icon, R.mipmap.ic_launcher);
         }

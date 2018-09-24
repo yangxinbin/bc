@@ -56,6 +56,8 @@ public class DetailFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        Log.v("dddddddddddd","-----ddd2--");
+        bookDetailAdapter.recycleBitmap();
         ButterKnife.unbind(this);
         EventBus.getDefault().unregister(this);
     }

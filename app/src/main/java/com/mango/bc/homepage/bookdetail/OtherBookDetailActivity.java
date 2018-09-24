@@ -376,6 +376,8 @@ public class OtherBookDetailActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.v("dddddddddddd","-----ddd1---");
+        bookDetailAdapter.recycleBitmap();
         ButterKnife.unbind(this);
         EventBus.getDefault().unregister(this);
         EventBus.getDefault().removeStickyEvent(BookBean.class);//展示完删除

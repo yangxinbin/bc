@@ -77,6 +77,8 @@ public class TxtActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        txtDetailAdapter.recycleBitmap();
+        myTxtDetailAdapter.recycleBitmap();
         ButterKnife.unbind(this);
         EventBus.getDefault().unregister(this);
     }

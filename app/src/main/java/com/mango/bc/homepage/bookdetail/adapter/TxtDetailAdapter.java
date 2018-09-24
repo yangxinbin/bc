@@ -42,6 +42,7 @@ public class TxtDetailAdapter extends RecyclerView.Adapter {
     private List<BookBean.ChaptersBean.ContentImagesBean> datas = new ArrayList<>();
     private Handler mHandler = new Handler(Looper.getMainLooper()); //获取主线程的Handler
     private Dialog dialog_load;
+    private Bitmap bitmap;
 
     public TxtDetailAdapter(List<BookBean.ChaptersBean.ContentImagesBean> datas, Context context) {
         createLoadDailog(context);
@@ -82,7 +83,7 @@ public class TxtDetailAdapter extends RecyclerView.Adapter {
                 //待优化
                 //final Bitmap bitmap = BitmapFactory.decodeByteArray(Picture, 0, Picture.length);
                 //通过imageview，设置图片
-                final Bitmap bitmap = streamToBitmap(input);
+                bitmap = streamToBitmap(input);
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -100,7 +101,10 @@ public class TxtDetailAdapter extends RecyclerView.Adapter {
             }
         });
     }
-
+    public void recycleBitmap() {
+        bitmap.recycle();  //一秒之后回收
+        System.gc();//提醒系统即时回收
+    }
     public static Bitmap streamToBitmap(InputStream input) {
         Bitmap bitmap = null;
         BitmapFactory.Options options = new BitmapFactory.Options();

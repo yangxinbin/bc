@@ -55,7 +55,7 @@ public class Notifier {
         if (music == null) {
             return;
         }
-        Log.v("yyyyyy","-----s---");
+        Log.v("yyyyyy", "-----s---");
         playService.startForeground(NOTIFICATION_ID, buildNotification(playService, music, true));
     }
 
@@ -87,7 +87,7 @@ public class Notifier {
     }
 
     private RemoteViews getRemoteViews(Context context, BookMusicDetailBean music, boolean isPlaying) {
-        String title = music.getName()+"："+music.getTitle();
+        String title = music.getName() + "：" + music.getTitle();
         String subtitle = music.getMp3Name();
         Bitmap cover = CoverLoader.get().loadThumb(music);
 
@@ -100,29 +100,30 @@ public class Notifier {
         remoteViews.setTextViewText(R.id.tv_title, title);
         remoteViews.setTextViewText(R.id.tv_subtitle, subtitle);
 
+        boolean isLightNotificationTheme = isLightNotificationTheme(playService);
 
         Intent playIntent = new Intent(StatusBarReceiver.ACTION_STATUS_BAR);
         playIntent.putExtra(StatusBarReceiver.EXTRA, StatusBarReceiver.EXTRA_PLAY_PAUSE);
         PendingIntent playPendingIntent = PendingIntent.getBroadcast(context, 0, playIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setImageViewResource(R.id.iv_play_pause,R.drawable.ic_status_bar_pause_dark);
+        remoteViews.setImageViewResource(R.id.iv_play_pause, getPlayIconRes(isLightNotificationTheme, isPlaying));
         remoteViews.setOnClickPendingIntent(R.id.iv_play_pause, playPendingIntent);
 
         Intent nextIntent = new Intent(StatusBarReceiver.ACTION_STATUS_BAR);
         nextIntent.putExtra(StatusBarReceiver.EXTRA, StatusBarReceiver.EXTRA_NEXT);
         PendingIntent nextPendingIntent = PendingIntent.getBroadcast(context, 1, nextIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setImageViewResource(R.id.iv_next,R.drawable.ic_status_bar_next_dark);
+        remoteViews.setImageViewResource(R.id.iv_next, getNextIconRes(isLightNotificationTheme));
         remoteViews.setOnClickPendingIntent(R.id.iv_next, nextPendingIntent);
 
         Intent prevIntent = new Intent(StatusBarReceiver.ACTION_STATUS_BAR);
         prevIntent.putExtra(StatusBarReceiver.EXTRA, StatusBarReceiver.EXTRA_PREV);
         PendingIntent prevPendingIntent = PendingIntent.getBroadcast(context, 2, prevIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setImageViewResource(R.id.iv_prev,R.drawable.ic_status_bar_next_dark);
+        remoteViews.setImageViewResource(R.id.iv_prev, getPrevIconRes(isLightNotificationTheme));
         remoteViews.setOnClickPendingIntent(R.id.iv_prev, prevPendingIntent);
 
         Intent stopIntent = new Intent(StatusBarReceiver.ACTION_STATUS_BAR);
         stopIntent.putExtra(StatusBarReceiver.EXTRA, StatusBarReceiver.EXTRA_STOP);
         PendingIntent stopPendingIntent = PendingIntent.getBroadcast(context, 3, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setImageViewResource(R.id.iv_stop,R.drawable.ic_status_bar_next_dark);
+        remoteViews.setImageViewResource(R.id.iv_stop, getStopIconRes(isLightNotificationTheme));
         remoteViews.setOnClickPendingIntent(R.id.iv_stop, stopPendingIntent);
 
         return remoteViews;
@@ -148,6 +149,36 @@ public class Notifier {
         } else {
             return findTextColor(notificationLayout);
         }
+    }
+
+    private int getPlayIconRes(boolean isLightNotificationTheme, boolean isPlaying) {
+        if (isPlaying) {
+            return isLightNotificationTheme
+                    ? R.drawable.ic_status_bar_pause_dark_selector
+                    : R.drawable.ic_status_bar_pause_light_selector;
+        } else {
+            return isLightNotificationTheme
+                    ? R.drawable.ic_status_bar_play_dark_selector
+                    : R.drawable.ic_status_bar_play_light_selector;
+        }
+    }
+
+    private int getNextIconRes(boolean isLightNotificationTheme) {
+        return isLightNotificationTheme
+                ? R.drawable.ic_status_bar_next_dark_selector
+                : R.drawable.ic_status_bar_next_light_selector;
+    }
+
+    private int getPrevIconRes(boolean isLightNotificationTheme) {
+        return isLightNotificationTheme
+                ? R.drawable.ic_status_bar_next_dark_selector
+                : R.drawable.ic_status_bar_next_light_selector;
+    }
+
+    private int getStopIconRes(boolean isLightNotificationTheme) {
+        return isLightNotificationTheme
+                ? R.drawable.ic_status_bar_next_dark_selector
+                : R.drawable.ic_status_bar_next_light_selector;
     }
 
     /**

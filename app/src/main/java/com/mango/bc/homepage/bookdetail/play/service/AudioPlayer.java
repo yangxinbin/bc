@@ -207,7 +207,7 @@ public class AudioPlayer {
     }
 
     public void pausePlayer() {
-        pausePlayer(true);
+        pausePlayer2(true);
     }
 
     public void pausePlayer(boolean abandonAudioFocus) {
@@ -229,7 +229,24 @@ public class AudioPlayer {
             listener.onPlayerPause();
         }
     }
+    public void pausePlayer2(boolean abandonAudioFocus) {
+        if (!isPlaying()) {
+            return;
+        }
 
+        mediaPlayer.pause();
+        state = STATE_PAUSE;
+        handler.removeCallbacks(mPublishRunnable);
+        Notifier.get().showPause(getPlayMusic());
+        MediaSessionManager.get().updatePlaybackState();
+        if (abandonAudioFocus) {
+            audioFocusManager.abandonAudioFocus();
+        }
+
+        for (OnPlayerEventListener listener : listeners) {
+            listener.onPlayerPause();
+        }
+    }
     public void stopPlayer() {
         if (isIdle()) {
             return;

@@ -55,7 +55,7 @@ public class BookCourseAdapter extends RecyclerView.Adapter {
         if (holder instanceof BookCourseAdapter.BookCourseViewHolder) {
             final BookCourseAdapter.BookCourseViewHolder viewHolder = (BookCourseAdapter.BookCourseViewHolder) holder;
             if (datas.get(position) != null) {
-                viewHolder.tv_title.setText(datas.get(position).getTitle());
+                viewHolder.tv_title.setText(datas.get(position).getMp3Name());
                 viewHolder.tv_time.setText("时长：" + secToTime(datas.get(position).getDuration()));
                 if (!(datas.get(position).getIsFree() || spUtils.getBoolean("isFree", false))) {
                     viewHolder.img_txt.setImageResource(R.drawable.lock);

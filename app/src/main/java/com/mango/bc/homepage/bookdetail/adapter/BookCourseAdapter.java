@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mango.bc.R;
+import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.SPUtils;
@@ -23,11 +24,11 @@ import java.util.List;
 public class BookCourseAdapter extends RecyclerView.Adapter {
     private final SPUtils spUtils;
     private Context context;
-    private List<BookBean.ChaptersBean> datas = new ArrayList<>();
+    private List<BookMusicDetailBean> datas = new ArrayList<>();
     private BookCourseAdapter.OnItemClickLitener mOnItemClickLitener;
 
 
-    public BookCourseAdapter(List<BookBean.ChaptersBean> datas, Context context) {
+    public BookCourseAdapter(List<BookMusicDetailBean> datas, Context context) {
         spUtils = SPUtils.getInstance("bc", context);
         this.context = context;
         this.datas = datas;
@@ -56,13 +57,13 @@ public class BookCourseAdapter extends RecyclerView.Adapter {
             if (datas.get(position) != null) {
                 viewHolder.tv_title.setText(datas.get(position).getTitle());
                 viewHolder.tv_time.setText("时长：" + secToTime(datas.get(position).getDuration()));
-                if (!(datas.get(position).isFree() || spUtils.getBoolean("isFree", false))) {
+                if (!(datas.get(position).getIsFree() || spUtils.getBoolean("isFree", false))) {
                     viewHolder.img_txt.setImageResource(R.drawable.lock);
                 }
                 viewHolder.img_read.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (datas.get(position).isFree() || spUtils.getBoolean("isFree", false)) {
+                        if (datas.get(position).getIsFree() || spUtils.getBoolean("isFree", false)) {
                             mOnItemClickLitener.onReadClick(viewHolder.img_read, position);
                         } else {
                             AppUtils.showToast(context, "请购买");
@@ -72,7 +73,7 @@ public class BookCourseAdapter extends RecyclerView.Adapter {
                 viewHolder.img_txt.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (datas.get(position).isFree() || spUtils.getBoolean("isFree", false)) {
+                        if (datas.get(position).getIsFree() || spUtils.getBoolean("isFree", false)) {
                             mOnItemClickLitener.onTxtClick(viewHolder.img_txt, position);
                         } else {
                             AppUtils.showToast(context, "请购买");

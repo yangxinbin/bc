@@ -47,5 +47,5 @@ dependencies {
     compile 'com.youth.banner:banner:1.4.8'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
-
+    compile 'com.hwangjr.rxbus:rxbus:2.0.0'
 }

@@ -15,10 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mango.bc.R;
-import com.mango.bc.bookcase.adapter.MyBookCourseAdapter;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.bookdetail.adapter.BookCommentAdapter;
-import com.mango.bc.homepage.bookdetail.adapter.BookCourseAdapter;
 import com.mango.bc.homepage.bookdetail.bean.CommentBean;
 import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
 import com.mango.bc.homepage.net.bean.BookBean;

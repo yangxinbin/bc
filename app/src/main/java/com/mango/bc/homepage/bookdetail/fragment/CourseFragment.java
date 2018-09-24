@@ -10,18 +10,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import com.mango.bc.R;
-import com.mango.bc.bookcase.adapter.MyBookCourseAdapter;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.bookdetail.TxtActivity;
 import com.mango.bc.homepage.bookdetail.adapter.BookCourseAdapter;
+import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
+import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
+import com.mango.bc.homepage.bookdetail.play.service.OnPlayerEventListener;
 import com.mango.bc.homepage.net.bean.BookBean;
-import com.mango.bc.util.AppUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,11 +35,11 @@ import butterknife.ButterKnife;
  * Created by admin on 2018/9/12.
  */
 
-public class CourseFragment extends Fragment {
+public class CourseFragment extends Fragment implements AdapterView.OnItemClickListener, OnPlayerEventListener {
     @Bind(R.id.recycle)
     RecyclerView recycle;
     private BookCourseAdapter bookCourseAdapter;
-    private MyBookCourseAdapter myBookCourseAdapter;
+    private BookCourseAdapter myBookCourseAdapter;
 
     @Nullable
     @Override
@@ -51,21 +56,48 @@ public class CourseFragment extends Fragment {
             return;
         }
         Log.v("uuuuuuuuuuuu", "--2--");
-        if (bookBean.getDescriptionImages() != null) {
-            bookCourseAdapter = new BookCourseAdapter(bookBean.getChapters(), getActivity());
+        List<BookMusicDetailBean> bookMusicDetailBeanList = new ArrayList<>();
+        bookMusicDetailBeanList.clear();
+        if (bookBean.getChapters() != null) {
+            for (int i = 0; i < bookBean.getChapters().size(); i++) {
+                BookMusicDetailBean bookMusicDetailBean = new BookMusicDetailBean();
+                bookMusicDetailBean.setName(bookBean.getAuthor().getName());
+                bookMusicDetailBean.setTitle(bookBean.getTitle());
+                bookMusicDetailBean.setIsFree(bookBean.getChapters().get(i).isFree());
+                bookMusicDetailBean.setMp3Name(bookBean.getChapters().get(i).getTitle());
+                if (bookBean.getChapters().get(i).getAudio() != null)
+                    bookMusicDetailBean.setMp3Path(bookBean.getChapters().get(i).getAudio().getFileName());
+                bookMusicDetailBean.setDuration(bookBean.getChapters().get(i).getDuration());
+                bookMusicDetailBeanList.add(bookMusicDetailBean);
+            }
+            bookCourseAdapter = new BookCourseAdapter(bookMusicDetailBeanList, getActivity());
             recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
             recycle.setAdapter(bookCourseAdapter);
             bookCourseAdapter.setOnItemClickLitener(mOnClickListenner);
         }
         //EventBus.getDefault().removeStickyEvent(MyBookBean.class);//展示完删除
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void MyBookBeanEventBus(MyBookBean bookBean) {  //书架进来  不需要判断 直接可以播放
         if (bookBean == null) {
             return;
         }
+        List<BookMusicDetailBean> bookMusicDetailBeanList = new ArrayList<>();
+        bookMusicDetailBeanList.clear();
         if (bookBean.getBook() != null) {
-            myBookCourseAdapter = new MyBookCourseAdapter(bookBean.getBook().getChapters(), getActivity());
+            for (int i = 0; i < bookBean.getBook().getChapters().size(); i++) {
+                BookMusicDetailBean bookMusicDetailBean = new BookMusicDetailBean();
+                bookMusicDetailBean.setName(bookBean.getBook().getAuthor().getName());
+                bookMusicDetailBean.setTitle(bookBean.getBook().getTitle());
+                bookMusicDetailBean.setIsFree(bookBean.getBook().getChapters().get(i).isFree());
+                bookMusicDetailBean.setMp3Name(bookBean.getBook().getChapters().get(i).getTitle());
+                if (bookBean.getBook().getChapters().get(i).getAudio() != null)
+                    bookMusicDetailBean.setMp3Path(bookBean.getBook().getChapters().get(i).getAudio().getFileName());
+                bookMusicDetailBean.setDuration(bookBean.getBook().getChapters().get(i).getDuration());
+                bookMusicDetailBeanList.add(bookMusicDetailBean);
+            }
+            myBookCourseAdapter = new BookCourseAdapter(bookMusicDetailBeanList, getActivity());
             recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
             recycle.setAdapter(myBookCourseAdapter);
             bookCourseAdapter.setOnItemClickLitener(mOnClickListenner);
@@ -78,13 +110,14 @@ public class CourseFragment extends Fragment {
         @Override
         public void onReadClick(View view, int position) {
             //AppUtils.showToast(getContext(), "播放");
+            AudioPlayer.get().play(position);
         }
 
         @Override
         public void onTxtClick(View view, int position) {
             //AppUtils.showToast(getContext(), "阅读");
             intent = new Intent(getActivity(), TxtActivity.class);
-            intent.putExtra("position",position);
+            intent.putExtra("position", position);
             startActivity(intent);
         }
     };
@@ -94,5 +127,37 @@ public class CourseFragment extends Fragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
         EventBus.getDefault().unregister(this);
+        AudioPlayer.get().removeOnPlayEventListener(this);
+
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        AudioPlayer.get().play(position);
+    }
+
+    @Override
+    public void onChange(BookMusicDetailBean music) {
+        bookCourseAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onPlayerStart() {
+
+    }
+
+    @Override
+    public void onPlayerPause() {
+
+    }
+
+    @Override
+    public void onPublish(int progress) {
+
+    }
+
+    @Override
+    public void onBufferingUpdate(int percent) {
+
     }
 }

@@ -63,6 +63,7 @@ public class AudioPlayer {
     public void init(Context context) {
         this.context = context.getApplicationContext();
         musicList.clear();
+        stopPlayer();
         BookDetailBean bookBean = JsonBookDetailUtils.readBookDetailBean(spUtils.getString("bookDetail", ""));
         Log.v("bbbbbbb", "-----" + spUtils.getString("bookDetail", ""));
         for (int i = 0; i < bookBean.getChapters().size(); i++) {
@@ -222,7 +223,7 @@ public class AudioPlayer {
         handler.removeCallbacks(mPublishRunnable);
         Notifier.get().showPause(getPlayMusic());
         MediaSessionManager.get().updatePlaybackState();
-        context.unregisterReceiver(noisyReceiver);
+//        context.unregisterReceiver(noisyReceiver);
         if (abandonAudioFocus) {
             audioFocusManager.abandonAudioFocus();
         }

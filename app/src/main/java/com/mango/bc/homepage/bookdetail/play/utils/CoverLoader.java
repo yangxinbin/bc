@@ -6,20 +6,28 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.util.LruCache;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.mango.bc.R;
 import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
+import com.mango.bc.util.HttpUtils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.ref.SoftReference;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 
 /**
@@ -29,10 +37,12 @@ import java.util.Map;
 public class CoverLoader {
     public static final int THUMBNAIL_MAX_LENGTH = 500;
     private static final String KEY_NULL = "null";
+    private Handler mHandler = new Handler(Looper.getMainLooper()); //获取主线程的Handler
 
     private Context context;
-    private Map<Type, LruCache<String, Bitmap>> cacheMap;
+    //private Map<Type, LruCache<String, Bitmap>> cacheMap;
     private int roundLength = ScreenUtils.getScreenWidth() / 2;
+    private Bitmap bitmap;
 
     private enum Type {
         THUMB,
@@ -71,16 +81,16 @@ public class CoverLoader {
         LruCache<String, Bitmap> roundCache = new LruCache<>(10);
         LruCache<String, Bitmap> blurCache = new LruCache<>(10);
 
-        cacheMap = new HashMap<>(3);
+        /*cacheMap = new HashMap<>(3);
         cacheMap.put(Type.THUMB, thumbCache);
         cacheMap.put(Type.ROUND, roundCache);
-        cacheMap.put(Type.BLUR, blurCache);
+        cacheMap.put(Type.BLUR, blurCache);*/
     }
 
     public void setRoundLength(int roundLength) {
         if (this.roundLength != roundLength) {
             this.roundLength = roundLength;
-            cacheMap.get(Type.ROUND).evictAll();
+            //cacheMap.get(Type.ROUND).evictAll();
         }
     }
 
@@ -97,28 +107,30 @@ public class CoverLoader {
     }
 
     private Bitmap loadCover(BookMusicDetailBean music, Type type) {
-        Bitmap bitmap;
+        Log.v("pppppp", "=loadCover=");
+
+        Bitmap bitmap = null;
         String key = getKey(music);
-        LruCache<String, Bitmap> cache = cacheMap.get(type);
+        //LruCache<String, Bitmap> cache = cacheMap.get(type);
         if (TextUtils.isEmpty(key)) {
-            bitmap = cache.get(KEY_NULL);
+            //bitmap = cache.get(KEY_NULL);
             if (bitmap != null) {
                 return bitmap;
             }
 
             bitmap = getDefaultCover(type);
-            cache.put(KEY_NULL, bitmap);
+            //cache.put(KEY_NULL, bitmap);
             return bitmap;
         }
 
-        bitmap = cache.get(key);
+        //bitmap = cache.get(key);
         if (bitmap != null) {
             return bitmap;
         }
 
         bitmap = loadCoverByType(music, type);
         if (bitmap != null) {
-            cache.put(key, bitmap);
+            //cache.put(key, bitmap);
             return bitmap;
         }
 
@@ -130,7 +142,7 @@ public class CoverLoader {
             return null;
         }
         if (!TextUtils.isEmpty(music.getCoverPath())) {
-            Log.v("ccccccc","-----"+music.getCoverPath());
+            Log.v("ccccccc", "-----" + music.getCoverPath());
             return music.getCoverPath();
         } else {
             return null;
@@ -187,23 +199,72 @@ public class CoverLoader {
      * 从下载的图片加载封面<br>
      * 网络音乐
      */
-    public Bitmap loadCoverFromFile(String path) {
-        Log.v("pppppp","=="+path);
+    public Bitmap loadCoverFromFile(final String path) {
+        Log.v("pppppp", "==" + path);
+        HttpUtils.doGet(path, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                InputStream input = response.body().byteStream();
+                //使用BitmapFactory工厂，把字节数组转化为bitmap
+                //java.lang.OutOfMemoryError: Failed to allocate a 14445012 byte allocation with 3456152 free bytes and 3MB until OOM
+                //待优化
+                //final Bitmap bitmap = BitmapFactory.decodeByteArray(Picture, 0, Picture.length);
+                //通过imageview，设置图片
+                final Bitmap bitmap1 = streamToBitmap(input);
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        bitmap = bitmap1;
+                    }
+                });
+            }
+        });
+        return bitmap;
+    }
+
+    public static Bitmap streamToBitmap(InputStream input) {
+        Bitmap bitmap = null;
         BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inPreferredConfig = Bitmap.Config.RGB_565;
-        return BitmapFactory.decodeFile(path, options);
-/*        Bitmap map = null;
+        options.inSampleSize = getinSampleSize(options);
+        //options.inPreferredConfig = Bitmap.Config.RGB_565;//颜色要求不高
+        //options.inPurgeable = true;
+        //options.inInputShareable = true;
+        SoftReference softRef = new SoftReference(BitmapFactory.decodeStream(
+                input, null, options));
+        bitmap = (Bitmap) softRef.get();
         try {
-            URL url = new URL(path);
-            URLConnection conn = url.openConnection();
-            conn.connect();
-            InputStream in;
-            in = conn.getInputStream();
-            map = BitmapFactory.decodeStream(in);
+            if (input != null) {
+                input.close();
+            }
         } catch (IOException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return map;*/
+        return bitmap;
+    }
 
+    //获取option采样率inSampleSize
+    private static int getinSampleSize(BitmapFactory.Options options) {
+        int inSampleSize = 1;
+        int imageWidth = options.outWidth;//取出bitmap的原始高宽
+        int imageHeight = options.outHeight;
+        //个人认为intent，bundle传递图片的时候，当图片内存大于1024KB的时候，会发生内存溢出，
+        // 所以为解决内存溢出问题，此处选择通过计算图片大小来查找缩放比例系数小于1024KB时，找到inSampleSize
+        while (getImageMemory(imageWidth, imageHeight, inSampleSize) > 1024) {
+            inSampleSize *= 2;
+        }
+        Log.v("sssssss", "--1--" + inSampleSize);
+        return inSampleSize;
+    }
+
+    private static int getImageMemory(int imagewidth, int imageheight, int inSampleSize) {
+        Log.v("sssssss", "--2--" + (imagewidth / inSampleSize) * (imageheight / inSampleSize) * 3 / 1024);
+        return (imagewidth / inSampleSize) * (imageheight / inSampleSize) * 3 / 1024;
     }
 }

@@ -58,7 +58,7 @@ public class PlayService extends Service {
         return START_NOT_STICKY;
     }
 
-    private void stop() {
+    public void stop() {
         AudioPlayer.get().stopPlayer();
         QuitTimer.get().stop();
         Notifier.get().cancelAll();

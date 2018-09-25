@@ -18,6 +18,8 @@ import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.bookdetail.TxtActivity;
 import com.mango.bc.homepage.bookdetail.adapter.BookCourseAdapter;
 import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
+import com.mango.bc.homepage.bookdetail.play.BaseServiceFragment;
+import com.mango.bc.homepage.bookdetail.play.constants.Actions;
 import com.mango.bc.homepage.bookdetail.play.global.Notifier;
 import com.mango.bc.homepage.bookdetail.play.receiver.StatusBarReceiver;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
@@ -40,7 +42,7 @@ import butterknife.ButterKnife;
  * Created by admin on 2018/9/12.
  */
 
-public class CourseFragment extends Fragment implements AdapterView.OnItemClickListener, OnPlayerEventListener {
+public class CourseFragment extends BaseServiceFragment implements OnPlayerEventListener {
     @Bind(R.id.recycle)
     RecyclerView recycle;
     private BookCourseAdapter bookCourseAdapter;
@@ -116,6 +118,7 @@ public class CourseFragment extends Fragment implements AdapterView.OnItemClickL
 
         @Override
         public void onReadClick(View view, int position) {
+            AudioPlayer.get().init(getActivity());
             AudioPlayer.get().play(position);
         }
 
@@ -129,6 +132,11 @@ public class CourseFragment extends Fragment implements AdapterView.OnItemClickL
     };
 
     @Override
+    protected void onServiceBound() {
+        AudioPlayer.get().addOnPlayEventListener(this);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
@@ -137,10 +145,6 @@ public class CourseFragment extends Fragment implements AdapterView.OnItemClickL
 
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        AudioPlayer.get().play(position);
-    }
 
     @Override
     public void onChange(BookMusicDetailBean music) {

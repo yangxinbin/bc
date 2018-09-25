@@ -40,7 +40,7 @@ public class StatusBarReceiver extends BroadcastReceiver {
             AudioPlayer.get().prev();
         } else if (TextUtils.equals(extra, EXTRA_STOP)) {
             Log.v("ppppppppppp","----s---");
-            AudioPlayer.get().playPause();
+            //AudioPlayer.get().playPause();
             Notifier.get().cancelAll();
             //AudioPlayer.get().stopPlayer();
         }

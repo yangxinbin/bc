@@ -320,7 +320,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
     private void initBookDetailView(BookDetailBean bookDetailBean) {
         if (bookDetailBean == null)
             return;
-        AudioPlayer.get().init(this);
+        //AudioPlayer.get().init(this);
         this.mBookDetailBean = bookDetailBean;
         EventBus.getDefault().postSticky(bookDetailBean);
         if (bookDetailBean.getAuthor() != null) {

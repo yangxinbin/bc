@@ -20,6 +20,7 @@ import com.mango.bc.homepage.bookdetail.ExpertBookDetailActivity;
 import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
 import com.mango.bc.homepage.bookdetail.play.constants.Extras;
 import com.mango.bc.homepage.bookdetail.play.receiver.StatusBarReceiver;
+import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.bookdetail.play.service.PlayService;
 import com.mango.bc.homepage.bookdetail.play.utils.CoverLoader;
 import com.mango.bc.homepage.net.bean.BookBean;
@@ -55,7 +56,7 @@ public class Notifier {
         if (music == null) {
             return;
         }
-        Log.v("yyyyyy", "-----s---");
+        Log.v("pppppp", "---yyyyyy--s---");
         playService.startForeground(NOTIFICATION_ID, buildNotification(playService, music, true));
     }
 
@@ -68,6 +69,8 @@ public class Notifier {
     }
 
     public void cancelAll() {
+        playService.stopForeground(false);
+        AudioPlayer.get().stopPlayer();
         notificationManager.cancelAll();
     }
 
@@ -89,7 +92,7 @@ public class Notifier {
     private RemoteViews getRemoteViews(Context context, BookMusicDetailBean music, boolean isPlaying) {
         String title = music.getName() + "：" + music.getTitle();
         String subtitle = music.getMp3Name();
-        Bitmap cover = CoverLoader.get().loadThumb(music);
+        Bitmap cover = CoverLoader.get().loadRound(music);
         //Bitmap cover = CoverLoader.get().loadCoverFromFile(music.getCoverPath());
         Log.v("pppppp","=cover="+cover);
 

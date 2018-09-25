@@ -28,4 +28,7 @@
         <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
         <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
     </style>
+    <attr name="playBarBackground" format="reference" />
+    <style name="AppTheme.Text" parent="TextAppearance.AppCompat" />
+
 </resources>

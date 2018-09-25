@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,6 +29,9 @@ import com.mango.bc.homepage.bookdetail.fragment.CommentFragment;
 import com.mango.bc.homepage.bookdetail.fragment.CourseFragment;
 import com.mango.bc.homepage.bookdetail.fragment.DetailFragment;
 import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
+import com.mango.bc.homepage.bookdetail.play.PlayFragment;
+import com.mango.bc.homepage.bookdetail.play.constants.Extras;
+import com.mango.bc.homepage.bookdetail.play.executor.ControlPanel;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.bookdetail.play.service.PlayService;
 import com.mango.bc.homepage.net.bean.BookBean;
@@ -101,6 +107,8 @@ public class ExpertBookDetailActivity extends BaseActivity {
     TextView tvLikeGet;
     @Bind(R.id.tv_like_play)
     TextView tvLikePlay;
+    @Bind(R.id.fl_play_bar)
+    FrameLayout flPlayBar;
     private ArrayList<String> mDatas;
     List<Fragment> mfragments = new ArrayList<Fragment>();
     private SPUtils spUtils;
@@ -110,6 +118,9 @@ public class ExpertBookDetailActivity extends BaseActivity {
     private String type;
     private BookDetailBean mBookDetailBean;
     private BookBean mBookBean;
+    private ControlPanel controlPanel;
+    private boolean isPlayFragmentShow;
+    private PlayFragment mPlayFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +133,43 @@ public class ExpertBookDetailActivity extends BaseActivity {
         initDatas();
         init();
     }
+    @Override
+    protected void onServiceBound() {
+        controlPanel = new ControlPanel(flPlayBar);
+        AudioPlayer.get().addOnPlayEventListener(controlPanel);
+        parseIntent();
+    }
+    private void parseIntent() {
+        Intent intent = getIntent();
+        if (intent.hasExtra(Extras.EXTRA_NOTIFICATION)) {
+            showPlayingFragment();
+            setIntent(new Intent());
+        }
+    }
 
+    private void showPlayingFragment() {
+        if (isPlayFragmentShow) {
+            return;
+        }
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.setCustomAnimations(R.anim.fragment_slide_up, 0);
+        if (mPlayFragment == null) {
+            mPlayFragment = new PlayFragment();
+            ft.replace(android.R.id.content, mPlayFragment);
+        } else {
+            ft.show(mPlayFragment);
+        }
+        ft.commitAllowingStateLoss();
+        isPlayFragmentShow = true;
+    }
+    private void hidePlayingFragment() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.setCustomAnimations(0, R.anim.fragment_slide_down);
+        ft.hide(mPlayFragment);
+        ft.commitAllowingStateLoss();
+        isPlayFragmentShow = false;
+    }
     private void initState(String bookId, String type) {
         if (chechState(bookId)) {
             spUtils.put("isFree",true);
@@ -209,7 +256,6 @@ public class ExpertBookDetailActivity extends BaseActivity {
                 });
             }
         }).start();
-
     }
 
     private void checkLike(final String bookId) {
@@ -533,5 +579,14 @@ public class ExpertBookDetailActivity extends BaseActivity {
 
         // 启动分享GUI
         oks.show(getApplicationContext());
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mPlayFragment != null && isPlayFragmentShow) {
+            hidePlayingFragment();
+            return;
+        }
+        super.onBackPressed();
     }
 }

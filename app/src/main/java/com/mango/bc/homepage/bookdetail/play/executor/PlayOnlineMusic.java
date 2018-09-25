@@ -1,15 +1,5 @@
 package com.mango.bc.homepage.bookdetail.play.executor;
 
-import android.app.Activity;
-import android.text.TextUtils;
-import android.util.Log;
-
-import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
-import com.mango.bc.homepage.bookdetail.play.model.OnlineMusic;
-
-import java.io.File;
-
-
 /**
  * 播放在线音乐
  * Created by wcy on 2016/1/3.

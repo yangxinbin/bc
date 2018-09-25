@@ -6,8 +6,11 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.mango.bc.homepage.bookdetail.bean.PlayBarBean;
 import com.mango.bc.homepage.bookdetail.play.global.Notifier;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
+
+import org.greenrobot.eventbus.EventBus;
 
 
 /**
@@ -40,6 +43,7 @@ public class StatusBarReceiver extends BroadcastReceiver {
             AudioPlayer.get().prev();
         } else if (TextUtils.equals(extra, EXTRA_STOP)) {
             Log.v("ppppppppppp","----s---");
+            EventBus.getDefault().postSticky(new PlayBarBean(false));
             //AudioPlayer.get().playPause();
             Notifier.get().cancelAll();
             //AudioPlayer.get().stopPlayer();

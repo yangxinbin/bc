@@ -25,6 +25,7 @@ import com.mango.bc.base.BaseActivity;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.activity.BuyBookActivity;
 import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
+import com.mango.bc.homepage.bookdetail.bean.PlayBarBean;
 import com.mango.bc.homepage.bookdetail.fragment.CommentFragment;
 import com.mango.bc.homepage.bookdetail.fragment.CourseFragment;
 import com.mango.bc.homepage.bookdetail.fragment.DetailFragment;
@@ -420,7 +421,18 @@ public class ExpertBookDetailActivity extends BaseActivity {
             }
         }
     }
-
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void PlayBarBeanEventBus(PlayBarBean playBarBean) {
+        if (playBarBean == null) {
+            return;
+        }
+        Log.v("iiiiiiiiiiiiii","---iiiiiiiiiiii---");
+        if (!playBarBean.isShowBar()) {
+            flPlayBar.setVisibility(View.GONE);//播放控件
+            Log.v("iiiiiiiiiiiiii","----h---");
+        }
+        EventBus.getDefault().removeStickyEvent(PlayBarBean.class);
+    }
     private void initDatas() {
         mDatas = new ArrayList<String>(Arrays.asList("详情", "课程", "评论"));
     }

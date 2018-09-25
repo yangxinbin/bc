@@ -111,6 +111,7 @@ public class OtherBookDetailActivity extends BaseActivity {
         spUtils = SPUtils.getInstance("bc", this);
         mCache = ACache.get(this.getApplicationContext());
         ButterKnife.bind(this);
+        recycle.setNestedScrollingEnabled(false);
         EventBus.getDefault().register(this);
     }
 

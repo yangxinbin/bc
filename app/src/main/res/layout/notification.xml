@@ -6,6 +6,7 @@
 
     <ImageView
         android:id="@+id/iv_icon"
+        android:padding="@dimen/dp_5"
         android:layout_width="@android:dimen/notification_large_icon_width"
         android:layout_height="@android:dimen/notification_large_icon_height"
         android:layout_gravity="center_vertical"
@@ -18,9 +19,8 @@
         android:layout_gravity="center"
         android:layout_weight="1.0"
         android:orientation="vertical"
-        android:paddingBottom="2.0dp"
-        android:paddingLeft="13.0dp"
-        android:paddingTop="2.0dp">
+        android:paddingBottom="@dimen/dp_1"
+        android:paddingTop="@dimen/dp_1">
 
         <TextView
             android:id="@+id/tv_title"

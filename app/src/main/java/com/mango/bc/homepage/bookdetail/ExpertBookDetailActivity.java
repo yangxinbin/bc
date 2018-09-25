@@ -396,13 +396,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
                     lPlayExpert.setVisibility(View.GONE);
                 } else {
                     l2.setVisibility(View.GONE);
-                    if (getIntent().getBooleanExtra("foot_buy_get", false)) {
-                        lGet.setVisibility(View.VISIBLE);//进去播放界面
-                        lPlayExpert.setVisibility(View.GONE);
-                    } else if (getIntent().getBooleanExtra("foot_play", false)) {
-                        lGet.setVisibility(View.GONE);
-                        lPlayExpert.setVisibility(View.VISIBLE);
-                    }
+                    initState(bookId, type);
                 }
             }
 

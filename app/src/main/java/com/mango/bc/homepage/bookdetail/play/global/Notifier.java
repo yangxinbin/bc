@@ -174,14 +174,14 @@ public class Notifier {
 
     private int getPrevIconRes(boolean isLightNotificationTheme) {
         return isLightNotificationTheme
-                ? R.drawable.ic_status_bar_next_dark_selector
-                : R.drawable.ic_status_bar_next_light_selector;
+                ? R.drawable.ic_status_bar_prev_dark_selector
+                : R.drawable.ic_status_bar_prev_light_selector;
     }
 
     private int getStopIconRes(boolean isLightNotificationTheme) {
         return isLightNotificationTheme
-                ? R.drawable.ic_status_bar_next_dark_selector
-                : R.drawable.ic_status_bar_next_light_selector;
+                ? R.drawable.play_x
+                : R.drawable.play_x;
     }
 
     /**

@@ -29,7 +29,9 @@
             android:ellipsize="end"
             android:fadingEdge="horizontal"
             android:maxLines="1"
-            android:textAppearance="@android:style/TextAppearance.StatusBar.EventContent.Title" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSize"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_subtitle"

@@ -1,17 +1,14 @@
 package com.mango.bc.homepage.bookdetail.fragment;
 
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import com.mango.bc.R;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
@@ -19,12 +16,8 @@ import com.mango.bc.homepage.bookdetail.TxtActivity;
 import com.mango.bc.homepage.bookdetail.adapter.BookCourseAdapter;
 import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
 import com.mango.bc.homepage.bookdetail.play.BaseServiceFragment;
-import com.mango.bc.homepage.bookdetail.play.constants.Actions;
-import com.mango.bc.homepage.bookdetail.play.global.Notifier;
-import com.mango.bc.homepage.bookdetail.play.receiver.StatusBarReceiver;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.bookdetail.play.service.OnPlayerEventListener;
-import com.mango.bc.homepage.bookdetail.play.service.PlayService;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.SPUtils;
 

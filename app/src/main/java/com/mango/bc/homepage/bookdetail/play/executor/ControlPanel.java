@@ -61,6 +61,8 @@ public class ControlPanel implements View.OnClickListener, OnPlayerEventListener
         tvPlayBarTitle.setText(music.getTitle());
         tvPlayBarArtist.setText(music.getName());
         ivPlayBarPlay.setSelected(AudioPlayer.get().isPlaying() || AudioPlayer.get().isPreparing());
+        if (AudioPlayer.get().isPlaying() || AudioPlayer.get().isPreparing())
+            flPlayBar.setVisibility(View.VISIBLE);
 /*        mProgressBar.setMax((int) music.getDuration());
         mProgressBar.setProgress((int) AudioPlayer.get().getAudioPosition());*/
     }

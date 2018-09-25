@@ -15,7 +15,6 @@ import com.mango.bc.homepage.bookdetail.play.enums.PlayModeEnum;
 import com.mango.bc.homepage.bookdetail.play.global.Notifier;
 import com.mango.bc.homepage.bookdetail.play.preference.Preferences;
 import com.mango.bc.homepage.bookdetail.play.receiver.NoisyAudioStreamReceiver;
-import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;

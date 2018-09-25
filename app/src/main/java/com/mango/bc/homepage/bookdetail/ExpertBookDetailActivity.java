@@ -133,12 +133,14 @@ public class ExpertBookDetailActivity extends BaseActivity {
         initDatas();
         init();
     }
+
     @Override
     protected void onServiceBound() {
         controlPanel = new ControlPanel(flPlayBar);
         AudioPlayer.get().addOnPlayEventListener(controlPanel);
         parseIntent();
     }
+
     private void parseIntent() {
         Intent intent = getIntent();
         if (intent.hasExtra(Extras.EXTRA_NOTIFICATION)) {
@@ -163,6 +165,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
         ft.commitAllowingStateLoss();
         isPlayFragmentShow = true;
     }
+
     private void hidePlayingFragment() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setCustomAnimations(0, R.anim.fragment_slide_down);
@@ -170,13 +173,14 @@ public class ExpertBookDetailActivity extends BaseActivity {
         ft.commitAllowingStateLoss();
         isPlayFragmentShow = false;
     }
+
     private void initState(String bookId, String type) {
         if (chechState(bookId)) {
-            spUtils.put("isFree",true);
+            spUtils.put("isFree", true);
             lGet.setVisibility(View.GONE);
             lPlayExpert.setVisibility(View.VISIBLE);//进去播放界面
         } else {
-            spUtils.put("isFree",false);
+            spUtils.put("isFree", false);
             lGet.setVisibility(View.VISIBLE);//购买状态
             lPlayExpert.setVisibility(View.GONE);
 
@@ -422,6 +426,8 @@ public class ExpertBookDetailActivity extends BaseActivity {
     }
 
     private void init() {
+        if (AudioPlayer.get().isPlaying() || AudioPlayer.get().isPausing())
+            flPlayBar.setVisibility(View.VISIBLE);//播放控件
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         ViewPageAdapter vp = new ViewPageAdapter(getSupportFragmentManager(), mfragments, mDatas);
         tabLayout.setupWithViewPager(viewPager);
@@ -532,7 +538,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
                 intent = new Intent(this, BuyBookActivity.class);
                 EventBus.getDefault().postSticky(mBookBean);
                 EventBus.getDefault().removeStickyEvent(MyBookBean.class);
-                startActivityForResult(intent,2);
+                startActivityForResult(intent, 2);
                 break;
             case R.id.l_collage:
                 break;//以上是购买foot
@@ -546,15 +552,17 @@ public class ExpertBookDetailActivity extends BaseActivity {
                 break;//以上是播放foot
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 2 && resultCode == 1){
-            spUtils.put("isFree",true);
+        if (requestCode == 2 && resultCode == 1) {
+            spUtils.put("isFree", true);
             lGet.setVisibility(View.GONE);
             lPlayExpert.setVisibility(View.VISIBLE);//进去播放界面
         }
     }
+
     private void showShare() {
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权

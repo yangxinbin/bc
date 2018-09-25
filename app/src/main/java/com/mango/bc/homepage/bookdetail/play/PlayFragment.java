@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,8 +59,8 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
     SeekBar sbProgress;
     @Bind(R.id.tv_total_time)
     TextView tvTotalTime;
-    @Bind(R.id.iv_mode)
-    ImageView ivMode;
+/*    @Bind(R.id.iv_mode)
+    ImageView ivMode;*/
     @Bind(R.id.iv_prev)
     ImageView ivPrev;
     @Bind(R.id.iv_play)
@@ -90,10 +91,10 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        initSystemBar();
+        //initSystemBar();
         initViewPager();
         //ilIndicator.create(mViewPagerContent.size());
-        initPlayMode();
+        //initPlayMode();
         onChangeImpl(AudioPlayer.get().getPlayMusic());
         AudioPlayer.get().addOnPlayEventListener(this);
     }
@@ -108,7 +109,7 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
     @Override
     protected void setListener() {
         ivBack.setOnClickListener(this);
-        ivMode.setOnClickListener(this);
+        //ivMode.setOnClickListener(this);
         ivPlay.setOnClickListener(this);
         ivPrev.setOnClickListener(this);
         ivNext.setOnClickListener(this);
@@ -152,7 +153,7 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
 
     private void initPlayMode() {
         int mode = Preferences.getPlayMode();
-        ivMode.setImageLevel(mode);
+        //ivMode.setImageLevel(mode);
     }
 
     @Override
@@ -180,6 +181,7 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
         if (!isDraggingProgress) {
             sbProgress.setProgress(progress);
         }
+        Log.v("ddddddddd","---progress--"+progress);
 
 /*        if (mLrcViewSingle.hasLrc()) {
             mLrcViewSingle.updateTime(progress);
@@ -189,7 +191,9 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
 
     @Override
     public void onBufferingUpdate(int percent) {
-        sbProgress.setSecondaryProgress(sbProgress.getMax() * 100 / percent);
+        Log.v("ddddddddd","--percent--"+percent);
+
+//        sbProgress.setSecondaryProgress(sbProgress.getMax() * 100 / percent);
     }
 
     @Override
@@ -198,9 +202,9 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
             case R.id.iv_back:
                 onBackPressed();
                 break;
-            case R.id.iv_mode:
+/*            case R.id.iv_mode:
                 switchPlayMode();
-                break;
+                break;*/
             case R.id.iv_play:
                 play();
                 break;
@@ -229,7 +233,10 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (seekBar == sbProgress) {
+            Log.v("ddddddddd",Math.abs(progress - mLastProgress)+"--seekBar-progress--"+progress);
+
             if (Math.abs(progress - mLastProgress) >= DateUtils.SECOND_IN_MILLIS) {
+
                 tvCurrentTime.setText(formatTime(progress));
                 mLastProgress = progress;
             }
@@ -270,13 +277,14 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
         }
 
         tvTitle.setText(music.getTitle());
-        tvArtist.setText(music.getName());
+        tvArtist.setText(music.getName()+" | "+music.getMp3Name());
         sbProgress.setProgress((int) AudioPlayer.get().getAudioPosition());
         sbProgress.setSecondaryProgress(0);
         sbProgress.setMax((int) music.getDuration());
         mLastProgress = 0;
         tvCurrentTime.setText(R.string.play_time_start);
-        tvTotalTime.setText(formatTime(music.getDuration()));
+        Log.v("ddddddddd","-----"+music.getDuration());
+        tvTotalTime.setText(secToTime(music.getDuration()));
         setCoverAndBg(music);
         //setLrc(music);
         if (AudioPlayer.get().isPlaying() || AudioPlayer.get().isPreparing()) {
@@ -398,7 +406,37 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
     private String formatTime(long time) {
         return SystemUtils.formatTime("mm:ss", time);
     }
-
+    public static String secToTime(int time) {
+        String timeStr = null;
+        int hour = 0;
+        int minute = 0;
+        int second = 0;
+        if (time <= 0)
+            return "00:00";
+        else {
+            minute = time / 60;
+            if (minute < 60) {
+                second = time % 60;
+                timeStr = unitFormat(minute) + ":" + unitFormat(second);
+            } else {
+                hour = minute / 60;
+                if (hour > 99)
+                    return "99:59:59";
+                minute = minute % 60;
+                second = time - hour * 3600 - minute * 60;
+                timeStr = unitFormat(hour) + ":" + unitFormat(minute) + ":" + unitFormat(second);
+            }
+        }
+        return timeStr;
+    }
+    public static String unitFormat(int i) {
+        String retStr = null;
+        if (i >= 0 && i < 10)
+            retStr = "0" + Integer.toString(i);
+        else
+            retStr = "" + i;
+        return retStr;
+    }
 /*    private BroadcastReceiver mVolumeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {

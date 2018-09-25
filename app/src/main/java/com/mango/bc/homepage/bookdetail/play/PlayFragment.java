@@ -178,9 +178,7 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
      */
     @Override
     public void onPublish(int progress) {
-        if (!isDraggingProgress) {
-            sbProgress.setProgress(progress);
-        }
+        sbProgress.setProgress(progress);
         Log.v("ddddddddd", "---progress--" + progress);
 
 /*        if (mLrcViewSingle.hasLrc()) {
@@ -233,11 +231,11 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (seekBar == sbProgress) {
-            Log.v("ddddddddd", Math.abs(progress - mLastProgress) + "--seekBar-progress--" + progress);
+            Log.v("ffffff", Math.abs(progress - mLastProgress) + "--seekBar-progress--" + progress);
 
             if (Math.abs(progress - mLastProgress) >= DateUtils.SECOND_IN_MILLIS) {
 
-                tvCurrentTime.setText(formatTime(progress));
+                tvCurrentTime.setText(secToTime(progress));
                 mLastProgress = progress;
             }
         }
@@ -342,69 +340,6 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
     private void setCoverAndBg(BookMusicDetailBean music) {
         mAlbumCoverView.setCoverBitmap(CoverLoader.get().loadRound(music));
         vpPlayPage.setBackground(new BitmapDrawable(getActivity().getResources(), CoverLoader.get().loadBlur(music)));
-    }
-
-   /* private void setLrc(final BookMusicDetailBean music) {
-        if (music.getType() == BookMusicDetailBean.Type.LOCAL) {
-            String lrcPath = FileUtils.getLrcFilePath(music);
-            if (!TextUtils.isEmpty(lrcPath)) {
-                loadLrc(lrcPath);
-            } else {
-                new SearchLrc(music.getArtist(), music.getTitle()) {
-                    @Override
-                    public void onPrepare() {
-                        // 设置tag防止歌词下载完成后已切换歌曲
-                        vpPlay.setTag(music);
-
-                        loadLrc("");
-                        setLrcLabel("正在搜索歌词");
-                    }
-
-                    @Override
-                    public void onExecuteSuccess(@NonNull String lrcPath) {
-                        if (vpPlay.getTag() != music) {
-                            return;
-                        }
-
-                        // 清除tag
-                        vpPlay.setTag(null);
-
-                        loadLrc(lrcPath);
-                        setLrcLabel("暂无歌词");
-                    }
-
-                    @Override
-                    public void onExecuteFail(Exception e) {
-                        if (vpPlay.getTag() != music) {
-                            return;
-                        }
-
-                        // 清除tag
-                        vpPlay.setTag(null);
-
-                        setLrcLabel("暂无歌词");
-                    }
-                }.execute();
-            }
-        } else {
-            String lrcPath = FileUtils.getLrcDir() + FileUtils.getLrcFileName(music.getArtist(), music.getTitle());
-            loadLrc(lrcPath);
-        }
-    }
-
-    private void loadLrc(String path) {
-        File file = new File(path);
-        //mLrcViewSingle.loadLrc(file);
-        //mLrcViewFull.loadLrc(file);
-    }
-
-    private void setLrcLabel(String label) {
-        //mLrcViewSingle.setLabel(label);
-        //mLrcViewFull.setLabel(label);
-    }*/
-
-    private String formatTime(long time) {
-        return SystemUtils.formatTime("mm:ss", time);
     }
 
     public static String secToTime(int time) {

@@ -59,7 +59,7 @@ public class ControlPanel implements View.OnClickListener, OnPlayerEventListener
             return;
         }
         tvPlayBarTitle.setText(music.getTitle());
-        tvPlayBarArtist.setText(music.getName());
+        tvPlayBarArtist.setText(music.getName()+" | "+music.getMp3Name());
         ivPlayBarPlay.setSelected(AudioPlayer.get().isPlaying() || AudioPlayer.get().isPreparing());
         if (AudioPlayer.get().isPlaying() || AudioPlayer.get().isPreparing())
             flPlayBar.setVisibility(View.VISIBLE);

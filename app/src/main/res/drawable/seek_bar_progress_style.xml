@@ -3,18 +3,10 @@
     <item android:id="@android:id/background">
         <shape>
             <corners android:radius="1dp" />
-            <solid android:color="@color/white" />
+            <solid android:color="@color/common_yello" />
         </shape>
     </item>
     <item android:id="@android:id/progress">
-        <clip>
-            <shape>
-                <corners android:radius="1dp" />
-                <solid android:color="@color/white" />
-            </shape>
-        </clip>
-    </item>
-    <item android:id="@android:id/secondaryProgress">
         <clip>
             <shape>
                 <corners android:radius="1dp" />
@@ -22,4 +14,12 @@
             </shape>
         </clip>
     </item>
+<!--    <item android:id="@android:id/secondaryProgress">
+        <clip>
+            <shape>
+                <corners android:radius="1dp" />
+                <solid android:color="@color/yello" />
+            </shape>
+        </clip>
+    </item>-->
 </layer-list>

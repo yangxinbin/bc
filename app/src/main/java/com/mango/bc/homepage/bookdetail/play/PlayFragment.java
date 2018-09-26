@@ -26,6 +26,7 @@ import com.mango.bc.homepage.bookdetail.play.enums.PlayModeEnum;
 import com.mango.bc.homepage.bookdetail.play.preference.Preferences;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.bookdetail.play.service.OnPlayerEventListener;
+import com.mango.bc.homepage.bookdetail.play.utils.Bind;
 import com.mango.bc.homepage.bookdetail.play.utils.CoverLoader;
 import com.mango.bc.homepage.bookdetail.play.utils.ScreenUtils;
 import com.mango.bc.homepage.bookdetail.play.utils.SystemUtils;
@@ -35,7 +36,6 @@ import com.mango.bc.util.AppUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
@@ -82,9 +82,10 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_play, container, false);
+/*        View view = inflater.inflate(R.layout.fragment_play, container, false);
         ButterKnife.bind(this, view);
-        return view;
+        return view;*/
+        return inflater.inflate(R.layout.fragment_play, container, false);
     }
 
     @Override
@@ -158,6 +159,7 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
 
     @Override
     public void onChange(BookMusicDetailBean music) {
+        Log.v("ddddddddd", "---onChange--");
         onChangeImpl(music);
     }
 
@@ -178,8 +180,10 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
      */
     @Override
     public void onPublish(int progress) {
-        sbProgress.setProgress(progress);
-        Log.v("ddddddddd", "---progress--" + progress);
+        if (!isDraggingProgress) {
+            Log.v("ddddddddd", "---onPublish--"+progress);
+            sbProgress.setProgress(progress);
+        }
 
 /*        if (mLrcViewSingle.hasLrc()) {
             mLrcViewSingle.updateTime(progress);
@@ -189,9 +193,10 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
 
     @Override
     public void onBufferingUpdate(int percent) {
-        Log.v("ddddddddd", "--percent--" + percent);
-        if (percent != 0)
+        if (percent != 0){
+            Log.v("ddddddddd", "---onBufferingUpdate--"+sbProgress.getMax() * 100 / percent);
             sbProgress.setSecondaryProgress(sbProgress.getMax() * 100 / percent);
+        }
     }
 
     @Override
@@ -228,14 +233,15 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
     public void onPageScrollStateChanged(int state) {
     }
 
+    private String formatTime(long time) {
+        return SystemUtils.formatTime("mm:ss", time);
+    }
+
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (seekBar == sbProgress) {
-            Log.v("ffffff", Math.abs(progress - mLastProgress) + "--seekBar-progress--" + progress);
-
             if (Math.abs(progress - mLastProgress) >= DateUtils.SECOND_IN_MILLIS) {
-
-                tvCurrentTime.setText(secToTime(progress));
+                tvCurrentTime.setText(formatTime(progress));
                 mLastProgress = progress;
             }
         }
@@ -278,11 +284,11 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
         tvArtist.setText(music.getName() + " | " + music.getMp3Name());
         sbProgress.setProgress((int) AudioPlayer.get().getAudioPosition());
         sbProgress.setSecondaryProgress(0);
-        sbProgress.setMax((int) music.getDuration());
+        sbProgress.setMax((music.getDuration())*1000);//需要时间戳
         mLastProgress = 0;
         tvCurrentTime.setText(R.string.play_time_start);
-        Log.v("ddddddddd", "-----" + music.getDuration());
-        tvTotalTime.setText(secToTime(music.getDuration()));
+        Log.v("ddddddddd", "--onChangeImpl---" + music.getDuration());
+        tvTotalTime.setText(secToTime(music.getDuration()));//秒转为标准格式
         setCoverAndBg(music);
         //setLrc(music);
         if (AudioPlayer.get().isPlaying() || AudioPlayer.get().isPreparing()) {

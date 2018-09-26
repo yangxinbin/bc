@@ -109,7 +109,7 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
             intentDetail.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             intentDetail.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             getActivity().startActivity(intentDetail);
-            Log.v("jjjjjjjjjjjjj", "----h---");
+            Log.v("jjjjjjjjjjjjj", "----h----");
         }
         EventBus.getDefault().removeStickyEvent(JumpToPlayDetailBean.class);
     }

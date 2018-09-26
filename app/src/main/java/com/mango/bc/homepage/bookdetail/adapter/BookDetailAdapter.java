@@ -125,8 +125,10 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
     }
 
     public void recycleBitmap() {
-        bitmap.recycle();  //一秒之后回收
-        System.gc();//提醒系统即时回收
+        if (bitmap != null) {
+            bitmap.recycle();  //一秒之后回收
+            System.gc();//提醒系统即时回收
+        }
     }
 
     public static Bitmap streamToBitmap(InputStream input) {

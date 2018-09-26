@@ -15,11 +15,9 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 
 import com.mango.bc.R;
 import com.mango.bc.homepage.net.bean.BookBean;
-import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.Urls;
 
@@ -101,10 +99,14 @@ public class TxtDetailAdapter extends RecyclerView.Adapter {
             }
         });
     }
+
     public void recycleBitmap() {
-        bitmap.recycle();  //一秒之后回收
-        System.gc();//提醒系统即时回收
+        if (bitmap != null) {
+            bitmap.recycle();  //一秒之后回收
+            System.gc();//提醒系统即时回收
+        }
     }
+
     public static Bitmap streamToBitmap(InputStream input) {
         Bitmap bitmap = null;
         BitmapFactory.Options options = new BitmapFactory.Options();

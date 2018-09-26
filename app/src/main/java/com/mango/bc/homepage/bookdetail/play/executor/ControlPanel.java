@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mango.bc.R;
+import com.mango.bc.homepage.bean.JumpToPlayDetailBean;
 import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
 import com.mango.bc.homepage.bookdetail.bean.PlayBarBean;
 import com.mango.bc.homepage.bookdetail.play.PlayActivity;
@@ -67,7 +68,7 @@ public class ControlPanel implements View.OnClickListener, OnPlayerEventListener
                 intentDetail.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intentDetail);*/
                 Log.v("ooooooooooooooo", "----h---");
-
+                EventBus.getDefault().postSticky(new JumpToPlayDetailBean(true));
                 break;
         }
     }
@@ -78,7 +79,7 @@ public class ControlPanel implements View.OnClickListener, OnPlayerEventListener
             return;
         }
         tvPlayBarTitle.setText(music.getTitle());
-        tvPlayBarArtist.setText(music.getName()+" | "+music.getMp3Name());
+        tvPlayBarArtist.setText(music.getName() + " | " + music.getMp3Name());
         ivPlayBarPlay.setSelected(AudioPlayer.get().isPlaying() || AudioPlayer.get().isPreparing());
         if (AudioPlayer.get().isPlaying() || AudioPlayer.get().isPreparing())
             flPlayBar.setVisibility(View.VISIBLE);

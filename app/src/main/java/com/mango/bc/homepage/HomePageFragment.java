@@ -18,6 +18,7 @@ import com.mango.bc.bookcase.net.presenter.MyBookPresenter;
 import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
 import com.mango.bc.bookcase.net.view.MyAllBookView;
 import com.mango.bc.homepage.adapter.HomePageAdapter;
+import com.mango.bc.homepage.bean.JumpToPlayDetailBean;
 import com.mango.bc.homepage.bookdetail.bean.PlayBarBean;
 import com.mango.bc.homepage.bookdetail.play.BaseServiceFragment;
 import com.mango.bc.homepage.bookdetail.play.PlayActivity;
@@ -96,6 +97,23 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
         EventBus.getDefault().removeStickyEvent(PlayBarBean.class);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void JumpToPlayDetailBeanEventBus(JumpToPlayDetailBean jumpToPlayDetailBean) {
+        if (jumpToPlayDetailBean == null) {
+            return;
+        }
+        Log.v("jjjjjjjjjjjjj", "---jjjjjjjjjjj---");
+        if (jumpToPlayDetailBean.isIdJump()) {
+            Intent intentDetail = new Intent(getActivity(), PlayActivity.class);
+            intentDetail.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intentDetail.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intentDetail.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getActivity().startActivity(intentDetail);
+            Log.v("jjjjjjjjjjjjj", "----h---");
+        }
+        EventBus.getDefault().removeStickyEvent(JumpToPlayDetailBean.class);
+    }
+
     /*private void parseIntent() {
         Intent intent = getActivity().getIntent();
         if (intent.hasExtra(Extras.EXTRA_NOTIFICATION)) {
@@ -131,16 +149,6 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
     private void initView() {
         if (AudioPlayer.get().isPlaying() || AudioPlayer.get().isPausing())
             flPlayBar.setVisibility(View.VISIBLE);//播放控件
-        flPlayBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentDetail = new Intent(getActivity(), PlayActivity.class);
-                intentDetail.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intentDetail.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intentDetail.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                getActivity().startActivity(intentDetail);
-            }
-        });
         homePageAdapter = new HomePageAdapter(getActivity());
         recycle.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         recycle.setAdapter(homePageAdapter);

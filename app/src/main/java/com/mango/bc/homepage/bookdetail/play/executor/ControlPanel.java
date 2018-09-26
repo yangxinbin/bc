@@ -8,11 +8,14 @@ import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
+import com.mango.bc.homepage.bookdetail.bean.PlayBarBean;
 import com.mango.bc.homepage.bookdetail.play.global.Notifier;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.bookdetail.play.service.OnPlayerEventListener;
 import com.mango.bc.homepage.bookdetail.play.utils.Bind;
 import com.mango.bc.homepage.bookdetail.play.utils.ViewBinder;
+
+import org.greenrobot.eventbus.EventBus;
 
 
 /**
@@ -49,6 +52,7 @@ public class ControlPanel implements View.OnClickListener, OnPlayerEventListener
                 flPlayBar.setVisibility(View.GONE);
                 AudioPlayer.get().stopPlayer();
                 Notifier.get().cancelAll();
+                EventBus.getDefault().postSticky(new PlayBarBean(false));
                 break;
         }
     }

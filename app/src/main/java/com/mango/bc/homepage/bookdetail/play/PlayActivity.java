@@ -6,13 +6,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -22,20 +20,18 @@ import com.mango.bc.R;
 import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
 import com.mango.bc.homepage.bookdetail.play.adapter.PlayPagerAdapter;
 import com.mango.bc.homepage.bookdetail.play.constants.Actions;
-import com.mango.bc.homepage.bookdetail.play.enums.PlayModeEnum;
 import com.mango.bc.homepage.bookdetail.play.preference.Preferences;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.bookdetail.play.service.OnPlayerEventListener;
-import com.mango.bc.homepage.bookdetail.play.utils.Bind;
 import com.mango.bc.homepage.bookdetail.play.utils.CoverLoader;
 import com.mango.bc.homepage.bookdetail.play.utils.ScreenUtils;
 import com.mango.bc.homepage.bookdetail.play.utils.SystemUtils;
 import com.mango.bc.homepage.bookdetail.play.widget.AlbumCoverView;
-import com.mango.bc.util.AppUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
@@ -43,7 +39,7 @@ import butterknife.ButterKnife;
  * 正在播放界面
  * Created by wcy on 2015/11/27.
  */
-public class PlayFragment extends BaseFragment implements View.OnClickListener,
+public class PlayActivity extends BasePlayActivity implements View.OnClickListener,
         ViewPager.OnPageChangeListener, SeekBar.OnSeekBarChangeListener, OnPlayerEventListener {
     @Bind(R.id.iv_back)
     ImageView ivBack;
@@ -79,19 +75,11 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
     private int mLastProgress;
     private boolean isDraggingProgress;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-/*        View view = inflater.inflate(R.layout.fragment_play, container, false);
-        ButterKnife.bind(this, view);
-        return view;*/
-        return inflater.inflate(R.layout.fragment_play, container, false);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_play);
+        ButterKnife.bind(this);
         //initSystemBar();
         initViewPager();
         //ilIndicator.create(mViewPagerContent.size());
@@ -130,7 +118,7 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
     }
 
     private void initViewPager() {
-        View coverView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_play_page_cover, null);
+        View coverView = LayoutInflater.from(this).inflate(R.layout.fragment_play_page_cover, null);
         //View lrcView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_play_page_lrc, null);
         mAlbumCoverView = (AlbumCoverView) coverView.findViewById(R.id.album_cover_view);
         //mLrcViewSingle = (LrcView) coverView.findViewById(R.id.lrc_view_single);
@@ -147,7 +135,7 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
     }
 
     private void initVolume() {
-        mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
+        mAudioManager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
         //sbVolume.setMax(mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
         //sbVolume.setProgress(mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
     }
@@ -193,9 +181,9 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
 
     @Override
     public void onBufferingUpdate(int percent) {
-        if (percent != 0){
-        //Log.v("ddddddddd", "---onBufferingUpdate--"+sbProgress.getMax() * 100 / percent);
-        sbProgress.setSecondaryProgress(sbProgress.getMax() * 100 / percent);
+        if (percent != 0) {
+            //Log.v("ddddddddd", "---onBufferingUpdate--"+sbProgress.getMax() * 100 / percent);
+            sbProgress.setSecondaryProgress(sbProgress.getMax() * 100 / percent);
         }
     }
 
@@ -312,7 +300,7 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
         AudioPlayer.get().prev();
     }
 
-    private void switchPlayMode() {
+/*    private void switchPlayMode() {
         PlayModeEnum mode = PlayModeEnum.valueOf(Preferences.getPlayMode());
         switch (mode) {
             case LOOP:
@@ -330,11 +318,11 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
         }
         Preferences.savePlayMode(mode.value());
         initPlayMode();
-    }
+    }*/
 
-    private void onBackPressed() {
-        getActivity().onBackPressed();
+    public void onBackPressed() {
         ivBack.setEnabled(false);
+        finish();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -345,7 +333,7 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
 
     private void setCoverAndBg(BookMusicDetailBean music) {
         mAlbumCoverView.setCoverBitmap(CoverLoader.get().loadThumb(music));
-        vpPlayPage.setBackground(new BitmapDrawable(getActivity().getResources(), CoverLoader.get().loadBlur(music)));
+        vpPlayPage.setBackground(new BitmapDrawable(getResources(), CoverLoader.get().loadBlur(music)));
     }
 
     /*public static String secToTime(int time) {
@@ -391,12 +379,8 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
     public void onDestroy() {
         //getContext().unregisterReceiver(mVolumeReceiver);
         AudioPlayer.get().removeOnPlayEventListener(this);
+        ButterKnife.unbind(this);
         super.onDestroy();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
 }

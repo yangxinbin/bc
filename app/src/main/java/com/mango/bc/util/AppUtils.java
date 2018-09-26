@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.os.Build;
 import android.util.Base64;
 import android.view.Display;
 import android.view.Gravity;
@@ -28,6 +29,7 @@ import com.mango.bc.R;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
@@ -113,7 +115,7 @@ public class AppUtils {
     }
 
     public static void showToast(Context context, String string) {
-        Toast.makeText(context,string,Toast.LENGTH_LONG).show();
+        Toast.makeText(context, string, Toast.LENGTH_LONG).show();
     }
 
     /**
@@ -166,8 +168,10 @@ public class AppUtils {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
         return dateFormat.format(timeMillis);
     }
+
     /**
      * 图片转换成base64
+     *
      * @param file
      * @return
      */
@@ -185,7 +189,9 @@ public class AppUtils {
         //Log.v("rrrrrrrrrr",""+Base64.encodeToString(bytes, Base64.DEFAULT));
         return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
+
     public static List<Activity> activityList = new LinkedList<Activity>();
+
     /**
      * 添加到Activity容器中
      */
@@ -204,6 +210,7 @@ public class AppUtils {
         }
         activityList.clear();
     }
+
     /**
      * 加载中的动画
      *
@@ -224,8 +231,27 @@ public class AppUtils {
         dialog_load.setCanceledOnTouchOutside(true);
         dialog_load.show();
     }
+
     public static void dissmissLoadDailog(final Context context) {
         dialog_load.dismiss();
     }
 
+    /**
+     * * 收起通知栏     * @param context
+     */
+    public static void collapseStatusBar(Context context) {
+        try {
+            @SuppressLint("WrongConstant") Object statusBarManager = context.getSystemService("statusbar");
+            Method collapse;
+            if (Build.VERSION.SDK_INT <= 16) {
+                collapse = statusBarManager.getClass().getMethod("collapse");
+            } else {
+                collapse = statusBarManager.getClass().getMethod("collapsePanels");
+            }
+            collapse.invoke(statusBarManager);
+        } catch (Exception localException) {
+            localException.printStackTrace();
+        }
+
+    }
 }

@@ -37,6 +37,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- SD卡读取权限，用户写入离线定位数据 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
 
     <application
         android:name=".BcApplication"
@@ -76,6 +77,7 @@
         <activity android:name=".homepage.bookdetail.ExpertBookDetailActivity" />
         <activity android:name=".homepage.bookdetail.OtherBookDetailActivity" />
         <activity android:name=".homepage.bookdetail.TxtActivity" />
+        <activity android:name=".homepage.bookdetail.play.PlayActivity" />
         <!-- ShareSDK的activity -->
         <activity
             android:name="com.mob.tools.MobUIShell"

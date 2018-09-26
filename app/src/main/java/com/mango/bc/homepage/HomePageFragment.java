@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +20,7 @@ import com.mango.bc.bookcase.net.view.MyAllBookView;
 import com.mango.bc.homepage.adapter.HomePageAdapter;
 import com.mango.bc.homepage.bookdetail.bean.PlayBarBean;
 import com.mango.bc.homepage.bookdetail.play.BaseServiceFragment;
-import com.mango.bc.homepage.bookdetail.play.PlayFragment;
+import com.mango.bc.homepage.bookdetail.play.PlayActivity;
 import com.mango.bc.homepage.bookdetail.play.constants.Extras;
 import com.mango.bc.homepage.bookdetail.play.executor.ControlPanel;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
@@ -62,7 +61,7 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
     private MyBookPresenter myBookPresenter;
     private ControlPanel controlPanel;
     private boolean isPlayFragmentShow;
-    private PlayFragment mPlayFragment;
+    private PlayActivity mPlayFragment;
 
     @Nullable
     @Override
@@ -79,7 +78,7 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
     protected void onServiceBound() {
         controlPanel = new ControlPanel(flPlayBar);
         AudioPlayer.get().addOnPlayEventListener(controlPanel);
-        parseIntent();
+        //parseIntent();
     }
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void PlayBarBeanEventBus(PlayBarBean playBarBean) {
@@ -93,7 +92,8 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
         }
         EventBus.getDefault().removeStickyEvent(PlayBarBean.class);
     }
-    private void parseIntent() {
+
+    /*private void parseIntent() {
         Intent intent = getActivity().getIntent();
         if (intent.hasExtra(Extras.EXTRA_NOTIFICATION)) {
             showPlayingFragment();
@@ -109,7 +109,7 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.setCustomAnimations(R.anim.fragment_slide_up, 0);
         if (mPlayFragment == null) {
-            mPlayFragment = new PlayFragment();
+            mPlayFragment = new PlayActivity();
             ft.replace(android.R.id.content, mPlayFragment);
         } else {
             ft.show(mPlayFragment);
@@ -124,7 +124,7 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
         ft.hide(mPlayFragment);
         ft.commitAllowingStateLoss();
         isPlayFragmentShow = false;
-    }
+    }*/
     private void initView() {
         if (AudioPlayer.get().isPlaying() || AudioPlayer.get().isPausing())
             flPlayBar.setVisibility(View.VISIBLE);//播放控件

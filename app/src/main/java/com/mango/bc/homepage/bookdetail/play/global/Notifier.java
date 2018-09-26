@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.mango.bc.R;
 import com.mango.bc.homepage.bookdetail.ExpertBookDetailActivity;
 import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
+import com.mango.bc.homepage.bookdetail.play.PlayActivity;
 import com.mango.bc.homepage.bookdetail.play.constants.Extras;
 import com.mango.bc.homepage.bookdetail.play.receiver.StatusBarReceiver;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
@@ -75,15 +76,16 @@ public class Notifier {
     }
 
     private Notification buildNotification(Context context, BookMusicDetailBean music, boolean isPlaying) {
-        Intent intent = new Intent(context, ExpertBookDetailActivity.class);
+ /*        Intent intent = new Intent(context, PlayActivity.class);
+        context.startActivity(intent);
         intent.putExtra(Extras.EXTRA_NOTIFICATION, true);
         intent.setAction(Intent.ACTION_VIEW);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);*/
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"default")
-                .setContentIntent(pendingIntent)
+                //.setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setCustomContentView(getRemoteViews(context, music, isPlaying));
         return builder.build();
@@ -131,6 +133,11 @@ public class Notifier {
         PendingIntent stopPendingIntent = PendingIntent.getBroadcast(context, 3, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setImageViewResource(R.id.iv_stop, getStopIconRes(isLightNotificationTheme));
         remoteViews.setOnClickPendingIntent(R.id.iv_stop, stopPendingIntent);
+
+        Intent detailIntent = new Intent(StatusBarReceiver.ACTION_STATUS_BAR);
+        detailIntent.putExtra(StatusBarReceiver.EXTRA, StatusBarReceiver.EXTRA_DETAIL);
+        PendingIntent detailPendingIntent = PendingIntent.getBroadcast(context, 4, detailIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews.setOnClickPendingIntent(R.id.notification_all, detailPendingIntent);
 
         return remoteViews;
     }

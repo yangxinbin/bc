@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -30,11 +28,8 @@ import com.mango.bc.homepage.bookdetail.fragment.CommentFragment;
 import com.mango.bc.homepage.bookdetail.fragment.CourseFragment;
 import com.mango.bc.homepage.bookdetail.fragment.DetailFragment;
 import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
-import com.mango.bc.homepage.bookdetail.play.PlayFragment;
-import com.mango.bc.homepage.bookdetail.play.constants.Extras;
 import com.mango.bc.homepage.bookdetail.play.executor.ControlPanel;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
-import com.mango.bc.homepage.bookdetail.play.service.PlayService;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.ACache;
 import com.mango.bc.util.AppUtils;
@@ -121,7 +116,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
     private BookBean mBookBean;
     private ControlPanel controlPanel;
     private boolean isPlayFragmentShow;
-    private PlayFragment mPlayFragment;
+    //private PlayActivity mPlayFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,9 +134,9 @@ public class ExpertBookDetailActivity extends BaseActivity {
     protected void onServiceBound() {
         controlPanel = new ControlPanel(flPlayBar);
         AudioPlayer.get().addOnPlayEventListener(controlPanel);
-        parseIntent();
+        //parseIntent();
     }
-
+/*
     private void parseIntent() {
         Intent intent = getIntent();
         if (intent.hasExtra(Extras.EXTRA_NOTIFICATION)) {
@@ -158,7 +153,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setCustomAnimations(R.anim.fragment_slide_up, 0);
         if (mPlayFragment == null) {
-            mPlayFragment = new PlayFragment();
+            mPlayFragment = new PlayActivity();
             ft.replace(android.R.id.content, mPlayFragment);
         } else {
             ft.show(mPlayFragment);
@@ -173,7 +168,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
         ft.hide(mPlayFragment);
         ft.commitAllowingStateLoss();
         isPlayFragmentShow = false;
-    }
+    }*/
 
     private void initState(String bookId, String type) {
         if (chechState(bookId)) {
@@ -603,10 +598,10 @@ public class ExpertBookDetailActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if (mPlayFragment != null && isPlayFragmentShow) {
+/*        if (mPlayFragment != null && isPlayFragmentShow) {
             hidePlayingFragment();
             return;
-        }
+        }*/
         super.onBackPressed();
     }
 }

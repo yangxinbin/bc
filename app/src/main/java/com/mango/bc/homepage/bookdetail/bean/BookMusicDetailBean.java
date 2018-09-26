@@ -5,6 +5,7 @@ package com.mango.bc.homepage.bookdetail.bean;
  */
 
 public class BookMusicDetailBean {
+    private String bookId;
     private String name;
     private String title;
     private String coverPath;
@@ -12,6 +13,14 @@ public class BookMusicDetailBean {
     private String mp3Path;
     private int duration;
     private boolean isFree;
+
+    public String getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
+    }
 
     public boolean getIsFree() {
         return isFree;

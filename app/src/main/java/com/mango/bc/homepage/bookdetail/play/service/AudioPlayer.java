@@ -67,6 +67,7 @@ public class AudioPlayer {
         Log.v("bbbbbbb", "-----" + spUtils.getString("bookDetail", ""));
         for (int i = 0; i < bookBean.getChapters().size(); i++) {
             BookMusicDetailBean bookMusicDetailBean = new BookMusicDetailBean();
+            bookMusicDetailBean.setBookId(bookBean.getId());
             bookMusicDetailBean.setName(bookBean.getAuthor().getName());
             bookMusicDetailBean.setTitle(bookBean.getTitle());
             bookMusicDetailBean.setIsFree(bookBean.getChapters().get(i).isFree());

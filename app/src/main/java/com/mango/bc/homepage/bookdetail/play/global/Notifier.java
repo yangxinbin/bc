@@ -183,8 +183,8 @@ public class Notifier {
 
     private int getStopIconRes(boolean isLightNotificationTheme) {
         return isLightNotificationTheme
-                ? R.drawable.play_x
-                : R.drawable.play_x;
+                ? R.drawable.close_x
+                : R.drawable.close_x;
     }
 
     /**

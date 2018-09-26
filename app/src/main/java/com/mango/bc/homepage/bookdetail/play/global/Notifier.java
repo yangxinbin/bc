@@ -82,7 +82,7 @@ public class Notifier {
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"default")
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setCustomContentView(getRemoteViews(context, music, isPlaying));
@@ -90,8 +90,8 @@ public class Notifier {
     }
 
     private RemoteViews getRemoteViews(Context context, BookMusicDetailBean music, boolean isPlaying) {
-        String title = music.getName() + "：" + music.getTitle();
-        String subtitle = music.getMp3Name();
+        String title =  music.getTitle();
+        String subtitle = music.getName() + " | " +music.getMp3Name();
         Bitmap cover = CoverLoader.get().loadRound(music);
         //Bitmap cover = CoverLoader.get().loadCoverFromFile(music.getCoverPath());
         Log.v("pppppp","=cover="+cover);
@@ -141,7 +141,7 @@ public class Notifier {
     }
 
     private int getNotificationTextColor(Context context) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"default");
         Notification notification = builder.build();
         RemoteViews remoteViews = notification.contentView;
         if (remoteViews == null) {

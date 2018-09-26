@@ -95,11 +95,11 @@ public class AlbumCoverView extends View implements ValueAnimator.AnimatorUpdate
             return;
         }
 
-        int unit = Math.min(getWidth(), getHeight()) / 8;
-        CoverLoader.get().setRoundLength(unit * 4);
+        //int unit = Math.min(getWidth(), getHeight()) / 8;
+        //CoverLoader.get().setRoundLength(unit * 4);
 
         // mDiscBitmap = ImageUtils.resizeImage(mDiscBitmap, unit * 6, unit * 6);
-        mCoverBitmap = ImageUtils.resizeImage(mCoverBitmap, unit * 4, unit * 4);
+        //mCoverBitmap = ImageUtils.resizeImage(mCoverBitmap, unit * 4, unit * 4);
         //mNeedleBitmap = ImageUtils.resizeImage(mNeedleBitmap, unit * 2, unit * 3);
 
         //int discOffsetY = mNeedleBitmap.getHeight() / 2;

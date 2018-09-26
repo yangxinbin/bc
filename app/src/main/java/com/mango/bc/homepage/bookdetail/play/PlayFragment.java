@@ -344,7 +344,7 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
     }
 
     private void setCoverAndBg(BookMusicDetailBean music) {
-        mAlbumCoverView.setCoverBitmap(CoverLoader.get().loadRound(music));
+        mAlbumCoverView.setCoverBitmap(CoverLoader.get().loadThumb(music));
         vpPlayPage.setBackground(new BitmapDrawable(getActivity().getResources(), CoverLoader.get().loadBlur(music)));
     }
 

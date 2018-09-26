@@ -22,12 +22,14 @@ import com.mango.bc.adapter.ViewPageAdapter;
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.activity.BuyBookActivity;
+import com.mango.bc.homepage.activity.expertbook.ExpertBookActivity;
 import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
 import com.mango.bc.homepage.bookdetail.bean.PlayBarBean;
 import com.mango.bc.homepage.bookdetail.fragment.CommentFragment;
 import com.mango.bc.homepage.bookdetail.fragment.CourseFragment;
 import com.mango.bc.homepage.bookdetail.fragment.DetailFragment;
 import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
+import com.mango.bc.homepage.bookdetail.play.PlayActivity;
 import com.mango.bc.homepage.bookdetail.play.executor.ControlPanel;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
@@ -416,18 +418,20 @@ public class ExpertBookDetailActivity extends BaseActivity {
             }
         }
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void PlayBarBeanEventBus(PlayBarBean playBarBean) {
         if (playBarBean == null) {
             return;
         }
-        Log.v("iiiiiiiiiiiiii","---iiiiiiiiiiii---");
+        Log.v("iiiiiiiiiiiiii", "---iiiiiiiiiiii---");
         if (!playBarBean.isShowBar()) {
             flPlayBar.setVisibility(View.GONE);//播放控件
-            Log.v("iiiiiiiiiiiiii","----h---");
+            Log.v("iiiiiiiiiiiiii", "----h---");
         }
         EventBus.getDefault().removeStickyEvent(PlayBarBean.class);
     }
+
     private void initDatas() {
         mDatas = new ArrayList<String>(Arrays.asList("详情", "课程", "评论"));
     }
@@ -435,6 +439,17 @@ public class ExpertBookDetailActivity extends BaseActivity {
     private void init() {
         if (AudioPlayer.get().isPlaying() || AudioPlayer.get().isPausing())
             flPlayBar.setVisibility(View.VISIBLE);//播放控件
+        flPlayBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.v("ooooooooooooooo", "----h---");
+                Intent intentDetail = new Intent(ExpertBookDetailActivity.this, PlayActivity.class);
+                intentDetail.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intentDetail.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intentDetail.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intentDetail);
+            }
+        });
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         ViewPageAdapter vp = new ViewPageAdapter(getSupportFragmentManager(), mfragments, mDatas);
         tabLayout.setupWithViewPager(viewPager);

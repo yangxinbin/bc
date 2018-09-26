@@ -72,23 +72,26 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
         EventBus.getDefault().register(this);
         initView();
         refreshAndLoadMore();
+
         return view;
     }
+
     @Override
     protected void onServiceBound() {
         controlPanel = new ControlPanel(flPlayBar);
         AudioPlayer.get().addOnPlayEventListener(controlPanel);
         //parseIntent();
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void PlayBarBeanEventBus(PlayBarBean playBarBean) {
         if (playBarBean == null) {
             return;
         }
-        Log.v("iiiiiiiiiiiiii","---iiiiiiiiiiii---");
+        Log.v("iiiiiiiiiiiiii", "---iiiiiiiiiiii---");
         if (!playBarBean.isShowBar()) {
             flPlayBar.setVisibility(View.GONE);//播放控件
-            Log.v("iiiiiiiiiiiiii","----h---");
+            Log.v("iiiiiiiiiiiiii", "----h---");
         }
         EventBus.getDefault().removeStickyEvent(PlayBarBean.class);
     }
@@ -128,6 +131,16 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
     private void initView() {
         if (AudioPlayer.get().isPlaying() || AudioPlayer.get().isPausing())
             flPlayBar.setVisibility(View.VISIBLE);//播放控件
+        flPlayBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentDetail = new Intent(getActivity(), PlayActivity.class);
+                intentDetail.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intentDetail.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intentDetail.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getActivity().startActivity(intentDetail);
+            }
+        });
         homePageAdapter = new HomePageAdapter(getActivity());
         recycle.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         recycle.setAdapter(homePageAdapter);

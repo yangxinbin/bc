@@ -439,17 +439,6 @@ public class ExpertBookDetailActivity extends BaseActivity {
     private void init() {
         if (AudioPlayer.get().isPlaying() || AudioPlayer.get().isPausing())
             flPlayBar.setVisibility(View.VISIBLE);//播放控件
-        flPlayBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.v("ooooooooooooooo", "----h---");
-                Intent intentDetail = new Intent(ExpertBookDetailActivity.this, PlayActivity.class);
-                intentDetail.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intentDetail.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intentDetail.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intentDetail);
-            }
-        });
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         ViewPageAdapter vp = new ViewPageAdapter(getSupportFragmentManager(), mfragments, mDatas);
         tabLayout.setupWithViewPager(viewPager);
@@ -535,11 +524,6 @@ public class ExpertBookDetailActivity extends BaseActivity {
         });
     }
 
-    @OnClick(R.id.imageView_back)
-    public void onViewClicked() {
-        finish();
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -547,10 +531,13 @@ public class ExpertBookDetailActivity extends BaseActivity {
         EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.l_like_play, R.id.l_share_play_expert, R.id.book_stage_expert_play, R.id.l_like_get, R.id.l_try, R.id.l_buy, R.id.l_collage})
+    @OnClick({R.id.imageView_back,R.id.l_like_play, R.id.l_share_play_expert, R.id.book_stage_expert_play, R.id.l_like_get, R.id.l_try, R.id.l_buy, R.id.l_collage})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
+            case R.id.imageView_back:
+                finish();
+                break;
             case R.id.l_like_get:
                 like(bookId);
                 break;

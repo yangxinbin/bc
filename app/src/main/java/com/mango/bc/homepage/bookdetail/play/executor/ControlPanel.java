@@ -1,6 +1,7 @@
 package com.mango.bc.homepage.bookdetail.play.executor;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -65,6 +66,8 @@ public class ControlPanel implements View.OnClickListener, OnPlayerEventListener
                 intentDetail.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 intentDetail.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intentDetail);*/
+                Log.v("ooooooooooooooo", "----h---");
+
                 break;
         }
     }

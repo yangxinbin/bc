@@ -181,7 +181,7 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
     @Override
     public void onPublish(int progress) {
         if (!isDraggingProgress) {
-            Log.v("ddddddddd", "---onPublish--"+progress);
+            //Log.v("ddddddddd", "---onPublish--" + progress);
             sbProgress.setProgress(progress);
         }
 
@@ -194,8 +194,8 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
     @Override
     public void onBufferingUpdate(int percent) {
         if (percent != 0){
-            Log.v("ddddddddd", "---onBufferingUpdate--"+sbProgress.getMax() * 100 / percent);
-            sbProgress.setSecondaryProgress(sbProgress.getMax() * 100 / percent);
+        //Log.v("ddddddddd", "---onBufferingUpdate--"+sbProgress.getMax() * 100 / percent);
+        sbProgress.setSecondaryProgress(sbProgress.getMax() * 100 / percent);
         }
     }
 
@@ -284,11 +284,11 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
         tvArtist.setText(music.getName() + " | " + music.getMp3Name());
         sbProgress.setProgress((int) AudioPlayer.get().getAudioPosition());
         sbProgress.setSecondaryProgress(0);
-        sbProgress.setMax((music.getDuration())*1000);//需要时间戳
+        sbProgress.setMax((music.getDuration()) * 1000);//需要时间戳
         mLastProgress = 0;
         tvCurrentTime.setText(R.string.play_time_start);
-        Log.v("ddddddddd", "--onChangeImpl---" + music.getDuration());
-        tvTotalTime.setText(secToTime(music.getDuration()));//秒转为标准格式
+        //Log.v("ddddddddd", "--onChangeImpl---" + music.getDuration());
+        tvTotalTime.setText(formatTime(music.getDuration() * 1000));//秒转为标准格式
         setCoverAndBg(music);
         //setLrc(music);
         if (AudioPlayer.get().isPlaying() || AudioPlayer.get().isPreparing()) {
@@ -348,7 +348,7 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
         vpPlayPage.setBackground(new BitmapDrawable(getActivity().getResources(), CoverLoader.get().loadBlur(music)));
     }
 
-    public static String secToTime(int time) {
+    /*public static String secToTime(int time) {
         String timeStr = null;
         int hour = 0;
         int minute = 0;
@@ -379,7 +379,7 @@ public class PlayFragment extends BaseFragment implements View.OnClickListener,
         else
             retStr = "" + i;
         return retStr;
-    }
+    }*/
 /*    private BroadcastReceiver mVolumeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {

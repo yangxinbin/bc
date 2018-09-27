@@ -54,15 +54,6 @@ public class CourseFragment extends BaseServiceFragment implements OnPlayerEvent
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void PlayBarBeanEventBus(PlayBarBean playBarBean) {
-        if (playBarBean == null) {
-            return;
-        }
-        Log.v("iiiiiiiiiiiiii", "---iiiicccciiii---");
-        bookCourseAdapter.notifyDataSetChanged();
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void BookBeanEventBus(BookBean bookBean) {
         if (bookBean == null) {
             return;

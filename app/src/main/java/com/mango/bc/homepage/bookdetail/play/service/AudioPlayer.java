@@ -63,16 +63,24 @@ public class AudioPlayer {
     }
 
     public void init(Context context) {
+        stopPlayer();
+        if (mediaPlayer != null) {
+            Log.v("mmmmmmmmmmmm", "-----mmmm---");
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
         this.context = context.getApplicationContext();
         musicList.clear();
-        stopPlayer();
         BookDetailBean bookBean = JsonBookDetailUtils.readBookDetailBean(spUtils.getString("bookDetail", ""));
         Log.v("bbbbbbb", "-----" + spUtils.getString("bookDetail", ""));
         if (bookBean.getChapters() != null)
             for (int i = 0; i < bookBean.getChapters().size(); i++) {
+                Log.v("bbbbbbb", bookBean.getChapters().get(i).isFree() + "-----" + spUtils.getBoolean("isFree", false));
                 if (bookBean.getChapters().get(i).isFree() || spUtils.getBoolean("isFree", false)) {
                     BookMusicDetailBean bookMusicDetailBean = new BookMusicDetailBean();
                     bookMusicDetailBean.setBookId(bookBean.getId());
+                    Log.v("bbbbbbb", "---isSameBook--" + bookBean.getId());
                     spUtils.put("isSameBook", bookBean.getId());
                     bookMusicDetailBean.setName(bookBean.getAuthor().getName());
                     bookMusicDetailBean.setTitle(bookBean.getTitle());

@@ -270,6 +270,7 @@ public class AudioPlayer {
     }
 
     public void stopPlayer() {
+        EventBus.getDefault().postSticky(new PlayPauseBean(true));
         if (isIdle()) {
             return;
         }

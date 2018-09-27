@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mango.bc.R;
+import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.RoundImageView;
 import com.mango.bc.util.SPUtils;
@@ -104,8 +105,13 @@ public class BookExpertAdapter extends RecyclerView.Adapter {
                     Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getCover().getFileName()).into(((BookExpertAdapter.BookViewHolder) holder).img_book);
                 //((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice() + "积分");
                 if (chechState(datas.get(position).getId())) {//拿书id遍历判断
-                    Log.v("rrrrrrr","==y==");
-                    ((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText("播放");//是领取
+                    Log.v("rrrrrrr", "==y==");
+                    if (AudioPlayer.get().isPlaying() && datas.get(position).getId().equals(spUtils.getString("isSameBook", ""))) {
+                        ((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText("播放中");
+                    } else {
+                        ((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText("播放");
+                    }
+                    //((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText("播放");//是领取
                     ((BookExpertAdapter.BookViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -119,7 +125,7 @@ public class BookExpertAdapter extends RecyclerView.Adapter {
                         }
                     });
                 } else {
-                    Log.v("rrrrrrr","==n==");
+                    Log.v("rrrrrrr", "==n==");
                     ((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice() + "积分");//否领取
                     ((BookExpertAdapter.BookViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -144,7 +150,7 @@ public class BookExpertAdapter extends RecyclerView.Adapter {
         Type listType = new TypeToken<List<String>>() {
         }.getType();
         List<String> list = gson.fromJson(data, listType);
-       // Log.v("rrrrrrr","==list="+list.size());
+        // Log.v("rrrrrrr","==list="+list.size());
 
         if (list == null)
             return false;

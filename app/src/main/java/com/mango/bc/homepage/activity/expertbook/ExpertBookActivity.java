@@ -17,14 +17,22 @@ import com.mango.bc.homepage.activity.BuyBookActivity;
 import com.mango.bc.homepage.adapter.BookExpertAdapter;
 import com.mango.bc.homepage.bookdetail.ExpertBookDetailActivity;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
+import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
+import com.mango.bc.homepage.bookdetail.bean.PlayPauseBean;
+import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
+import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookExpertView;
+import com.mango.bc.util.ACache;
 import com.mango.bc.util.AppUtils;
+import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.NetUtil;
+import com.mango.bc.util.SPUtils;
+import com.mango.bc.util.Urls;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -35,11 +43,15 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.IOException;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class ExpertBookActivity extends BaseActivity implements BookExpertView {
 
@@ -57,6 +69,8 @@ public class ExpertBookActivity extends BaseActivity implements BookExpertView {
     private final int TYPE = 2;//大咖课
     private int page = 0;
     public TextView tv_stage;
+    private ACache mCache;
+    private SPUtils spUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +79,8 @@ public class ExpertBookActivity extends BaseActivity implements BookExpertView {
         bookPresenter = new BookPresenterImpl(this);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
+        spUtils = SPUtils.getInstance("bc", this);
+        mCache = ACache.get(this);
         initView();
         if (NetUtil.isNetConnect(this)) {
             bookPresenter.visitBooks(this, TYPE, "", page, false);
@@ -86,7 +102,18 @@ public class ExpertBookActivity extends BaseActivity implements BookExpertView {
             //bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//缓存。
         }
     }
-
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void PlayPauseBeanEventBus(PlayPauseBean playPauseBean) {
+        if (playPauseBean == null) {
+            return;
+        }
+        if (playPauseBean.isPause()) {
+            tv_stage.setText("播放");
+        } else {
+            tv_stage.setText("播放中");
+        }
+        //EventBus.getDefault().removeStickyEvent(PlayPauseBean.class);
+    }
     private void initView() {
         bookExpertAdapter = new BookExpertAdapter(this);
         recycle.setLayoutManager(new LinearLayoutManager(this.getApplicationContext()));
@@ -114,7 +141,19 @@ public class ExpertBookActivity extends BaseActivity implements BookExpertView {
 
         @Override
         public void onPlayClick(View view, int position) {
-
+            tv_stage = view.findViewById(R.id.tv_stage);
+            if (AudioPlayer.get().isPlaying() /*&& mData.get(position).getId().equals(spUtils.getString("isSameBook", ""))*/) {
+                return;
+            } else if (AudioPlayer.get().isPausing() /*&& mData.get(position).getId().equals(spUtils.getString("isSameBook", ""))*/) {
+                AudioPlayer.get().startPlayer();
+                tv_stage.setText("播放中");
+                return;
+            }
+            if (NetUtil.isNetConnect(getBaseContext())) {
+                loadBookDetail(false, bookExpertAdapter.getItem(position).getId());
+            } else {
+                loadBookDetail(true, bookExpertAdapter.getItem(position).getId());
+            }
         }
 
         @Override
@@ -130,6 +169,71 @@ public class ExpertBookActivity extends BaseActivity implements BookExpertView {
             }
         }
     };
+
+    private void loadBookDetail(final Boolean ifCache, final String bookId) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (ifCache) {//读取缓存数据
+                    String newString = mCache.getAsString("bookDetail" + bookId);
+                    Log.v("yyyyyy", "---cache5---" + newString);
+                    if (newString != null) {
+                        spUtils.put("bookDetail", newString);
+                        final BookDetailBean bookDetailBean = JsonBookDetailUtils.readBookDetailBean(newString);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                AudioPlayer.get().init(ExpertBookActivity.this);
+                                AudioPlayer.get().play(0);//第一个开始播放
+                                tv_stage.setText("播放中");
+
+                            }
+                        });
+                        return;
+                    }
+                } else {
+                    mCache.remove("bookDetail" + bookId);//刷新之后缓存也更新过来
+                }
+                HttpUtils.doGet(Urls.HOST_BOOKDETAIL + "/" + bookId, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                AppUtils.showToast(ExpertBookActivity.this, "播放失败");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            String string = response.body().string();
+                            mCache.put("bookDetail" + bookId, string);
+                            spUtils.put("bookDetail", string);
+                            final BookDetailBean bookDetailBean = JsonBookDetailUtils.readBookDetailBean(string);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AudioPlayer.get().init(ExpertBookActivity.this);
+                                    AudioPlayer.get().play(0);//第一个开始播放
+                                    tv_stage.setText("播放中");
+                                }
+                            });
+                        } catch (Exception e) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AppUtils.showToast(ExpertBookActivity.this, "播放失败");
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

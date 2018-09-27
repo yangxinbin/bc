@@ -262,7 +262,6 @@ public class AudioPlayer {
         if (isIdle()) {
             return;
         }
-
         pausePlayer();
         mediaPlayer.reset();
         state = STATE_IDLE;

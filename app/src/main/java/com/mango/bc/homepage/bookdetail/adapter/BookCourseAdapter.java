@@ -68,6 +68,8 @@ public class BookCourseAdapter extends RecyclerView.Adapter {
                 }
                 if (isPlaylist && position == AudioPlayer.get().getPlayPosition()) {
                     viewHolder.img_read.setImageResource(R.drawable.playing);
+                }else {
+                    viewHolder.img_read.setImageResource(R.drawable.play);
                 }
                 viewHolder.img_read.setOnClickListener(new View.OnClickListener() {
                     @Override

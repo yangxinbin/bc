@@ -1,23 +1,22 @@
 package com.mango.bc.wallet.bean;
 
 /**
- * Created by admin on 2018/9/18.
+ * Created by Administrator on 2018/9/28 0028.
  */
 
-public class CheckInBean {
-
+public class CheckBean {
 
     /**
      * id : 5b8a3d4b04440c0a48a33a05
-     * count : 1
-     * date : 1
-     * todayCheckedIn : true
+     * count : 2
+     * date : 20180927
+     * todayCheckedIn : null
      */
 
     private String id;
     private int count;
     private int date;
-    private boolean todayCheckedIn;
+    private Object todayCheckedIn;
 
     public String getId() {
         return id;
@@ -43,11 +42,11 @@ public class CheckInBean {
         this.date = date;
     }
 
-    public boolean isTodayCheckedIn() {
+    public Object getTodayCheckedIn() {
         return todayCheckedIn;
     }
 
-    public void setTodayCheckedIn(boolean todayCheckedIn) {
+    public void setTodayCheckedIn(Object todayCheckedIn) {
         this.todayCheckedIn = todayCheckedIn;
     }
 }

@@ -3,6 +3,7 @@ package com.mango.bc.util;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mango.bc.homepage.net.bean.BookBean;
+import com.mango.bc.wallet.bean.CheckBean;
 import com.mango.bc.wallet.bean.CheckInBean;
 
 import java.util.List;
@@ -16,5 +17,10 @@ public class JsonUtil {
         Gson gson = new Gson();
         CheckInBean checkInBean = gson.fromJson(res, new TypeToken<CheckInBean>(){}.getType());
         return checkInBean;
+    }
+    public static CheckBean readCheckBean(String res) {
+        Gson gson = new Gson();
+        CheckBean checkBean = gson.fromJson(res, new TypeToken<CheckBean>(){}.getType());
+        return checkBean;
     }
 }

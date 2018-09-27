@@ -34,6 +34,7 @@ import com.mango.bc.wallet.activity.CurrencyActivity;
 import com.mango.bc.wallet.activity.RechargeActivity;
 import com.mango.bc.wallet.activity.TransactionActivity;
 import com.mango.bc.wallet.activity.TransferActivity;
+import com.mango.bc.wallet.bean.CheckBean;
 import com.mango.bc.wallet.bean.CheckInBean;
 import com.mango.bc.wallet.bean.RefreshPpgBean;
 import com.mango.bc.wallet.bean.RefreshTaskBean;
@@ -146,9 +147,9 @@ public class WalletFragment extends Fragment {
     public void RefreshPpgEventBus(RefreshPpgBean refreshPpgBean) {
         if (refreshPpgBean == null)
             return;
-        Log.v("cccccccccc", "-----RefreshPpgEventBus----"+refreshPpgBean.getIfRefreshPpg());
+        Log.v("cccccccccc", "-----RefreshPpgEventBus----" + refreshPpgBean.getIfRefreshPpg());
 
-        if (refreshPpgBean.getIfRefreshPpg()){
+        if (refreshPpgBean.getIfRefreshPpg()) {
             initAuth(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));
         }
         EventBus.getDefault().removeStickyEvent(RefreshPpgBean.class);
@@ -315,11 +316,11 @@ public class WalletFragment extends Fragment {
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         try {
-                            String string = response.body().string();
-                            CheckInBean checkInBean = JsonUtil.readCheckInBean(string);
-                            spUtils.put("checkIf", string);
+                            //String string = response.body().string();
+                            //CheckBean checkBean = JsonUtil.readCheckBean(string);
+                            //spUtils.put("checkIf", string);
                             Message msg = mHandler.obtainMessage();
-                            msg.obj = checkInBean;
+                            //msg.obj = checkBean;
                             msg.what = 1;
                             msg.sendToTarget();
                         } catch (Exception e) {
@@ -342,11 +343,18 @@ public class WalletFragment extends Fragment {
                     AppUtils.showToast(getActivity(), "签到失败");
                     break;
                 case 1://签到成功
-                    CheckInBean checkInBean = (CheckInBean) msg.obj;
+                    //CheckBean checkBean = (CheckBean) msg.obj;
                     //EventBus.getDefault().postSticky(checkInBean);//刷新
-                    initChechIf(checkInBean);
-                    EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
-                    AppUtils.showToast(getActivity(), "签到成功");
+                    //initChechIf(checkBean);
+                    try {
+                        breadcrumbs.nextStep();
+                        EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
+                        AppUtils.showToast(getActivity(), "签到成功");
+                        tvSign.setText("已签到");
+                        tvSign.setEnabled(false);
+                    } catch (IndexOutOfBoundsException e) {
+                        //签到7天完成
+                    }
                     break;
                 default:
                     break;
@@ -358,7 +366,7 @@ public class WalletFragment extends Fragment {
         if (checkInBean == null)
             return;
         tvSignDay.setText("已签到" + checkInBean.getCount() + "天");
-        if (checkInBean.isCanCheckIn()) {
+        if (checkInBean.isTodayCheckedIn()) {
             tvSign.setText("立即签到");
             tvSign.setEnabled(true);
         } else {

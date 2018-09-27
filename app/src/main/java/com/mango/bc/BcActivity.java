@@ -251,7 +251,7 @@ public class BcActivity extends BaseActivity implements MyAllBookView {
                     CheckInBean checkInBean = (CheckInBean) msg.obj;
                     if (checkInBean == null)
                         return;
-                    if (checkInBean.isCanCheckIn()) {
+                    if (checkInBean.isTodayCheckedIn()) {
                         showCheckInWindow(BcActivity.this, checkInBean);
                     } else {
                         EventBus.getDefault().postSticky(checkInBean);

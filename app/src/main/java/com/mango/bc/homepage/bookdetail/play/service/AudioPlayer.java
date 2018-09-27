@@ -139,6 +139,7 @@ public class AudioPlayer {
     }
 
     public void play(int position) {
+        EventBus.getDefault().postSticky(new PlayPauseBean(false));
         if (musicList.isEmpty()) {
             return;
         }
@@ -189,17 +190,21 @@ public class AudioPlayer {
     }
 
     public void playPause() {
-        EventBus.getDefault().postSticky(new PlayPauseBean(true));
+        PlayPauseBean playPauseBean = new PlayPauseBean();
         if (isPreparing()) {
+            playPauseBean.setPause(true);
             stopPlayer();
         } else if (isPlaying()) {
+            playPauseBean.setPause(true);
             pausePlayer();
         } else if (isPausing()) {
+            playPauseBean.setPause(false);
             startPlayer();
         } else {
+            playPauseBean.setPause(false);
             play(getPlayPosition());
         }
-
+        EventBus.getDefault().postSticky(playPauseBean);
     }
 
     public void startPlayer() {

@@ -11,6 +11,9 @@ public class PlayPauseBean {
         this.isPause = isPause;
     }
 
+    public PlayPauseBean() {
+    }
+
     public boolean isPause() {
         return isPause;
     }

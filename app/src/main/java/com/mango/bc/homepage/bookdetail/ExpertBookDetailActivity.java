@@ -443,6 +443,8 @@ public class ExpertBookDetailActivity extends BaseActivity {
         }
         if (playPauseBean.isPause()) {
             bookStageExpertPlay.setText(getResources().getString(R.string.play));
+        }else {
+            bookStageExpertPlay.setText("播放中");
         }
         EventBus.getDefault().removeStickyEvent(PlayPauseBean.class);
     }

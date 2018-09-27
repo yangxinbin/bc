@@ -1,24 +1,20 @@
 package com.mango.bc.homepage.bookdetail.play.executor;
 
-import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.homepage.bean.JumpToPlayDetailBean;
 import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
 import com.mango.bc.homepage.bookdetail.bean.PlayBarBean;
-import com.mango.bc.homepage.bookdetail.play.PlayActivity;
 import com.mango.bc.homepage.bookdetail.play.global.Notifier;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.bookdetail.play.service.OnPlayerEventListener;
 import com.mango.bc.homepage.bookdetail.play.utils.Bind;
 import com.mango.bc.homepage.bookdetail.play.utils.ViewBinder;
-import com.mango.bc.util.AppUtils;
 
 import org.greenrobot.eventbus.EventBus;
 

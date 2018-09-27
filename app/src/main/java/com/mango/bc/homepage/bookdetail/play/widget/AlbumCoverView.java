@@ -101,7 +101,7 @@ public class AlbumCoverView extends View implements ValueAnimator.AnimatorUpdate
         // mDiscBitmap = ImageUtils.resizeImage(mDiscBitmap, unit * 6, unit * 6);
         //mCoverBitmap = ImageUtils.resizeImage(mCoverBitmap, unit * 4, unit * 4);
         //mNeedleBitmap = ImageUtils.resizeImage(mNeedleBitmap, unit * 2, unit * 3);
-
+        mCoverBitmap = big(mCoverBitmap);
         //int discOffsetY = mNeedleBitmap.getHeight() / 2;
         //mDiscPoint.x = (getWidth() - mDiscBitmap.getWidth()) / 2;
         //mDiscPoint.y = discOffsetY;
@@ -115,6 +115,17 @@ public class AlbumCoverView extends View implements ValueAnimator.AnimatorUpdate
         mNeedleCenterPoint.x = mDiscCenterPoint.x;
         mNeedleCenterPoint.y = 0;
     }
+
+    /**
+     * Bitmap放大的方法
+     */
+    private static Bitmap big(Bitmap bitmap) {
+        Matrix matrix = new Matrix();
+        matrix.postScale(1.5f, 1.5f);//长和宽放大缩小的比例
+        Bitmap resizeBmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        return resizeBmp;
+    }
+
 
     @Override
     protected void onDraw(Canvas canvas) {

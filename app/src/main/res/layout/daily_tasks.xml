@@ -21,7 +21,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:text="点赞"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize" />
@@ -79,7 +79,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:text="分享"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize" />
@@ -137,7 +137,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:text="评论"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize" />
@@ -195,7 +195,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:text="阅读时长"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize" />
@@ -253,7 +253,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:text="发起拼团"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize" />
@@ -331,7 +331,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:text="推荐大咖课程（需成交）"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize" />
@@ -409,7 +409,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:text="推荐精品课（需成交）"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize" />
@@ -486,7 +486,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:text="邀请开通VIP（需成交）"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize" />

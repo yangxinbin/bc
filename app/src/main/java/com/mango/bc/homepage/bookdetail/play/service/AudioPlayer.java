@@ -70,6 +70,7 @@ public class AudioPlayer {
                 if (bookBean.getChapters().get(i).isFree() || spUtils.getBoolean("isFree", false)) {
                     BookMusicDetailBean bookMusicDetailBean = new BookMusicDetailBean();
                     bookMusicDetailBean.setBookId(bookBean.getId());
+                    spUtils.put("isSameBook", bookBean.getId());
                     bookMusicDetailBean.setName(bookBean.getAuthor().getName());
                     bookMusicDetailBean.setTitle(bookBean.getTitle());
                     bookMusicDetailBean.setIsFree(bookBean.getChapters().get(i).isFree());

@@ -65,6 +65,7 @@ public class CourseFragment extends BaseServiceFragment implements OnPlayerEvent
                 BookMusicDetailBean bookMusicDetailBean = new BookMusicDetailBean();
                 bookMusicDetailBean.setName(bookBean.getAuthor().getName());
                 bookMusicDetailBean.setTitle(bookBean.getTitle());
+                bookMusicDetailBean.setBookId(bookBean.getId());
                 bookMusicDetailBean.setIsFree(bookBean.getChapters().get(i).isFree());
                 bookMusicDetailBean.setMp3Name(bookBean.getChapters().get(i).getTitle());
                 if (bookBean.getChapters().get(i).getAudio() != null)
@@ -93,6 +94,7 @@ public class CourseFragment extends BaseServiceFragment implements OnPlayerEvent
             for (int i = 0; i < bookBean.getBook().getChapters().size(); i++) {
                 BookMusicDetailBean bookMusicDetailBean = new BookMusicDetailBean();
                 bookMusicDetailBean.setName(bookBean.getBook().getAuthor().getName());
+                bookMusicDetailBean.setBookId(bookBean.getId());
                 bookMusicDetailBean.setTitle(bookBean.getBook().getTitle());
                 bookMusicDetailBean.setIsFree(bookBean.getBook().getChapters().get(i).isFree());
                 bookMusicDetailBean.setMp3Name(bookBean.getBook().getChapters().get(i).getTitle());

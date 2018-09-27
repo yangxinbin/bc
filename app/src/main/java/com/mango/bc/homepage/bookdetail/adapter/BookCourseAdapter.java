@@ -71,7 +71,7 @@ public class BookCourseAdapter extends RecyclerView.Adapter {
                 }
                 Log.v("ssssssssss",isPlaylist+"-isPlaylist---"+AudioPlayer.get().getPlayPosition());
 
-                if (isPlaylist && position == AudioPlayer.get().getPlayPosition()) {
+                if (isPlaylist && position == AudioPlayer.get().getPlayPosition() && datas.get(position).getBookId().equals(spUtils.getString("isSameBook", ""))) {
                     viewHolder.img_read.setImageResource(R.drawable.playing);
                 }else {
                     viewHolder.img_read.setImageResource(R.drawable.play);

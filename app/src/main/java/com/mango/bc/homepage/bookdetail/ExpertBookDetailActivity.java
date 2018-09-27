@@ -22,14 +22,13 @@ import com.mango.bc.adapter.ViewPageAdapter;
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.activity.BuyBookActivity;
-import com.mango.bc.homepage.activity.expertbook.ExpertBookActivity;
 import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
 import com.mango.bc.homepage.bookdetail.bean.PlayBarBean;
+import com.mango.bc.homepage.bookdetail.bean.PlayPauseBean;
 import com.mango.bc.homepage.bookdetail.fragment.CommentFragment;
 import com.mango.bc.homepage.bookdetail.fragment.CourseFragment;
 import com.mango.bc.homepage.bookdetail.fragment.DetailFragment;
 import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
-import com.mango.bc.homepage.bookdetail.play.PlayActivity;
 import com.mango.bc.homepage.bookdetail.play.executor.ControlPanel;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
@@ -375,6 +374,11 @@ public class ExpertBookDetailActivity extends BaseActivity {
             if (bookDetailBean.getAuthor().getPhoto() != null)
                 Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookDetailBean.getAuthor().getPhoto().getFileName()).into(imgCover);
         }
+        if (AudioPlayer.get().isPlaying() && mBookDetailBean.getId().equals(spUtils.getString("isSameBook", ""))) {
+            bookStageExpertPlay.setText("播放中");
+        }else if (AudioPlayer.get().isPausing() && mBookDetailBean.getId().equals(spUtils.getString("isSameBook", ""))) {
+            bookStageExpertPlay.setText(getResources().getString(R.string.play));
+        }
         tvBuyer.setText(bookDetailBean.getSold() + "");
         tvCourse.setText(bookDetailBean.getChapters().size() + "");
         likeNum = bookDetailBean.getLikes();
@@ -430,6 +434,17 @@ public class ExpertBookDetailActivity extends BaseActivity {
             Log.v("iiiiiiiiiiiiii", "----h---");
         }
         EventBus.getDefault().removeStickyEvent(PlayBarBean.class);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void PlayPauseBeanEventBus(PlayPauseBean playPauseBean) {
+        if (playPauseBean == null) {
+            return;
+        }
+        if (playPauseBean.isPause()) {
+            bookStageExpertPlay.setText(getResources().getString(R.string.play));
+        }
+        EventBus.getDefault().removeStickyEvent(PlayPauseBean.class);
     }
 
     private void initDatas() {
@@ -531,7 +546,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
         EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.imageView_back,R.id.l_like_play, R.id.l_share_play_expert, R.id.book_stage_expert_play, R.id.l_like_get, R.id.l_try, R.id.l_buy, R.id.l_collage})
+    @OnClick({R.id.imageView_back, R.id.l_like_play, R.id.l_share_play_expert, R.id.book_stage_expert_play, R.id.l_like_get, R.id.l_try, R.id.l_buy, R.id.l_collage})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -558,6 +573,16 @@ public class ExpertBookDetailActivity extends BaseActivity {
                 showShare();
                 break;
             case R.id.book_stage_expert_play:
+                if (AudioPlayer.get().isPlaying() && mBookDetailBean.getId().equals(spUtils.getString("isSameBook", ""))) {
+                    return;
+                } else if (AudioPlayer.get().isPausing() && mBookDetailBean.getId().equals(spUtils.getString("isSameBook", ""))) {
+                    AudioPlayer.get().startPlayer();
+                    bookStageExpertPlay.setText("播放中");
+                } else {
+                    AudioPlayer.get().init(this);
+                    AudioPlayer.get().play(0);//第一个开始播放
+                    bookStageExpertPlay.setText("播放中");
+                }
                 break;//以上是播放foot
         }
     }

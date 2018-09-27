@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
 import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
+import com.mango.bc.homepage.bookdetail.bean.PlayPauseBean;
 import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
 import com.mango.bc.homepage.bookdetail.play.enums.PlayModeEnum;
 import com.mango.bc.homepage.bookdetail.play.global.Notifier;
@@ -18,6 +19,8 @@ import com.mango.bc.homepage.bookdetail.play.receiver.NoisyAudioStreamReceiver;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -186,6 +189,7 @@ public class AudioPlayer {
     }
 
     public void playPause() {
+        EventBus.getDefault().postSticky(new PlayPauseBean(true));
         if (isPreparing()) {
             stopPlayer();
         } else if (isPlaying()) {
@@ -195,6 +199,7 @@ public class AudioPlayer {
         } else {
             play(getPlayPosition());
         }
+
     }
 
     public void startPlayer() {

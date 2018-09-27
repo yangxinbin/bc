@@ -27,12 +27,15 @@ import com.mango.bc.homepage.bookdetail.play.utils.CoverLoader;
 import com.mango.bc.homepage.bookdetail.play.utils.ScreenUtils;
 import com.mango.bc.homepage.bookdetail.play.utils.SystemUtils;
 import com.mango.bc.homepage.bookdetail.play.widget.AlbumCoverView;
+import com.mango.bc.util.Urls;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 
 
 /**
@@ -65,6 +68,12 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
     ImageView ivNext;
     @Bind(R.id.ll_content)
     LinearLayout llContent;
+    @Bind(R.id.iv_txt)
+    ImageView ivTxt;
+    @Bind(R.id.iv_list)
+    ImageView ivList;
+    @Bind(R.id.iv_share)
+    ImageView ivShare;
     private AlbumCoverView mAlbumCoverView;
     //private LrcView mLrcViewSingle;
     //private LrcView mLrcViewFull;
@@ -74,6 +83,7 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
     private List<View> mViewPagerContent;
     private int mLastProgress;
     private boolean isDraggingProgress;
+    private BookMusicDetailBean showMusic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,7 +157,6 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
 
     @Override
     public void onChange(BookMusicDetailBean music) {
-        Log.v("ddddddddd", "---onChange--");
         onChangeImpl(music);
     }
 
@@ -267,7 +276,7 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
         if (music == null) {
             return;
         }
-
+        this.showMusic = music;
         tvTitle.setText(music.getTitle());
         tvArtist.setText(music.getName() + " | " + music.getMp3Name());
         sbProgress.setProgress((int) AudioPlayer.get().getAudioPosition());
@@ -383,4 +392,45 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
         super.onDestroy();
     }
 
+    @OnClick({R.id.iv_txt, R.id.iv_list, R.id.iv_share})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_txt:
+
+                break;
+            case R.id.iv_list:
+
+                break;
+            case R.id.iv_share:
+                showShare();
+                break;
+        }
+    }
+
+    private void showShare() {
+        OnekeyShare oks = new OnekeyShare();
+        //关闭sso授权
+        oks.disableSSOWhenAuthorize();
+
+        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间等使用
+        oks.setTitle(showMusic.getTitle());
+        // titleUrl是标题的网络链接，QQ和QQ空间等使用
+        oks.setTitleUrl("http://sharesdk.cn");
+        // text是分享文本，所有平台都需要这个字段
+        oks.setText(showMusic.getName()+" | "+showMusic.getMp3Name());
+        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+        Log.v("sssssssssss", Urls.HOST_GETFILE + "?name=" + showMusic.getCoverPath()+"---onChange--"+Urls.HOST_GETFILE + "?name=" + showMusic.getMp3Path());
+        oks.setImageUrl(showMusic.getCoverPath());//确保SDcard下面存在此张图片
+        // url在微信、微博，Facebook等平台中使用
+        oks.setUrl(showMusic.getMp3Path());
+        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+        oks.setComment("我是测试评论文本");
+        // site是分享此内容的网站名称，仅在QQ空间使用
+        oks.setSite(getString(R.string.app_name));
+        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+        oks.setSiteUrl("http://sharesdk.cn");
+
+        // 启动分享GUI
+        oks.show(getApplicationContext());
+    }
 }

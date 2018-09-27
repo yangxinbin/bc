@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
+import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.SPUtils;
@@ -26,12 +27,17 @@ public class BookCourseAdapter extends RecyclerView.Adapter {
     private Context context;
     private List<BookMusicDetailBean> datas = new ArrayList<>();
     private BookCourseAdapter.OnItemClickLitener mOnItemClickLitener;
+    private boolean isPlaylist;
 
 
     public BookCourseAdapter(List<BookMusicDetailBean> datas, Context context) {
         spUtils = SPUtils.getInstance("bc", context);
         this.context = context;
         this.datas = datas;
+    }
+
+    public void setIsPlaylist(boolean isPlaylist) {
+        this.isPlaylist = isPlaylist;
     }
 
     public void setOnItemClickLitener(BookCourseAdapter.OnItemClickLitener mOnItemClickLitener) {
@@ -59,6 +65,9 @@ public class BookCourseAdapter extends RecyclerView.Adapter {
                 viewHolder.tv_time.setText("时长：" + secToTime(datas.get(position).getDuration()));
                 if (!(datas.get(position).getIsFree() || spUtils.getBoolean("isFree", false))) {
                     viewHolder.img_txt.setImageResource(R.drawable.lock);
+                }
+                if (isPlaylist && position == AudioPlayer.get().getPlayPosition()) {
+                    viewHolder.img_read.setImageResource(R.drawable.playing);
                 }
                 viewHolder.img_read.setOnClickListener(new View.OnClickListener() {
                     @Override

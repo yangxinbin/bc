@@ -126,6 +126,7 @@ public class CourseFragment extends BaseServiceFragment implements OnPlayerEvent
 
     @Override
     protected void onServiceBound() {
+        bookCourseAdapter.setIsPlaylist(true);
         AudioPlayer.get().addOnPlayEventListener(this);
     }
 

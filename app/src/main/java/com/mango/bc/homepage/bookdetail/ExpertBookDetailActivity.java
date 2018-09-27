@@ -129,6 +129,9 @@ public class ExpertBookDetailActivity extends BaseActivity {
         EventBus.getDefault().register(this);
         initDatas();
         init();
+        if (getIntent().getBooleanExtra("bookCourse",false)){
+            viewPager.setCurrentItem(1);
+        }
     }
 
     @Override
@@ -393,6 +396,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
         if (bookBean == null) {
             return;
         }
+        Log.v("bbbbbbbbbbb","-----f");
         this.mBookBean = bookBean;
         bookId = bookBean.getId();
         type = bookBean.getType();

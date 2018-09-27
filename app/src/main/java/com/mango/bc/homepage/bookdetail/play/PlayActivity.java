@@ -1,5 +1,6 @@
 package com.mango.bc.homepage.bookdetail.play;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -8,10 +9,15 @@ import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -19,7 +25,10 @@ import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.homepage.bookdetail.TxtActivity;
+import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
 import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
+import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
+import com.mango.bc.homepage.bookdetail.play.adapter.BookCourseListAdapter;
 import com.mango.bc.homepage.bookdetail.play.adapter.PlayPagerAdapter;
 import com.mango.bc.homepage.bookdetail.play.constants.Actions;
 import com.mango.bc.homepage.bookdetail.play.preference.Preferences;
@@ -29,6 +38,7 @@ import com.mango.bc.homepage.bookdetail.play.utils.CoverLoader;
 import com.mango.bc.homepage.bookdetail.play.utils.ScreenUtils;
 import com.mango.bc.homepage.bookdetail.play.utils.SystemUtils;
 import com.mango.bc.homepage.bookdetail.play.widget.AlbumCoverView;
+import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 
 import java.util.ArrayList;
@@ -86,12 +96,17 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
     private int mLastProgress;
     private boolean isDraggingProgress;
     private BookMusicDetailBean showMusic;
+    private Dialog dialog;
+    private BookCourseListAdapter adapter;
+    private List<BookMusicDetailBean> bookMusicDetailBeanList = new ArrayList<>();
+    private SPUtils spUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_play);
         ButterKnife.bind(this);
+        spUtils = SPUtils.getInstance("bc", this);
         //initSystemBar();
         initViewPager();
         //ilIndicator.create(mViewPagerContent.size());
@@ -404,6 +419,39 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
                 startActivity(intent);
                 break;
             case R.id.iv_list:
+                //intent = new Intent(this, ExpertBookDetailActivity.class);
+                //EventBus.getDefault().removeStickyEvent(BookBean.class);
+                //EventBus.getDefault().removeStickyEvent(MyBookBean.class);
+                //intent.putExtra("bookCourse",true);
+                //startActivity(intent);
+                BookDetailBean bookBean = JsonBookDetailUtils.readBookDetailBean(spUtils.getString("bookDetail", ""));
+                Log.v("xxxxxxxxx", "-----" + spUtils.getString("bookDetail", ""));
+                bookMusicDetailBeanList.clear();//防止叠加
+                if (bookBean.getChapters() != null)
+                    for (int i = 0; i < bookBean.getChapters().size(); i++) {
+                        Log.v("xxxxxxxxxxx", bookBean.getChapters().get(i).isFree() + "-----" + spUtils.getBoolean("isFree", false));
+                        if (bookBean.getChapters().get(i).isFree() || spUtils.getBoolean("isFree", false)) {
+                            BookMusicDetailBean bookMusicDetailBean = new BookMusicDetailBean();
+                            bookMusicDetailBean.setBookId(bookBean.getId());
+                            Log.v("xxxxxxxxx", "---isSameBook--" + bookBean.getId());
+                            spUtils.put("isSameBook", bookBean.getId());
+                            //bookMusicDetailBean.setContentImages(bookBean.getChapters().get(i).getContentImages().get(i).getFileName());
+                            bookMusicDetailBean.setName(bookBean.getAuthor().getName());
+                            bookMusicDetailBean.setTitle(bookBean.getTitle());
+                            bookMusicDetailBean.setIsFree(bookBean.getChapters().get(i).isFree());
+                            bookMusicDetailBean.setMp3Name(bookBean.getChapters().get(i).getTitle());
+                            if (bookBean.getCover() != null)
+                                bookMusicDetailBean.setCoverPath(Urls.HOST_GETFILE + "?name=" + bookBean.getCover().getFileName());
+                            if (bookBean.getChapters().get(i).getAudio() != null)
+                                bookMusicDetailBean.setMp3Path(Urls.HOST_GETFILE + "?name=" + bookBean.getChapters().get(i).getAudio().getFileName());
+                            bookMusicDetailBean.setDuration(bookBean.getChapters().get(i).getDuration());
+                            bookMusicDetailBeanList.add(bookMusicDetailBean);
+                        } else {
+                            continue;
+                        }
+
+                    }
+                showPopupWindow(this, bookMusicDetailBeanList);
                 break;
             case R.id.iv_share:
                 showShare();
@@ -421,9 +469,9 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
         // titleUrl是标题的网络链接，QQ和QQ空间等使用
         oks.setTitleUrl("http://sharesdk.cn");
         // text是分享文本，所有平台都需要这个字段
-        oks.setText(showMusic.getName()+" | "+showMusic.getMp3Name());
+        oks.setText(showMusic.getName() + " | " + showMusic.getMp3Name());
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-        Log.v("sssssssssss", Urls.HOST_GETFILE + "?name=" + showMusic.getCoverPath()+"---onChange--"+Urls.HOST_GETFILE + "?name=" + showMusic.getMp3Path());
+        Log.v("sssssssssss", Urls.HOST_GETFILE + "?name=" + showMusic.getCoverPath() + "---onChange--" + Urls.HOST_GETFILE + "?name=" + showMusic.getMp3Path());
         oks.setImageUrl(showMusic.getCoverPath());//确保SDcard下面存在此张图片
         // url在微信、微博，Facebook等平台中使用
         oks.setUrl(showMusic.getMp3Path());
@@ -437,4 +485,51 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
         // 启动分享GUI
         oks.show(getApplicationContext());
     }
+
+    private void showPopupWindow(Context context, List<BookMusicDetailBean> bookMusicDetailBeanList) {
+        Log.v("xxxxxxxxx", "-bookMusicDetailBeanList----" + bookMusicDetailBeanList.size());
+        //设置要显示的view
+        View view = LayoutInflater.from(context).inflate(R.layout.recycle_text_down, null);
+        //此处可按需求为各控件设置属性
+        RecyclerView recyclerView = view.findViewById(R.id.recycle_course);
+        ImageView imageView_close = view.findViewById(R.id.img_close);
+        imageView_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        adapter = new BookCourseListAdapter(bookMusicDetailBeanList, this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickLitener(mOnClickListenner);
+        dialog = new Dialog(context, R.style.dialog);
+        dialog.setContentView(view);
+        Window window = dialog.getWindow();
+        //设置弹出窗口大小
+        window.setLayout(WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        //设置显示位置
+        window.setGravity(Gravity.BOTTOM);
+        //设置动画效果
+        window.setWindowAnimations(R.style.AnimBottom);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+    }
+
+    private BookCourseListAdapter.OnItemClickLitener mOnClickListenner = new BookCourseListAdapter.OnItemClickLitener() {
+        @Override
+        public void onReadClick(View view, int position) {
+            AudioPlayer.get().init(PlayActivity.this);
+            AudioPlayer.get().play(position);
+            adapter.notifyDataSetChanged();
+        }
+    };
+
+/*    @Override
+    protected void onServiceBound() {
+        if (adapter != null)
+            adapter.setIsPlaylist(true);
+        Log.v("xxxx", "----" + AudioPlayer.get().getPlayPosition());
+        AudioPlayer.get().addOnPlayEventListener(this);
+    }*/
 }

@@ -38,9 +38,12 @@ public class ControlPanel implements View.OnClickListener, OnPlayerEventListener
 
     public ControlPanel(View view) {
         ViewBinder.bind(this, view);
-        ivPlayBarPlay.setOnClickListener(this);
-        ivPlayBarClose.setOnClickListener(this);
-        flPlayBar.setOnClickListener(this);
+        if (ivPlayBarPlay != null)
+            ivPlayBarPlay.setOnClickListener(this);
+        if (ivPlayBarClose != null)
+            ivPlayBarClose.setOnClickListener(this);
+        if (flPlayBar != null)
+            flPlayBar.setOnClickListener(this);
         onChange(AudioPlayer.get().getPlayMusic());
     }
 

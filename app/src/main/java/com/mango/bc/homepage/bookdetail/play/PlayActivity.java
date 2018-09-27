@@ -1,6 +1,7 @@
 package com.mango.bc.homepage.bookdetail.play;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioManager;
@@ -17,6 +18,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.mango.bc.R;
+import com.mango.bc.homepage.bookdetail.TxtActivity;
 import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
 import com.mango.bc.homepage.bookdetail.play.adapter.PlayPagerAdapter;
 import com.mango.bc.homepage.bookdetail.play.constants.Actions;
@@ -394,12 +396,14 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
 
     @OnClick({R.id.iv_txt, R.id.iv_list, R.id.iv_share})
     public void onViewClicked(View view) {
+        Intent intent;
         switch (view.getId()) {
             case R.id.iv_txt:
-
+                intent = new Intent(this, TxtActivity.class);
+                intent.putExtra("position", AudioPlayer.get().getPlayPosition());
+                startActivity(intent);
                 break;
             case R.id.iv_list:
-
                 break;
             case R.id.iv_share:
                 showShare();

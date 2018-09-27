@@ -121,7 +121,7 @@ public class AlbumCoverView extends View implements ValueAnimator.AnimatorUpdate
      */
     private static Bitmap big(Bitmap bitmap) {
         Matrix matrix = new Matrix();
-        matrix.postScale(1.5f, 1.5f);//长和宽放大缩小的比例
+        matrix.postScale(1f, 1f);//长和宽放大缩小的比例
         Bitmap resizeBmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         return resizeBmp;
     }

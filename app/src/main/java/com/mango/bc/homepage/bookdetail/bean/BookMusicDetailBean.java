@@ -13,6 +13,15 @@ public class BookMusicDetailBean {
     private String mp3Path;
     private int duration;
     private boolean isFree;
+    private String contentImages;
+
+    public String getContentImages() {
+        return contentImages;
+    }
+
+    public void setContentImages(String contentImages) {
+        this.contentImages = contentImages;
+    }
 
     public String getBookId() {
         return bookId;

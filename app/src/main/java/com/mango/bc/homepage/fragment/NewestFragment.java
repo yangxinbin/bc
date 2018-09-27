@@ -140,6 +140,7 @@ public class NewestFragment extends Fragment implements BookNewestView, MyAllBoo
 
         @Override
         public void onPlayClick(View view, int position) {
+            EventBus.getDefault().postSticky(bookNewestAdapter.getItem(position));
             if (chechState(bookNewestAdapter.getItem(position).getId())) {
                 spUtils.put("isFree", true);
             } else {

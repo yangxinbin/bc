@@ -82,6 +82,7 @@ public class AudioPlayer {
                     bookMusicDetailBean.setBookId(bookBean.getId());
                     Log.v("bbbbbbb", "---isSameBook--" + bookBean.getId());
                     spUtils.put("isSameBook", bookBean.getId());
+                    //bookMusicDetailBean.setContentImages(bookBean.getChapters().get(i).getContentImages().get(i).getFileName());
                     bookMusicDetailBean.setName(bookBean.getAuthor().getName());
                     bookMusicDetailBean.setTitle(bookBean.getTitle());
                     bookMusicDetailBean.setIsFree(bookBean.getChapters().get(i).isFree());

@@ -135,6 +135,7 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView,MyAll
 
         @Override
         public void onPlayClick(View view, int position) {//播放
+            EventBus.getDefault().postSticky(bookGirdFreeAdapter.getItem(position));
             if (chechState(bookGirdFreeAdapter.getItem(position).getId())) {
                 spUtils.put("isFree", true);
             } else {

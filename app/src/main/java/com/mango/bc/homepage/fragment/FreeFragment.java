@@ -147,6 +147,7 @@ public class FreeFragment extends Fragment implements BookFreeView, MyAllBookVie
 /*            if (AudioPlayer.get().isPlaying() *//*&& mData.get(position).getId().equals(spUtils.getString("isSameBook", ""))*//*) {
                 return;
             } else*/
+            EventBus.getDefault().postSticky(bookGirdFreeAdapter.getItem(position));
             if (chechState(mData.get(position).getId())) {
                 spUtils.put("isFree", true);
             } else {

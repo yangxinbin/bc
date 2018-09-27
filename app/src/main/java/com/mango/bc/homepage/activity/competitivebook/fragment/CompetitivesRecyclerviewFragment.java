@@ -18,12 +18,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.mango.bc.R;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.activity.BuyBookActivity;
+import com.mango.bc.homepage.activity.freebook.FreeBookActivity;
 import com.mango.bc.homepage.adapter.BookComprtitiveAdapter;
 import com.mango.bc.homepage.bean.BuySuccessBean;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
+import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.bean.LoadStageBean;
@@ -31,8 +35,12 @@ import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookCompetitiveView;
+import com.mango.bc.util.ACache;
 import com.mango.bc.util.AppUtils;
+import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.NetUtil;
+import com.mango.bc.util.SPUtils;
+import com.mango.bc.util.Urls;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -43,10 +51,15 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -70,6 +83,8 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
     private int page = 0;
     public TextView tv_stage;
     private TextView tv_head_stage;
+    private SPUtils spUtils;
+    private ACache mCache;
 
 
     public static CompetitivesRecyclerviewFragment newInstance(String type) {
@@ -95,6 +110,8 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
         View view = inflater.inflate(R.layout.competitive_items, null);
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
+        spUtils = SPUtils.getInstance("bc", getActivity());
+        mCache = ACache.get(getActivity());
         initView();
         refreshAndLoadMore();
         return view;
@@ -147,8 +164,22 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
 
         @Override
         public void onPlayClick(View view, int position) {//播放按钮
-            Log.v("bbbbbbbb", "---onPlayClick--");
-
+            EventBus.getDefault().postSticky(adapter.getItem(position));
+            if (chechState(adapter.getItem(position).getId())) {
+                spUtils.put("isFree", true);
+            } else {
+                spUtils.put("isFree", false);
+            }
+            if (AudioPlayer.get().isPausing() /*&& mData.get(position).getId().equals(spUtils.getString("isSameBook", ""))*/) {
+                AudioPlayer.get().startPlayer();
+                //tv_free_stage.setText("播放中");
+                return;
+            }
+            if (NetUtil.isNetConnect(getActivity())) {
+                loadBookDetail(false, adapter.getItem(position).getId());
+            } else {
+                loadBookDetail(true, adapter.getItem(position).getId());
+            }
         }
 
         @Override
@@ -178,7 +209,81 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
         }
 
     };
+    private boolean chechState(String bookId) {
+        String data = spUtils.getString("allMyBook", "");
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<String>>() {
+        }.getType();
+        List<String> list = gson.fromJson(data, listType);
+        if (list == null)
+            return false;
+        if (list.contains(bookId)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
+    private void loadBookDetail(final Boolean ifCache, final String bookId) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (ifCache) {//读取缓存数据
+                    String newString = mCache.getAsString("bookDetail" + bookId);
+                    Log.v("yyyyyy", "---cache5---" + newString);
+                    if (newString != null) {
+                        spUtils.put("bookDetail", newString);
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                AudioPlayer.get().init(getActivity());
+                                AudioPlayer.get().play(0);//第一个开始播放
+
+                            }
+                        });
+                        return;
+                    }
+                } else {
+                    mCache.remove("bookDetail" + bookId);//刷新之后缓存也更新过来
+                }
+                HttpUtils.doGet(Urls.HOST_BOOKDETAIL + "/" + bookId, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                AppUtils.showToast(getActivity(), "播放失败");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            Log.v("fffffffff", "---f--");
+                            String string = response.body().string();
+                            mCache.put("bookDetail" + bookId, string);
+                            spUtils.put("bookDetail", string);
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AudioPlayer.get().init(getActivity());
+                                    AudioPlayer.get().play(0);//第一个开始播放
+                                }
+                            });
+                        } catch (Exception e) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AppUtils.showToast(getActivity(), "播放失败");
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void BuySuccessBeanEventBus(BuySuccessBean bean) {
         if (bean == null) {

@@ -158,6 +158,7 @@ public class ExpertFragment extends Fragment implements BookExpertView {
 /*            if (AudioPlayer.get().isPlaying() *//*&& mData.get(position).getId().equals(spUtils.getString("isSameBook", ""))*//*) {
                 return;
             } else*/
+            EventBus.getDefault().postSticky(bookExpertAdapter.getItem(position));
             if (chechState(mData.get(position).getId())) {
                 spUtils.put("isFree", true);
             } else {

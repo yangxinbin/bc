@@ -134,6 +134,7 @@ public class ExpertBookActivity extends BaseActivity implements BookExpertView {
 
         @Override
         public void onPlayClick(View view, int position) {
+            EventBus.getDefault().postSticky(bookExpertAdapter.getItem(position));
             if (chechState(bookExpertAdapter.getItem(position).getId())) {
                 spUtils.put("isFree", true);
             } else {

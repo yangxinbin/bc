@@ -3,6 +3,7 @@ package com.mango.bc.homepage.bookdetail;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
@@ -49,6 +50,7 @@ public class TxtActivity extends BaseActivity {
                 txtDetailAdapter = new TxtDetailAdapter(bookBean.getChapters().get(position).getContentImages(), this);
             }
             recycle.setLayoutManager(new LinearLayoutManager(this));
+            Log.v("rrrrrrrrrrrr","----r1");
             recycle.setAdapter(txtDetailAdapter);
         }
     }
@@ -65,6 +67,7 @@ public class TxtActivity extends BaseActivity {
                 myTxtDetailAdapter = new MyTxtDetailAdapter(bookBean.getBook().getChapters().get(position).getContentImages(), this);
             }
             recycle.setLayoutManager(new LinearLayoutManager(this));
+            Log.v("rrrrrrrrrrrr","----r2");
             recycle.setAdapter(myTxtDetailAdapter);
         }
     }

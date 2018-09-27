@@ -559,6 +559,16 @@ public class ExpertBookDetailActivity extends BaseActivity {
                 like(bookId);
                 break;
             case R.id.l_try:
+                if (AudioPlayer.get().isPlaying() && mBookDetailBean.getId().equals(spUtils.getString("isSameBook", ""))) {
+                    return;
+                } else if (AudioPlayer.get().isPausing() && mBookDetailBean.getId().equals(spUtils.getString("isSameBook", ""))) {
+                    AudioPlayer.get().startPlayer();
+                    bookStageExpertPlay.setText("播放中");
+                } else {
+                    AudioPlayer.get().init(this);
+                    AudioPlayer.get().play(0);//第一个开始播放
+                    bookStageExpertPlay.setText("播放中");
+                }
                 break;
             case R.id.l_buy:
                 intent = new Intent(this, BuyBookActivity.class);

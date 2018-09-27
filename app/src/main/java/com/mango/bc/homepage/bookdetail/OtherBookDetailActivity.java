@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,10 +17,16 @@ import com.google.gson.reflect.TypeToken;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
+import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
+import com.mango.bc.bookcase.net.view.MyAllBookView;
 import com.mango.bc.homepage.activity.BuyBookActivity;
 import com.mango.bc.homepage.bookdetail.adapter.BookDetailAdapter;
 import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
+import com.mango.bc.homepage.bookdetail.bean.PlayBarBean;
+import com.mango.bc.homepage.bookdetail.bean.PlayPauseBean;
 import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
+import com.mango.bc.homepage.bookdetail.play.executor.ControlPanel;
+import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.jsonutils.JsonUtils;
@@ -49,7 +56,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class OtherBookDetailActivity extends BaseActivity {
+public class OtherBookDetailActivity extends BaseActivity implements MyAllBookView {
 
 
     @Bind(R.id.imageView_back)
@@ -94,6 +101,8 @@ public class OtherBookDetailActivity extends BaseActivity {
     TextView tvLikeFree;
     @Bind(R.id.tv_like_needbuy)
     TextView tvLikeNeedbuy;
+    @Bind(R.id.fl_play_bar)
+    FrameLayout flPlayBar;
     private BookDetailAdapter bookDetailAdapter;
     private SPUtils spUtils;
     private String bookId;
@@ -102,17 +111,27 @@ public class OtherBookDetailActivity extends BaseActivity {
     private String type;
     private BookDetailBean mBookDetailBean;
     private BookBean mBookBean;
+    private MyBookPresenterImpl myBookPresenter;
+    private ControlPanel controlPanel;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {   //精品+上新+免费 详情共用  判断：是否领取   是否购买  三种 精品上新一样
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_other_detail);
+        myBookPresenter = new MyBookPresenterImpl(this);
         spUtils = SPUtils.getInstance("bc", this);
         mCache = ACache.get(this.getApplicationContext());
         ButterKnife.bind(this);
         recycle.setNestedScrollingEnabled(false);
         EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onServiceBound() {
+        controlPanel = new ControlPanel(flPlayBar);
+        AudioPlayer.get().addOnPlayEventListener(controlPanel);
+        //parseIntent();
     }
 
     private boolean chechState(String bookId) {
@@ -326,6 +345,12 @@ public class OtherBookDetailActivity extends BaseActivity {
             if (bookDetailBean.getAuthor().getPhoto() != null)
                 Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookDetailBean.getAuthor().getPhoto().getFileName()).into(imgCover);
         }
+        Log.v("bbbbbbb", AudioPlayer.get().isPlaying()+"---name--" + mBookDetailBean.getId()+"==="+spUtils.getString("isSameBook", ""));
+        if (AudioPlayer.get().isPlaying() && mBookDetailBean.getId().equals(spUtils.getString("isSameBook", ""))) {
+            bookStagePlay.setText("播放中");
+        } else if (AudioPlayer.get().isPausing() /*&& mBookDetailBean.getId().equals(spUtils.getString("isSameBook", ""))*/) {
+            bookStagePlay.setText(getResources().getString(R.string.play));
+        }
         tvTitle.setText(bookDetailBean.getTitle());
         tvBuyer.setText(bookDetailBean.getSold() + "人已购买");
         likeNum = bookDetailBean.getLikes();
@@ -349,7 +374,7 @@ public class OtherBookDetailActivity extends BaseActivity {
         this.mBookBean = bookBean;
         bookId = bookBean.getId();
         type = bookBean.getType();
-        initState(bookId,type);
+        initState(bookId, type);
         checkLike(bookId);
         if (NetUtil.isNetConnect(this)) {
             loadBookDetail(false, bookId);
@@ -366,7 +391,7 @@ public class OtherBookDetailActivity extends BaseActivity {
         if (bookBean.getBook() != null) {
             bookId = bookBean.getBook().getId();
             type = bookBean.getBook().getType();
-            initState(bookId,type);
+            initState(bookId, type);
             checkLike(bookId);
             if (NetUtil.isNetConnect(this)) {
                 loadBookDetail(false, bookId);
@@ -376,11 +401,38 @@ public class OtherBookDetailActivity extends BaseActivity {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void PlayBarBeanEventBus(PlayBarBean playBarBean) {
+        if (playBarBean == null) {
+            return;
+        }
+        Log.v("iiiiiiiiiiiiii", "---iiiieeeeiiiii---");
+        if (!playBarBean.isShowBar()) {
+            flPlayBar.setVisibility(View.GONE);//播放控件
+            Log.v("iiiiiiiiiiiiii", "----h---");
+        }
+        EventBus.getDefault().removeStickyEvent(PlayBarBean.class);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void PlayPauseBeanEventBus(PlayPauseBean playPauseBean) {
+        if (playPauseBean == null) {
+            return;
+        }
+        if (playPauseBean.isPause()) {
+            bookStagePlay.setText(getResources().getString(R.string.play));
+        } else if (mBookDetailBean.getId().equals(spUtils.getString("isSameBook", ""))){
+            bookStagePlay.setText("播放中");
+        }
+        EventBus.getDefault().removeStickyEvent(PlayPauseBean.class);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.v("dddddddddddd","-----ddd1---");
-        bookDetailAdapter.recycleBitmap();
+        Log.v("dddddddddddd", "-----ddd1---");
+        if (bookDetailAdapter != null)
+            bookDetailAdapter.recycleBitmap();
         ButterKnife.unbind(this);
         EventBus.getDefault().unregister(this);
         EventBus.getDefault().removeStickyEvent(BookBean.class);//展示完删除
@@ -406,7 +458,10 @@ public class OtherBookDetailActivity extends BaseActivity {
                 intent.putExtra("position", -1);
                 startActivity(intent);
                 break;
-            case R.id.book_stage_play:
+            case R.id.book_stage_play: //播放
+                Log.v("tttttttttt", "---播放---");
+                AudioPlayer.get().init(this);
+                AudioPlayer.get().play(0);
                 break;
             case R.id.l_get:
                 break;//以上领取可以播放状态
@@ -417,6 +472,7 @@ public class OtherBookDetailActivity extends BaseActivity {
                 showShare();
                 break;
             case R.id.book_stage_free:
+                getFreeBook(bookId);
                 break;
             case R.id.l_free:
                 break;//以上免费需要领取
@@ -430,17 +486,69 @@ public class OtherBookDetailActivity extends BaseActivity {
                 intent = new Intent(this, BuyBookActivity.class);
                 EventBus.getDefault().postSticky(mBookBean);
                 EventBus.getDefault().removeStickyEvent(MyBookBean.class);
-                startActivityForResult(intent,0);
+                startActivityForResult(intent, 0);
                 break;
             case R.id.l_needbuy:
                 break;//以上需要购买播放
         }
     }
 
+    private void getFreeBook(final String bookId) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
+                mapParams.put("bookId", bookId);
+                HttpUtils.doPost(Urls.HOST_BUYBOOK, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                AppUtils.showToast(OtherBookDetailActivity.this, "领取失败");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //领取成功
+                                    lGet.setVisibility(View.VISIBLE);//进去播放界面
+                                    lFree.setVisibility(View.GONE);//进去免费领取界面
+                                    lNeedbuy.setVisibility(View.GONE);//进去购买领取界面
+                                    if (NetUtil.isNetConnect(OtherBookDetailActivity.this)) {
+                                        myBookPresenter.visitBooks(OtherBookDetailActivity.this, 3, 0, false);//获取书架的所有书(加入刷新)
+                                    } else {
+                                        myBookPresenter.visitBooks(OtherBookDetailActivity.this, 3, 0, true);//获取书架的所有书(加入刷新)
+                                    }  //要不点击详情页还是显现领取，详情书的状态在adapter里面控制
+/*                                    RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, true, false);
+                                    EventBus.getDefault().postSticky(refreshStageBean);*/
+                                }
+                            });
+                        } catch (Exception e) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AppUtils.showToast(OtherBookDetailActivity.this, "领取失败");
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0 && resultCode == 1){
+        if (requestCode == 0 && resultCode == 1) {
             lGet.setVisibility(View.VISIBLE);//进去播放界面
             lFree.setVisibility(View.GONE);//进去免费领取界面
             lNeedbuy.setVisibility(View.GONE);//进去购买领取界面

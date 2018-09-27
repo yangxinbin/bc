@@ -106,11 +106,11 @@ public class BookExpertAdapter extends RecyclerView.Adapter {
                 //((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice() + "积分");
                 if (chechState(datas.get(position).getId())) {//拿书id遍历判断
                     Log.v("rrrrrrr", "==y==");
-                    if (AudioPlayer.get().isPlaying() && datas.get(position).getId().equals(spUtils.getString("isSameBook", ""))) {
+/*                    if (AudioPlayer.get().isPlaying() && datas.get(position).getId().equals(spUtils.getString("isSameBook", ""))) {
                         ((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText("播放中");
-                    } else {
+                    } else {*/
                         ((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText("播放");
-                    }
+                    //}
                     //((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText("播放");//是领取
                     ((BookExpertAdapter.BookViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
                         @Override

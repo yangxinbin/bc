@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mango.bc.R;
+import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.RoundImageView;
 import com.mango.bc.util.SPUtils;
@@ -101,7 +102,11 @@ public class BookGirdFreeAdapter extends RecyclerView.Adapter {
                 return;
             viewHolder.tv_free_title.setText(datas.get(position).getTitle());
             if (chechState(datas.get(position).getId())) {//拿书id遍历判断
-                viewHolder.tv_free_stage.setText("播放");//是领取
+/*                if (AudioPlayer.get().isPlaying() && datas.get(position).getId().equals(spUtils.getString("isSameBook", ""))) {
+                    viewHolder.tv_free_stage.setText("播放中");
+                }else {*/
+                    viewHolder.tv_free_stage.setText("播放");//是领取
+                //}
                 viewHolder.tv_free_stage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

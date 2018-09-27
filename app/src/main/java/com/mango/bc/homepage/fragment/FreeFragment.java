@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.mango.bc.R;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
@@ -19,11 +21,16 @@ import com.mango.bc.bookcase.net.view.MyAllBookView;
 import com.mango.bc.homepage.activity.freebook.FreeBookActivity;
 import com.mango.bc.homepage.adapter.BookGirdFreeAdapter;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
+import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
+import com.mango.bc.homepage.bookdetail.bean.PlayPauseBean;
+import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
+import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookFreeView;
+import com.mango.bc.util.ACache;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.NetUtil;
@@ -35,6 +42,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,7 +54,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class FreeFragment extends Fragment implements BookFreeView,MyAllBookView {
+public class FreeFragment extends Fragment implements BookFreeView, MyAllBookView {
     @Bind(R.id.see_more)
     TextView seeMore;
     @Bind(R.id.recycle)
@@ -59,6 +67,7 @@ public class FreeFragment extends Fragment implements BookFreeView,MyAllBookView
     private SPUtils spUtils;
     private TextView tv_free_stage;
     private MyBookPresenterImpl myBookPresenter;
+    private ACache mCache;
 
     @Nullable
     @Override
@@ -67,6 +76,7 @@ public class FreeFragment extends Fragment implements BookFreeView,MyAllBookView
         bookPresenter = new BookPresenterImpl(this);
         myBookPresenter = new MyBookPresenterImpl(this);
         spUtils = SPUtils.getInstance("bc", getActivity());
+        mCache = ACache.get(this.getActivity());
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         initView();
@@ -93,6 +103,18 @@ public class FreeFragment extends Fragment implements BookFreeView,MyAllBookView
         }
     }
 
+    /*    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+        public void PlayPauseBeanEventBus(PlayPauseBean playPauseBean) {
+            if (playPauseBean == null) {
+                return;
+            }
+            if (playPauseBean.isPause()) {
+                tv_free_stage.setText("播放");
+            } else {
+                tv_free_stage.setText("播放中");
+            }
+            EventBus.getDefault().removeStickyEvent(PlayPauseBean.class);
+        }*/
     private void initView() {
         bookGirdFreeAdapter = new BookGirdFreeAdapter(getActivity());
         recycle.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 3));
@@ -121,7 +143,26 @@ public class FreeFragment extends Fragment implements BookFreeView,MyAllBookView
 
         @Override
         public void onPlayClick(View view, int position) {//播放
-            Log.v("wwwwwww", "======p");
+            //tv_free_stage = view.findViewById(R.id.tv_free_stage);
+/*            if (AudioPlayer.get().isPlaying() *//*&& mData.get(position).getId().equals(spUtils.getString("isSameBook", ""))*//*) {
+                return;
+            } else*/
+            if (chechState(mData.get(position).getId())) {
+                spUtils.put("isFree", true);
+            } else {
+                spUtils.put("isFree", false);
+            }
+            if (AudioPlayer.get().isPausing() /*&& mData.get(position).getId().equals(spUtils.getString("isSameBook", ""))*/) {
+                AudioPlayer.get().startPlayer();
+                //tv_free_stage.setText("播放中");
+                return;
+            }
+            if (NetUtil.isNetConnect(getActivity())) {
+                loadBookDetail(false, mData.get(position).getId());
+            } else {
+                loadBookDetail(true, mData.get(position).getId());
+            }
+
         }
 
         @Override
@@ -130,6 +171,82 @@ public class FreeFragment extends Fragment implements BookFreeView,MyAllBookView
             getFreeBook(bookGirdFreeAdapter.getItem(position).getId());
         }
     };
+
+    private boolean chechState(String bookId) {
+        String data = spUtils.getString("allMyBook", "");
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<String>>() {
+        }.getType();
+        List<String> list = gson.fromJson(data, listType);
+        if (list == null)
+            return false;
+        if (list.contains(bookId)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void loadBookDetail(final Boolean ifCache, final String bookId) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (ifCache) {//读取缓存数据
+                    String newString = mCache.getAsString("bookDetail" + bookId);
+                    Log.v("yyyyyy", "---cache5---" + newString);
+                    if (newString != null) {
+                        spUtils.put("bookDetail", newString);
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                AudioPlayer.get().init(getActivity());
+                                AudioPlayer.get().play(0);//第一个开始播放
+
+                            }
+                        });
+                        return;
+                    }
+                } else {
+                    mCache.remove("bookDetail" + bookId);//刷新之后缓存也更新过来
+                }
+                HttpUtils.doGet(Urls.HOST_BOOKDETAIL + "/" + bookId, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                AppUtils.showToast(getActivity(), "播放失败");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            Log.v("fffffffff", "---f--");
+                            String string = response.body().string();
+                            mCache.put("bookDetail" + bookId, string);
+                            spUtils.put("bookDetail", string);
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AudioPlayer.get().init(getActivity());
+                                    AudioPlayer.get().play(0);//第一个开始播放
+                                }
+                            });
+                        } catch (Exception e) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AppUtils.showToast(getActivity(), "播放失败");
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
 
     private void getFreeBook(final String bookId) {
         new Thread(new Runnable() {

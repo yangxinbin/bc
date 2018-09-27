@@ -10,10 +10,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.activity.BuyBookActivity;
+import com.mango.bc.homepage.activity.freebook.FreeBookActivity;
 import com.mango.bc.homepage.adapter.BookExpertAdapter;
 import com.mango.bc.homepage.bookdetail.ExpertBookDetailActivity;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
@@ -44,6 +47,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.List;
 
 import butterknife.Bind;
@@ -102,18 +106,7 @@ public class ExpertBookActivity extends BaseActivity implements BookExpertView {
             //bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//缓存。
         }
     }
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void PlayPauseBeanEventBus(PlayPauseBean playPauseBean) {
-        if (playPauseBean == null) {
-            return;
-        }
-        if (playPauseBean.isPause()) {
-            tv_stage.setText("播放");
-        } else {
-            tv_stage.setText("播放中");
-        }
-        //EventBus.getDefault().removeStickyEvent(PlayPauseBean.class);
-    }
+
     private void initView() {
         bookExpertAdapter = new BookExpertAdapter(this);
         recycle.setLayoutManager(new LinearLayoutManager(this.getApplicationContext()));
@@ -141,15 +134,17 @@ public class ExpertBookActivity extends BaseActivity implements BookExpertView {
 
         @Override
         public void onPlayClick(View view, int position) {
-            tv_stage = view.findViewById(R.id.tv_stage);
-            if (AudioPlayer.get().isPlaying() /*&& mData.get(position).getId().equals(spUtils.getString("isSameBook", ""))*/) {
-                return;
-            } else if (AudioPlayer.get().isPausing() /*&& mData.get(position).getId().equals(spUtils.getString("isSameBook", ""))*/) {
+            if (chechState(bookExpertAdapter.getItem(position).getId())) {
+                spUtils.put("isFree", true);
+            } else {
+                spUtils.put("isFree", false);
+            }
+            if (AudioPlayer.get().isPausing() /*&& mData.get(position).getId().equals(spUtils.getString("isSameBook", ""))*/) {
                 AudioPlayer.get().startPlayer();
-                tv_stage.setText("播放中");
+                //tv_free_stage.setText("播放中");
                 return;
             }
-            if (NetUtil.isNetConnect(getBaseContext())) {
+            if (NetUtil.isNetConnect(ExpertBookActivity.this)) {
                 loadBookDetail(false, bookExpertAdapter.getItem(position).getId());
             } else {
                 loadBookDetail(true, bookExpertAdapter.getItem(position).getId());
@@ -165,10 +160,25 @@ public class ExpertBookActivity extends BaseActivity implements BookExpertView {
                 Intent intent = new Intent(ExpertBookActivity.this, BuyBookActivity.class);
                 EventBus.getDefault().postSticky(bookExpertAdapter.getItem(position));
                 EventBus.getDefault().removeStickyEvent(MyBookBean.class);
-                startActivityForResult(intent,1);
+                startActivityForResult(intent, 1);
             }
         }
     };
+
+    private boolean chechState(String bookId) {
+        String data = spUtils.getString("allMyBook", "");
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<String>>() {
+        }.getType();
+        List<String> list = gson.fromJson(data, listType);
+        if (list == null)
+            return false;
+        if (list.contains(bookId)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     private void loadBookDetail(final Boolean ifCache, final String bookId) {
         new Thread(new Runnable() {
@@ -179,14 +189,11 @@ public class ExpertBookActivity extends BaseActivity implements BookExpertView {
                     Log.v("yyyyyy", "---cache5---" + newString);
                     if (newString != null) {
                         spUtils.put("bookDetail", newString);
-                        final BookDetailBean bookDetailBean = JsonBookDetailUtils.readBookDetailBean(newString);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 AudioPlayer.get().init(ExpertBookActivity.this);
                                 AudioPlayer.get().play(0);//第一个开始播放
-                                tv_stage.setText("播放中");
-
                             }
                         });
                         return;
@@ -211,13 +218,11 @@ public class ExpertBookActivity extends BaseActivity implements BookExpertView {
                             String string = response.body().string();
                             mCache.put("bookDetail" + bookId, string);
                             spUtils.put("bookDetail", string);
-                            final BookDetailBean bookDetailBean = JsonBookDetailUtils.readBookDetailBean(string);
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     AudioPlayer.get().init(ExpertBookActivity.this);
                                     AudioPlayer.get().play(0);//第一个开始播放
-                                    tv_stage.setText("播放中");
                                 }
                             });
                         } catch (Exception e) {
@@ -237,10 +242,11 @@ public class ExpertBookActivity extends BaseActivity implements BookExpertView {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == 1){
+        if (requestCode == 1 && resultCode == 1) {
             tv_stage.setText("播放");
         }
     }
+
     private void refreshAndLoadMore() {
         refresh.setOnRefreshListener(new OnRefreshListener() {
             @Override

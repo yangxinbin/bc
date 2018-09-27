@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.mango.bc.R;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.activity.BuyBookActivity;
@@ -40,6 +42,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -111,7 +114,7 @@ public class ExpertFragment extends Fragment implements BookExpertView {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+/*    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void PlayPauseBeanEventBus(PlayPauseBean playPauseBean) {
         if (playPauseBean == null) {
             return;
@@ -122,7 +125,7 @@ public class ExpertFragment extends Fragment implements BookExpertView {
             tv_stage.setText("播放中");
         }
         EventBus.getDefault().removeStickyEvent(PlayPauseBean.class);
-    }
+    }*/
 
     private void initView() {
         bookExpertAdapter = new BookExpertAdapter(getActivity());
@@ -151,12 +154,18 @@ public class ExpertFragment extends Fragment implements BookExpertView {
 
         @Override
         public void onPlayClick(View view, int position) {
-            tv_stage = view.findViewById(R.id.tv_stage);
-            if (AudioPlayer.get().isPlaying() /*&& mData.get(position).getId().equals(spUtils.getString("isSameBook", ""))*/) {
+//            tv_stage = view.findViewById(R.id.tv_stage);
+/*            if (AudioPlayer.get().isPlaying() *//*&& mData.get(position).getId().equals(spUtils.getString("isSameBook", ""))*//*) {
                 return;
-            } else if (AudioPlayer.get().isPausing() /*&& mData.get(position).getId().equals(spUtils.getString("isSameBook", ""))*/) {
+            } else*/
+            if (chechState(mData.get(position).getId())) {
+                spUtils.put("isFree", true);
+            } else {
+                spUtils.put("isFree", false);
+            }
+            if (AudioPlayer.get().isPausing() /*&& mData.get(position).getId().equals(spUtils.getString("isSameBook", ""))*/) {
                 AudioPlayer.get().startPlayer();
-                tv_stage.setText("播放中");
+                //tv_stage.setText("播放中");
                 return;
             }
             if (NetUtil.isNetConnect(getActivity())) {
@@ -179,7 +188,20 @@ public class ExpertFragment extends Fragment implements BookExpertView {
             }
         }
     };
-
+    private boolean chechState(String bookId) {
+        String data = spUtils.getString("allMyBook", "");
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<String>>() {
+        }.getType();
+        List<String> list = gson.fromJson(data, listType);
+        if (list == null)
+            return false;
+        if (list.contains(bookId)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     private void loadBookDetail(final Boolean ifCache, final String bookId) {
         new Thread(new Runnable() {
             @Override
@@ -189,13 +211,12 @@ public class ExpertFragment extends Fragment implements BookExpertView {
                     Log.v("yyyyyy", "---cache5---" + newString);
                     if (newString != null) {
                         spUtils.put("bookDetail", newString);
-                        final BookDetailBean bookDetailBean = JsonBookDetailUtils.readBookDetailBean(newString);
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 AudioPlayer.get().init(getActivity());
                                 AudioPlayer.get().play(0);//第一个开始播放
-                                tv_stage.setText("播放中");
+//                                tv_stage.setText("播放中");
 
                             }
                         });
@@ -221,13 +242,11 @@ public class ExpertFragment extends Fragment implements BookExpertView {
                             String string = response.body().string();
                             mCache.put("bookDetail" + bookId, string);
                             spUtils.put("bookDetail", string);
-                            final BookDetailBean bookDetailBean = JsonBookDetailUtils.readBookDetailBean(string);
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     AudioPlayer.get().init(getActivity());
                                     AudioPlayer.get().play(0);//第一个开始播放
-                                    tv_stage.setText("播放中");
                                 }
                             });
                         } catch (Exception e) {

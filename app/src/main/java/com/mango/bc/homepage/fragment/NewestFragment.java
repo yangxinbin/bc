@@ -12,14 +12,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.mango.bc.R;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
 import com.mango.bc.bookcase.net.view.MyAllBookView;
 import com.mango.bc.homepage.activity.BuyBookActivity;
+import com.mango.bc.homepage.activity.freebook.FreeBookActivity;
 import com.mango.bc.homepage.adapter.BookNewestAdapter;
 import com.mango.bc.homepage.bean.BuySuccessBean;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
+import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
+import com.mango.bc.homepage.bookdetail.bean.PlayPauseBean;
+import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
+import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.bean.LoadStageBean;
@@ -27,19 +34,28 @@ import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookNewestView;
+import com.mango.bc.util.ACache;
 import com.mango.bc.util.AppUtils;
+import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.NetUtil;
+import com.mango.bc.util.SPUtils;
+import com.mango.bc.util.Urls;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
-public class NewestFragment extends Fragment implements BookNewestView,MyAllBookView {
+public class NewestFragment extends Fragment implements BookNewestView, MyAllBookView {
     @Bind(R.id.recycle)
     RecyclerView recycle;
     private BookNewestAdapter bookNewestAdapter;
@@ -48,6 +64,8 @@ public class NewestFragment extends Fragment implements BookNewestView,MyAllBook
     private int page = 0;
     private TextView tv_stage;
     private MyBookPresenterImpl myBookPresenter;
+    private ACache mCache;
+    private SPUtils spUtils;
 
     @Nullable
     @Override
@@ -57,10 +75,12 @@ public class NewestFragment extends Fragment implements BookNewestView,MyAllBook
         myBookPresenter = new MyBookPresenterImpl(this);
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
+        spUtils = SPUtils.getInstance("bc", getActivity());
+        mCache = ACache.get(this.getActivity());
         initView();
-        if (NetUtil.isNetConnect(getActivity())){
+        if (NetUtil.isNetConnect(getActivity())) {
             //bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);
-        }else {
+        } else {
             bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);
         }
         return view;
@@ -120,15 +140,29 @@ public class NewestFragment extends Fragment implements BookNewestView,MyAllBook
 
         @Override
         public void onPlayClick(View view, int position) {
-
+            if (chechState(bookNewestAdapter.getItem(position).getId())) {
+                spUtils.put("isFree", true);
+            } else {
+                spUtils.put("isFree", false);
+            }
+            if (AudioPlayer.get().isPausing() /*&& mData.get(position).getId().equals(spUtils.getString("isSameBook", ""))*/) {
+                AudioPlayer.get().startPlayer();
+                //tv_free_stage.setText("播放中");
+                return;
+            }
+            if (NetUtil.isNetConnect(getActivity())) {
+                loadBookDetail(false, bookNewestAdapter.getItem(position).getId());
+            } else {
+                loadBookDetail(true, bookNewestAdapter.getItem(position).getId());
+            }
         }
 
         @Override
         public void onGetClick(View view, int position) {
             tv_stage = view.findViewById(R.id.tv_stage);
-            if (tv_stage.getText().equals("播放")){
-                Log.v("bbbbbbbb","-----"+tv_stage.getText());
-            }else {
+            if (tv_stage.getText().equals("播放")) {
+                Log.v("bbbbbbbb", "-----" + tv_stage.getText());
+            } else {
                 Intent intent = new Intent(getActivity(), BuyBookActivity.class);
                 EventBus.getDefault().postSticky(bookNewestAdapter.getItem(position));
                 EventBus.getDefault().removeStickyEvent(MyBookBean.class);
@@ -139,19 +173,94 @@ public class NewestFragment extends Fragment implements BookNewestView,MyAllBook
 
     };
 
+    private boolean chechState(String bookId) {
+        String data = spUtils.getString("allMyBook", "");
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<String>>() {
+        }.getType();
+        List<String> list = gson.fromJson(data, listType);
+        if (list == null)
+            return false;
+        if (list.contains(bookId)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void loadBookDetail(final Boolean ifCache, final String bookId) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (ifCache) {//读取缓存数据
+                    String newString = mCache.getAsString("bookDetail" + bookId);
+                    Log.v("yyyyyy", "---cache5---" + newString);
+                    if (newString != null) {
+                        spUtils.put("bookDetail", newString);
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                AudioPlayer.get().init(getActivity());
+                                AudioPlayer.get().play(0);//第一个开始播放
+                            }
+                        });
+                        return;
+                    }
+                } else {
+                    mCache.remove("bookDetail" + bookId);//刷新之后缓存也更新过来
+                }
+                HttpUtils.doGet(Urls.HOST_BOOKDETAIL + "/" + bookId, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                AppUtils.showToast(getActivity(), "播放失败");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            String string = response.body().string();
+                            mCache.put("bookDetail" + bookId, string);
+                            spUtils.put("bookDetail", string);
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AudioPlayer.get().init(getActivity());
+                                    AudioPlayer.get().play(0);//第一个开始播放
+                                }
+                            });
+                        } catch (Exception e) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AppUtils.showToast(getActivity(), "播放失败");
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void BuySuccessBeanEventBus(BuySuccessBean bean) {
         if (bean == null) {
             return;
         }
-        Log.v("bbbbb","---1----"+bean.getBuySuccess());
+        Log.v("bbbbb", "---1----" + bean.getBuySuccess());
 
-        if (bean.getBuySuccess()){
-            Log.v("bbbbb","----2---");
+        if (bean.getBuySuccess()) {
+            Log.v("bbbbb", "----2---");
             tv_stage.setText("播放");
         }
         EventBus.getDefault().removeStickyEvent(BuySuccessBean.class);
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -169,7 +278,7 @@ public class NewestFragment extends Fragment implements BookNewestView,MyAllBook
                         return;
                     }
                     if (page == 0) {
-                        Log.v("yyyyyyy", "==?like===4--"+bookBeanList.get(4).getLikes());
+                        Log.v("yyyyyyy", "==?like===4--" + bookBeanList.get(4).getLikes());
                         bookNewestAdapter.reMove();
                         bookNewestAdapter.setmDate(bookBeanList);
                     } else {

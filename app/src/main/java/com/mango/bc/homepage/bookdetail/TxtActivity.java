@@ -101,7 +101,7 @@ public class TxtActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            if (getIntent().getBooleanExtra("playActivity", false)) {//避免图片错位
+            if (getIntent().getBooleanExtra("playActivity", false)) {// 避免图片错位
                 Intent intentDetail = new Intent(this, PlayActivity.class);
                 intentDetail.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intentDetail.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);

@@ -184,7 +184,7 @@ public class AlbumCoverView extends View implements ValueAnimator.AnimatorUpdate
     @Override
     public void onAnimationUpdate(ValueAnimator animation) {
         mNeedleRotation = (float) animation.getAnimatedValue();
-        invalidate();
+        //invalidate();
     }
 
     private Runnable mRotationRunnable = new Runnable() {

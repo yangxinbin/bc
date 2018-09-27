@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -416,7 +417,9 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
             case R.id.iv_txt:
                 intent = new Intent(this, TxtActivity.class);
                 intent.putExtra("position", AudioPlayer.get().getPlayPosition());
+                intent.putExtra("playActivity", true);
                 startActivity(intent);
+                finish();
                 break;
             case R.id.iv_list:
                 //intent = new Intent(this, ExpertBookDetailActivity.class);
@@ -507,9 +510,9 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
         dialog.setContentView(view);
         Window window = dialog.getWindow();
         //设置弹出窗口大小
-        window.setLayout(WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
         //设置显示位置
-        window.setGravity(Gravity.BOTTOM);
+        window.setGravity(Gravity.CENTER);
         //设置动画效果
         window.setWindowAnimations(R.style.AnimBottom);
         dialog.setCanceledOnTouchOutside(true);
@@ -521,7 +524,8 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
         public void onReadClick(View view, int position) {
             AudioPlayer.get().init(PlayActivity.this);
             AudioPlayer.get().play(position);
-            adapter.notifyDataSetChanged();
+            dialog.dismiss();
+            //adapter.notifyDataSetChanged();
         }
     };
 
@@ -532,4 +536,6 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
         Log.v("xxxx", "----" + AudioPlayer.get().getPlayPosition());
         AudioPlayer.get().addOnPlayEventListener(this);
     }*/
+
+
 }

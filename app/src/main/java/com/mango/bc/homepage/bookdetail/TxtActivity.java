@@ -1,15 +1,18 @@
 package com.mango.bc.homepage.bookdetail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.bookdetail.adapter.MyTxtDetailAdapter;
 import com.mango.bc.homepage.bookdetail.adapter.TxtDetailAdapter;
+import com.mango.bc.homepage.bookdetail.play.PlayActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 
 import org.greenrobot.eventbus.EventBus;
@@ -50,7 +53,7 @@ public class TxtActivity extends BaseActivity {
                 txtDetailAdapter = new TxtDetailAdapter(bookBean.getChapters().get(position).getContentImages(), this);
             }
             recycle.setLayoutManager(new LinearLayoutManager(this));
-            Log.v("rrrrrrrrrrrr","----r1");
+            Log.v("rrrrrrrrrrrr", "----r1");
             recycle.setAdapter(txtDetailAdapter);
         }
     }
@@ -67,13 +70,20 @@ public class TxtActivity extends BaseActivity {
                 myTxtDetailAdapter = new MyTxtDetailAdapter(bookBean.getBook().getChapters().get(position).getContentImages(), this);
             }
             recycle.setLayoutManager(new LinearLayoutManager(this));
-            Log.v("rrrrrrrrrrrr","----r2");
+            Log.v("rrrrrrrrrrrr", "----r2");
             recycle.setAdapter(myTxtDetailAdapter);
         }
     }
 
     @OnClick(R.id.imageView_back)
     public void onViewClicked() {
+        if (getIntent().getBooleanExtra("playActivity", false)) {//避免图片错位
+            Intent intentDetail = new Intent(this, PlayActivity.class);
+            intentDetail.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intentDetail.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intentDetail.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intentDetail);
+        }
         finish();
     }
 
@@ -86,5 +96,22 @@ public class TxtActivity extends BaseActivity {
             myTxtDetailAdapter.recycleBitmap();
         ButterKnife.unbind(this);
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            if (getIntent().getBooleanExtra("playActivity", false)) {//避免图片错位
+                Intent intentDetail = new Intent(this, PlayActivity.class);
+                intentDetail.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intentDetail.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intentDetail.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intentDetail);
+            }
+            finish();
+            return false;
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
     }
 }

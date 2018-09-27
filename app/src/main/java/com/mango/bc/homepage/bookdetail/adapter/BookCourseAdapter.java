@@ -2,6 +2,7 @@ package com.mango.bc.homepage.bookdetail.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,8 @@ public class BookCourseAdapter extends RecyclerView.Adapter {
     }
 
     public void setIsPlaylist(boolean isPlaylist) {
+        Log.v("ssssssssss","--setIsPlaylist--");
+
         this.isPlaylist = isPlaylist;
     }
 
@@ -66,6 +69,8 @@ public class BookCourseAdapter extends RecyclerView.Adapter {
                 if (!(datas.get(position).getIsFree() || spUtils.getBoolean("isFree", false))) {
                     viewHolder.img_txt.setImageResource(R.drawable.lock);
                 }
+                Log.v("ssssssssss",isPlaylist+"-isPlaylist---"+AudioPlayer.get().getPlayPosition());
+
                 if (isPlaylist && position == AudioPlayer.get().getPlayPosition()) {
                     viewHolder.img_read.setImageResource(R.drawable.playing);
                 }else {

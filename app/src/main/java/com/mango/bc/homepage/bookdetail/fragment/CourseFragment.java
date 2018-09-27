@@ -73,6 +73,8 @@ public class CourseFragment extends BaseServiceFragment implements OnPlayerEvent
                 bookMusicDetailBeanList.add(bookMusicDetailBean);
             }
             bookCourseAdapter = new BookCourseAdapter(bookMusicDetailBeanList, getActivity());
+            if (AudioPlayer.get().isPlaying() || AudioPlayer.get().isPausing())
+                bookCourseAdapter.setIsPlaylist(true);
             recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
             recycle.setAdapter(bookCourseAdapter);
             bookCourseAdapter.setOnItemClickLitener(mOnClickListenner);
@@ -100,6 +102,8 @@ public class CourseFragment extends BaseServiceFragment implements OnPlayerEvent
                 bookMusicDetailBeanList.add(bookMusicDetailBean);
             }
             bookCourseAdapter = new BookCourseAdapter(bookMusicDetailBeanList, getActivity());
+            if (AudioPlayer.get().isPlaying() || AudioPlayer.get().isPausing())
+                bookCourseAdapter.setIsPlaylist(true);
             recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
             recycle.setAdapter(bookCourseAdapter);
             bookCourseAdapter.setOnItemClickLitener(mOnClickListenner);
@@ -127,6 +131,7 @@ public class CourseFragment extends BaseServiceFragment implements OnPlayerEvent
     @Override
     protected void onServiceBound() {
         bookCourseAdapter.setIsPlaylist(true);
+        Log.v("ssssssssss", "----" + AudioPlayer.get().getPlayPosition());
         AudioPlayer.get().addOnPlayEventListener(this);
     }
 

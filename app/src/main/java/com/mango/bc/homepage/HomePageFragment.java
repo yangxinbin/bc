@@ -89,7 +89,7 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
         if (playBarBean == null) {
             return;
         }
-        Log.v("iiiiiiiiiiiiii", "---iiiiiiiiiiii---");
+        Log.v("iiiiiiiiiiiiii", "---iiiihhhhiiiii---");
         if (!playBarBean.isShowBar()) {
             flPlayBar.setVisibility(View.GONE);//播放控件
             Log.v("iiiiiiiiiiiiii", "----h---");

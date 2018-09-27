@@ -424,7 +424,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
         if (playBarBean == null) {
             return;
         }
-        Log.v("iiiiiiiiiiiiii", "---iiiiiiiiiiii---");
+        Log.v("iiiiiiiiiiiiii", "---iiiieeeeiiiii---");
         if (!playBarBean.isShowBar()) {
             flPlayBar.setVisibility(View.GONE);//播放控件
             Log.v("iiiiiiiiiiiiii", "----h---");

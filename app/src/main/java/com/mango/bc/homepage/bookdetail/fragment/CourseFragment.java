@@ -15,6 +15,7 @@ import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.bookdetail.TxtActivity;
 import com.mango.bc.homepage.bookdetail.adapter.BookCourseAdapter;
 import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
+import com.mango.bc.homepage.bookdetail.bean.PlayBarBean;
 import com.mango.bc.homepage.bookdetail.play.BaseServiceFragment;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.bookdetail.play.service.OnPlayerEventListener;
@@ -50,6 +51,15 @@ public class CourseFragment extends BaseServiceFragment implements OnPlayerEvent
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         return view;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void PlayBarBeanEventBus(PlayBarBean playBarBean) {
+        if (playBarBean == null) {
+            return;
+        }
+        Log.v("iiiiiiiiiiiiii", "---iiiicccciiii---");
+        bookCourseAdapter.notifyDataSetChanged();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)

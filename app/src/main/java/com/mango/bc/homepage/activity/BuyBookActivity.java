@@ -180,7 +180,7 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    loadUser();//更新用户信息
+                                    loadUser();//更新用户信息（钱）
                                     StatsBean statsBean = AuthJsonUtils.readStatsBean(string1);
                                     EventBus.getDefault().postSticky(statsBean);//刷新钱包
                                 }

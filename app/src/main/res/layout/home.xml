@@ -51,29 +51,31 @@
             android:src="@drawable/group" />
     </LinearLayout>
 
-<!--    <ImageView
-        android:id="@+id/imageView_vip"
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/imageView_novip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_10"
         android:scaleType="fitXY"
-        app:srcCompat="@drawable/banner" />-->
-    <com.youth.banner.Banner
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="@dimen/dp_15"
-        android:layout_marginRight="@dimen/dp_15"
-        android:layout_marginTop="@dimen/dp_10"
-        android:scaleType="fitXY"
-        tools:layout_editor_absoluteX="0dp" />
+        app:srcCompat="@drawable/banner" />
+    <!--    <com.youth.banner.Banner
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginRight="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_10"
+            android:scaleType="fitXY"
+            tools:layout_editor_absoluteX="0dp" />-->
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/l_vip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -83,8 +85,7 @@
         android:background="@drawable/vip_card"
         android:orientation="vertical"
         android:padding="@dimen/dp_15"
-        android:scaleType="fitXY"
-        android:visibility="gone">
+        android:scaleType="fitXY">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -93,7 +94,7 @@
             android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imageVie_pic"
+                android:id="@+id/imageVie_author"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:src="@drawable/head_pic5"
@@ -113,6 +114,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv_vipName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -121,6 +123,8 @@
                         android:textSize="@dimen/textSize" />
 
                     <ImageView
+                        android:id="@+id/img_vip"
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -128,14 +132,17 @@
                         android:src="@drawable/vip" />
 
                     <ImageView
+                        android:id="@+id/img_agency"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:layout_gravity="center"
                         android:layout_marginLeft="@dimen/dp_5"
                         android:src="@drawable/talent" />
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tv_vipTime"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -168,6 +175,7 @@
             android:padding="@dimen/dp_5">
 
             <TextView
+                android:id="@+id/tv_bookReadDay"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -177,6 +185,7 @@
                 android:textSize="@dimen/textSize" />
 
             <TextView
+                android:id="@+id/tv_vipTip"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -194,6 +203,7 @@
             android:padding="@dimen/dp_5">
 
             <TextView
+                android:id="@+id/tv_vipContent1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -203,6 +213,7 @@
                 android:textSize="@dimen/dp_12" />
 
             <TextView
+                android:id="@+id/tv_vipContent2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"

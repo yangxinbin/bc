@@ -73,6 +73,10 @@ public class MineFragment extends Fragment {
     LinearLayout lToAgent;
     @Bind(R.id.l_faq)
     LinearLayout lFaq;
+    @Bind(R.id.img_vip)
+    ImageView imgVip;
+    @Bind(R.id.img_agency)
+    ImageView imgAgency;
     private SPUtils spUtils;
 
     @Nullable
@@ -168,6 +172,11 @@ public class MineFragment extends Fragment {
         if (userBean == null)
             return;
         Log.v("cccccccccc", "-----R--2--" + spUtils.getString("auth", ""));
+        if (userBean.isVip()) {
+            imgVip.setVisibility(View.VISIBLE);
+        } else {
+            imgVip.setVisibility(View.GONE);
+        }
         tvAuthNName.setText(userBean.getAlias());
         if (userBean.getAvator() != null)
             Glide.with(getActivity()).load(Urls.HOST_GETFILE + "?name=" + userBean.getAvator().getFileName()).into(imageViePic);

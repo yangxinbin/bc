@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.mango.bc.R;
@@ -18,9 +17,7 @@ import com.mango.bc.base.BaseActivity;
 import com.mango.bc.homepage.adapter.SingleAdapter;
 import com.mango.bc.homepage.bean.VipPackageBean;
 import com.mango.bc.homepage.bean.VipType;
-import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
-import com.mango.bc.homepage.net.jsonutils.JsonUtils;
-import com.mango.bc.mine.bean.StatsBean;
+import com.mango.bc.mine.bean.UserBean;
 import com.mango.bc.mine.jsonutil.AuthJsonUtils;
 import com.mango.bc.util.ACache;
 import com.mango.bc.util.AppUtils;
@@ -31,9 +28,9 @@ import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -46,6 +43,8 @@ import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+
+import static android.R.attr.format;
 
 public class OpenUpVipActivity extends BaseActivity {
 
@@ -152,8 +151,21 @@ public class OpenUpVipActivity extends BaseActivity {
 
     private void initDetail(String s) {
         calendar = Calendar.getInstance();
-        //获取当前时间
-        da = new Date();
+        UserBean userBean = AuthJsonUtils.readUserBean(spUtils.getString("auth", ""));
+        if (userBean != null) {
+            if (userBean.getBilling() != null){
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String d = format.format(userBean.getBilling().getEndOn());
+                try {
+                    da = format.parse(d);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        }else {
+            //获取当前时间
+            da = new Date();
+        }
         calendar.setTime(da);//把当前时间赋给日历
         long timePast = 0;
         if (s.equals("monthly")) {//月

@@ -146,7 +146,6 @@ public class WalletFragment extends Fragment {
         if (userBean == null)
             return;
         initAuth(userBean);
-
     }
 
     private void initAuth(UserBean userBean) {

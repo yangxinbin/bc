@@ -10,13 +10,23 @@ public class VipType {
     private String detail;
     private String unbc;
     private String bc;
+    private String type;
 
-    public VipType(String title, String flagtitle, String detail, String unbc, String bc) {
+    public VipType(String title, String flagtitle, String detail, String unbc, String bc, String type) {
         this.title = title;
         Flagtitle = flagtitle;
         this.detail = detail;
         this.unbc = unbc;
         this.bc = bc;
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getTitle() {

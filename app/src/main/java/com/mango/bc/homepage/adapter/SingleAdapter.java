@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.homepage.bean.VipType;
+import com.mango.bc.homepage.net.bean.BookBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +21,7 @@ import java.util.List;
 
 public class SingleAdapter extends RecyclerView.Adapter {
 
-    private List<VipType> datas;
+    private List<VipType> datas = new ArrayList<>();
 
     private int selected = -1;
 
@@ -32,7 +34,9 @@ public class SingleAdapter extends RecyclerView.Adapter {
     public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
         this.mOnItemClickLitener = mOnItemClickLitener;
     }
-
+    public VipType getItem(int position) {
+        return datas.get(position);
+    }
     public interface OnItemClickLitener {
 
         void onItemClick(View view, int position);

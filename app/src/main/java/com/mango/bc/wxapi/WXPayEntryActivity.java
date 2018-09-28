@@ -30,7 +30,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.pay_result);
         sharedPreferences = getSharedPreferences("CIFIT", MODE_PRIVATE);
-        api = WXAPIFactory.createWXAPI(this, "wxdb0ddd21496fccc3");
+        api = WXAPIFactory.createWXAPI(this, "wxb93480bda524daa0");
         api.handleIntent(getIntent(), this);
     }
 
@@ -85,4 +85,5 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
         }
 
     }
+
 }

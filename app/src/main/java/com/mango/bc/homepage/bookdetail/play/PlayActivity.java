@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,16 +40,36 @@ import com.mango.bc.homepage.bookdetail.play.utils.CoverLoader;
 import com.mango.bc.homepage.bookdetail.play.utils.ScreenUtils;
 import com.mango.bc.homepage.bookdetail.play.utils.SystemUtils;
 import com.mango.bc.homepage.bookdetail.play.widget.AlbumCoverView;
+import com.mango.bc.util.AppUtils;
+import com.mango.bc.util.HttpUtils;
+import com.mango.bc.util.JsonUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
+import com.mango.bc.wallet.bean.CheckInBean;
+import com.mango.bc.wallet.bean.RefreshTaskBean;
+import com.tencent.mm.opensdk.modelbase.BaseReq;
+import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.IOException;
+import java.nio.file.Watchable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.wechat.friends.Wechat;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 
 /**
@@ -484,9 +505,54 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
         oks.setSite(getString(R.string.app_name));
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
         oks.setSiteUrl("http://sharesdk.cn");
+        oks.setCallback(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                Log.v("nnnnn", "----1");
+                shareNum();
+            }
 
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+                Log.v("nnnn", "----2");
+
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+                Log.v("nnnn", "----3");
+
+            }
+        });
         // 启动分享GUI
         oks.show(getApplicationContext());
+
+    }
+
+    private void shareNum() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
+                HttpUtils.doPost(Urls.HOST_TASKSHARE, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        //mHandler.sendEmptyMessage(0);
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
+                        } catch (Exception e) {
+                            //mHandler.sendEmptyMessage(0);
+                        }
+                    }
+                });
+            }
+        }).start();
     }
 
     private void showPopupWindow(Context context, List<BookMusicDetailBean> bookMusicDetailBeanList) {
@@ -528,6 +594,7 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
             //adapter.notifyDataSetChanged();
         }
     };
+
 
 /*    @Override
     protected void onServiceBound() {

@@ -74,6 +74,7 @@ public class RechargeActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView_back:
+                finish();
                 break;
             case R.id.buy_vip:
                 break;

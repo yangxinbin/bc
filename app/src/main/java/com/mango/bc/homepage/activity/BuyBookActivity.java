@@ -1,5 +1,6 @@
 package com.mango.bc.homepage.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
+import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
 import com.mango.bc.bookcase.net.view.MyAllBookView;
 import com.mango.bc.homepage.bean.BuySuccessBean;
@@ -23,6 +25,7 @@ import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.RoundImageView;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
+import com.mango.bc.wallet.activity.RechargeActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -59,6 +62,7 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
     private SPUtils spUtils;
     private MyBookPresenterImpl myBookPresenter;
     private String bookId;
+    private Double ppCoins, prices;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,14 +73,21 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         initAuth(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));
+        Log.v("ppppppp",ppCoins+"==="+prices);
+        if (ppCoins < prices) {
+            tvBuy.setText(getResources().getString(R.string.pp_recharge));
+        }
     }
+
     private void initAuth(UserBean userBean) {
         if (userBean == null)
             return;
         if (userBean.getWallet() != null) {
+            ppCoins = userBean.getWallet().getPpCoins();
             tvAllPpg.setText(userBean.getWallet().getPpCoins() + "积分");
         }
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void BookBeanEventBus(BookBean bookDetailBean) { //首页进来 需要判断 是否可以播放 是否要钱购买
         if (bookDetailBean == null) {
@@ -88,10 +99,12 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
         }
         bookId = bookDetailBean.getId();
         tvTitle.setText(bookDetailBean.getTitle());
-        tvPpgNeed.setText(bookDetailBean.getPrice()+"积分");
-        tvNeedPpg.setText("实付款："+bookDetailBean.getPrice()+"积分");
+        prices = bookDetailBean.getPrice();
+        tvPpgNeed.setText(bookDetailBean.getPrice() + "积分");
+        tvNeedPpg.setText("实付款：" + bookDetailBean.getPrice() + "积分");
 
     }
+
     @OnClick({R.id.imageView_back, R.id.tv_buy})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -103,10 +116,16 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
                 EventBus.getDefault().postSticky(buySuccessBean);
                 setResult(1);
                 finish();*/
-                getBuyBook(bookId);
+                if (tvBuy.getText().equals(getResources().getString(R.string.pp_recharge))) {
+                    Intent intent = new Intent(this, RechargeActivity.class);
+                    startActivity(intent);
+                } else {
+                    getBuyBook(bookId);
+                }
                 break;
         }
     }
+
     private void getBuyBook(final String bookId) {
         new Thread(new Runnable() {
             @Override
@@ -168,7 +187,7 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
                 //final HashMap<String, String> mapParams = new HashMap<String, String>();
                 //mapParams.clear();
                 //mapParams.put("authToken", spUtils.getString("authToken", ""));
-                HttpUtils.doGet(Urls.HOST_STATS+"?authToken="+spUtils.getString("authToken", ""), /*mapParams,*/ new Callback() {
+                HttpUtils.doGet(Urls.HOST_STATS + "?authToken=" + spUtils.getString("authToken", ""), /*mapParams,*/ new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                     }

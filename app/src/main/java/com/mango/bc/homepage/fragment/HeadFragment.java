@@ -112,6 +112,7 @@ public class HeadFragment extends Fragment {
     public void UserBeanEventBus(UserBean userBean) {//用于实时更新
         if (userBean == null)
             return;
+        initView(userBean);
     }
 /*    private void initBanner() {
         List<String> pathsImage = new ArrayList<>();

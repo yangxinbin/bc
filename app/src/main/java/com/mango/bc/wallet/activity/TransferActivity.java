@@ -16,7 +16,6 @@ import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
-import com.mango.bc.wallet.bean.RefreshPpgBean;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -95,9 +94,10 @@ public class TransferActivity extends BaseActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    spUtils.put("auth", string);
-                                    initAuth(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));//刷新
-                                    EventBus.getDefault().postSticky(new RefreshPpgBean(true));//刷新
+                                    spUtils.put("auth", string);//刷新用户信息
+                                    initAuth(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));
+                                    UserBean userBean = AuthJsonUtils.readUserBean(string);
+                                    EventBus.getDefault().postSticky(userBean);//刷新钱包
                                 }
                             });
                         } catch (IOException e) {

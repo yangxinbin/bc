@@ -2,11 +2,9 @@ package com.mango.bc;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,15 +22,11 @@ import okhttp3.Response;
 
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.bookcase.BookcaseFragment;
-import com.mango.bc.bookcase.net.model.MyBookModel;
 import com.mango.bc.bookcase.net.presenter.MyBookPresenter;
 import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
 import com.mango.bc.bookcase.net.view.MyAllBookView;
 import com.mango.bc.homepage.HomePageFragment;
-import com.mango.bc.homepage.bookdetail.bean.CommentBean;
-import com.mango.bc.homepage.bookdetail.fragment.CommentFragment;
 import com.mango.bc.mine.MineFragment;
-import com.mango.bc.mine.jsonutil.AuthJsonUtils;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.JsonUtil;
@@ -42,14 +36,12 @@ import com.mango.bc.util.Urls;
 import com.mango.bc.view.BottomBar;
 import com.mango.bc.wallet.WalletFragment;
 import com.mango.bc.wallet.bean.CheckInBean;
-import com.mango.bc.wallet.bean.RefreshPpgBean;
 import com.mango.bc.wallet.bean.RefreshTaskBean;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 
 public class BcActivity extends BaseActivity implements MyAllBookView {
 
@@ -253,9 +245,9 @@ public class BcActivity extends BaseActivity implements MyAllBookView {
                         return;
                     if (checkInBean.isTodayCheckedIn()) {
                         showCheckInWindow(BcActivity.this, checkInBean);
-                    } else {
+                    }/* else {
                         EventBus.getDefault().postSticky(checkInBean);
-                    }
+                    }*/
                     break;
                 case 2://获取信息失败
 

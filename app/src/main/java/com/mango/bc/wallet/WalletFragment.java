@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.mango.bc.BcActivity;
 import com.mango.bc.R;
 import com.mango.bc.adapter.ViewPageAdapter;
 import com.mango.bc.mine.bean.UserBean;
@@ -34,9 +33,7 @@ import com.mango.bc.wallet.activity.CurrencyActivity;
 import com.mango.bc.wallet.activity.RechargeActivity;
 import com.mango.bc.wallet.activity.TransactionActivity;
 import com.mango.bc.wallet.activity.TransferActivity;
-import com.mango.bc.wallet.bean.CheckBean;
 import com.mango.bc.wallet.bean.CheckInBean;
-import com.mango.bc.wallet.bean.RefreshPpgBean;
 import com.mango.bc.wallet.bean.RefreshTaskBean;
 import com.mango.bc.wallet.fragment.AlreadyObtainedFragment;
 import com.mango.bc.wallet.fragment.DailyTasksFragment;
@@ -120,14 +117,15 @@ public class WalletFragment extends Fragment {
     private ArrayList<String> mDatas;
     List<Fragment> mfragments = new ArrayList<Fragment>();
     private SPUtils spUtils;
+    private int singDay;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.wallet, container, false);
+        spUtils = SPUtils.getInstance("bc", getActivity());
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
-        spUtils = SPUtils.getInstance("bc", getActivity());
         initDatas();
         init();
         initAuth(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));
@@ -135,29 +133,26 @@ public class WalletFragment extends Fragment {
         return view;
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true, priority = 1)
+/*    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true, priority = 1)
     public void CheckEventBus(CheckInBean checkInBean) {
         if (checkInBean == null)
             return;
-        initChechIf(JsonUtil.readCheckInBean(spUtils.getString("checkIf", "")));
-        EventBus.getDefault().removeStickyEvent(CheckInBean.class);
-    }
+        initChechIf(checkInBean*//*JsonUtil.readCheckInBean(spUtils.getString("checkIf", ""))*//*);
+        //EventBus.getDefault().removeStickyEvent(CheckInBean.class);
+    }*/
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void RefreshPpgEventBus(RefreshPpgBean refreshPpgBean) {
-        if (refreshPpgBean == null)
+    public void UserBeanEventBus(UserBean userBean) {
+        if (userBean == null)
             return;
-        Log.v("cccccccccc", "-----RefreshPpgEventBus----" + refreshPpgBean.getIfRefreshPpg());
+        initAuth(userBean);
 
-        if (refreshPpgBean.getIfRefreshPpg()) {
-            initAuth(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));
-        }
-        EventBus.getDefault().removeStickyEvent(RefreshPpgBean.class);
     }
 
     private void initAuth(UserBean userBean) {
         if (userBean == null)
             return;
+        Log.v("cccccccccc", "-----R--1--" + spUtils.getString("auth", ""));
         if (userBean.getWallet() != null) {
             tvAllPp.setText(userBean.getWallet().getPpCoins() + "");
             tvWalletadress.setText(userBean.getWallet().getWalletAddress());
@@ -260,6 +255,7 @@ public class WalletFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        //EventBus.getDefault().unregister(this);
     }
 
     @OnClick({R.id.tv_transaction_record, R.id.tv_copy, R.id.l_recharge, R.id.l_transfer, R.id.l_currency, R.id.tv_sign,/* R.id.l_to_bc, R.id.l_1, R.id.l_2, R.id.l_3, R.id.l_4, R.id.l_5, R.id.l_service*/})
@@ -347,14 +343,19 @@ public class WalletFragment extends Fragment {
                     //EventBus.getDefault().postSticky(checkInBean);//刷新
                     //initChechIf(checkBean);
                     try {
-                        breadcrumbs.nextStep();
                         EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
                         AppUtils.showToast(getActivity(), "签到成功");
-                        tvSign.setText("已签到");
-                        tvSign.setEnabled(false);
+                        ifCheckIn();
+                        //tvSign.setEnabled(false);
                     } catch (IndexOutOfBoundsException e) {
                         //签到7天完成
+                        //tvSignDay.setText("已签到" + 7 + "天");
                     }
+                    break;
+                case 2://
+                    CheckInBean checkInBean = (CheckInBean) msg.obj;
+                    if (checkInBean != null)
+                        initChechfromWallet(checkInBean);//更新签到表
                     break;
                 default:
                     break;
@@ -362,9 +363,54 @@ public class WalletFragment extends Fragment {
         }
     }
 
+    private void ifCheckIn() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
+                HttpUtils.doPost(Urls.HOST_IFCHECK, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        //mHandler.sendEmptyMessage(0);
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            String string = response.body().string();
+                            CheckInBean checkInBean = JsonUtil.readCheckInBean(string);
+                            spUtils.put("checkIf", string);
+                            Message msg = mHandler.obtainMessage();
+                            msg.obj = checkInBean;
+                            msg.what = 2;
+                            msg.sendToTarget();
+                        } catch (Exception e) {
+                            //mHandler.sendEmptyMessage(0);
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
+    private void initChechfromWallet(CheckInBean checkInBean) {
+        breadcrumbs.nextStep();
+        singDay = checkInBean.getCount();
+        tvSignDay.setText("已签到" + checkInBean.getCount() + "天");
+        if (checkInBean.isTodayCheckedIn()) {
+            tvSign.setText("立即签到");
+            tvSign.setEnabled(true);
+        } else {
+            tvSign.setText("已签到");
+            tvSign.setEnabled(false);
+        }
+    }
+
     private void initChechIf(CheckInBean checkInBean) {
         if (checkInBean == null)
             return;
+        singDay = checkInBean.getCount();
         tvSignDay.setText("已签到" + checkInBean.getCount() + "天");
         if (checkInBean.isTodayCheckedIn()) {
             tvSign.setText("立即签到");

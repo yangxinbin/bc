@@ -2,8 +2,6 @@ package com.mango.bc.mine;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,27 +15,22 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.mango.bc.R;
 import com.mango.bc.homepage.activity.VipDetailActivity;
-import com.mango.bc.homepage.adapter.BookExpertAdapter;
 import com.mango.bc.mine.activity.FaqActivity;
 import com.mango.bc.mine.activity.ServiceActivity;
+import com.mango.bc.mine.bean.StatsBean;
 import com.mango.bc.mine.bean.UserBean;
 import com.mango.bc.mine.jsonutil.AuthJsonUtils;
-import com.mango.bc.util.ACache;
-import com.mango.bc.util.AppUtils;
-import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 
-import java.io.IOException;
-import java.util.HashMap;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 /**
  * Created by admin on 2018/9/10.
@@ -86,9 +79,10 @@ public class MineFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.mine, container, false);
-        ButterKnife.bind(this, view);
-        //loadUser(false); //从网络拿数据
         spUtils = SPUtils.getInstance("bc", getActivity());
+        ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
+        //loadUser(false); //从网络拿数据
         initView(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));
         return view;
     }
@@ -162,9 +156,18 @@ public class MineFragment extends Fragment {
             }
         }
     */
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void StatsBeanEventBus(StatsBean statsBean) {
+        if (statsBean == null)
+            return;
+        initView(statsBean);
+    }
+
     private void initView(UserBean userBean) {
         if (userBean == null)
             return;
+        Log.v("cccccccccc", "-----R--2--" + spUtils.getString("auth", ""));
         tvAuthNName.setText(userBean.getAlias());
         if (userBean.getAvator() != null)
             Glide.with(getActivity()).load(Urls.HOST_GETFILE + "?name=" + userBean.getAvator().getFileName()).into(imageViePic);
@@ -174,10 +177,20 @@ public class MineFragment extends Fragment {
         tvCode.setText(userBean.getStats().getPpCoinEarned() + "积分");
     }
 
+    private void initView(StatsBean statsBean) {
+        if (statsBean == null)
+            return;
+        tvClass.setText(statsBean.getPaidBooks() + "本");
+        tvGet.setText(statsBean.getVipGetBooks() + "本");
+        tvTime.setText(statsBean.getTotalDuration() + "小时");
+        tvCode.setText(statsBean.getPpCoinEarned() + "积分");
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        //EventBus.getDefault().unregister(this);
     }
 
     @OnClick({R.id.imageView_to_vip, R.id.l_collage, R.id.imageVie_pic, R.id.l_class, R.id.l_get, R.id.l_time, R.id.l_code,/* R.id.l_to_vip,*/ R.id.l_to_agent, /*R.id.l_to_talent,*/ R.id.l_faq, R.id.l_service, R.id.l_setting})

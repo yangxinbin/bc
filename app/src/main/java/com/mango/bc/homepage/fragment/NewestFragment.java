@@ -257,7 +257,8 @@ public class NewestFragment extends Fragment implements BookNewestView, MyAllBoo
 
         if (bean.getBuySuccess()) {
             Log.v("bbbbb", "----2---");
-            tv_stage.setText("播放");
+            if (tv_stage != null)
+                tv_stage.setText("播放");
         }
         EventBus.getDefault().removeStickyEvent(BuySuccessBean.class);
     }

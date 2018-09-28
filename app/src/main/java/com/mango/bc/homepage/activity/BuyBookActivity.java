@@ -1,7 +1,7 @@
 package com.mango.bc.homepage.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,6 +14,7 @@ import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
 import com.mango.bc.bookcase.net.view.MyAllBookView;
 import com.mango.bc.homepage.bean.BuySuccessBean;
 import com.mango.bc.homepage.net.bean.BookBean;
+import com.mango.bc.mine.bean.StatsBean;
 import com.mango.bc.mine.bean.UserBean;
 import com.mango.bc.mine.jsonutil.AuthJsonUtils;
 import com.mango.bc.util.AppUtils;
@@ -102,11 +103,11 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
                 EventBus.getDefault().postSticky(buySuccessBean);
                 setResult(1);
                 finish();*/
-                getFreeBook(bookId);
+                getBuyBook(bookId);
                 break;
         }
     }
-    private void getFreeBook(final String bookId) {
+    private void getBuyBook(final String bookId) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -128,6 +129,8 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         try {
+                            loadStats();
+                            //loadUser();
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -152,6 +155,75 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
                                 }
                             });
                         }
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void loadStats() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //final HashMap<String, String> mapParams = new HashMap<String, String>();
+                //mapParams.clear();
+                //mapParams.put("authToken", spUtils.getString("authToken", ""));
+                HttpUtils.doGet(Urls.HOST_STATS+"?authToken="+spUtils.getString("authToken", ""), /*mapParams,*/ new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                    }
+
+                    @Override
+                    public void onResponse(Call call, final Response response) {
+                        try {
+                            final String string1 = response.body().string();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    loadUser();//更新用户信息
+                                    StatsBean statsBean = AuthJsonUtils.readStatsBean(string1);
+                                    EventBus.getDefault().postSticky(statsBean);//刷新钱包
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void loadUser() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("openId", spUtils.getString("openId", ""));
+                HttpUtils.doPost(Urls.HOST_AUTH, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                    }
+
+                    @Override
+                    public void onResponse(Call call, final Response response) {
+                        try {
+                            final String string2 = response.body().string();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    spUtils.put("auth", string2);//刷新用户信息
+                                    Log.v("cccccccccc", "-----auth----");
+                                    UserBean userBean = AuthJsonUtils.readUserBean(string2);
+                                    EventBus.getDefault().postSticky(userBean);//刷新钱包
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 });
             }

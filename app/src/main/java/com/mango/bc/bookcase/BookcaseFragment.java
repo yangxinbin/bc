@@ -13,10 +13,16 @@ import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.adapter.ViewPageAdapter;
+import com.mango.bc.bookcase.bean.RefreshBookCaseBean;
 import com.mango.bc.bookcase.fragment.MyCompetitiveFragment;
 import com.mango.bc.bookcase.fragment.MyExpertFragment;
 import com.mango.bc.bookcase.fragment.MyFreeFragment;
+import com.mango.bc.homepage.bookdetail.bean.PlayPauseBean;
 import com.mango.bc.util.DensityUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -60,7 +66,6 @@ public class BookcaseFragment extends Fragment {
         init();
         return view;
     }
-
     private void initDatas() {
         //  mDatas = new ArrayList<String>(Arrays.asList("       我的事件       ", "       全部事件       "));
         mDatas = new ArrayList<String>(Arrays.asList("大咖课程", "精品课程", "免费课程"));

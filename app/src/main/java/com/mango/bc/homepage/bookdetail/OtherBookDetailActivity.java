@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
+import com.mango.bc.bookcase.bean.RefreshBookCaseBean;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
 import com.mango.bc.bookcase.net.view.MyAllBookView;
@@ -375,6 +376,7 @@ public class OtherBookDetailActivity extends BaseActivity implements MyAllBookVi
         }
         this.mBookBean = bookBean;
         bookId = bookBean.getId();
+        Log.v("kkkkk","---1--"+bookId);
         type = bookBean.getType();
         initState(bookId, type);
         checkLike(bookId);
@@ -392,6 +394,7 @@ public class OtherBookDetailActivity extends BaseActivity implements MyAllBookVi
         }
         if (bookBean.getBook() != null) {
             bookId = bookBean.getBook().getId();
+            Log.v("kkkkk","---2--"+bookId);
             type = bookBean.getBook().getType();
             initState(bookId, type);
             checkLike(bookId);
@@ -532,6 +535,8 @@ public class OtherBookDetailActivity extends BaseActivity implements MyAllBookVi
                                     }  //要不点击详情页还是显现领取，详情书的状态在adapter里面控制
 /*                                    RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, true, false);
                                     EventBus.getDefault().postSticky(refreshStageBean);*/
+                                    EventBus.getDefault().postSticky(new RefreshBookCaseBean(false,true,true));//vip精品课就是免费课
+
                                 }
                             });
                         } catch (Exception e) {

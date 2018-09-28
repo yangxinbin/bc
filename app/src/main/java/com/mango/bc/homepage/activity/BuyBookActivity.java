@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
+import com.mango.bc.bookcase.bean.RefreshBookCaseBean;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
 import com.mango.bc.bookcase.net.view.MyAllBookView;
@@ -164,6 +165,8 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
                                     finish();
 /*                                    RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, true, false);
                                     EventBus.getDefault().postSticky(refreshStageBean);*/
+                                    EventBus.getDefault().postSticky(new RefreshBookCaseBean(true,true,false));//两种情况
+
                                 }
                             });
                         } catch (Exception e) {

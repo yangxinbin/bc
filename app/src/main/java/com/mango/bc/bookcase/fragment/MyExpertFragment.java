@@ -15,6 +15,7 @@ import android.widget.ImageView;
 
 import com.mango.bc.R;
 import com.mango.bc.bookcase.adapter.MyBookGirdAdapter;
+import com.mango.bc.bookcase.bean.RefreshBookCaseBean;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.bookcase.net.presenter.MyBookPresenter;
 import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
@@ -24,6 +25,7 @@ import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.NetUtil;
+import com.mango.bc.util.SPUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -31,6 +33,8 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -53,11 +57,13 @@ public class MyExpertFragment extends Fragment implements MyExpertBookView {
     private MyBookPresenter myBookPresenter;
     private final int TYPE = 0;//大咖
     private int page = 0;
+    private SPUtils spUtils;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.my_expert, container, false);
+        spUtils = SPUtils.getInstance("bc", getActivity());
         myBookPresenter = new MyBookPresenterImpl(this);
         ButterKnife.bind(this, view);
         initView();
@@ -69,7 +75,17 @@ public class MyExpertFragment extends Fragment implements MyExpertBookView {
         refreshAndLoadMore();
         return view;
     }
-
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void RefreshBookCaseBeanEventBus(RefreshBookCaseBean refreshBookCaseBean) {
+        if (refreshBookCaseBean == null) {
+            return;
+        }
+        if (refreshBookCaseBean.isRefreshPaid()) {
+            refresh.autoRefresh();
+            refreshBookCaseBean.setRefreshPaid(false);
+            //EventBus.getDefault().removeStickyEvent(RefreshBookCaseBean.class);
+        }
+    }
     private void initView() {
         myBookGirdAdapter = new MyBookGirdAdapter(getActivity());
         recycle.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 3));
@@ -80,6 +96,7 @@ public class MyExpertFragment extends Fragment implements MyExpertBookView {
     private MyBookGirdAdapter.OnItemClickLitener mOnClickListenner = new MyBookGirdAdapter.OnItemClickLitener() {
         @Override
         public void onItemClick(View view, int position) {
+            spUtils.put("isFree", true);
             Intent intent = new Intent(getActivity(), ExpertBookDetailActivity.class);
             EventBus.getDefault().removeStickyEvent(BookBean.class);
             EventBus.getDefault().postSticky(myBookGirdAdapter.getItem(position));

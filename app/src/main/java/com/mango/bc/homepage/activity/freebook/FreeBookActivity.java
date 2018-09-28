@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
+import com.mango.bc.bookcase.bean.RefreshBookCaseBean;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
 import com.mango.bc.bookcase.net.view.MyAllBookView;
@@ -58,7 +59,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class FreeBookActivity extends BaseActivity implements BookFreeView,MyAllBookView {
+public class FreeBookActivity extends BaseActivity implements BookFreeView, MyAllBookView {
 
     @Bind(R.id.imageView_back)
     ImageView imageViewBack;
@@ -89,14 +90,15 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView,MyAll
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         initView();
-        if (NetUtil.isNetConnect(this)){
+        if (NetUtil.isNetConnect(this)) {
             bookPresenter.visitBooks(this, TYPE, "", page, false);
-        }else {
+        } else {
             bookPresenter.visitBooks(this, TYPE, "", page, true);
         }
         refreshAndLoadMore();
     }
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true,priority = 5)
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true, priority = 5)
     public void RefreshStageBeanEventBus(RefreshStageBean bean) {
         if (bean == null) {
             return;
@@ -108,6 +110,7 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView,MyAll
             //bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//缓存。
         }
     }
+
     private void initView() {
         bookGirdFreeAdapter = new BookGirdFreeAdapter(this);
         recycle.setLayoutManager(new GridLayoutManager(this.getApplicationContext(), 3));
@@ -119,7 +122,7 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView,MyAll
 
         @Override
         public void onItemPlayClick(View view, int position) {
-            Log.v("wwwwwww","======pi");
+            Log.v("wwwwwww", "======pi");
             Intent intent = new Intent(getBaseContext(), OtherBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookGirdFreeAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
@@ -128,7 +131,7 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView,MyAll
 
         @Override
         public void onItemGetClick(View view, int position) {
-            Log.v("wwwwwww","======gi");
+            Log.v("wwwwwww", "======gi");
             Intent intent = new Intent(getBaseContext(), OtherBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookGirdFreeAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
@@ -162,6 +165,7 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView,MyAll
         }
 
     };
+
     private boolean chechState(String bookId) {
         String data = spUtils.getString("allMyBook", "");
         Gson gson = new Gson();
@@ -237,6 +241,7 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView,MyAll
             }
         }).start();
     }
+
     private void getFreeBook(final String bookId) {
         new Thread(new Runnable() {
             @Override
@@ -271,6 +276,7 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView,MyAll
                                     }  //要不点击详情页还是显现领取，详情书的状态在adapter里面控制
 /*                                    RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, true, false);
                                     EventBus.getDefault().postSticky(refreshStageBean);*/
+                                    EventBus.getDefault().postSticky(new RefreshBookCaseBean(false,false,true));
                                 }
                             });
                         } catch (Exception e) {
@@ -286,6 +292,7 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView,MyAll
             }
         }).start();
     }
+
     private void loadStats() {
         new Thread(new Runnable() {
             @Override
@@ -293,7 +300,7 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView,MyAll
                 //final HashMap<String, String> mapParams = new HashMap<String, String>();
                 //mapParams.clear();
                 //mapParams.put("authToken", spUtils.getString("authToken", ""));
-                HttpUtils.doGet(Urls.HOST_STATS+"?authToken="+spUtils.getString("authToken", ""), /*mapParams,*/ new Callback() {
+                HttpUtils.doGet(Urls.HOST_STATS + "?authToken=" + spUtils.getString("authToken", ""), /*mapParams,*/ new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                     }
@@ -319,6 +326,7 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView,MyAll
             }
         }).start();
     }
+
     private void refreshAndLoadMore() {
         refresh.setOnRefreshListener(new OnRefreshListener() {
             @Override

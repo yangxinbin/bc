@@ -30,6 +30,8 @@ import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.jsonutils.JsonUtils;
+import com.mango.bc.mine.bean.StatsBean;
+import com.mango.bc.mine.jsonutil.AuthJsonUtils;
 import com.mango.bc.util.ACache;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
@@ -519,6 +521,7 @@ public class OtherBookDetailActivity extends BaseActivity implements MyAllBookVi
                                 @Override
                                 public void run() {
                                     //领取成功
+                                    loadStats();
                                     lGet.setVisibility(View.VISIBLE);//进去播放界面
                                     lFree.setVisibility(View.GONE);//进去免费领取界面
                                     lNeedbuy.setVisibility(View.GONE);//进去购买领取界面
@@ -544,7 +547,39 @@ public class OtherBookDetailActivity extends BaseActivity implements MyAllBookVi
             }
         }).start();
     }
+    private void loadStats() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //final HashMap<String, String> mapParams = new HashMap<String, String>();
+                //mapParams.clear();
+                //mapParams.put("authToken", spUtils.getString("authToken", ""));
+                HttpUtils.doGet(Urls.HOST_STATS+"?authToken="+spUtils.getString("authToken", ""), /*mapParams,*/ new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                    }
 
+                    @Override
+                    public void onResponse(Call call, final Response response) {
+                        try {
+                            final String string1 = response.body().string();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //loadUser();//更新用户信息（钱）
+                                    StatsBean statsBean = AuthJsonUtils.readStatsBean(string1);
+                                    EventBus.getDefault().postSticky(statsBean);//刷新钱包
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+            }
+        }).start();
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

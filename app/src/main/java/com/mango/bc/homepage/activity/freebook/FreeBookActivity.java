@@ -28,6 +28,8 @@ import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookFreeView;
+import com.mango.bc.mine.bean.StatsBean;
+import com.mango.bc.mine.jsonutil.AuthJsonUtils;
 import com.mango.bc.util.ACache;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
@@ -261,6 +263,7 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView,MyAll
                                 @Override
                                 public void run() {
                                     tv_free_stage.setText("播放");//领取成功
+                                    loadStats();
                                     if (NetUtil.isNetConnect(getBaseContext())) {
                                         myBookPresenter.visitBooks(getBaseContext(), 3, 0, false);//获取书架的所有书(加入刷新)
                                     } else {
@@ -283,7 +286,39 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView,MyAll
             }
         }).start();
     }
+    private void loadStats() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //final HashMap<String, String> mapParams = new HashMap<String, String>();
+                //mapParams.clear();
+                //mapParams.put("authToken", spUtils.getString("authToken", ""));
+                HttpUtils.doGet(Urls.HOST_STATS+"?authToken="+spUtils.getString("authToken", ""), /*mapParams,*/ new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                    }
 
+                    @Override
+                    public void onResponse(Call call, final Response response) {
+                        try {
+                            final String string1 = response.body().string();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //loadUser();//更新用户信息（钱）
+                                    StatsBean statsBean = AuthJsonUtils.readStatsBean(string1);
+                                    EventBus.getDefault().postSticky(statsBean);//刷新钱包
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+            }
+        }).start();
+    }
     private void refreshAndLoadMore() {
         refresh.setOnRefreshListener(new OnRefreshListener() {
             @Override

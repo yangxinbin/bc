@@ -157,7 +157,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp_10"
-                android:background="@drawable/yellow_full_circle"
+                android:background="@drawable/yellow_full_circle_radiu20"
                 android:paddingBottom="@dimen/dp_5"
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_10"

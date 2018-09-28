@@ -152,19 +152,22 @@ public class OpenUpVipActivity extends BaseActivity {
     private void initDetail(String s) {
         calendar = Calendar.getInstance();
         UserBean userBean = AuthJsonUtils.readUserBean(spUtils.getString("auth", ""));
+        Log.v("vvvv", "====" + userBean.getBilling().getEndOn());
         if (userBean != null) {
-            if (userBean.getBilling() != null){
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String d = format.format(userBean.getBilling().getEndOn());
-                try {
-                    da = format.parse(d);
-                } catch (ParseException e) {
-                    e.printStackTrace();
+            if (userBean.getBilling() != null) {
+                if (userBean.getBilling().getEndOn() == 0) {
+                    //获取当前时间
+                    da = new Date();
+                } else {
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String d = format.format(userBean.getBilling().getEndOn());
+                    try {
+                        da = format.parse(d);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-        }else {
-            //获取当前时间
-            da = new Date();
         }
         calendar.setTime(da);//把当前时间赋给日历
         long timePast = 0;

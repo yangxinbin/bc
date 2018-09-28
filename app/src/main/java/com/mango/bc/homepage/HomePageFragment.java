@@ -28,8 +28,13 @@ import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.LoadStageBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
+import com.mango.bc.mine.bean.UserBean;
+import com.mango.bc.mine.jsonutil.AuthJsonUtils;
 import com.mango.bc.util.AppUtils;
+import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.NetUtil;
+import com.mango.bc.util.SPUtils;
+import com.mango.bc.util.Urls;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -40,8 +45,14 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.IOException;
+import java.util.HashMap;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * Created by admin on 2018/9/3.
@@ -63,11 +74,13 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
     private ControlPanel controlPanel;
     private boolean isPlayFragmentShow;
     private PlayActivity mPlayFragment;
+    private SPUtils spUtils;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.homepage, container, false);
+        spUtils = SPUtils.getInstance("bc", getActivity());
         myBookPresenter = new MyBookPresenterImpl(this);
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
@@ -161,6 +174,7 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
                 refreshLayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        loadUser();
                         page = 0;
                         if (NetUtil.isNetConnect(getActivity())) {
                             RefreshStageBean refreshStageBean = new RefreshStageBean(true, true, true, true, true);
@@ -201,7 +215,40 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
             //mAdapter.refresh(initData());
         }
     }
+    private void loadUser() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("openId", spUtils.getString("openId", ""));
+                HttpUtils.doPost(Urls.HOST_AUTH, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                    }
 
+                    @Override
+                    public void onResponse(Call call, final Response response) {
+                        try {
+                            final String string2 = response.body().string();
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    spUtils.put("auth", string2);//刷新用户信息
+                                    Log.v("cccccccccc", "-----auth----");
+                                    UserBean userBean = AuthJsonUtils.readUserBean(string2);
+                                    EventBus.getDefault().postSticky(userBean);//刷新钱包
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+            }
+        }).start();
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

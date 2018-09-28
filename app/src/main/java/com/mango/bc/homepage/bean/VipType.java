@@ -11,14 +11,34 @@ public class VipType {
     private String unbc;
     private String bc;
     private String type;
+    private String vipPackageId;
+    private String autoBilling;
 
-    public VipType(String title, String flagtitle, String detail, String unbc, String bc, String type) {
+    public VipType(String title, String flagtitle, String detail, String unbc, String bc, String type, String vipPackageId, String autoBilling) {
         this.title = title;
         Flagtitle = flagtitle;
         this.detail = detail;
         this.unbc = unbc;
         this.bc = bc;
         this.type = type;
+        this.vipPackageId = vipPackageId;
+        this.autoBilling = autoBilling;
+    }
+
+    public String getVipPackageId() {
+        return vipPackageId;
+    }
+
+    public void setVipPackageId(String vipPackageId) {
+        this.vipPackageId = vipPackageId;
+    }
+
+    public String getAutoBilling() {
+        return autoBilling;
+    }
+
+    public void setAutoBilling(String autoBilling) {
+        this.autoBilling = autoBilling;
     }
 
     public String getType() {

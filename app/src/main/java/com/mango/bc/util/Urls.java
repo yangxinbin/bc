@@ -32,6 +32,7 @@ public class Urls {
     public static final String TASKCOMMENT = "/task/comment";
     public static final String TASKSHARE = "/task/share";
     public static final String VIPPACKAGE = "/book/vip/packages";
+    public static final String BUYVIP = "/wallet/buy/membership";
 
 
 
@@ -58,5 +59,6 @@ public class Urls {
     public static final String HOST_TASKCOMMENT = HOST+TASKCOMMENT;
     public static final String HOST_TASKSHARE = HOST+TASKSHARE;
     public static final String HOST_VIPPACKAGE = HOST+VIPPACKAGE;
+    public static final String HOST_BUYVIP = HOST+BUYVIP;
 
 }

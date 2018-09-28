@@ -1,5 +1,7 @@
 package com.mango.bc.homepage.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,10 +23,12 @@ import com.mango.bc.homepage.net.jsonutils.JsonUtils;
 import com.mango.bc.mine.bean.StatsBean;
 import com.mango.bc.mine.jsonutil.AuthJsonUtils;
 import com.mango.bc.util.ACache;
+import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.DateUtil;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.JsonUtil;
 import com.mango.bc.util.NetUtil;
+import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 
 import org.greenrobot.eventbus.EventBus;
@@ -33,6 +37,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
@@ -56,11 +61,15 @@ public class OpenUpVipActivity extends BaseActivity {
     private Calendar calendar;
     private Date da;
     private SingleAdapter adapter;
+    private String sVipPackageId;
+    private String sAutoBilling;
+    private SPUtils spUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_up_vip);
+        spUtils = SPUtils.getInstance("bc", this);
         ButterKnife.bind(this);
         if (NetUtil.isNetConnect(this)) {
             intVipPackage(false);
@@ -79,6 +88,9 @@ public class OpenUpVipActivity extends BaseActivity {
                     Log.v("yyyyyy", "---cache---");
                     if (newString != null) {
                         List<VipPackageBean> vipPackageBeans = JsonUtil.readVipPackageBean(newString);
+                        sAutoBilling = "true";
+                        if (vipPackageBeans.get(0) != null)
+                            sVipPackageId = vipPackageBeans.get(0).getId();
                         initData(vipPackageBeans);
                         return;
                     }
@@ -99,6 +111,9 @@ public class OpenUpVipActivity extends BaseActivity {
                                 public void run() {
                                     mCache.put("vipPackage", string1);
                                     List<VipPackageBean> vipPackageBeans = JsonUtil.readVipPackageBean(string1);
+                                    sAutoBilling = "true";
+                                    if (vipPackageBeans.get(0) != null)
+                                        sVipPackageId = vipPackageBeans.get(0).getId();
                                     initData(vipPackageBeans);
                                 }
                             });
@@ -123,6 +138,9 @@ public class OpenUpVipActivity extends BaseActivity {
             public void onItemClick(View view, int position) {
                 adapter.setSelection(position);
                 initDetail(adapter.getItem(position).getType());
+                sVipPackageId = adapter.getItem(position).getVipPackageId();
+                sAutoBilling = adapter.getItem(position).getAutoBilling();
+
             }
 
             @Override
@@ -141,11 +159,11 @@ public class OpenUpVipActivity extends BaseActivity {
         if (s.equals("monthly")) {//月
             calendar.add(Calendar.MONTH, 1);
             timePast = calendar.getTimeInMillis();
-            tvBuyDetail.setText("购买后，VIP到期时间将延迟至"+ DateUtil.getDateToString(timePast,"yyyy年MM月dd日"));
-        }else {//年
+            tvBuyDetail.setText("购买后，VIP到期时间将延迟至" + DateUtil.getDateToString(timePast, "yyyy年MM月dd日"));
+        } else {//年
             calendar.add(Calendar.YEAR, 1);
             timePast = calendar.getTimeInMillis();
-            tvBuyDetail.setText("购买后，VIP到期时间将延迟至"+ DateUtil.getDateToString(timePast,"yyyy年MM月dd日"));
+            tvBuyDetail.setText("购买后，VIP到期时间将延迟至" + DateUtil.getDateToString(timePast, "yyyy年MM月dd日"));
         }
     }
 
@@ -164,7 +182,7 @@ public class OpenUpVipActivity extends BaseActivity {
             if (s12.endsWith(".0")) {
                 new12 = s12.substring(0, s12.length() - 2);
             }
-            datas.add(new VipType("连续包月VIP", "首月特价", "每月仅需" + new11 + "积分，自动续费可随时取消", "", new12 + "积分", vipPackageBeans.get(0).getBillingType()));
+            datas.add(new VipType("连续包月VIP", "首月特价", "每月仅需" + new11 + "积分，自动续费可随时取消", "", new12 + "积分", vipPackageBeans.get(0).getBillingType(), vipPackageBeans.get(0).getId(), "true"));
         }
         if (vipPackageBeans.get(1) != null) {
             String s21 = vipPackageBeans.get(1).getAutoBillingFee() + "";
@@ -177,7 +195,7 @@ public class OpenUpVipActivity extends BaseActivity {
             if (s22.endsWith(".0")) {
                 new22 = s22.substring(0, s22.length() - 2);
             }
-            datas.add(new VipType("连续包年VIP", "八折优惠", "每年仅需" + new21 + "积分，自动续费可随时取消", "", new22 + "积分", vipPackageBeans.get(1).getBillingType()));
+            datas.add(new VipType("连续包年VIP", "八折优惠", "每年仅需" + new21 + "积分，自动续费可随时取消", "", new22 + "积分", vipPackageBeans.get(1).getBillingType(), vipPackageBeans.get(1).getId(), "true"));
         }
         if (vipPackageBeans.get(0) != null) {
             String s13 = vipPackageBeans.get(0).getManualBillingFee() + "";
@@ -185,7 +203,7 @@ public class OpenUpVipActivity extends BaseActivity {
             if (s13.endsWith(".0")) {
                 new13 = s13.substring(0, s13.length() - 2);
             }
-            datas.add(new VipType("包月VIP", "", "", "", new13 + "积分", vipPackageBeans.get(0).getBillingType()));
+            datas.add(new VipType("包月VIP", "", "", "", new13 + "积分", vipPackageBeans.get(0).getBillingType(), vipPackageBeans.get(0).getId(), "false"));
 
         }
         if (vipPackageBeans.get(1) != null) {
@@ -194,7 +212,7 @@ public class OpenUpVipActivity extends BaseActivity {
             if (s23.endsWith(".0")) {
                 new23 = s23.substring(0, s23.length() - 2);
             }
-            datas.add(new VipType("包年VIP", "", "", "", new23 + "积分", vipPackageBeans.get(1).getBillingType()));
+            datas.add(new VipType("包年VIP", "", "", "", new23 + "积分", vipPackageBeans.get(1).getBillingType(), vipPackageBeans.get(1).getId(), "false"));
         }
         intView();
         adapter.setSelection(0);
@@ -211,7 +229,74 @@ public class OpenUpVipActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.buy_vip:
+                showDailog("是否确认支付", "");
                 break;
         }
+    }
+
+    private void showDailog(String s1, final String s2) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setIcon(R.mipmap.icon)//设置标题的图片
+                .setTitle(s1)//设置对话框的标题
+                //.setMessage(s2)//设置对话框的内容
+                //设置对话框的按钮
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        becomeVip();
+                        dialog.dismiss();
+                    }
+                }).create();
+        dialog.show();
+    }
+
+    private void becomeVip() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
+                mapParams.put("autoBilling", sAutoBilling);
+                mapParams.put("vipPackageId", sVipPackageId);
+                HttpUtils.doPost(Urls.HOST_BUYVIP, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                AppUtils.showToast(OpenUpVipActivity.this, "购买失败");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AppUtils.showToast(OpenUpVipActivity.this, "购买成功");
+                                    finish();
+                                }
+                            });
+                        } catch (Exception e) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AppUtils.showToast(OpenUpVipActivity.this, "购买失败");
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }).start();
     }
 }

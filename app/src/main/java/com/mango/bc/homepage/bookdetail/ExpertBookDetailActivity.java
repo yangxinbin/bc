@@ -80,8 +80,8 @@ public class ExpertBookDetailActivity extends BaseActivity {
     ViewPager viewPager;
     @Bind(R.id.l_get)
     LinearLayout lGet;
-    @Bind(R.id.et_search)
-    EditText etSearch;
+    @Bind(R.id.et_comment)
+    EditText etComment;
     @Bind(R.id.l_2)
     LinearLayout l2;
     @Bind(R.id.l_like_get)
@@ -127,9 +127,10 @@ public class ExpertBookDetailActivity extends BaseActivity {
         mCache = ACache.get(this.getApplicationContext());
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
+        etComment.setFocusable(false);
         initDatas();
         init();
-        if (getIntent().getBooleanExtra("bookCourse",false)){
+        if (getIntent().getBooleanExtra("bookCourse", false)) {
             viewPager.setCurrentItem(1);
         }
     }
@@ -379,7 +380,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
         }
         if (AudioPlayer.get().isPlaying() && mBookDetailBean.getId().equals(spUtils.getString("isSameBook", ""))) {
             bookStageExpertPlay.setText("播放中");
-        }else if (AudioPlayer.get().isPausing() && mBookDetailBean.getId().equals(spUtils.getString("isSameBook", ""))) {
+        } else if (AudioPlayer.get().isPausing() && mBookDetailBean.getId().equals(spUtils.getString("isSameBook", ""))) {
             bookStageExpertPlay.setText(getResources().getString(R.string.play));
         }
         tvBuyer.setText(bookDetailBean.getSold() + "");
@@ -396,7 +397,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
         if (bookBean == null) {
             return;
         }
-        Log.v("bbbbbbbbbbb","-----f");
+        Log.v("bbbbbbbbbbb", "-----f");
         this.mBookBean = bookBean;
         bookId = bookBean.getId();
         type = bookBean.getType();
@@ -447,7 +448,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
         }
         if (playPauseBean.isPause()) {
             bookStageExpertPlay.setText(getResources().getString(R.string.play));
-        }else {
+        } else {
             bookStageExpertPlay.setText("播放中");
         }
         EventBus.getDefault().removeStickyEvent(PlayPauseBean.class);
@@ -552,7 +553,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
         EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.imageView_back, R.id.l_like_play, R.id.l_share_play_expert, R.id.book_stage_expert_play, R.id.l_like_get, R.id.l_try, R.id.l_buy, R.id.l_collage})
+    @OnClick({R.id.et_comment, R.id.imageView_back, R.id.l_like_play, R.id.l_share_play_expert, R.id.book_stage_expert_play, R.id.l_like_get, R.id.l_try, R.id.l_buy, R.id.l_collage})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -600,6 +601,15 @@ public class ExpertBookDetailActivity extends BaseActivity {
                     bookStageExpertPlay.setText("播放中");
                 }
                 break;//以上是播放foot
+            case R.id.et_comment:
+                etComment.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(ExpertBookDetailActivity.this, CommentActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                break;
         }
     }
 

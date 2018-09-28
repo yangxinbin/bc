@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -83,7 +84,7 @@
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <!-- 微信分享回调 -->
         <activity
@@ -97,9 +98,10 @@
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop" />
-        <activity android:name=".homepage.activity.BuyBookActivity"></activity>
+        <activity android:name=".homepage.activity.BuyBookActivity" />
 
         <service android:name=".homepage.bookdetail.play.service.PlayService" />
+
         <receiver android:name=".homepage.bookdetail.play.receiver.RemoteControlReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
@@ -110,6 +112,10 @@
                 <action android:name="me.bc.music.STATUS_BAR_ACTIONS" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".homepage.bookdetail.CommentActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
     </application>
 
 </manifest>

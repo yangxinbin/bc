@@ -125,5 +125,8 @@
     <string name="grant_permission_setting">授权成功，请在再次操作以设置铃声</string>
     <string name="no_permission_select_image">没有权限，无法选择图片！</string>
     <string name="activity_playlist">播放列表</string>
+    <string name="comment">评论</string>
+    <string name="commit">提交</string>
+    <string name="comment_hint">欢迎参与交流，大家把真知灼见留下来吧！</string>
 
 </resources>

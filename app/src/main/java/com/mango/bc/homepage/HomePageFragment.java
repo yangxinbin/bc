@@ -73,7 +73,6 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
         EventBus.getDefault().register(this);
         initView();
         refreshAndLoadMore();
-
         return view;
     }
 

@@ -116,7 +116,7 @@ public class CommentActivity extends BaseActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    showDailog("提示","你的评论已提交成功，带审核通过后发布。");
+                                    showDailog("提示","你的评论已提交成功，待审核通过后发布。");
                                 }
                             });
                         } catch (final Exception e) {

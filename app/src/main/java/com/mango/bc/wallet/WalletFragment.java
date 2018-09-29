@@ -115,6 +115,8 @@ public class WalletFragment extends Fragment {
     TextView tvD6;
     @Bind(R.id.tv_d7)
     TextView tvD7;
+    @Bind(R.id.breadcrumbs_fork)
+    BreadcrumbsView breadcrumbsFork;
     private ArrayList<String> mDatas;
     List<Fragment> mfragments = new ArrayList<Fragment>();
     private SPUtils spUtils;
@@ -328,7 +330,7 @@ public class WalletFragment extends Fragment {
         }).start();
     }
 
-    private WalletFragment.MyHandler mHandler = new WalletFragment.MyHandler();
+    private MyHandler mHandler = new MyHandler();
 
     private class MyHandler extends Handler {
         @Override
@@ -397,10 +399,18 @@ public class WalletFragment extends Fragment {
     }*/
 
     private void initChechfromWallet(CheckBean checkBean) {
-        try {
-            breadcrumbs.nextStep();
-        } catch (IndexOutOfBoundsException e) {
+        if (checkBean.getCount() == 1) {
+            breadcrumbsFork.setVisibility(View.VISIBLE);
+            breadcrumbs.setVisibility(View.GONE);
+        } else {
+            breadcrumbsFork.setVisibility(View.GONE);
+            breadcrumbs.setVisibility(View.VISIBLE);
+            try {
+                breadcrumbs.nextStep();
+            } catch (IndexOutOfBoundsException e) {
+            }
         }
+
         switch (checkBean.getCount()) {
             case 0:
                 break;
@@ -481,8 +491,8 @@ public class WalletFragment extends Fragment {
             tvSign.setText("立即签到");
             tvSign.setEnabled(true);
         } else {*/
-            tvSign.setText("已签到");
-            tvSign.setEnabled(false);
+        tvSign.setText("已签到");
+        //tvSign.setEnabled(false);
         //}
     }
 
@@ -495,7 +505,7 @@ public class WalletFragment extends Fragment {
             tvSign.setEnabled(true);
         } else {
             tvSign.setText("已签到");
-            tvSign.setEnabled(false);
+            //tvSign.setEnabled(false);
         }
         switch (checkInBean.getCount()) {
             case 0:

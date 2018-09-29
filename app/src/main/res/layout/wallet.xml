@@ -380,7 +380,23 @@
                         android:gravity="center"
                         android:text="+1+5" />
                 </LinearLayout>
-
+                <io.victoralbertos.breadcumbs_view.BreadcrumbsView
+                    android:visibility="invisible"
+                    android:id="@+id/breadcrumbs_fork"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_30"
+                    android:layout_marginRight="@dimen/dp_30"
+                    app:heightSeparator="@dimen/dp_1"
+                    app:nextStepBorderDotColor="@color/common_sign_gray"
+                    app:nextStepFillDotColor="@color/common_sign_gray"
+                    app:nextStepSeparatorColor="@color/common_sign_gray"
+                    app:numberOfSteps="7"
+                    app:radiusDot="@dimen/dp_5"
+                    app:sizeDotBorder="@dimen/dp_1"
+                    app:visitedStepBorderDotColor="@color/yello"
+                    app:visitedStepFillDotColor="@color/yello"
+                    app:visitedStepSeparatorColor="@color/yello" />
                 <io.victoralbertos.breadcumbs_view.BreadcrumbsView
                     android:id="@+id/breadcrumbs"
                     android:layout_width="match_parent"

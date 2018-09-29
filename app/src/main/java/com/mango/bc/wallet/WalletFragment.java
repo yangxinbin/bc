@@ -507,6 +507,9 @@ public class WalletFragment extends Fragment {
             tvSign.setText("已签到");
             tvSign.setEnabled(false);
         }
+        if (checkInBean.getCount() != 0)
+            breadcrumbsFork.setVisibility(View.GONE);
+
         switch (checkInBean.getCount()) {
             case 0:
                 breadcrumbs.setCurrentStep(-1);

@@ -50,6 +50,7 @@ import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 import com.mango.bc.wallet.bean.CheckInBean;
 import com.mango.bc.wallet.bean.RefreshTaskBean;
+import com.mob.MobSDK;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
@@ -488,7 +489,8 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
                 showPopupWindow(this, bookMusicDetailBeanList);
                 break;
             case R.id.iv_share:
-                showShare();
+                //showShare();
+                shareMiniProgram();
                 break;
         }
     }
@@ -651,5 +653,26 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
         req.scene = WXSceneSession;
         api.sendReq(req);
     }
+    public void shareMiniProgram(){
+        Platform platform = ShareSDK.getPlatform(Wechat.NAME);
+        Platform.ShareParams shareParams = new  Platform.ShareParams();
+        shareParams.setText("小程序分享");
+        shareParams.setTitle("BC大陆");
+        //shareParams.setUrl("http://www.mob.com");
+        shareParams.setWxUserName("");
+        //shareParams.setImagePath(ResourcesManager.getInstace(MobSDK.getContext()).getImagePath());
+        //shareParams.setImageData(ResourcesManager.getInstace(MobSDK.getContext()).getImageBmp());
+        shareParams.setImageUrl(showMusic.getCoverPath());
+        shareParams.setWxPath("");
+        shareParams.setShareType(Platform.SHARE_WXMINIPROGRAM);
+        //platform.setPlatformActionListener(platformActionListener);
+        platform.share(shareParams);
+    }
 
+/*    private PlatformActionListener platformActionListener;
+
+    public WechatShare(PlatformActionListener mListener){
+        this.platformActionListener = mListener;
+        DemoUtils.isValidClient("com.tencent.mm");
+    }*/
 }

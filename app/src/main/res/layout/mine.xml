@@ -96,8 +96,14 @@
             android:layout_marginTop="@dimen/dp_10"
             android:background="@drawable/apply2"
             android:orientation="horizontal"
-            android:visibility="gone">
-
+            android:visibility="gone"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:src="@drawable/center_vip" />
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

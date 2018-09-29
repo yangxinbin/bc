@@ -162,6 +162,22 @@ public class NewestFragment extends Fragment implements BookNewestView, MyAllBoo
             tv_stage = view.findViewById(R.id.tv_stage);
             if (tv_stage.getText().equals("播放")) {
                 Log.v("bbbbbbbb", "-----" + tv_stage.getText());
+                EventBus.getDefault().postSticky(bookNewestAdapter.getItem(position));
+                if (chechState(bookNewestAdapter.getItem(position).getId())) {
+                    spUtils.put("isFree", true);
+                } else {
+                    spUtils.put("isFree", false);
+                }
+                if (AudioPlayer.get().isPausing() /*&& mData.get(position).getId().equals(spUtils.getString("isSameBook", ""))*/) {
+                    AudioPlayer.get().startPlayer();
+                    //tv_free_stage.setText("播放中");
+                    return;
+                }
+                if (NetUtil.isNetConnect(getActivity())) {
+                    loadBookDetail(false, bookNewestAdapter.getItem(position).getId());
+                } else {
+                    loadBookDetail(true, bookNewestAdapter.getItem(position).getId());
+                }
             } else {
                 Intent intent = new Intent(getActivity(), BuyBookActivity.class);
                 EventBus.getDefault().postSticky(bookNewestAdapter.getItem(position));

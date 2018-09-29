@@ -172,7 +172,26 @@ public class FreeFragment extends Fragment implements BookFreeView, MyAllBookVie
         @Override
         public void onGetClick(View view, int position) {//领取  adapter 里面对应点击控件
             tv_free_stage = view.findViewById(R.id.tv_free_stage);
-            getFreeBook(bookGirdFreeAdapter.getItem(position).getId());
+            if (tv_free_stage.getText().equals("播放")) {
+                EventBus.getDefault().postSticky(bookGirdFreeAdapter.getItem(position));
+                if (chechState(mData.get(position).getId())) {
+                    spUtils.put("isFree", true);
+                } else {
+                    spUtils.put("isFree", false);
+                }
+                if (AudioPlayer.get().isPausing() /*&& mData.get(position).getId().equals(spUtils.getString("isSameBook", ""))*/) {
+                    AudioPlayer.get().startPlayer();
+                    //tv_free_stage.setText("播放中");
+                    return;
+                }
+                if (NetUtil.isNetConnect(getActivity())) {
+                    loadBookDetail(false, mData.get(position).getId());
+                } else {
+                    loadBookDetail(true, mData.get(position).getId());
+                }
+            } else {
+                getFreeBook(bookGirdFreeAdapter.getItem(position).getId());
+            }
         }
     };
 
@@ -286,7 +305,7 @@ public class FreeFragment extends Fragment implements BookFreeView, MyAllBookVie
                                     }  //要不点击详情页还是显现领取，详情书的状态在adapter里面控制
 /*                                    RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, true, false);
                                     EventBus.getDefault().postSticky(refreshStageBean);*/
-                                    EventBus.getDefault().postSticky(new RefreshBookCaseBean(false,false,true));
+                                    EventBus.getDefault().postSticky(new RefreshBookCaseBean(false, false, true));
 
                                 }
                             });
@@ -303,6 +322,7 @@ public class FreeFragment extends Fragment implements BookFreeView, MyAllBookVie
             }
         }).start();
     }
+
     private void loadStats() {
         new Thread(new Runnable() {
             @Override
@@ -310,7 +330,7 @@ public class FreeFragment extends Fragment implements BookFreeView, MyAllBookVie
                 //final HashMap<String, String> mapParams = new HashMap<String, String>();
                 //mapParams.clear();
                 //mapParams.put("authToken", spUtils.getString("authToken", ""));
-                HttpUtils.doGet(Urls.HOST_STATS+"?authToken="+spUtils.getString("authToken", ""), /*mapParams,*/ new Callback() {
+                HttpUtils.doGet(Urls.HOST_STATS + "?authToken=" + spUtils.getString("authToken", ""), /*mapParams,*/ new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                     }
@@ -336,6 +356,7 @@ public class FreeFragment extends Fragment implements BookFreeView, MyAllBookVie
             }
         }).start();
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

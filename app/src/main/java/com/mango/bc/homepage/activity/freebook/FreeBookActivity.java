@@ -161,7 +161,26 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView, MyAl
         @Override
         public void onGetClick(View view, int position) {//领取
             tv_free_stage = view.findViewById(R.id.tv_free_stage);
-            getFreeBook(bookGirdFreeAdapter.getItem(position).getId());
+            if (tv_free_stage.getText().equals("播放")) {
+                EventBus.getDefault().postSticky(bookGirdFreeAdapter.getItem(position));
+                if (chechState(bookGirdFreeAdapter.getItem(position).getId())) {
+                    spUtils.put("isFree", true);
+                } else {
+                    spUtils.put("isFree", false);
+                }
+                if (AudioPlayer.get().isPausing() /*&& mData.get(position).getId().equals(spUtils.getString("isSameBook", ""))*/) {
+                    AudioPlayer.get().startPlayer();
+                    //tv_free_stage.setText("播放中");
+                    return;
+                }
+                if (NetUtil.isNetConnect(FreeBookActivity.this)) {
+                    loadBookDetail(false, bookGirdFreeAdapter.getItem(position).getId());
+                } else {
+                    loadBookDetail(true, bookGirdFreeAdapter.getItem(position).getId());
+                }
+            } else {
+                getFreeBook(bookGirdFreeAdapter.getItem(position).getId());
+            }
         }
 
     };
@@ -276,7 +295,7 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView, MyAl
                                     }  //要不点击详情页还是显现领取，详情书的状态在adapter里面控制
 /*                                    RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, true, false);
                                     EventBus.getDefault().postSticky(refreshStageBean);*/
-                                    EventBus.getDefault().postSticky(new RefreshBookCaseBean(false,false,true));
+                                    EventBus.getDefault().postSticky(new RefreshBookCaseBean(false, false, true));
                                 }
                             });
                         } catch (Exception e) {

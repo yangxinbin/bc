@@ -18,6 +18,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mango.bc.R;
 import com.mango.bc.homepage.net.bean.BookBean;
+import com.mango.bc.mine.bean.UserBean;
+import com.mango.bc.mine.jsonutil.AuthJsonUtils;
 import com.mango.bc.util.RoundImageView;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
@@ -31,6 +33,7 @@ import java.util.List;
  */
 
 public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private boolean isVip;
     private SPUtils spUtils;
     private Context context;
     private OnItemClickLitener mOnItemClickLitener;//自注册的接口给调用者用于点击逻辑
@@ -63,6 +66,9 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public BookComprtitiveAdapter(Context context) {
         spUtils = SPUtils.getInstance("bc", context);
+        UserBean userBean = AuthJsonUtils.readUserBean(spUtils.getString("auth", ""));
+        if (userBean != null)
+            isVip = userBean.isVip();
         this.context = context;
     }
 
@@ -138,7 +144,11 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         }
                     });
                 } else {
-                    ((HeadViewHolder) holder).tv_head_stage.setText("购买");
+                    if (isVip){
+                        ((HeadViewHolder) holder).tv_head_stage.setText("免费领取");
+                    }else {
+                        ((HeadViewHolder) holder).tv_head_stage.setText("购买");
+                    }
                     ((HeadViewHolder) holder).tv_head_stage.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -176,7 +186,11 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         }
                     });
                 } else {
-                    ((ItemViewHolder) holder).tv_stage.setText(mData.get(position).getPrice() + "积分");//否领取
+                    if (isVip) {
+                        ((ItemViewHolder) holder).tv_stage.setText("免费领取");//否领取
+                    } else {
+                        ((ItemViewHolder) holder).tv_stage.setText(mData.get(position).getPrice() + "积分");//否领取
+                    }
                     ((ItemViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

@@ -280,7 +280,7 @@ public class NewestFragment extends Fragment implements BookNewestView, MyAllBoo
                         return;
                     }
                     if (page == 0) {
-                        Log.v("yyyyyyy", "==?like===4--" + bookBeanList.get(4).getLikes());
+                        Log.v("yyyyyyy", "==?like===4--");
                         bookNewestAdapter.reMove();
                         bookNewestAdapter.setmDate(bookBeanList);
                     } else {

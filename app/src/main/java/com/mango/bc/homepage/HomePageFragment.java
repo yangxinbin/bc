@@ -237,6 +237,7 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
                                     spUtils.put("auth", string2);//刷新用户信息
                                     Log.v("cccccccccc", "-----auth----");
                                     UserBean userBean = AuthJsonUtils.readUserBean(string2);
+                                    Log.v("lllllllll","=rrrr=="+userBean.isVip());
                                     EventBus.getDefault().postSticky(userBean);//刷新钱包
                                 }
                             });

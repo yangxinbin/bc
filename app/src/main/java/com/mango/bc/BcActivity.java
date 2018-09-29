@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,9 +76,12 @@ public class BcActivity extends BaseActivity implements MyAllBookView {
         //spUtils.put("authToken", "eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1MzgxNTQzNTgwNjUsImFsaWFzIjoiR3Vlc3QiLCJpZCI6IjViYWU1ZDk3MjU1N2I5MDVkODg4ODhmNyIsInR5cGUiOiJnZW5lcmFsIiwid2FsbGV0QWRkcmVzcyI6IjB4MDFiOTkyODZmNWUwMDk4NjEwZDZmYzJmOTNjN2VmYjQiLCJleHAiOjQxMzAxNTQzNTgsInVzZXJuYW1lIjoiYVhoaTk0alFrWFBvdkJzcUVzMEI4UUtzYk0wQSJ9.oZ8Cpgqvv5ouIF7r_Ht_yuJ3LTZjvW-3ftPPso1gNLEBb0Khl29P-suU1lRsjckX3eglENrj0LhTSNMdY76O_Q");
         ButterKnife.bind(this);
         //进来刷新可以屏蔽
-
-        ifCheckIn();
         loadUser(); //个人信息从网络拿数据
+        ifCheckIn();
+        initPage();
+    }
+
+    private void initPage() {
         bottomBar.setContainer(R.id.container)
                 .setTitleBeforeAndAfterColor("#333333", "#ffac00")
                 .addItem(HomePageFragment.class,
@@ -180,6 +184,8 @@ public class BcActivity extends BaseActivity implements MyAllBookView {
                                 public void run() {
                                     spUtils.put("auth", string);
                                     UserBean userBean = AuthJsonUtils.readUserBean(string);
+                                    Log.v("lllllllll","=aaaa=="+userBean.isVip());
+
                                     EventBus.getDefault().postSticky(userBean);//刷新
                                 }
                             });

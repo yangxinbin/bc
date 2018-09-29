@@ -15,6 +15,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mango.bc.R;
 import com.mango.bc.homepage.net.bean.BookBean;
+import com.mango.bc.mine.bean.UserBean;
+import com.mango.bc.mine.jsonutil.AuthJsonUtils;
 import com.mango.bc.util.RoundImageView;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
@@ -28,6 +30,7 @@ import java.util.List;
  */
 
 public class BookNewestAdapter extends RecyclerView.Adapter {
+    private boolean isVip = false;
     private SPUtils spUtils;
     private Context context;
     private BookNewestAdapter.OnItemClickLitener mOnItemClickLitener;
@@ -40,7 +43,6 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
 
 
     public BookNewestAdapter(Context context) {
-        spUtils = SPUtils.getInstance("bc", context);
         this.context = context;
     }
 
@@ -48,6 +50,11 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
     }
 
     public void setmDate(List<BookBean> data) {
+        spUtils = SPUtils.getInstance("bc", context);
+        UserBean userBean = AuthJsonUtils.readUserBean(spUtils.getString("auth", ""));
+        Log.v("lllllllll","===userBean.isVip()="+userBean.isVip());
+        if (userBean != null)
+            isVip = userBean.isVip();
         this.datas = data;
         this.notifyDataSetChanged();
     }
@@ -121,7 +128,11 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
                         }
                     });
                 } else {
-                    ((BookNewestAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice() + "积分");//否领取
+                    if (isVip){
+                        ((BookNewestAdapter.BookViewHolder) holder).tv_stage.setText("免费领取");//vip领取
+                    }else {
+                        ((BookNewestAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice() + "积分");//否领取
+                    }
                     ((BookNewestAdapter.BookViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

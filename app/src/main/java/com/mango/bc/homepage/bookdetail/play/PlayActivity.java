@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioManager;
 import android.os.Build;
@@ -12,6 +14,7 @@ import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -49,7 +52,12 @@ import com.mango.bc.wallet.bean.CheckInBean;
 import com.mango.bc.wallet.bean.RefreshTaskBean;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXMiniProgramObject;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -70,6 +78,8 @@ import cn.sharesdk.wechat.friends.Wechat;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+
+import static com.tencent.mm.opensdk.modelmsg.SendMessageToWX.Req.WXSceneSession;
 
 
 /**
@@ -604,5 +614,42 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
         AudioPlayer.get().addOnPlayEventListener(this);
     }*/
 
+    private void sendMiniApps(String articlePk, String title, String content, String url, Bitmap icon) {
+        IWXAPI api;
+        api = WXAPIFactory.createWXAPI(this, "wxb93480bda524daa0");
+        WXMiniProgramObject miniProgram = new WXMiniProgramObject();
+        //低版本微信打开 URL
+        miniProgram.webpageUrl = url;
+        //跳转的小程序的原始 ID
+        miniProgram.userName = "";//WechatShareUtils.MINI_APPS_ID;
+        // 小程序的 Path
+        miniProgram.path = ""/*WechatShareUtils.getMiniAppPath(articlePk)*/;
+        WXMediaMessage msg = new WXMediaMessage(miniProgram);
+        final String shareTitle = /*WechatShareUtils.getValidTitle(title)*/"";
+        if (!TextUtils.isEmpty(shareTitle)) {
+            msg.title = title;
+        }
+        final String shareDescription = /*WechatShareUtils.getValidDescription(content)*/"";
+        if (!TextUtils.isEmpty(shareDescription)) {
+            msg.description = shareDescription;
+        }
+        if (icon != null) {
+            msg.setThumbImage(icon);
+        } else {
+            Bitmap temp = BitmapFactory.decodeResource(this.getResources(),
+                    R.mipmap.icon);
+            msg.setThumbImage(temp);
+        }
+        Log.i("TAG", "sendMiniApps title: " + title);
+        //使用此方法会出现无法分享的问题
+        // Bitmap thumbBmp = Bitmap.createScaledBitmap(icon, 150, 150, true);
+        //icon.recycle();
+        // msg.thumbData = BitmapUtils.bitmapToByteArray(thumbBmp, true);
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = "";//buildTransaction("miniProgram");
+        req.message = msg;
+        req.scene = WXSceneSession;
+        api.sendReq(req);
+    }
 
 }

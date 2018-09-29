@@ -33,6 +33,7 @@ import com.mango.bc.wallet.activity.CurrencyActivity;
 import com.mango.bc.wallet.activity.RechargeActivity;
 import com.mango.bc.wallet.activity.TransactionActivity;
 import com.mango.bc.wallet.activity.TransferActivity;
+import com.mango.bc.wallet.bean.CheckBean;
 import com.mango.bc.wallet.bean.CheckInBean;
 import com.mango.bc.wallet.bean.RefreshTaskBean;
 import com.mango.bc.wallet.fragment.AlreadyObtainedFragment;
@@ -117,6 +118,7 @@ public class WalletFragment extends Fragment {
     private ArrayList<String> mDatas;
     List<Fragment> mfragments = new ArrayList<Fragment>();
     private SPUtils spUtils;
+    private boolean flag = false;
 
     @Nullable
     @Override
@@ -310,11 +312,11 @@ public class WalletFragment extends Fragment {
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         try {
-                            //String string = response.body().string();
-                            //CheckBean checkBean = JsonUtil.readCheckBean(string);
+                            String string = response.body().string();
+                            CheckBean checkBean = JsonUtil.readCheckBean(string);
                             //spUtils.put("checkIf", string);
                             Message msg = mHandler.obtainMessage();
-                            //msg.obj = checkBean;
+                            msg.obj = checkBean;
                             msg.what = 1;
                             msg.sendToTarget();
                         } catch (Exception e) {
@@ -337,13 +339,14 @@ public class WalletFragment extends Fragment {
                     AppUtils.showToast(getActivity(), "签到失败");
                     break;
                 case 1://签到成功
-                    //CheckBean checkBean = (CheckBean) msg.obj;
+                    CheckBean checkBean = (CheckBean) msg.obj;
                     //EventBus.getDefault().postSticky(checkInBean);//刷新
                     //initChechIf(checkBean);
                     try {
                         EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
                         AppUtils.showToast(getActivity(), "签到成功");
-                        ifCheckIn();
+                        initChechfromWallet(checkBean);
+                        //ifCheckIn();
                         //tvSign.setEnabled(false);
                     } catch (IndexOutOfBoundsException e) {
                         //签到7天完成
@@ -351,9 +354,9 @@ public class WalletFragment extends Fragment {
                     }
                     break;
                 case 2://
-                    CheckInBean checkInBean = (CheckInBean) msg.obj;
+/*                    CheckInBean checkInBean = (CheckInBean) msg.obj;
                     if (checkInBean != null)
-                        initChechfromWallet(checkInBean);//更新签到表
+                        initChechfromWallet(checkInBean);//更新签到表*/
                     break;
                 default:
                     break;
@@ -361,7 +364,7 @@ public class WalletFragment extends Fragment {
         }
     }
 
-    private void ifCheckIn() {
+/*    private void ifCheckIn() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -391,14 +394,14 @@ public class WalletFragment extends Fragment {
                 });
             }
         }).start();
-    }
+    }*/
 
-    private void initChechfromWallet(CheckInBean checkInBean) {
+    private void initChechfromWallet(CheckBean checkBean) {
         try {
             breadcrumbs.nextStep();
         } catch (IndexOutOfBoundsException e) {
         }
-        switch (checkInBean.getCount()) {
+        switch (checkBean.getCount()) {
             case 0:
                 break;
             case 1:
@@ -473,14 +476,14 @@ public class WalletFragment extends Fragment {
                 tvD7.setTextColor(getActivity().getResources().getColor(R.color.yello));
                 break;
         }
-        tvSignDay.setText("已签到" + checkInBean.getCount() + "天");
-        if (checkInBean.isTodayCheckedIn()) {
+        tvSignDay.setText("已签到" + checkBean.getCount() + "天");
+/*        if (checkBean.isTodayCheckedIn()) {
             tvSign.setText("立即签到");
             tvSign.setEnabled(true);
-        } else {
+        } else {*/
             tvSign.setText("已签到");
-            //tvSign.setEnabled(false);
-        }
+            tvSign.setEnabled(false);
+        //}
     }
 
     private void initChechIf(CheckInBean checkInBean) {
@@ -492,7 +495,7 @@ public class WalletFragment extends Fragment {
             tvSign.setEnabled(true);
         } else {
             tvSign.setText("已签到");
-            //tvSign.setEnabled(false);
+            tvSign.setEnabled(false);
         }
         switch (checkInBean.getCount()) {
             case 0:

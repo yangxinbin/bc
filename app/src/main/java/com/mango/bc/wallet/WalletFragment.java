@@ -492,7 +492,7 @@ public class WalletFragment extends Fragment {
             tvSign.setEnabled(true);
         } else {*/
         tvSign.setText("已签到");
-        //tvSign.setEnabled(false);
+        tvSign.setEnabled(false);
         //}
     }
 
@@ -505,7 +505,7 @@ public class WalletFragment extends Fragment {
             tvSign.setEnabled(true);
         } else {
             tvSign.setText("已签到");
-            //tvSign.setEnabled(false);
+            tvSign.setEnabled(false);
         }
         switch (checkInBean.getCount()) {
             case 0:

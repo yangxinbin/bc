@@ -51,8 +51,7 @@
             android:src="@drawable/group" />
     </LinearLayout>
 
-    <ImageView
-        android:visibility="gone"
+<!--    <ImageView
         android:id="@+id/imageView_novip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -60,8 +59,9 @@
         android:layout_marginRight="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_10"
         android:scaleType="fitXY"
-        app:srcCompat="@drawable/banner" />
-    <!--    <com.youth.banner.Banner
+        android:visibility="gone"
+        app:srcCompat="@drawable/banner" />-->
+        <com.youth.banner.Banner
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
@@ -72,10 +72,9 @@
             android:layout_marginRight="@dimen/dp_15"
             android:layout_marginTop="@dimen/dp_10"
             android:scaleType="fitXY"
-            tools:layout_editor_absoluteX="0dp" />-->
+            tools:layout_editor_absoluteX="0dp" />
 
-    <LinearLayout
-        android:visibility="gone"
+<!--    <LinearLayout
         android:id="@+id/l_vip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -85,7 +84,8 @@
         android:background="@drawable/vip_card"
         android:orientation="vertical"
         android:padding="@dimen/dp_15"
-        android:scaleType="fitXY">
+        android:scaleType="fitXY"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -124,21 +124,21 @@
 
                     <ImageView
                         android:id="@+id/img_vip"
-                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="@dimen/dp_10"
-                        android:src="@drawable/vip" />
+                        android:src="@drawable/vip"
+                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/img_agency"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
                         android:layout_gravity="center"
                         android:layout_marginLeft="@dimen/dp_5"
-                        android:src="@drawable/talent" />
+                        android:src="@drawable/talent"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <TextView
@@ -222,7 +222,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/dp_12" />
         </LinearLayout>
-    </LinearLayout>
+    </LinearLayout>-->
     <!--
         <ImageView
             android:visibility="gone"

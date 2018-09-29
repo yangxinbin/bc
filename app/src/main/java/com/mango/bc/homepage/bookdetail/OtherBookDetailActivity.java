@@ -21,6 +21,7 @@ import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
 import com.mango.bc.bookcase.net.view.MyAllBookView;
 import com.mango.bc.homepage.activity.BuyBookActivity;
+import com.mango.bc.homepage.activity.OpenUpVipActivity;
 import com.mango.bc.homepage.bookdetail.adapter.BookDetailAdapter;
 import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
 import com.mango.bc.homepage.bookdetail.bean.PlayBarBean;
@@ -486,6 +487,8 @@ public class OtherBookDetailActivity extends BaseActivity implements MyAllBookVi
                 Log.v("yyyyyyy", "==?===4--");
                 break;
             case R.id.book_stage_needbuy_vip:
+                intent = new Intent(this,OpenUpVipActivity.class);
+                startActivity(intent);
                 break;
             case R.id.book_stage_needbuy_money:
                 intent = new Intent(this, BuyBookActivity.class);

@@ -14,12 +14,15 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mango.bc.R;
+import com.mango.bc.homepage.activity.OpenUpVipActivity;
 import com.mango.bc.homepage.activity.VipDetailActivity;
 import com.mango.bc.mine.activity.FaqActivity;
 import com.mango.bc.mine.activity.ServiceActivity;
+import com.mango.bc.mine.activity.VipCenterActivity;
 import com.mango.bc.mine.bean.StatsBean;
 import com.mango.bc.mine.bean.UserBean;
 import com.mango.bc.mine.jsonutil.AuthJsonUtils;
+import com.mango.bc.util.DateUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 
@@ -77,6 +80,12 @@ public class MineFragment extends Fragment {
     ImageView imgVip;
     @Bind(R.id.img_agency)
     ImageView imgAgency;
+    @Bind(R.id.vip_time)
+    TextView vipTime;
+    @Bind(R.id.vip_hasTime)
+    TextView vipHasTime;
+    @Bind(R.id.center_vip)
+    LinearLayout centerVip;
     private SPUtils spUtils;
 
     @Nullable
@@ -174,8 +183,13 @@ public class MineFragment extends Fragment {
         Log.v("cccccccccc", "-----R--2--" + spUtils.getString("auth", ""));
         if (userBean.isVip()) {
             imgVip.setVisibility(View.VISIBLE);
+            centerVip.setVisibility(View.VISIBLE);
+            imageViewToVip.setVisibility(View.GONE);
+            vipTime.setText("至" + DateUtil.getDateToString(userBean.getBilling().getEndOn(), "yyyy-MM-dd"));
         } else {
             imgVip.setVisibility(View.GONE);
+            centerVip.setVisibility(View.GONE);
+            imageViewToVip.setVisibility(View.VISIBLE);
         }
         tvAuthNName.setText(userBean.getAlias());
         if (userBean.getAvator() != null)
@@ -202,7 +216,7 @@ public class MineFragment extends Fragment {
         //EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.imageView_to_vip, R.id.l_collage, R.id.imageVie_pic, R.id.l_class, R.id.l_get, R.id.l_time, R.id.l_code,/* R.id.l_to_vip,*/ R.id.l_to_agent, /*R.id.l_to_talent,*/ R.id.l_faq, R.id.l_service, R.id.l_setting})
+    @OnClick({R.id.center_vip,R.id.imageView_to_vip, R.id.l_collage, R.id.imageVie_pic, R.id.l_class, R.id.l_get, R.id.l_time, R.id.l_code,/* R.id.l_to_vip,*/ R.id.l_to_agent, /*R.id.l_to_talent,*/ R.id.l_faq, R.id.l_service, R.id.l_setting})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -233,6 +247,12 @@ public class MineFragment extends Fragment {
             case R.id.l_setting:
                 break;
             case R.id.imageView_to_vip:
+                intent = new Intent(getActivity(),OpenUpVipActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.center_vip:
+                intent = new Intent(getActivity(), VipCenterActivity.class);
+                startActivity(intent);
                 break;
             case R.id.l_collage:
                 intent = new Intent(getContext(), VipDetailActivity.class);

@@ -1,7 +1,10 @@
 package com.mango.bc.homepage.fragment;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -22,12 +25,19 @@ import com.mango.bc.mine.bean.UserBean;
 import com.mango.bc.mine.jsonutil.AuthJsonUtils;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.DateUtil;
+import com.mango.bc.util.GlideImageLoader;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.listener.OnBannerClickListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -37,7 +47,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class HeadFragment extends Fragment {
     @Bind(R.id.et_search)
     EditText etSearch;
-    @Bind(R.id.imageView_collage)
+ /*   @Bind(R.id.imageView_collage)
     ImageView imageViewCollage;
     @Bind(R.id.imageView_novip)
     ImageView imageViewNovip;
@@ -63,17 +73,17 @@ public class HeadFragment extends Fragment {
     TextView tvVipContent2;
     @Bind(R.id.l_vip)
     LinearLayout lVip;
-    private SPUtils spUtils;
-/*    @Bind(R.id.imageView)
-    Banner imageView;*/
+    private SPUtils spUtils;*/
+    @Bind(R.id.imageView)
+    Banner imageView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home, container, false);
-        spUtils = SPUtils.getInstance("bc", getActivity());
+        //spUtils = SPUtils.getInstance("bc", getActivity());
         ButterKnife.bind(this, view);
-        EventBus.getDefault().register(this);
+        //EventBus.getDefault().register(this);
         etSearch.setFocusable(false);
         etSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,12 +93,12 @@ public class HeadFragment extends Fragment {
             }
         });
         AppUtils.hideInput(getActivity());
-        //initBanner();
-        initView(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));
+        initBanner();
+        //initView(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));
         return view;
     }
 
-    private void initView(UserBean auth) {
+/*    private void initView(UserBean auth) {
         if (auth == null)
             return;
         if (auth.isVip()) {
@@ -113,8 +123,8 @@ public class HeadFragment extends Fragment {
         if (userBean == null)
             return;
         initView(userBean);
-    }
-/*    private void initBanner() {
+    }*/
+    private void initBanner() {
         List<String> pathsImage = new ArrayList<>();
         List<String> pathsTitle = new ArrayList<>();
         pathsImage.add(getResourcesUri(R.drawable.banner));
@@ -144,7 +154,7 @@ public class HeadFragment extends Fragment {
                 resources.getResourceTypeName(id) + "/" +
                 resources.getResourceEntryName(id);
         return uriPath;
-    }*/
+    }
 
     @Override
     public void onDestroyView() {
@@ -152,11 +162,11 @@ public class HeadFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.imageView_novip, R.id.buy_vip, R.id.l_vip, R.id.imageView_collage})
+    @OnClick({/*R.id.imageView_novip, R.id.buy_vip, R.id.l_vip,*/ R.id.imageView_collage})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
-            case R.id.imageView_novip:
+/*            case R.id.imageView_novip:
                 intent = new Intent(getContext(), VipDetailActivity.class);
                 startActivity(intent);
                 break;
@@ -166,7 +176,7 @@ public class HeadFragment extends Fragment {
                 //intent = new Intent(getContext(), VipAutoActivity.class);//管理自动续费
                 intent = new Intent(getContext(), VipDetailActivity.class);//暂时
                 startActivity(intent);
-                break;
+                break;*/
             case R.id.imageView_collage:
                 intent = new Intent(getContext(), CollageActivity.class);
                 startActivity(intent);

@@ -117,7 +117,6 @@ public class WalletFragment extends Fragment {
     private ArrayList<String> mDatas;
     List<Fragment> mfragments = new ArrayList<Fragment>();
     private SPUtils spUtils;
-    private int singDay;
 
     @Nullable
     @Override
@@ -393,30 +392,107 @@ public class WalletFragment extends Fragment {
             }
         }).start();
     }
+
     private void initChechfromWallet(CheckInBean checkInBean) {
-        breadcrumbs.nextStep();
-        singDay = checkInBean.getCount();
+        try {
+            breadcrumbs.nextStep();
+        } catch (IndexOutOfBoundsException e) {
+        }
+        switch (checkInBean.getCount()) {
+            case 0:
+                break;
+            case 1:
+                tv1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                break;
+            case 2:
+                tv1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv2.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD2.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                break;
+            case 3:
+                tv1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv2.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD2.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv3.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD3.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                break;
+            case 4:
+                tv1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv2.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD2.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv3.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD3.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv4.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD4.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                break;
+            case 5:
+                tv1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv2.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD2.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv3.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD3.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv4.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD4.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv5.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD5.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                break;
+
+            case 6:
+                tv1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv2.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD2.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv3.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD3.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv4.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD4.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv5.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD5.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv6.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD6.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                break;
+            case 7:
+                tv1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD1.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv2.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD2.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv3.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD3.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv4.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD4.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv5.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD5.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv6.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD6.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tv7.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                tvD7.setTextColor(getActivity().getResources().getColor(R.color.yello));
+                break;
+        }
         tvSignDay.setText("已签到" + checkInBean.getCount() + "天");
         if (checkInBean.isTodayCheckedIn()) {
             tvSign.setText("立即签到");
             tvSign.setEnabled(true);
         } else {
             tvSign.setText("已签到");
-            tvSign.setEnabled(false);
+            //tvSign.setEnabled(false);
         }
     }
 
     private void initChechIf(CheckInBean checkInBean) {
         if (checkInBean == null)
             return;
-        singDay = checkInBean.getCount();
         tvSignDay.setText("已签到" + checkInBean.getCount() + "天");
         if (checkInBean.isTodayCheckedIn()) {
             tvSign.setText("立即签到");
             tvSign.setEnabled(true);
         } else {
             tvSign.setText("已签到");
-            tvSign.setEnabled(false);
+            //tvSign.setEnabled(false);
         }
         switch (checkInBean.getCount()) {
             case 0:

@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,6 +19,9 @@ import com.mango.bc.bookcase.fragment.MyCompetitiveFragment;
 import com.mango.bc.bookcase.fragment.MyExpertFragment;
 import com.mango.bc.bookcase.fragment.MyFreeFragment;
 import com.mango.bc.homepage.bookdetail.bean.PlayPauseBean;
+import com.mango.bc.homepage.bookdetail.play.BaseServiceFragment;
+import com.mango.bc.homepage.bookdetail.play.executor.ControlPanel;
+import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.util.DensityUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -36,7 +40,7 @@ import butterknife.ButterKnife;
  * Created by admin on 2018/9/3.
  */
 
-public class BookcaseFragment extends Fragment {
+public class BookcaseFragment extends BaseServiceFragment {
     /*    @Bind(R.id.imageVie_pic)
         CircleImageView imageVieP;
         @Bind(R.id.tv_class)
@@ -53,8 +57,11 @@ public class BookcaseFragment extends Fragment {
     TabLayout tabLayout;
     @Bind(R.id.viewpager_bookcase)
     ViewPager viewPager;
+    @Bind(R.id.fl_play_bar)
+    FrameLayout flPlayBar;
     private ArrayList<String> mDatas;
     List<Fragment> mfragments = new ArrayList<Fragment>();//
+    private ControlPanel controlPanel;
 
 
     @Nullable
@@ -65,6 +72,12 @@ public class BookcaseFragment extends Fragment {
         initDatas();
         init();
         return view;
+    }
+    @Override
+    protected void onServiceBound() {
+        controlPanel = new ControlPanel(flPlayBar);
+        AudioPlayer.get().addOnPlayEventListener(controlPanel);
+        //parseIntent();
     }
     private void initDatas() {
         //  mDatas = new ArrayList<String>(Arrays.asList("       我的事件       ", "       全部事件       "));

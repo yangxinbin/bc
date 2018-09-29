@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
 import com.mango.bc.homepage.bookdetail.bean.PlayPauseBean;
 import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
+import com.mango.bc.homepage.bookdetail.play.executor.ControlPanel;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
@@ -67,6 +69,8 @@ public class ExpertBookActivity extends BaseActivity implements BookExpertView {
     SmartRefreshLayout refresh;
     @Bind(R.id.img_no_book)
     ImageView imgNoBook;
+    @Bind(R.id.fl_play_bar)
+    FrameLayout flPlayBar;
     private BookExpertAdapter bookExpertAdapter;
     private boolean isFirstEnter;
     private BookPresenter bookPresenter;
@@ -75,6 +79,7 @@ public class ExpertBookActivity extends BaseActivity implements BookExpertView {
     public TextView tv_stage;
     private ACache mCache;
     private SPUtils spUtils;
+    private ControlPanel controlPanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +98,12 @@ public class ExpertBookActivity extends BaseActivity implements BookExpertView {
         }
         refreshAndLoadMore();
     }
-
+    @Override
+    protected void onServiceBound() {
+        controlPanel = new ControlPanel(flPlayBar);
+        AudioPlayer.get().addOnPlayEventListener(controlPanel);
+        //parseIntent();
+    }
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true, priority = 5)
     public void RefreshStageBeanEventBus(RefreshStageBean bean) {
         if (bean == null) {

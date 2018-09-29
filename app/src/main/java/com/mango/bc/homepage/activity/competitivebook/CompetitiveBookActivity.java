@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.homepage.activity.competitivebook.fragment.CompetitivesRecyclerviewFragment;
+import com.mango.bc.homepage.bookdetail.play.executor.ControlPanel;
+import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.jsonutils.JsonUtils;
 import com.mango.bc.util.ACache;
@@ -37,7 +40,10 @@ public class CompetitiveBookActivity extends BaseActivity {
     TabLayout tabLayout;
     @Bind(R.id.viewpager)
     ViewPager viewpager;
+    @Bind(R.id.fl_play_bar)
+    FrameLayout flPlayBar;
     private List<CompetitiveFieldBean> beanList = new ArrayList<>();
+    private ControlPanel controlPanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,12 @@ public class CompetitiveBookActivity extends BaseActivity {
         setupViewPager(viewpager);
         tabLayout.setupWithViewPager(viewpager);
         viewpager.setCurrentItem(getIntent().getIntExtra("which",0));//默认第一页
+    }
+    @Override
+    protected void onServiceBound() {
+        controlPanel = new ControlPanel(flPlayBar);
+        AudioPlayer.get().addOnPlayEventListener(controlPanel);
+        //parseIntent();
     }
     public void reflex(final TabLayout tabLayout) {
         //了解源码得知 线的宽度是根据 tabView的宽度来设置的

@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.mango.bc.homepage.activity.freebook.FreeBookActivity">
+
     <RelativeLayout
-        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:gravity="center_vertical"
         android:padding="@dimen/dp_5">
 
@@ -33,12 +34,27 @@
             android:layout_marginStart="@dimen/dp_10"
             app:srcCompat="@drawable/back" />
     </RelativeLayout>
-    <include layout="@layout/refresh_recycler"/>
-    <ImageView
-        android:visibility="gone"
-        android:id="@+id/img_no_book"
-        android:src="@drawable/no_book"
-        android:gravity="center"
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <include layout="@layout/refresh_recycler" />
+
+        <include
+            layout="@layout/include_play_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/play_bar_height"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:layout_margin="@dimen/dp_10" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/img_no_book"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:src="@drawable/no_book"
+        android:visibility="gone" />
 </LinearLayout>

@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import com.mango.bc.homepage.adapter.BookGirdFreeAdapter;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
 import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
+import com.mango.bc.homepage.bookdetail.play.executor.ControlPanel;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
@@ -69,6 +71,8 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView, MyAl
     SmartRefreshLayout refresh;
     @Bind(R.id.img_no_book)
     ImageView imgNoBook;
+    @Bind(R.id.fl_play_bar)
+    FrameLayout flPlayBar;
     private BookGirdFreeAdapter bookGirdFreeAdapter;
     private boolean isFirstEnter = true;
     private BookPresenter bookPresenter;
@@ -78,6 +82,7 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView, MyAl
     private SPUtils spUtils;
     private TextView tv_free_stage;
     private ACache mCache;
+    private ControlPanel controlPanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +101,13 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView, MyAl
             bookPresenter.visitBooks(this, TYPE, "", page, true);
         }
         refreshAndLoadMore();
+    }
+
+    @Override
+    protected void onServiceBound() {
+        controlPanel = new ControlPanel(flPlayBar);
+        AudioPlayer.get().addOnPlayEventListener(controlPanel);
+        //parseIntent();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true, priority = 5)

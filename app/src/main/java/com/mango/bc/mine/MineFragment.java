@@ -25,6 +25,7 @@ import com.mango.bc.mine.jsonutil.AuthJsonUtils;
 import com.mango.bc.util.DateUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
+import com.mango.bc.wallet.activity.ExpertApplyActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -216,7 +217,7 @@ public class MineFragment extends Fragment {
         //EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.center_vip,R.id.imageView_to_vip, R.id.l_collage, R.id.imageVie_pic, R.id.l_class, R.id.l_get, R.id.l_time, R.id.l_code,/* R.id.l_to_vip,*/ R.id.l_to_agent, /*R.id.l_to_talent,*/ R.id.l_faq, R.id.l_service, R.id.l_setting})
+    @OnClick({R.id.center_vip, R.id.imageView_to_vip, R.id.l_collage, R.id.imageVie_pic, R.id.l_class, R.id.l_get, R.id.l_time, R.id.l_code,/* R.id.l_to_vip,*/ R.id.l_to_agent, /*R.id.l_to_talent,*/ R.id.l_faq, R.id.l_service, R.id.l_setting})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -233,6 +234,8 @@ public class MineFragment extends Fragment {
 /*            case R.id.l_to_vip:
                 break;*/
             case R.id.l_to_agent:
+                intent = new Intent(getActivity(), ExpertApplyActivity.class);
+                startActivity(intent);
                 break;
 /*            case R.id.l_to_talent:
                 break;*/
@@ -247,7 +250,7 @@ public class MineFragment extends Fragment {
             case R.id.l_setting:
                 break;
             case R.id.imageView_to_vip:
-                intent = new Intent(getActivity(),OpenUpVipActivity.class);
+                intent = new Intent(getActivity(), OpenUpVipActivity.class);
                 startActivity(intent);
                 break;
             case R.id.center_vip:

@@ -91,6 +91,11 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
         void onPlayClick(View view, int position);
 
         void onGetClick(View view, int position);
+
+        void onItemVipGetClick(View view, int position);
+
+        void onVipGetClick(View view, int position);
+
     }
 
 
@@ -130,21 +135,34 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
                 } else {
                     if (isVip){
                         ((BookNewestAdapter.BookViewHolder) holder).tv_stage.setText("免费领取");//vip领取
+                        ((BookNewestAdapter.BookViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                mOnItemClickLitener.onVipGetClick(((BookNewestAdapter.BookViewHolder) holder).tv_stage, position);
+                            }
+                        });
+                        ((BookNewestAdapter.BookViewHolder) holder).book_item.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                mOnItemClickLitener.onItemVipGetClick(((BookNewestAdapter.BookViewHolder) holder).book_item, position);
+                            }
+                        });
                     }else {
                         ((BookNewestAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice() + "积分");//否领取
+                        ((BookNewestAdapter.BookViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                mOnItemClickLitener.onGetClick(((BookNewestAdapter.BookViewHolder) holder).tv_stage, position);
+                            }
+                        });
+                        ((BookNewestAdapter.BookViewHolder) holder).book_item.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                mOnItemClickLitener.onItemGetClick(((BookNewestAdapter.BookViewHolder) holder).book_item, position);
+                            }
+                        });
                     }
-                    ((BookNewestAdapter.BookViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            mOnItemClickLitener.onGetClick(((BookNewestAdapter.BookViewHolder) holder).tv_stage, position);
-                        }
-                    });
-                    ((BookNewestAdapter.BookViewHolder) holder).book_item.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            mOnItemClickLitener.onItemGetClick(((BookNewestAdapter.BookViewHolder) holder).tv_stage, position);
-                        }
-                    });
+
                 }
             }
         }

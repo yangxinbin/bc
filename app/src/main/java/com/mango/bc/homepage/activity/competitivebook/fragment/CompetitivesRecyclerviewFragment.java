@@ -21,7 +21,10 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mango.bc.R;
+import com.mango.bc.bookcase.bean.RefreshBookCaseBean;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
+import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
+import com.mango.bc.bookcase.net.view.MyAllBookView;
 import com.mango.bc.homepage.activity.BuyBookActivity;
 import com.mango.bc.homepage.activity.freebook.FreeBookActivity;
 import com.mango.bc.homepage.adapter.BookComprtitiveAdapter;
@@ -35,6 +38,8 @@ import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookCompetitiveView;
+import com.mango.bc.mine.bean.StatsBean;
+import com.mango.bc.mine.jsonutil.AuthJsonUtils;
 import com.mango.bc.util.ACache;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
@@ -53,6 +58,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
@@ -67,7 +73,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by admin on 2018/5/21.
  */
 
-public class CompetitivesRecyclerviewFragment extends Fragment implements BookCompetitiveView {
+public class CompetitivesRecyclerviewFragment extends Fragment implements BookCompetitiveView, MyAllBookView {
     @Bind(R.id.recycle)
     RecyclerView recycle;
     @Bind(R.id.refresh)
@@ -85,6 +91,7 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
     private TextView tv_head_stage;
     private SPUtils spUtils;
     private ACache mCache;
+    private MyBookPresenterImpl myBookPresenter;
 
 
     public static CompetitivesRecyclerviewFragment newInstance(String type) {
@@ -99,6 +106,7 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bookPresenter = new BookPresenterImpl(this);
+        myBookPresenter = new MyBookPresenterImpl(this);
         mType = getArguments().getString("type");
         Log.v("yyyyy", "====mType======" + mType);
 
@@ -208,7 +216,127 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
             }
         }
 
+        @Override
+        public void onItemVipGetClick(View view, int position) {
+            Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
+            intent.putExtra("vipFree", true);
+            EventBus.getDefault().postSticky(adapter.getItem(position));
+            EventBus.getDefault().removeStickyEvent(MyBookBean.class);
+            startActivity(intent);
+        }
+
+        @Override
+        public void onVipGetClick(View view, int position) {
+            tv_stage = view.findViewById(R.id.tv_stage);
+            if (tv_stage.getText().equals("播放")) {//用户没有刷新没有加载时临时调用（刷新与加载会重新与书架匹配）
+                Log.v("bbbbbbbb", "---tv_stage--" + tv_stage.getText());
+
+            } else {
+                getVipFreeBook(adapter.getItem(position).getId());
+            }
+        }
+
+        @Override
+        public void onHeadVipGetClick(View view, int position) {
+            tv_head_stage = view.findViewById(R.id.tv_head_stage);
+            if (tv_head_stage.getText().equals("播放")) {
+                Log.v("bbbbbbbb", "---tv_head_stage--" + tv_head_stage.getText());
+            } else {
+                getVipFreeBook(adapter.getItem(position).getId());
+            }
+        }
+
     };
+
+    private void getVipFreeBook(final String bookId) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
+                mapParams.put("bookId", bookId);
+                HttpUtils.doPost(Urls.HOST_BUYBOOK, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                AppUtils.showToast(getActivity(), "领取失败");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (tv_stage != null)
+                                        tv_stage.setText("播放");//领取成功
+                                    if (tv_head_stage != null)
+                                        tv_head_stage.setText("播放");//领取成功
+                                    loadStats();
+                                    if (NetUtil.isNetConnect(getActivity())) {
+                                        myBookPresenter.visitBooks(getActivity(), 3, 0, false);//获取书架的所有书(加入刷新)
+                                    } else {
+                                        myBookPresenter.visitBooks(getActivity(), 3, 0, true);//获取书架的所有书(加入刷新)
+                                    }  //要不点击详情页还是显现领取，详情书的状态在adapter里面控制
+/*                                    RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, true, false);
+                                    EventBus.getDefault().postSticky(refreshStageBean);*/
+                                    EventBus.getDefault().postSticky(new RefreshBookCaseBean(false, true, false));
+
+                                }
+                            });
+                        } catch (Exception e) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AppUtils.showToast(getActivity(), "领取失败");
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void loadStats() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //final HashMap<String, String> mapParams = new HashMap<String, String>();
+                //mapParams.clear();
+                //mapParams.put("authToken", spUtils.getString("authToken", ""));
+                HttpUtils.doGet(Urls.HOST_STATS + "?authToken=" + spUtils.getString("authToken", ""), /*mapParams,*/ new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                    }
+
+                    @Override
+                    public void onResponse(Call call, final Response response) {
+                        try {
+                            final String string1 = response.body().string();
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //loadUser();//更新用户信息（钱）
+                                    StatsBean statsBean = AuthJsonUtils.readStatsBean(string1);
+                                    EventBus.getDefault().postSticky(statsBean);//刷新钱包
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+            }
+        }).start();
+    }
+
     private boolean chechState(String bookId) {
         String data = spUtils.getString("allMyBook", "");
         Gson gson = new Gson();
@@ -284,6 +412,7 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
             }
         }).start();
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void BuySuccessBeanEventBus(BuySuccessBean bean) {
         if (bean == null) {

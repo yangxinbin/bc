@@ -121,7 +121,7 @@ public class BookExpertAdapter extends RecyclerView.Adapter {
                     ((BookExpertAdapter.BookViewHolder) holder).book_item.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            mOnItemClickLitener.onItemPlayClick(((BookExpertAdapter.BookViewHolder) holder).tv_stage, position);
+                            mOnItemClickLitener.onItemPlayClick(((BookExpertAdapter.BookViewHolder) holder).book_item, position);
                         }
                     });
                 } else {
@@ -136,7 +136,7 @@ public class BookExpertAdapter extends RecyclerView.Adapter {
                     ((BookExpertAdapter.BookViewHolder) holder).book_item.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            mOnItemClickLitener.onItemGetClick(((BookExpertAdapter.BookViewHolder) holder).tv_stage, position);
+                            mOnItemClickLitener.onItemGetClick(((BookExpertAdapter.BookViewHolder) holder).book_item, position);
                         }
                     });
                 }

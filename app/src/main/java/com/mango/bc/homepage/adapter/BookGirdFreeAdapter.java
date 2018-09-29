@@ -116,7 +116,7 @@ public class BookGirdFreeAdapter extends RecyclerView.Adapter {
                 viewHolder.book_free_item.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        mOnItemClickLitener.onItemPlayClick(viewHolder.tv_free_stage, position);
+                        mOnItemClickLitener.onItemPlayClick(viewHolder.book_free_item, position);
                     }
                 });
             } else {
@@ -130,7 +130,7 @@ public class BookGirdFreeAdapter extends RecyclerView.Adapter {
                 viewHolder.book_free_item.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        mOnItemClickLitener.onItemGetClick(viewHolder.tv_free_stage, position);
+                        mOnItemClickLitener.onItemGetClick(viewHolder.book_free_item, position);
                     }
                 });
             }

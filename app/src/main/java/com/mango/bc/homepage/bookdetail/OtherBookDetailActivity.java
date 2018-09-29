@@ -328,7 +328,7 @@ public class OtherBookDetailActivity extends BaseActivity implements MyAllBookVi
             lFree.setVisibility(View.GONE);//进去免费领取界面
             lNeedbuy.setVisibility(View.GONE);//进去购买领取界面
         } else {
-            if (type.equals("free")) {
+            if (type.equals("free") || getIntent().getBooleanExtra("vipFree",false)) {
                 lGet.setVisibility(View.GONE);
                 lFree.setVisibility(View.VISIBLE);
                 lNeedbuy.setVisibility(View.GONE);

@@ -15,25 +15,23 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mango.bc.R;
+import com.mango.bc.bookcase.bean.RefreshBookCaseBean;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
 import com.mango.bc.bookcase.net.view.MyAllBookView;
 import com.mango.bc.homepage.activity.BuyBookActivity;
-import com.mango.bc.homepage.activity.freebook.FreeBookActivity;
 import com.mango.bc.homepage.adapter.BookNewestAdapter;
 import com.mango.bc.homepage.bean.BuySuccessBean;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
-import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
-import com.mango.bc.homepage.bookdetail.bean.PlayPauseBean;
-import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
-import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.bean.LoadStageBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookNewestView;
+import com.mango.bc.mine.bean.StatsBean;
+import com.mango.bc.mine.jsonutil.AuthJsonUtils;
 import com.mango.bc.util.ACache;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
@@ -47,6 +45,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
@@ -172,7 +171,108 @@ public class NewestFragment extends Fragment implements BookNewestView, MyAllBoo
 
         }
 
+        @Override
+        public void onItemVipGetClick(View view, int position) {
+            Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
+            intent.putExtra("vipFree", true);
+            EventBus.getDefault().postSticky(bookNewestAdapter.getItem(position));
+            EventBus.getDefault().removeStickyEvent(MyBookBean.class);
+            startActivity(intent);
+        }
+
+        @Override
+        public void onVipGetClick(View view, int position) {
+            tv_stage = view.findViewById(R.id.tv_stage);
+            getVipFreeBook(bookNewestAdapter.getItem(position).getId());
+        }
+
     };
+
+    private void getVipFreeBook(final String bookId) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
+                mapParams.put("bookId", bookId);
+                HttpUtils.doPost(Urls.HOST_BUYBOOK, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                AppUtils.showToast(getActivity(), "领取失败");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    tv_stage.setText("播放");//领取成功
+                                    loadStats();
+                                    if (NetUtil.isNetConnect(getActivity())) {
+                                        myBookPresenter.visitBooks(getActivity(), 3, 0, false);//获取书架的所有书(加入刷新)
+                                    } else {
+                                        myBookPresenter.visitBooks(getActivity(), 3, 0, true);//获取书架的所有书(加入刷新)
+                                    }  //要不点击详情页还是显现领取，详情书的状态在adapter里面控制
+/*                                    RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, true, false);
+                                    EventBus.getDefault().postSticky(refreshStageBean);*/
+                                    EventBus.getDefault().postSticky(new RefreshBookCaseBean(false, true, true));
+
+                                }
+                            });
+                        } catch (Exception e) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AppUtils.showToast(getActivity(), "领取失败");
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void loadStats() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //final HashMap<String, String> mapParams = new HashMap<String, String>();
+                //mapParams.clear();
+                //mapParams.put("authToken", spUtils.getString("authToken", ""));
+                HttpUtils.doGet(Urls.HOST_STATS + "?authToken=" + spUtils.getString("authToken", ""), /*mapParams,*/ new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                    }
+
+                    @Override
+                    public void onResponse(Call call, final Response response) {
+                        try {
+                            final String string1 = response.body().string();
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //loadUser();//更新用户信息（钱）
+                                    StatsBean statsBean = AuthJsonUtils.readStatsBean(string1);
+                                    EventBus.getDefault().postSticky(statsBean);//刷新钱包
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+            }
+        }).start();
+    }
 
     private boolean chechState(String bookId) {
         String data = spUtils.getString("allMyBook", "");

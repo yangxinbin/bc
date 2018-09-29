@@ -134,7 +134,7 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     ((HeadViewHolder) holder).tv_head_stage.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            mOnItemClickLitener.onPlayClick(((HeadViewHolder) holder).book_head_item, position);
+                            mOnItemClickLitener.onPlayClick(((HeadViewHolder) holder).tv_head_stage, position);
                         }
                     });
                     ((HeadViewHolder) holder).book_head_item.setOnClickListener(new View.OnClickListener() {
@@ -146,21 +146,34 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 } else {
                     if (isVip){
                         ((HeadViewHolder) holder).tv_head_stage.setText("免费领取");
+                        ((HeadViewHolder) holder).tv_head_stage.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                mOnItemClickLitener.onHeadVipGetClick(((HeadViewHolder) holder).tv_head_stage, position);
+                            }
+                        });
+                        ((HeadViewHolder) holder).book_head_item.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                mOnItemClickLitener.onItemVipGetClick(((HeadViewHolder) holder).book_head_item, position);
+                            }
+                        });
                     }else {
                         ((HeadViewHolder) holder).tv_head_stage.setText("购买");
+                        ((HeadViewHolder) holder).tv_head_stage.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                mOnItemClickLitener.onHeadGetClick(((HeadViewHolder) holder).tv_head_stage, position);
+                            }
+                        });
+                        ((HeadViewHolder) holder).book_head_item.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                mOnItemClickLitener.onItemGetClick(((HeadViewHolder) holder).book_head_item, position);
+                            }
+                        });
                     }
-                    ((HeadViewHolder) holder).tv_head_stage.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            mOnItemClickLitener.onHeadGetClick(((HeadViewHolder) holder).book_head_item, position);
-                        }
-                    });
-                    ((HeadViewHolder) holder).book_head_item.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            mOnItemClickLitener.onItemGetClick(((HeadViewHolder) holder).book_head_item, position);
-                        }
-                    });
+
                 }
             }
         } else if (holder instanceof ItemViewHolder) {
@@ -188,21 +201,33 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 } else {
                     if (isVip) {
                         ((ItemViewHolder) holder).tv_stage.setText("免费领取");//否领取
+                        ((ItemViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                mOnItemClickLitener.onVipGetClick(((ItemViewHolder) holder).tv_stage, position);
+                            }
+                        });
+                        ((ItemViewHolder) holder).book_item.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                mOnItemClickLitener.onItemVipGetClick(((ItemViewHolder) holder).tv_stage, position);
+                            }
+                        });
                     } else {
                         ((ItemViewHolder) holder).tv_stage.setText(mData.get(position).getPrice() + "积分");//否领取
+                        ((ItemViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                mOnItemClickLitener.onGetClick(((ItemViewHolder) holder).tv_stage, position);
+                            }
+                        });
+                        ((ItemViewHolder) holder).book_item.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                mOnItemClickLitener.onItemGetClick(((ItemViewHolder) holder).tv_stage, position);
+                            }
+                        });
                     }
-                    ((ItemViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            mOnItemClickLitener.onGetClick(((ItemViewHolder) holder).tv_stage, position);
-                        }
-                    });
-                    ((ItemViewHolder) holder).book_item.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            mOnItemClickLitener.onItemGetClick(((ItemViewHolder) holder).tv_stage, position);
-                        }
-                    });
                 }
             }
         }
@@ -242,6 +267,12 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         void onGetClick(View view, int position);
 
         void onHeadGetClick(View view, int position);
+
+        void onItemVipGetClick(View view, int position);
+
+        void onVipGetClick(View view, int position);
+
+        void onHeadVipGetClick(View view, int position);
 
     }
 

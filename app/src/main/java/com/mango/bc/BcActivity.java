@@ -69,14 +69,14 @@ public class BcActivity extends BaseActivity implements MyAllBookView {
             //myBookPresenter.visitBooks(this, 3, 0, true);//获取书架的所有书
         }
         spUtils = SPUtils.getInstance("bc", this);
-        spUtils.put("authToken", "eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1MzY5MDk3MjI5MzksImFsaWFzIjoi5p2o6ZGr5paMIiwiaWQiOiI1YjhhM2Q0YjA0NDQwYzBhNDhhMzNhMDUiLCJ0eXBlIjoiZ2VuZXJhbCIsIndhbGxldEFkZHJlc3MiOiIweGU3MmUzODdhZjEyZTA4NmFlZWNjOGVmMTljNzcxY2M4IiwiZXhwIjo0MTI4OTA5NzIyLCJ1c2VybmFtZSI6Im9YaGk5NGpRa1hQb3ZCc3FFczBCOFFLc2JNMEEifQ.m6rVYWnsxxogOAVmOLQ1HEC5bv0YzAwPhqGOlQ0tOP1CVec8XBRytgEFo_0rMlgSW42u2F199y3WAOr8XE2yYA");
-        spUtils.put("openId", "oXhi94jQkXPovBsqEs0B8QKsbM0A");
+        //spUtils.put("authToken", "eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1MzY5MDk3MjI5MzksImFsaWFzIjoi5p2o6ZGr5paMIiwiaWQiOiI1YjhhM2Q0YjA0NDQwYzBhNDhhMzNhMDUiLCJ0eXBlIjoiZ2VuZXJhbCIsIndhbGxldEFkZHJlc3MiOiIweGU3MmUzODdhZjEyZTA4NmFlZWNjOGVmMTljNzcxY2M4IiwiZXhwIjo0MTI4OTA5NzIyLCJ1c2VybmFtZSI6Im9YaGk5NGpRa1hQb3ZCc3FFczBCOFFLc2JNMEEifQ.m6rVYWnsxxogOAVmOLQ1HEC5bv0YzAwPhqGOlQ0tOP1CVec8XBRytgEFo_0rMlgSW42u2F199y3WAOr8XE2yYA");
+        //spUtils.put("openId", "oXhi94jQkXPovBsqEs0B8QKsbM0A");
         //假 普通1
         //spUtils.put("openId", "aXhi94jQkXPovBsqEs0B8QKsbM0A");
         //spUtils.put("authToken", "eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1MzgxNTQzNTgwNjUsImFsaWFzIjoiR3Vlc3QiLCJpZCI6IjViYWU1ZDk3MjU1N2I5MDVkODg4ODhmNyIsInR5cGUiOiJnZW5lcmFsIiwid2FsbGV0QWRkcmVzcyI6IjB4MDFiOTkyODZmNWUwMDk4NjEwZDZmYzJmOTNjN2VmYjQiLCJleHAiOjQxMzAxNTQzNTgsInVzZXJuYW1lIjoiYVhoaTk0alFrWFBvdkJzcUVzMEI4UUtzYk0wQSJ9.oZ8Cpgqvv5ouIF7r_Ht_yuJ3LTZjvW-3ftPPso1gNLEBb0Khl29P-suU1lRsjckX3eglENrj0LhTSNMdY76O_Q");
         //假 普通2
-        //spUtils.put("openId", "lXhi94jQkXPovBsqEs0B8QKsbM0A");
-        //spUtils.put("authToken", "eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1MzgyMTIzNzgzNzQsImFsaWFzIjoiR3Vlc3QiLCJpZCI6IjViYWY0MjFhMjU1N2I5MDVkODg4OGE4OSIsInR5cGUiOiJnZW5lcmFsIiwid2FsbGV0QWRkcmVzcyI6IjB4MWFlODhiMDgxMDJkNTVlMmI4M2EwODJkODZjNzlhODAiLCJleHAiOjQxMzAyMTIzNzgsInVzZXJuYW1lIjoibFhoaTk0alFrWFBvdkJzcUVzMEI4UUtzYk0wQSJ9.Uky1IUnFl6OHala9St3bV47qamauRoXu0lpdI1o9pLCBBT9UZISzZc4F-GluvgG0_mytlps_4NeZoBUWfetYgQ");
+        spUtils.put("openId", "9Xhi94jQkXPovBsqEs0B8QKsbM0A");
+        spUtils.put("authToken", "eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1MzgyOTMxMTg3ODAsImFsaWFzIjoiR3Vlc3QiLCJpZCI6IjViYjA3ZDdlMjU1N2I5MDVkODg4OGM3MyIsInR5cGUiOiJnZW5lcmFsIiwid2FsbGV0QWRkcmVzcyI6IjB4NzdlNzU2NjgwYTY1MDlhMWFhMmU1ZTdjYmJiM2QwODQiLCJleHAiOjQxMzAyOTMxMTgsInVzZXJuYW1lIjoiOVhoaTk0alFrWFBvdkJzcUVzMEI4UUtzYk0wQSJ9.8ZPkQD-qk7Jxlo1CFME71QGaTzpeewgowwB_mYpLPyCQ3sQCQDXLVvfUjc6XpxdIdtSPithrsJVpB-eWRwXUlg");
         ButterKnife.bind(this);
         //进来刷新可以屏蔽
         loadUser(); //个人信息从网络拿数据
@@ -259,7 +259,6 @@ public class BcActivity extends BaseActivity implements MyAllBookView {
                     CheckInBean checkInBean = (CheckInBean) msg.obj;
                     if (checkInBean == null)
                         return;
-                    showCheckInWindow(BcActivity.this, checkInBean);
                     if (checkInBean.isTodayCheckedIn()) {
                         showCheckInWindow(BcActivity.this, checkInBean);
                     }/* else {
@@ -277,7 +276,7 @@ public class BcActivity extends BaseActivity implements MyAllBookView {
                 case 5://签到成功
                     AppUtils.showToast(getBaseContext(), "签到成功");
                     EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
-                    //ifCheckIn();
+                    ifCheckIn();
                     break;
                 default:
                     break;

@@ -63,8 +63,6 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class OtherBookDetailActivity extends BaseActivity implements MyAllBookView {
-
-
     @Bind(R.id.imageView_back)
     ImageView imageViewBack;
     @Bind(R.id.tv_title)

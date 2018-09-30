@@ -165,7 +165,6 @@ public class AudioPlayer {
         try {
             mediaPlayer.reset();
             mediaPlayer.setDataSource(music.getMp3Path());
-            Log.v("yyyyyy","==="+mediaPlayer.getDuration());
             mediaPlayer.prepareAsync();
             state = STATE_PREPARING;
             for (OnPlayerEventListener listener : listeners) {

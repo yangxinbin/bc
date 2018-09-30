@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="comment">评论</string>
-    <string name="commit">提交</string>
-    <string name="comment_hint">欢迎参与交流，大家把真知灼见留下来吧！</string>
-    <string name="center_vip">VIP会员中心</string>
-</resources>

@@ -75,6 +75,7 @@ import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
 import cn.sharesdk.wechat.friends.Wechat;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -603,18 +604,9 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
             AudioPlayer.get().init(PlayActivity.this);
             AudioPlayer.get().play(position);
             dialog.dismiss();
-            //adapter.notifyDataSetChanged();
         }
     };
 
-
-/*    @Override
-    protected void onServiceBound() {
-        if (adapter != null)
-            adapter.setIsPlaylist(true);
-        Log.v("xxxx", "----" + AudioPlayer.get().getPlayPosition());
-        AudioPlayer.get().addOnPlayEventListener(this);
-    }*/
 
     private void sendMiniApps(String articlePk, String title, String content, String url, Bitmap icon) {
         IWXAPI api;
@@ -653,26 +645,38 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
         req.scene = WXSceneSession;
         api.sendReq(req);
     }
-    public void shareMiniProgram(){
-        Platform platform = ShareSDK.getPlatform(Wechat.NAME);
-        Platform.ShareParams shareParams = new  Platform.ShareParams();
-        shareParams.setText("小程序分享");
-        shareParams.setTitle("BC大陆");
-        //shareParams.setUrl("http://www.mob.com");
-        shareParams.setWxUserName("gh_482031325125");
-        //shareParams.setImagePath(ResourcesManager.getInstace(MobSDK.getContext()).getImagePath());
-        //shareParams.setImageData(ResourcesManager.getInstace(MobSDK.getContext()).getImageBmp());
-        shareParams.setImageUrl(showMusic.getCoverPath());
-        shareParams.setWxPath("pages/memberDetail/memberDetail?model="+"{\"bookId\":\"5b8cb5ce04440c13249a643e\",\"userId\":\"\"}");
-        shareParams.setShareType(Platform.SHARE_WXMINIPROGRAM);
-        //platform.setPlatformActionListener(platformActionListener);
-        platform.share(shareParams);
+
+    public void shareMiniProgram() {
+        OnekeyShare oks = new OnekeyShare();
+        oks.setTitle(showMusic.getTitle());
+        oks.setText("BC大陆");
+        oks.setImageUrl(showMusic.getCoverPath());
+        oks.setUrl("http://www.mob.com");
+        oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
+            @Override
+            public void onShare(Platform platform, Platform.ShareParams paramsToShare) {
+                if (platform.getName().equals("Wechat")) {
+                    paramsToShare.setShareType(Platform.SHARE_WXMINIPROGRAM);
+                    paramsToShare.setWxUserName("gh_482031325125");
+                    paramsToShare.setWxPath("pages/home/home");
+                }
+            }
+        });
+        oks.setCallback(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                shareNum();
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+            }
+        });
+        oks.show(getApplicationContext());
     }
 
-/*    private PlatformActionListener platformActionListener;
-
-    public WechatShare(PlatformActionListener mListener){
-        this.platformActionListener = mListener;
-        DemoUtils.isValidClient("com.tencent.mm");
-    }*/
 }

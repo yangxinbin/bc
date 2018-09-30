@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,7 +27,7 @@ import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.wechat.friends.Wechat;
 
-public class LoginActivity extends BaseActivity implements PlatformActionListener, Handler.Callback {
+public class LoginActivity extends BaseActivity  {
 
     @Bind(R.id.imageView_wechatLogin)
     ImageView imageViewWechatLogin;
@@ -43,35 +44,12 @@ public class LoginActivity extends BaseActivity implements PlatformActionListene
         ButterKnife.bind(this);
     }
 
-
-    private void wechatLogin() {
-        textView.setText(++i + "");
-        Platform wechat = ShareSDK.getPlatform(Wechat.NAME);
-        //wechat.setPlatformActionListener(this);
-        wechat.authorize();
-    }
-
-/*    @Override
-    public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-        textView.setText(platform.getDb().exportData());
-    }
-
-    @Override
-    public void onError(Platform platform, int i, Throwable throwable) {
-
-    }
-
-    @Override
-    public void onCancel(Platform platform, int i) {
-
-    }*/
-
     @OnClick({R.id.imageView_wechatLogin, R.id.button})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView_wechatLogin:
-                //wechatLogin();
-                authorize(ShareSDK.getPlatform(Wechat.NAME),false);
+                //authorize(ShareSDK.getPlatform(Wechat.NAME),true);
+                wechatLogin();
                 break;
             case R.id.button:
                 Intent intent = new Intent(this, BcActivity.class);
@@ -80,13 +58,53 @@ public class LoginActivity extends BaseActivity implements PlatformActionListene
                 break;
         }
     }
+    private void wechatLogin() {//要数据不要功能
+        Platform wechat = ShareSDK.getPlatform(Wechat.NAME);
+        //wechat.SSOSetting(false);
+        wechat.setPlatformActionListener(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                final String userInfo = StrUtils.format("", hashMap);
+                Log.v("ooooooooo","=="+userInfo);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        textView.setText(userInfo.toString());
+                    }
+                });
+            }
 
-    // 授权登录
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+
+            }
+        });
+        if(wechat.isClientValid()){
+            //判断是否存在授权凭条的客户端，true是有客户端，false是无
+        }
+        //判断指定平台是否已经完成授权
+/*        if(wechat.isAuthValid()) {
+            String userId = wechat.getDb().getUserId();
+            if (userId != null) {
+                //UIHandler.sendEmptyMessage(MSG_USERID_FOUND, this);
+                //login(wechat.getName(), userId, null);
+                return;
+            }
+        }*/
+        //wechat.authorize();
+        wechat.showUser(null);
+
+    }
+
+   /* // 授权登录
     private void authorize(Platform plat, Boolean isSSO) {
         // 判断指定平台是否已经完成授权
-        textView.setText("?");
         if (plat.isAuthValid()) {
-            textView.setText(++i + "");
             // 已经完成授权，直接读取本地授权信息，执行相关逻辑操作（如登录操作）
             String userId = plat.getDb().getUserId();
             if (!TextUtils.isEmpty(userId)) {
@@ -110,7 +128,9 @@ public class LoginActivity extends BaseActivity implements PlatformActionListene
     }
 
     // 回调：授权成功
-    public void onComplete(Platform platform, int action, HashMap<String, Object> res) {
+    public void onComplete(final Platform platform, int action, HashMap<String, Object> res) {
+        String userInfo = StrUtils.format("", res);
+        textView.setText(userInfo.toString());
         if (action == Platform.ACTION_USER_INFOR) {
             UIHandler.sendEmptyMessage(MSG_AUTH_COMPLETE, this);
             // 业务逻辑处理：比如登录操作
@@ -118,7 +138,6 @@ public class LoginActivity extends BaseActivity implements PlatformActionListene
             String userId = platform.getDb().getUserId();   // 用户Id
             String platName = platform.getName();     // 平台名称
             login(platName, userName, res);
-            textView.setText(platform.getDb().exportData());
         }
     }
 
@@ -183,5 +202,5 @@ public class LoginActivity extends BaseActivity implements PlatformActionListene
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
-    }
+    }*/
 }

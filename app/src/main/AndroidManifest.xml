@@ -50,8 +50,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".BcActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
-        </activity>
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
         <activity android:name=".homepage.activity.VipDetailActivity" />
         <activity
             android:name=".homepage.activity.SearchActivity"
@@ -120,6 +119,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".login.ShowUserInfoActivity"></activity>
     </application>
 
 </manifest>

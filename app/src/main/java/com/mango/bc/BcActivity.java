@@ -75,8 +75,8 @@ public class BcActivity extends BaseActivity implements MyAllBookView {
         //spUtils.put("openId", "aXhi94jQkXPovBsqEs0B8QKsbM0A");
         //spUtils.put("authToken", "eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1MzgxNTQzNTgwNjUsImFsaWFzIjoiR3Vlc3QiLCJpZCI6IjViYWU1ZDk3MjU1N2I5MDVkODg4ODhmNyIsInR5cGUiOiJnZW5lcmFsIiwid2FsbGV0QWRkcmVzcyI6IjB4MDFiOTkyODZmNWUwMDk4NjEwZDZmYzJmOTNjN2VmYjQiLCJleHAiOjQxMzAxNTQzNTgsInVzZXJuYW1lIjoiYVhoaTk0alFrWFBvdkJzcUVzMEI4UUtzYk0wQSJ9.oZ8Cpgqvv5ouIF7r_Ht_yuJ3LTZjvW-3ftPPso1gNLEBb0Khl29P-suU1lRsjckX3eglENrj0LhTSNMdY76O_Q");
         //假 普通2
-        spUtils.put("openId", "11Xhi94jQkXPovBsqEs0B8QKsbM0A");
-        spUtils.put("authToken", "eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1MzgyOTQzMTkzODQsImFsaWFzIjoiR3Vlc3QiLCJpZCI6IjViYjA4MjJmMjU1N2I5MDVkODg4OGM4NiIsInR5cGUiOiJnZW5lcmFsIiwid2FsbGV0QWRkcmVzcyI6IjB4Mzk2MTFkOTQyMmY4MTRiZmFkNjNhY2JhNjA1ZGYyODIiLCJleHAiOjQxMzAyOTQzMTksInVzZXJuYW1lIjoiMTFYaGk5NGpRa1hQb3ZCc3FFczBCOFFLc2JNMEEifQ.vF8Tidi5BSHhWsSymMu1FM6DYU8kEjVB6bO8x2n3h5sk-QonvDEo48w6ARNuT6hOHkQ4-USSdz4X93NJKfNoeQ");
+        spUtils.put("openId", "hi94jQkXPovBsqEs0B8QKsbM0A");
+        spUtils.put("authToken", "eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1MzgzMDAzNzUwNDAsImFsaWFzIjoiR3Vlc3QiLCJpZCI6IjViYjA5OWQ3MjU1N2I5MDVkODg4OGNhNyIsInR5cGUiOiJnZW5lcmFsIiwid2FsbGV0QWRkcmVzcyI6IjB4ZTllNzMzOTUwYzFkNzIzMmY0NGRjZDM5OTI2YjA2NmIiLCJleHAiOjQxMzAzMDAzNzUsInVzZXJuYW1lIjoiaGk5NGpRa1hQb3ZCc3FFczBCOFFLc2JNMEEifQ.b_jogrI714ai4nm-fr8l6fkfaGLZmA-7R69i4nc3oY8-nLrNHHvfqhZDBKVMGQqPVv2MnCPdMAVtLYs7-0z72Q");
         ButterKnife.bind(this);
         //进来刷新可以屏蔽
         loadUser(); //个人信息从网络拿数据

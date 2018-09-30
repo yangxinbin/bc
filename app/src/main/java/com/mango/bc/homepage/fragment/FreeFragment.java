@@ -196,16 +196,20 @@ public class FreeFragment extends Fragment implements BookFreeView, MyAllBookVie
     };
 
     private boolean chechState(String bookId) {
-        String data = spUtils.getString("allMyBook", "");
-        Gson gson = new Gson();
-        Type listType = new TypeToken<List<String>>() {
-        }.getType();
-        List<String> list = gson.fromJson(data, listType);
-        if (list == null)
-            return false;
-        if (list.contains(bookId)) {
-            return true;
-        } else {
+        if (spUtils != null) {
+            String data = spUtils.getString("allMyBook", "");
+            Gson gson = new Gson();
+            Type listType = new TypeToken<List<String>>() {
+            }.getType();
+            List<String> list = gson.fromJson(data, listType);
+            if (list == null)
+                return false;
+            if (list.contains(bookId)) {
+                return true;
+            } else {
+                return false;
+            }
+        }else {
             return false;
         }
     }

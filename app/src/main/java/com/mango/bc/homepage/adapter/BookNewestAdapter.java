@@ -43,6 +43,7 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
 
 
     public BookNewestAdapter(Context context) {
+        spUtils = SPUtils.getInstance("bc", context);
         this.context = context;
     }
 
@@ -50,9 +51,8 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
     }
 
     public void setmDate(List<BookBean> data) {
-        spUtils = SPUtils.getInstance("bc", context);
         UserBean userBean = AuthJsonUtils.readUserBean(spUtils.getString("auth", ""));
-        Log.v("lllllllll","===userBean.isVip()="+userBean.isVip());
+        Log.v("lllllllll", "===userBean.isVip()=" + userBean.isVip());
         if (userBean != null)
             isVip = userBean.isVip();
         this.datas = data;
@@ -133,7 +133,7 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
                         }
                     });
                 } else {
-                    if (isVip){
+                    if (isVip) {
                         ((BookNewestAdapter.BookViewHolder) holder).tv_stage.setText("免费领取");//vip领取
                         ((BookNewestAdapter.BookViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -147,7 +147,7 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
                                 mOnItemClickLitener.onItemVipGetClick(((BookNewestAdapter.BookViewHolder) holder).book_item, position);
                             }
                         });
-                    }else {
+                    } else {
                         ((BookNewestAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice() + "积分");//否领取
                         ((BookNewestAdapter.BookViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -169,16 +169,20 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
     }
 
     private boolean chechState(String bookId) {
-        String data = spUtils.getString("allMyBook", "");
-        Gson gson = new Gson();
-        Type listType = new TypeToken<List<String>>() {
-        }.getType();
-        List<String> list = gson.fromJson(data, listType);
-        if (list == null)
-            return false;
-        if (list.contains(bookId)) {
-            return true;
-        } else {
+        if (spUtils != null) {
+            String data = spUtils.getString("allMyBook", "");
+            Gson gson = new Gson();
+            Type listType = new TypeToken<List<String>>() {
+            }.getType();
+            List<String> list = gson.fromJson(data, listType);
+            if (list == null)
+                return false;
+            if (list.contains(bookId)) {
+                return true;
+            } else {
+                return false;
+            }
+        }else {
             return false;
         }
     }

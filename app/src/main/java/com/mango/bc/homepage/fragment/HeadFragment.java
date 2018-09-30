@@ -92,7 +92,7 @@ public class HeadFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        AppUtils.hideInput(getActivity());
+        //AppUtils.hideInput(getActivity());
         initBanner();
         //initView(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));
         return view;

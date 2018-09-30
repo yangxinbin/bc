@@ -10,10 +10,12 @@
         android:id="@+id/imageView_wechatLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="64dp"
         app:srcCompat="@drawable/ssdk_oks_classic_wechat"
         tools:layout_editor_absoluteX="190dp"
-        tools:layout_editor_absoluteY="163dp"
-        android:layout_centerHorizontal="true" />
+        tools:layout_editor_absoluteY="163dp" />
 
     <TextView
         android:id="@+id/textView"
@@ -21,9 +23,19 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/imageView_wechatLogin"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="17dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="19dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="25dp"
         android:text="TextView" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/textView"
+        android:layout_marginBottom="22dp"
+        android:text="跳过" />
 </RelativeLayout>

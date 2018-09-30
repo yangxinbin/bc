@@ -1,9 +1,13 @@
 package com.mango.bc.login;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mango.bc.BcActivity;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
 
@@ -23,7 +27,9 @@ public class LoginActivity extends BaseActivity implements PlatformActionListene
     ImageView imageViewWechatLogin;
     @Bind(R.id.textView)
     TextView textView;
-    private int i=0;
+    @Bind(R.id.button)
+    Button button;
+    private int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +38,10 @@ public class LoginActivity extends BaseActivity implements PlatformActionListene
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.imageView_wechatLogin)
-    public void onViewClicked() {
-        wechatLogin();
-    }
 
     private void wechatLogin() {
-        textView.setText(++i+"");
-        Platform wechat= ShareSDK.getPlatform(Wechat.NAME);
+        textView.setText(++i + "");
+        Platform wechat = ShareSDK.getPlatform(Wechat.NAME);
         wechat.setPlatformActionListener(this);
         wechat.authorize();
     }
@@ -57,5 +59,19 @@ public class LoginActivity extends BaseActivity implements PlatformActionListene
     @Override
     public void onCancel(Platform platform, int i) {
 
+    }
+
+    @OnClick({R.id.imageView_wechatLogin, R.id.button})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.imageView_wechatLogin:
+                wechatLogin();
+                break;
+            case R.id.button:
+                Intent intent = new Intent(this, BcActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+        }
     }
 }

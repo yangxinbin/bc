@@ -51,11 +51,6 @@
         <activity
             android:name=".BcActivity"
             android:windowSoftInputMode="adjustPan|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".homepage.activity.VipDetailActivity" />
         <activity
@@ -119,7 +114,11 @@
         <activity android:name=".homepage.activity.VipAutoActivity" />
         <activity android:name=".mine.activity.VipCenterActivity" />
         <activity android:name=".login.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

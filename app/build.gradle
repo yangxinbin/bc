@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+/*    signingConfigs {
+        release {
+            keyAlias 'bc'
+            keyPassword '123456'
+            storeFile file('D:/bc/bc_signed.jks')
+            storePassword '123456'
+        }
+    }*/
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
     defaultConfig {
@@ -16,14 +24,16 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //signingConfig signingConfigs.release
         }
     }
     lintOptions {
         disable 'MissingTranslation'
-        checkReleaseBuilds false
+        disable 'ExtraTranslation'
+        //checkReleaseBuilds false
         // Or, if you prefer, you can continue to check for errors in release builds,
         // but continue the build even when errors are found:
-        abortOnError false
+        //abortOnError false
 
     }
 }
@@ -56,5 +66,4 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
     compile 'com.hwangjr.rxbus:rxbus:2.0.0'
-
 }

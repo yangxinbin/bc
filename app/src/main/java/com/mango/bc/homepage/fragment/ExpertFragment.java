@@ -72,10 +72,10 @@ public class ExpertFragment extends Fragment implements BookExpertView {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.expert, container, false);
         bookPresenter = new BookPresenterImpl(this);
-        ButterKnife.bind(this, view);
-        EventBus.getDefault().register(this);
         spUtils = SPUtils.getInstance("bc", getActivity());
         mCache = ACache.get(this.getActivity());
+        ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
         initView();
         if (NetUtil.isNetConnect(getActivity())) {
             //bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);

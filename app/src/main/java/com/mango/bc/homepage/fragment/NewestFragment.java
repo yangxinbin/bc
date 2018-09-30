@@ -72,10 +72,10 @@ public class NewestFragment extends Fragment implements BookNewestView, MyAllBoo
         View view = inflater.inflate(R.layout.newest, container, false);
         bookPresenter = new BookPresenterImpl(this);
         myBookPresenter = new MyBookPresenterImpl(this);
-        ButterKnife.bind(this, view);
-        EventBus.getDefault().register(this);
         spUtils = SPUtils.getInstance("bc", getActivity());
         mCache = ACache.get(this.getActivity());
+        ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
         initView();
         if (NetUtil.isNetConnect(getActivity())) {
             //bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);

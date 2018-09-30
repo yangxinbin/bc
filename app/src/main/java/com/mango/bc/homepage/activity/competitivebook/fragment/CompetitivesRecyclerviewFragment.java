@@ -116,10 +116,10 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.competitive_items, null);
-        ButterKnife.bind(this, view);
-        EventBus.getDefault().register(this);
         spUtils = SPUtils.getInstance("bc", getActivity());
         mCache = ACache.get(getActivity());
+        ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
         initView();
         refreshAndLoadMore();
         return view;

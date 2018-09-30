@@ -62,9 +62,9 @@ public class BcActivity extends BaseActivity implements MyAllBookView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bc);
         myBookPresenter = new MyBookPresenterImpl(this);
-        if (NetUtil.isNetConnect(this)){
+        if (NetUtil.isNetConnect(this)) {
             //myBookPresenter.visitBooks(this,3,0,false);//获取书架的所有书
-        }else {
+        } else {
             AppUtils.showToast(this, getResources().getString(R.string.check_net));
             //myBookPresenter.visitBooks(this, 3, 0, true);//获取书架的所有书
         }
@@ -187,7 +187,7 @@ public class BcActivity extends BaseActivity implements MyAllBookView {
                                 public void run() {
                                     spUtils.put("auth", string);
                                     UserBean userBean = AuthJsonUtils.readUserBean(string);
-                                    Log.v("lllllllll","=aaaa=="+userBean.isVip());
+                                    Log.v("lllllllll", "=aaaa==" + userBean.isVip());
 
                                     EventBus.getDefault().postSticky(userBean);//刷新
                                 }
@@ -259,6 +259,7 @@ public class BcActivity extends BaseActivity implements MyAllBookView {
                     CheckInBean checkInBean = (CheckInBean) msg.obj;
                     if (checkInBean == null)
                         return;
+                    showCheckInWindow(BcActivity.this, checkInBean);
                     if (checkInBean.isTodayCheckedIn()) {
                         showCheckInWindow(BcActivity.this, checkInBean);
                     }/* else {
@@ -276,7 +277,7 @@ public class BcActivity extends BaseActivity implements MyAllBookView {
                 case 5://签到成功
                     AppUtils.showToast(getBaseContext(), "签到成功");
                     EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
-                    ifCheckIn();
+                    //ifCheckIn();
                     break;
                 default:
                     break;

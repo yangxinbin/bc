@@ -85,11 +85,11 @@ public class ExpertBookActivity extends BaseActivity implements BookExpertView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expert_book);
+        spUtils = SPUtils.getInstance("bc", this);
+        mCache = ACache.get(this);
         bookPresenter = new BookPresenterImpl(this);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
-        spUtils = SPUtils.getInstance("bc", this);
-        mCache = ACache.get(this);
         initView();
         if (NetUtil.isNetConnect(this)) {
             bookPresenter.visitBooks(this, TYPE, "", page, false);

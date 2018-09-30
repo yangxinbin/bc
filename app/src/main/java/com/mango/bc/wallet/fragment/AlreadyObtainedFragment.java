@@ -82,10 +82,10 @@ public class AlreadyObtainedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.already_obtained, container, false);
-        ButterKnife.bind(this, view);
-        EventBus.getDefault().register(this);
         spUtils = SPUtils.getInstance("bc", getActivity());
         mCache = ACache.get(getActivity());
+        ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
         if (NetUtil.isNetConnect(getActivity())) {
             loadReward(false);
         } else {

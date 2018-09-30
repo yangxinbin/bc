@@ -138,8 +138,8 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_play);
-        ButterKnife.bind(this);
         spUtils = SPUtils.getInstance("bc", this);
+        ButterKnife.bind(this);
         //initSystemBar();
         initViewPager();
         //ilIndicator.create(mViewPagerContent.size());
@@ -659,11 +659,11 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
         shareParams.setText("小程序分享");
         shareParams.setTitle("BC大陆");
         //shareParams.setUrl("http://www.mob.com");
-        shareParams.setWxUserName("");
+        shareParams.setWxUserName("gh_482031325125");
         //shareParams.setImagePath(ResourcesManager.getInstace(MobSDK.getContext()).getImagePath());
         //shareParams.setImageData(ResourcesManager.getInstace(MobSDK.getContext()).getImageBmp());
         shareParams.setImageUrl(showMusic.getCoverPath());
-        shareParams.setWxPath("");
+        shareParams.setWxPath("pages/memberDetail/memberDetail?model="+"{\"bookId\":\"5b8cb5ce04440c13249a643e\",\"userId\":\"\"}");
         shareParams.setShareType(Platform.SHARE_WXMINIPROGRAM);
         //platform.setPlatformActionListener(platformActionListener);
         platform.share(shareParams);

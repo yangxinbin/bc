@@ -50,7 +50,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".BcActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden">
+            android:windowSoftInputMode="stateHidden|adjustResize" >
         </activity>
         <activity android:name=".homepage.activity.VipDetailActivity" />
         <activity

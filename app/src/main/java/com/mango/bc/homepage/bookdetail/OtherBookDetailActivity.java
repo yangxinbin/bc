@@ -55,6 +55,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -623,7 +625,24 @@ public class OtherBookDetailActivity extends BaseActivity implements MyAllBookVi
         oks.setSite(getString(R.string.app_name));
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
         oks.setSiteUrl("http://sharesdk.cn");
+        oks.setCallback(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                Log.v("nnnnn", "----1");
+            }
 
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+                Log.v("nnnn", "----2"+throwable);
+
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+                Log.v("nnnn", "----3");
+
+            }
+        });
         // 启动分享GUI
         oks.show(getApplicationContext());
     }

@@ -28,6 +28,8 @@ import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -298,6 +300,7 @@ public class OpenUpVipActivity extends BaseActivity {
                                 @Override
                                 public void run() {
                                     AppUtils.showToast(OpenUpVipActivity.this, "购买成功");
+                                    loadUser();
                                     finish();
                                 }
                             });
@@ -309,6 +312,41 @@ public class OpenUpVipActivity extends BaseActivity {
                                 }
                             });
                         }
+                    }
+                });
+            }
+        }).start();
+    }
+    private void loadUser() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("openId", spUtils.getString("openId", ""));
+                HttpUtils.doPost(Urls.HOST_AUTH, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                    }
+
+                    @Override
+                    public void onResponse(Call call, final Response response) {
+                        final String string;
+                        try {
+                            string = response.body().string();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    spUtils.put("auth", string);
+                                    UserBean userBean = AuthJsonUtils.readUserBean(string);
+                                    Log.v("lllllllll", "=aaaa==" + userBean.isVip());
+                                    EventBus.getDefault().postSticky(userBean);//刷新钱包，我的。
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 });
             }

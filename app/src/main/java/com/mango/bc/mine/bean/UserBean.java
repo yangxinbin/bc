@@ -349,7 +349,7 @@ public class UserBean {
 
         private long startOn;
         private long endOn;
-        private int billingAmount;
+        private double billingAmount;
         private String billingType;
         private boolean auto;
 
@@ -369,11 +369,11 @@ public class UserBean {
             this.endOn = endOn;
         }
 
-        public int getBillingAmount() {
+        public double getBillingAmount() {
             return billingAmount;
         }
 
-        public void setBillingAmount(int billingAmount) {
+        public void setBillingAmount(double billingAmount) {
             this.billingAmount = billingAmount;
         }
 

@@ -71,16 +71,11 @@ public class BcActivity extends BaseActivity implements MyAllBookView {
         spUtils = SPUtils.getInstance("bc", this);
         //spUtils.put("authToken", "eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1MzY5MDk3MjI5MzksImFsaWFzIjoi5p2o6ZGr5paMIiwiaWQiOiI1YjhhM2Q0YjA0NDQwYzBhNDhhMzNhMDUiLCJ0eXBlIjoiZ2VuZXJhbCIsIndhbGxldEFkZHJlc3MiOiIweGU3MmUzODdhZjEyZTA4NmFlZWNjOGVmMTljNzcxY2M4IiwiZXhwIjo0MTI4OTA5NzIyLCJ1c2VybmFtZSI6Im9YaGk5NGpRa1hQb3ZCc3FFczBCOFFLc2JNMEEifQ.m6rVYWnsxxogOAVmOLQ1HEC5bv0YzAwPhqGOlQ0tOP1CVec8XBRytgEFo_0rMlgSW42u2F199y3WAOr8XE2yYA");
         //spUtils.put("openId", "oXhi94jQkXPovBsqEs0B8QKsbM0A");
-        //假 普通1
-        //spUtils.put("openId", "aXhi94jQkXPovBsqEs0B8QKsbM0A");
-        //spUtils.put("authToken", "eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1MzgxNTQzNTgwNjUsImFsaWFzIjoiR3Vlc3QiLCJpZCI6IjViYWU1ZDk3MjU1N2I5MDVkODg4ODhmNyIsInR5cGUiOiJnZW5lcmFsIiwid2FsbGV0QWRkcmVzcyI6IjB4MDFiOTkyODZmNWUwMDk4NjEwZDZmYzJmOTNjN2VmYjQiLCJleHAiOjQxMzAxNTQzNTgsInVzZXJuYW1lIjoiYVhoaTk0alFrWFBvdkJzcUVzMEI4UUtzYk0wQSJ9.oZ8Cpgqvv5ouIF7r_Ht_yuJ3LTZjvW-3ftPPso1gNLEBb0Khl29P-suU1lRsjckX3eglENrj0LhTSNMdY76O_Q");
-        //假 普通2
-        spUtils.put("openId", "hi94jQkXPovBsqEs0B8QKsbM0A");
-        spUtils.put("authToken", "eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1MzgzMDAzNzUwNDAsImFsaWFzIjoiR3Vlc3QiLCJpZCI6IjViYjA5OWQ3MjU1N2I5MDVkODg4OGNhNyIsInR5cGUiOiJnZW5lcmFsIiwid2FsbGV0QWRkcmVzcyI6IjB4ZTllNzMzOTUwYzFkNzIzMmY0NGRjZDM5OTI2YjA2NmIiLCJleHAiOjQxMzAzMDAzNzUsInVzZXJuYW1lIjoiaGk5NGpRa1hQb3ZCc3FFczBCOFFLc2JNMEEifQ.b_jogrI714ai4nm-fr8l6fkfaGLZmA-7R69i4nc3oY8-nLrNHHvfqhZDBKVMGQqPVv2MnCPdMAVtLYs7-0z72Q");
+        //假 普通
+        spUtils.put("openId", "tXhi94jQkXPovBsqEs0B8QKsbM0A");
         ButterKnife.bind(this);
         //进来刷新可以屏蔽
         loadUser(); //个人信息从网络拿数据
-        ifCheckIn();
         initPage();
     }
 
@@ -187,8 +182,9 @@ public class BcActivity extends BaseActivity implements MyAllBookView {
                                 public void run() {
                                     spUtils.put("auth", string);
                                     UserBean userBean = AuthJsonUtils.readUserBean(string);
+                                    spUtils.put("authToken",userBean.getAuthToken());
+                                    ifCheckIn();
                                     Log.v("lllllllll", "=aaaa==" + userBean.isVip());
-
                                     EventBus.getDefault().postSticky(userBean);//刷新
                                 }
                             });

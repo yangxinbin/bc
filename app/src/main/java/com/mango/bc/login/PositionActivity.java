@@ -45,7 +45,6 @@ public class PositionActivity extends BaseActivity implements AdapterView.OnItem
         list.add("投资机构");
         list.add("散户");
         list.add("其它");
-
     }
 
     private void initGird() {

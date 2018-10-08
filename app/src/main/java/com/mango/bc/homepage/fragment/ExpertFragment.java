@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,6 +20,7 @@ import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.activity.BuyBookActivity;
 import com.mango.bc.homepage.activity.expertbook.ExpertBookActivity;
 import com.mango.bc.homepage.adapter.BookExpertAdapter;
+import com.mango.bc.homepage.adapter.BookPaidAdapter;
 import com.mango.bc.homepage.bean.BuySuccessBean;
 import com.mango.bc.homepage.bookdetail.ExpertBookDetailActivity;
 import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
@@ -58,7 +60,7 @@ public class ExpertFragment extends Fragment implements BookExpertView {
     TextView seeMore;
     @Bind(R.id.recycle)
     RecyclerView recycle;
-    private BookExpertAdapter bookExpertAdapter;
+    private BookPaidAdapter bookPaidAdapter;
     private BookPresenter bookPresenter;
     private final int TYPE = 2;//大咖课
     private int page = 0;
@@ -128,18 +130,18 @@ public class ExpertFragment extends Fragment implements BookExpertView {
     }*/
 
     private void initView() {
-        bookExpertAdapter = new BookExpertAdapter(getActivity());
-        recycle.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-        recycle.setAdapter(bookExpertAdapter);
-        bookExpertAdapter.setOnItemClickLitener(mOnClickListenner);
+        bookPaidAdapter = new BookPaidAdapter(getActivity());
+        recycle.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 2));
+        recycle.setAdapter(bookPaidAdapter);
+        bookPaidAdapter.setOnItemClickLitener(mOnClickListenner);
     }
 
-    private BookExpertAdapter.OnItemClickLitener mOnClickListenner = new BookExpertAdapter.OnItemClickLitener() {
+    private BookPaidAdapter.OnItemClickLitener mOnClickListenner = new BookPaidAdapter.OnItemClickLitener() {
 
         @Override
         public void onItemPlayClick(View view, int position) {
             Intent intent = new Intent(getActivity(), ExpertBookDetailActivity.class);
-            EventBus.getDefault().postSticky(bookExpertAdapter.getItem(position));
+            EventBus.getDefault().postSticky(bookPaidAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             startActivity(intent);
         }
@@ -147,7 +149,7 @@ public class ExpertFragment extends Fragment implements BookExpertView {
         @Override
         public void onItemGetClick(View view, int position) {
             Intent intent = new Intent(getActivity(), ExpertBookDetailActivity.class);
-            EventBus.getDefault().postSticky(bookExpertAdapter.getItem(position));
+            EventBus.getDefault().postSticky(bookPaidAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             startActivity(intent);
         }
@@ -158,7 +160,7 @@ public class ExpertFragment extends Fragment implements BookExpertView {
 /*            if (AudioPlayer.get().isPlaying() *//*&& mData.get(position).getId().equals(spUtils.getString("isSameBook", ""))*//*) {
                 return;
             } else*/
-            EventBus.getDefault().postSticky(bookExpertAdapter.getItem(position));
+            EventBus.getDefault().postSticky(bookPaidAdapter.getItem(position));
             if (chechState(mData.get(position).getId())) {
                 spUtils.put("isFree", true);
             } else {
@@ -183,7 +185,7 @@ public class ExpertFragment extends Fragment implements BookExpertView {
                 Log.v("bbbbbbbb", "-----" + tv_stage.getText());
             } else {
                 Intent intent = new Intent(getActivity(), BuyBookActivity.class);
-                EventBus.getDefault().postSticky(bookExpertAdapter.getItem(position));
+                EventBus.getDefault().postSticky(bookPaidAdapter.getItem(position));
                 EventBus.getDefault().removeStickyEvent(MyBookBean.class);
                 startActivity(intent);
             }
@@ -296,7 +298,7 @@ public class ExpertFragment extends Fragment implements BookExpertView {
                     for (int i = 0; i < bookBeanList.size(); i++) {
                         mData.add(bookBeanList.get(i));
                     }
-                    bookExpertAdapter.setmDate(mData);
+                    bookPaidAdapter.setmDate(mData);
                 }
             });
     }

@@ -26,23 +26,23 @@ import java.util.List;
  * Created by admin on 2018/9/4.
  */
 
-public class BookExpertAdapter extends RecyclerView.Adapter {
+public class BookPaidAdapter extends RecyclerView.Adapter {
     private Context context;
-    private BookExpertAdapter.OnItemClickLitener mOnItemClickLitener;
+    private BookPaidAdapter.OnItemClickLitener mOnItemClickLitener;
     private SPUtils spUtils;
     private List<BookBean> datas = new ArrayList<>();
 
-    public BookExpertAdapter(List<BookBean> datas) {
+    public BookPaidAdapter(List<BookBean> datas) {
         this.datas = datas;
     }
 
 
-    public BookExpertAdapter(Context context) {
+    public BookPaidAdapter(Context context) {
         spUtils = SPUtils.getInstance("bc", context);
         this.context = context;
     }
 
-    public BookExpertAdapter() {
+    public BookPaidAdapter() {
     }
 
     public void setmDate(List<BookBean> data) {
@@ -70,7 +70,7 @@ public class BookExpertAdapter extends RecyclerView.Adapter {
         this.notifyDataSetChanged();
     }
 
-    public void setOnItemClickLitener(BookExpertAdapter.OnItemClickLitener mOnItemClickLitener) {
+    public void setOnItemClickLitener(BookPaidAdapter.OnItemClickLitener mOnItemClickLitener) {
         this.mOnItemClickLitener = mOnItemClickLitener;
     }
 
@@ -87,54 +87,52 @@ public class BookExpertAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_recycler_expert_item, parent, false);
-        return new BookExpertAdapter.BookViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_recycler_paid_items, parent, false);
+        return new BookPaidAdapter.BookViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-        if (holder instanceof BookExpertAdapter.BookViewHolder) {
-            if (((BookExpertAdapter.BookViewHolder) holder) != null && datas.get(position) != null) {
-                ((BookExpertAdapter.BookViewHolder) holder).tv_title.setText(datas.get(position).getTitle());
-                ((BookExpertAdapter.BookViewHolder) holder).tv_detail.setText(datas.get(position).getSubtitle());
-                ((BookExpertAdapter.BookViewHolder) holder).tv_time.setText("共" + datas.get(position).getChapters().size() + "节课");
-                ((BookExpertAdapter.BookViewHolder) holder).tv_buy.setText("已售：" + datas.get(position).getSold());
-                if (datas.get(position).getCover() != null)
-                    Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getCover().getFileName()).into(((BookExpertAdapter.BookViewHolder) holder).img_book);
+        if (holder instanceof BookPaidAdapter.BookViewHolder) {
+            if (((BookPaidAdapter.BookViewHolder) holder) != null && datas.get(position) != null) {
+                ((BookPaidAdapter.BookViewHolder) holder).tv_title.setText(datas.get(position).getTitle());
+                ((BookPaidAdapter.BookViewHolder) holder).tv_detail.setText(datas.get(position).getSubtitle());
+                if (datas.get(position).getBanner() != null)
+                    Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getBanner().getFileName()).into(((BookPaidAdapter.BookViewHolder) holder).img_book);
                 //((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice() + "积分");
                 if (chechState(datas.get(position).getId())) {//拿书id遍历判断
                     Log.v("rrrrrrr", "==y==");
 /*                    if (AudioPlayer.get().isPlaying() && datas.get(position).getId().equals(spUtils.getString("isSameBook", ""))) {
                         ((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText("播放中");
                     } else {*/
-                        ((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText("播放");
+                        ((BookPaidAdapter.BookViewHolder) holder).tv_stage.setText("播放");
                     //}
                     //((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText("播放");//是领取
-                    ((BookExpertAdapter.BookViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
+                    ((BookPaidAdapter.BookViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            mOnItemClickLitener.onPlayClick(((BookExpertAdapter.BookViewHolder) holder).tv_stage, position);
+                            mOnItemClickLitener.onPlayClick(((BookPaidAdapter.BookViewHolder) holder).tv_stage, position);
                         }
                     });
-                    ((BookExpertAdapter.BookViewHolder) holder).book_item.setOnClickListener(new View.OnClickListener() {
+                    ((BookPaidAdapter.BookViewHolder) holder).book_item.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            mOnItemClickLitener.onItemPlayClick(((BookExpertAdapter.BookViewHolder) holder).book_item, position);
+                            mOnItemClickLitener.onItemPlayClick(((BookPaidAdapter.BookViewHolder) holder).book_item, position);
                         }
                     });
                 } else {
                     Log.v("rrrrrrr", "==n==");
-                    ((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice() + "积分");//否领取
-                    ((BookExpertAdapter.BookViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
+                    ((BookPaidAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice() + "积分");//否领取
+                    ((BookPaidAdapter.BookViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            mOnItemClickLitener.onGetClick(((BookExpertAdapter.BookViewHolder) holder).tv_stage, position);
+                            mOnItemClickLitener.onGetClick(((BookPaidAdapter.BookViewHolder) holder).tv_stage, position);
                         }
                     });
-                    ((BookExpertAdapter.BookViewHolder) holder).book_item.setOnClickListener(new View.OnClickListener() {
+                    ((BookPaidAdapter.BookViewHolder) holder).book_item.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            mOnItemClickLitener.onItemGetClick(((BookExpertAdapter.BookViewHolder) holder).book_item, position);
+                            mOnItemClickLitener.onItemGetClick(((BookPaidAdapter.BookViewHolder) holder).book_item, position);
                         }
                     });
                 }
@@ -167,7 +165,7 @@ public class BookExpertAdapter extends RecyclerView.Adapter {
     }
 
     class BookViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_title, tv_detail, tv_time, tv_buy, tv_stage;
+        TextView tv_title, tv_detail, tv_stage;
         RoundImageView img_book;
         LinearLayout book_item;
 
@@ -175,8 +173,6 @@ public class BookExpertAdapter extends RecyclerView.Adapter {
             super(itemView);
             tv_title = (TextView) itemView.findViewById(R.id.tv_title);
             tv_detail = (TextView) itemView.findViewById(R.id.tv_detail);
-            tv_time = (TextView) itemView.findViewById(R.id.tv_time);
-            tv_buy = (TextView) itemView.findViewById(R.id.tv_buy);
             tv_stage = (TextView) itemView.findViewById(R.id.tv_stage);
 
             img_book = (RoundImageView) itemView.findViewById(R.id.img_book);

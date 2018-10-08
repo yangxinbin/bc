@@ -111,8 +111,8 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
             if (((BookNewestAdapter.BookViewHolder) holder) != null && datas.get(position) != null) {
                 ((BookNewestAdapter.BookViewHolder) holder).tv_title.setText(datas.get(position).getTitle());
                 ((BookNewestAdapter.BookViewHolder) holder).tv_detail.setText(datas.get(position).getSubtitle());
-                ((BookNewestAdapter.BookViewHolder) holder).tv_time.setText("共" + datas.get(position).getChapters().size() + "节课");
-                ((BookNewestAdapter.BookViewHolder) holder).tv_buy.setText("已购买" + datas.get(position).getSold());
+                ((BookNewestAdapter.BookViewHolder) holder).tv_time.setText("时长：" + secToTime(datas.get(position).getChapters().get(0).getDuration()));
+                ((BookNewestAdapter.BookViewHolder) holder).tv_buy.setText("已售：" + datas.get(position).getSold());
                 if (datas.get(position) == null)
                     return;
                 if (datas.get(position).getCover() != null)
@@ -168,6 +168,39 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
         }
     }
 
+    public static String secToTime(int time) {
+        String timeStr = null;
+        int hour = 0;
+        int minute = 0;
+        int second = 0;
+        if (time <= 0)
+            return "00:00";
+        else {
+            minute = time / 60;
+            if (minute < 60) {
+                second = time % 60;
+                timeStr = unitFormat(minute) + ":" + unitFormat(second);
+            } else {
+                hour = minute / 60;
+                if (hour > 99)
+                    return "99:59:59";
+                minute = minute % 60;
+                second = time - hour * 3600 - minute * 60;
+                timeStr = unitFormat(hour) + ":" + unitFormat(minute) + ":" + unitFormat(second);
+            }
+        }
+        return timeStr;
+    }
+
+    public static String unitFormat(int i) {
+        String retStr = null;
+        if (i >= 0 && i < 10)
+            retStr = "0" + Integer.toString(i);
+        else
+            retStr = "" + i;
+        return retStr;
+    }
+
     private boolean chechState(String bookId) {
         if (spUtils != null) {
             String data = spUtils.getString("allMyBook", "");
@@ -182,7 +215,7 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
             } else {
                 return false;
             }
-        }else {
+        } else {
             return false;
         }
     }

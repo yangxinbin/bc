@@ -144,7 +144,7 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         }
                     });
                 } else {
-                    if (isVip){
+                    if (isVip) {
                         ((HeadViewHolder) holder).tv_head_stage.setText("免费领取");
                         ((HeadViewHolder) holder).tv_head_stage.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -158,7 +158,7 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                                 mOnItemClickLitener.onItemVipGetClick(((HeadViewHolder) holder).book_head_item, position);
                             }
                         });
-                    }else {
+                    } else {
                         ((HeadViewHolder) holder).tv_head_stage.setText("购买");
                         ((HeadViewHolder) holder).tv_head_stage.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -180,8 +180,8 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             if (((ItemViewHolder) holder) != null && mData.get(position) != null) {
                 ((ItemViewHolder) holder).tv_title.setText(mData.get(position).getTitle());
                 ((ItemViewHolder) holder).tv_detail.setText(mData.get(position).getSubtitle());
-                ((ItemViewHolder) holder).tv_time.setText("共" + mData.get(position).getChapters().size() + "节课");
-                ((ItemViewHolder) holder).tv_buy.setText("已购买" + mData.get(position).getSold());
+                ((ItemViewHolder) holder).tv_time.setText("时长：" + secToTime(mData.get(position).getChapters().get(0).getDuration()));
+                ((ItemViewHolder) holder).tv_buy.setText("已售：" + mData.get(position).getSold());
                 if (mData.get(position).getCover() != null)
                     Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + mData.get(position).getCover().getFileName()).into(((ItemViewHolder) holder).img_book);
                 if (chechState(mData.get(position).getId())) {//拿书id遍历判断
@@ -233,6 +233,39 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
+    public static String secToTime(int time) {
+        String timeStr = null;
+        int hour = 0;
+        int minute = 0;
+        int second = 0;
+        if (time <= 0)
+            return "00:00";
+        else {
+            minute = time / 60;
+            if (minute < 60) {
+                second = time % 60;
+                timeStr = unitFormat(minute) + ":" + unitFormat(second);
+            } else {
+                hour = minute / 60;
+                if (hour > 99)
+                    return "99:59:59";
+                minute = minute % 60;
+                second = time - hour * 3600 - minute * 60;
+                timeStr = unitFormat(hour) + ":" + unitFormat(minute) + ":" + unitFormat(second);
+            }
+        }
+        return timeStr;
+    }
+
+    public static String unitFormat(int i) {
+        String retStr = null;
+        if (i >= 0 && i < 10)
+            retStr = "0" + Integer.toString(i);
+        else
+            retStr = "" + i;
+        return retStr;
+    }
+
     private boolean chechState(String bookId) {
         if (spUtils != null) {
             String data = spUtils.getString("allMyBook", "");
@@ -247,7 +280,7 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             } else {
                 return false;
             }
-        }else {
+        } else {
             return false;
         }
     }

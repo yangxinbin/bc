@@ -360,7 +360,7 @@ public class OtherBookDetailActivity extends BaseActivity implements MyAllBookVi
             bookStagePlay.setText(getResources().getString(R.string.play));
         }
         tvTitle.setText(bookDetailBean.getTitle());
-        tvBuyer.setText(bookDetailBean.getSold() + "人已购买");
+        tvBuyer.setText(bookDetailBean.getSold() + "人已售：");
         likeNum = bookDetailBean.getLikes();
         tvLikePlay.setText(bookDetailBean.getLikes() + "");
         tvLikeFree.setText(bookDetailBean.getLikes() + "");

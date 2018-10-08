@@ -139,6 +139,8 @@
                 android:id="@+id/recycle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginBottom="@dimen/dp_5"></android.support.v7.widget.RecyclerView>
 
             <com.scwang.smartrefresh.layout.footer.ClassicsFooter

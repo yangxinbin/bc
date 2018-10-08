@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="历史搜索"
-                android:textColor="@color/gray"
+                android:textColor="@color/grayText"
                 android:textSize="@dimen/sencond_textSize" />
 
             <LinearLayout
@@ -96,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/dp_5"
                     android:text="全部删除"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/grayText"
                     android:textSize="@dimen/sencond_textSize" />
 
                 <ImageView

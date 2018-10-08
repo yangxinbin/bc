@@ -9,28 +9,28 @@ import java.util.List;
 public class BookDetailBean {
 
     /**
-     * id : 5ba1e89e2557b90ecc1800a3
-     * title : 达世币DASH是什么？
-     * subtitle :
-     * recommendation : null
-     * descriptionImages : [{"id":"5ba1e92d2557b90ecc1800b9","alias":"微信图片_20180918104526.jpg","fileName":"15373376450371674.jpg","contentType":"image/jpeg","size":170161,"createdOn":1537337645037}]
-     * cover : {"id":"5ba1e89e2557b90ecc1800a1","alias":"微信图片_20180918104454.jpg","fileName":"15373375020192215.jpg","contentType":"image/jpeg","size":138500,"createdOn":1537337502019}
-     * banner : null
+     * id : 5b850b5d04440c128c65a189
+     * title : IPFS—分布式存储挖矿
+     * subtitle : IPFS是否能成为区块链4.0时代…？
+     * recommendation : bbb
+     * descriptionImages : [{"id":"5b850b9704440c128c65a18c","alias":"精品课-刘锋-课程详情.jpg","fileName":"15354459113759169.jpg","contentType":"image/jpeg","size":593726,"createdOn":1535445911375}]
+     * cover : {"id":"5b850b5d04440c128c65a187","alias":"刘锋400x300.jpg","fileName":"15354458533908661.jpg","contentType":"image/jpeg","size":66907,"createdOn":1535445853390}
+     * banner : {"id":"5b85100a04440c128c65a28e","alias":"精品课-刘锋-banner2.jpg","fileName":"15354470506599764.jpg","contentType":"image/jpeg","size":76757,"createdOn":1535447050659}
      * category : Other
-     * author : {"id":"5b839f2b04440c1224e72ba7","name":"BC大陆","introduction":"no","photo":{"id":"5b8501b204440c128c65a11e","alias":"作者-BC大陆.jpg","fileName":"15354433784241925.jpg","contentType":"image/jpeg","size":39399,"createdOn":1535443378424}}
-     * chapters : [{"id":"1537337567634","title":"达世币Dash是什么?","duration":162,"audio":{"id":"5ba1e8fb2557b90ecc1800a4","alias":"达世币Dash是什么？.mp3","fileName":"15373375956391529.mp3","contentType":"audio/mp3","size":3989153,"createdOn":1537337595639},"contentImages":[{"id":"5ba1e90b2557b90ecc1800b5","alias":"微信图片_20180918104530.jpg","fileName":"15373376119299223.jpg","contentType":"image/jpeg","size":655220,"createdOn":1537337611929}],"free":false,"index":1,"updatedOn":1537337567634}]
-     * tags : ["Other"]
-     * price : 0.0
-     * vipPrice : 0.0
-     * groupBuy2Price : 0.0
-     * groupBuy3Price : 0.0
-     * type : free
-     * likes : 2
+     * author : {"id":"5b85056a04440c128c65a135","name":"刘锋","introduction":"","photo":{"id":"5b85056904440c128c65a133","alias":"精品课-刘锋-封面.jpg","fileName":"15354443293105681.jpg","contentType":"image/jpeg","size":41770,"createdOn":1535444329310}}
+     * chapters : [{"id":"1536057201329","title":"发刊词","duration":243,"audio":{"id":"5bab4a2e2557b90cc4e6a49b","alias":"发刊词.mp3","fileName":"15379523025745651.mp3","contentType":"audio/mp3","size":5977373,"createdOn":1537952302574},"contentImages":[{"id":"5b8e602604440c12508dd828","alias":"发刊词.jpg","fileName":"15360573825003719.jpg","contentType":"image/jpeg","size":802675,"createdOn":1536057382500}],"free":true,"index":1,"updatedOn":1536057201329},{"id":"1537352833463","title":"IPFS的诞生","duration":543,"audio":{"id":"5ba225342557b90430ebc568","alias":"IPFS的诞生.mp3","fileName":"15373530129561273.mp3","contentType":"audio/mp3","size":13346901,"createdOn":1537353012956},"contentImages":[{"id":"5ba225592557b90430ebc59d","alias":"IPFS的诞生.jpg","fileName":"15373530494708241.jpg","contentType":"image/jpeg","size":845454,"createdOn":1537353049470},{"id":"5ba225642557b90430ebc5a2","alias":"IPFS的诞生2.jpg","fileName":"15373530601628961.jpg","contentType":"image/jpeg","size":1024582,"createdOn":1537353060162}],"free":false,"index":2,"updatedOn":1537352833463},{"id":"1537952469829","title":"什么是IPFS？","duration":733,"audio":{"id":"5bab4b1d2557b90cc4e6a4b3","alias":"什么是IPFS？_.mp3","fileName":"15379525413423484.mp3","contentType":"audio/mp3","size":18035923,"createdOn":1537952541342},"contentImages":[{"id":"5bab4fa82557b90cc4e6a4ff","alias":"什么是IPFS？.jpg","fileName":"15379537044447483.jpg","contentType":"image/jpeg","size":876920,"createdOn":1537953704444},{"id":"5bab506b2557b90cc4e6a504","alias":"什么是IPFS？2.jpg","fileName":"15379538992843318.jpg","contentType":"image/jpeg","size":963752,"createdOn":1537953899284}],"free":false,"index":3,"updatedOn":1537952469829},{"id":"1537954387401","title":"什么是filecoin","duration":583,"audio":{"id":"5bab52822557b90cc4e6a509","alias":"什么是filecoin？.mp3","fileName":"15379544347305664.mp3","contentType":"audio/mp3","size":14338781,"createdOn":1537954434730},"contentImages":[{"id":"5bab52932557b90cc4e6a541","alias":"什么是filecoin？.jpg","fileName":"15379544513073192.jpg","contentType":"image/jpeg","size":798390,"createdOn":1537954451307},{"id":"5bab52b02557b90cc4e6a546","alias":"什么是filecoin？2.jpg","fileName":"15379544801095967.jpg","contentType":"image/jpeg","size":1003236,"createdOn":1537954480109}],"free":false,"index":4,"updatedOn":1537954387401},{"id":"1537954545094","title":"IPFS挖矿机制","duration":675,"audio":{"id":"5bab53652557b90cc4e6a54b","alias":"IPFS挖矿机制.mp3","fileName":"15379546612843224.mp3","contentType":"audio/mp3","size":16595071,"createdOn":1537954661284},"contentImages":[{"id":"5bab537a2557b90cc4e6a58c","alias":"IPFS挖矿机制.jpg","fileName":"15379546824894283.jpg","contentType":"image/jpeg","size":840938,"createdOn":1537954682489},{"id":"5bab548e2557b90cc4e6a591","alias":"IPFS挖矿机制2.jpg","fileName":"15379549581982192.jpg","contentType":"image/jpeg","size":871052,"createdOn":1537954958198}],"free":false,"index":5,"updatedOn":1537954545094},{"id":"1537955009953","title":"\u201cIPFS+\u201d无限的应用拓展","duration":581,"audio":{"id":"5bab56c62557b90cc4e6a5ce","alias":"\u201cIPFS \u201d无限的应用拓展.mp3","fileName":"15379555260934664.mp3","contentType":"audio/mp3","size":14279751,"createdOn":1537955526093},"contentImages":[{"id":"5bab571a2557b90cc4e6a606","alias":"\u201cIPFS \u201d无限的应用拓展.jpg","fileName":"15379556108487493.jpg","contentType":"image/jpeg","size":953830,"createdOn":1537955610848}],"free":false,"index":6,"updatedOn":1537955009953}]
+     * tags : []
+     * price : 99.0
+     * vipPrice : 89.1
+     * groupBuy2Price : 79.2
+     * groupBuy3Price : 69.3
+     * type : paid
+     * likes : 70
      * likesPlus : 0
-     * sold : 39
-     * soldPlus : 0
-     * recommended : 0
-     * updatedOn : 1537337702182
+     * sold : 45
+     * soldPlus : 213
+     * recommended : 300
+     * updatedOn : 1538012029047
      * updatedBy : 5b84ad3904440c128c32992b
      * status : online
      */
@@ -38,9 +38,9 @@ public class BookDetailBean {
     private String id;
     private String title;
     private String subtitle;
-    private Object recommendation;
+    private String recommendation;
     private CoverBean cover;
-    private Object banner;
+    private BannerBean banner;
     private String category;
     private AuthorBean author;
     private double price;
@@ -58,7 +58,7 @@ public class BookDetailBean {
     private String status;
     private List<DescriptionImagesBean> descriptionImages;
     private List<ChaptersBean> chapters;
-    private List<String> tags;
+    private List<?> tags;
 
     public String getId() {
         return id;
@@ -84,11 +84,11 @@ public class BookDetailBean {
         this.subtitle = subtitle;
     }
 
-    public Object getRecommendation() {
+    public String getRecommendation() {
         return recommendation;
     }
 
-    public void setRecommendation(Object recommendation) {
+    public void setRecommendation(String recommendation) {
         this.recommendation = recommendation;
     }
 
@@ -100,11 +100,11 @@ public class BookDetailBean {
         this.cover = cover;
     }
 
-    public Object getBanner() {
+    public BannerBean getBanner() {
         return banner;
     }
 
-    public void setBanner(Object banner) {
+    public void setBanner(BannerBean banner) {
         this.banner = banner;
     }
 
@@ -244,22 +244,88 @@ public class BookDetailBean {
         this.chapters = chapters;
     }
 
-    public List<String> getTags() {
+    public List<?> getTags() {
         return tags;
     }
 
-    public void setTags(List<String> tags) {
+    public void setTags(List<?> tags) {
         this.tags = tags;
     }
 
     public static class CoverBean {
         /**
-         * id : 5ba1e89e2557b90ecc1800a1
-         * alias : 微信图片_20180918104454.jpg
-         * fileName : 15373375020192215.jpg
+         * id : 5b850b5d04440c128c65a187
+         * alias : 刘锋400x300.jpg
+         * fileName : 15354458533908661.jpg
          * contentType : image/jpeg
-         * size : 138500
-         * createdOn : 1537337502019
+         * size : 66907
+         * createdOn : 1535445853390
+         */
+
+        private String id;
+        private String alias;
+        private String fileName;
+        private String contentType;
+        private int size;
+        private long createdOn;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getAlias() {
+            return alias;
+        }
+
+        public void setAlias(String alias) {
+            this.alias = alias;
+        }
+
+        public String getFileName() {
+            return fileName;
+        }
+
+        public void setFileName(String fileName) {
+            this.fileName = fileName;
+        }
+
+        public String getContentType() {
+            return contentType;
+        }
+
+        public void setContentType(String contentType) {
+            this.contentType = contentType;
+        }
+
+        public int getSize() {
+            return size;
+        }
+
+        public void setSize(int size) {
+            this.size = size;
+        }
+
+        public long getCreatedOn() {
+            return createdOn;
+        }
+
+        public void setCreatedOn(long createdOn) {
+            this.createdOn = createdOn;
+        }
+    }
+
+    public static class BannerBean {
+        /**
+         * id : 5b85100a04440c128c65a28e
+         * alias : 精品课-刘锋-banner2.jpg
+         * fileName : 15354470506599764.jpg
+         * contentType : image/jpeg
+         * size : 76757
+         * createdOn : 1535447050659
          */
 
         private String id;
@@ -320,10 +386,10 @@ public class BookDetailBean {
 
     public static class AuthorBean {
         /**
-         * id : 5b839f2b04440c1224e72ba7
-         * name : BC大陆
-         * introduction : no
-         * photo : {"id":"5b8501b204440c128c65a11e","alias":"作者-BC大陆.jpg","fileName":"15354433784241925.jpg","contentType":"image/jpeg","size":39399,"createdOn":1535443378424}
+         * id : 5b85056a04440c128c65a135
+         * name : 刘锋
+         * introduction :
+         * photo : {"id":"5b85056904440c128c65a133","alias":"精品课-刘锋-封面.jpg","fileName":"15354443293105681.jpg","contentType":"image/jpeg","size":41770,"createdOn":1535444329310}
          */
 
         private String id;
@@ -365,12 +431,12 @@ public class BookDetailBean {
 
         public static class PhotoBean {
             /**
-             * id : 5b8501b204440c128c65a11e
-             * alias : 作者-BC大陆.jpg
-             * fileName : 15354433784241925.jpg
+             * id : 5b85056904440c128c65a133
+             * alias : 精品课-刘锋-封面.jpg
+             * fileName : 15354443293105681.jpg
              * contentType : image/jpeg
-             * size : 39399
-             * createdOn : 1535443378424
+             * size : 41770
+             * createdOn : 1535444329310
              */
 
             private String id;
@@ -432,12 +498,12 @@ public class BookDetailBean {
 
     public static class DescriptionImagesBean {
         /**
-         * id : 5ba1e92d2557b90ecc1800b9
-         * alias : 微信图片_20180918104526.jpg
-         * fileName : 15373376450371674.jpg
+         * id : 5b850b9704440c128c65a18c
+         * alias : 精品课-刘锋-课程详情.jpg
+         * fileName : 15354459113759169.jpg
          * contentType : image/jpeg
-         * size : 170161
-         * createdOn : 1537337645037
+         * size : 593726
+         * createdOn : 1535445911375
          */
 
         private String id;
@@ -498,14 +564,14 @@ public class BookDetailBean {
 
     public static class ChaptersBean {
         /**
-         * id : 1537337567634
-         * title : 达世币Dash是什么?
-         * duration : 162
-         * audio : {"id":"5ba1e8fb2557b90ecc1800a4","alias":"达世币Dash是什么？.mp3","fileName":"15373375956391529.mp3","contentType":"audio/mp3","size":3989153,"createdOn":1537337595639}
-         * contentImages : [{"id":"5ba1e90b2557b90ecc1800b5","alias":"微信图片_20180918104530.jpg","fileName":"15373376119299223.jpg","contentType":"image/jpeg","size":655220,"createdOn":1537337611929}]
-         * free : false
+         * id : 1536057201329
+         * title : 发刊词
+         * duration : 243
+         * audio : {"id":"5bab4a2e2557b90cc4e6a49b","alias":"发刊词.mp3","fileName":"15379523025745651.mp3","contentType":"audio/mp3","size":5977373,"createdOn":1537952302574}
+         * contentImages : [{"id":"5b8e602604440c12508dd828","alias":"发刊词.jpg","fileName":"15360573825003719.jpg","contentType":"image/jpeg","size":802675,"createdOn":1536057382500}]
+         * free : true
          * index : 1
-         * updatedOn : 1537337567634
+         * updatedOn : 1536057201329
          */
 
         private String id;
@@ -583,12 +649,12 @@ public class BookDetailBean {
 
         public static class AudioBean {
             /**
-             * id : 5ba1e8fb2557b90ecc1800a4
-             * alias : 达世币Dash是什么？.mp3
-             * fileName : 15373375956391529.mp3
+             * id : 5bab4a2e2557b90cc4e6a49b
+             * alias : 发刊词.mp3
+             * fileName : 15379523025745651.mp3
              * contentType : audio/mp3
-             * size : 3989153
-             * createdOn : 1537337595639
+             * size : 5977373
+             * createdOn : 1537952302574
              */
 
             private String id;
@@ -649,12 +715,12 @@ public class BookDetailBean {
 
         public static class ContentImagesBean {
             /**
-             * id : 5ba1e90b2557b90ecc1800b5
-             * alias : 微信图片_20180918104530.jpg
-             * fileName : 15373376119299223.jpg
+             * id : 5b8e602604440c12508dd828
+             * alias : 发刊词.jpg
+             * fileName : 15360573825003719.jpg
              * contentType : image/jpeg
-             * size : 655220
-             * createdOn : 1537337611929
+             * size : 802675
+             * createdOn : 1536057382500
              */
 
             private String id;

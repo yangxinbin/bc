@@ -38,6 +38,7 @@ import com.mango.bc.util.ACache;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.NetUtil;
+import com.mango.bc.util.RoundImageView;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 import com.mango.bc.view.likeview.PraiseView;
@@ -68,7 +69,7 @@ public class OtherBookDetailActivity extends BaseActivity implements MyAllBookVi
     @Bind(R.id.tv_title)
     TextView tvTitle;
     @Bind(R.id.img_cover)
-    ImageView imgCover;
+    RoundImageView imgCover;
     @Bind(R.id.tv_buyer)
     TextView tvBuyer;
     @Bind(R.id.recycle)
@@ -152,7 +153,7 @@ public class OtherBookDetailActivity extends BaseActivity implements MyAllBookVi
             } else {
                 return false;
             }
-        }else {
+        } else {
             return false;
         }
     }
@@ -333,7 +334,7 @@ public class OtherBookDetailActivity extends BaseActivity implements MyAllBookVi
             lFree.setVisibility(View.GONE);//进去免费领取界面
             lNeedbuy.setVisibility(View.GONE);//进去购买领取界面
         } else {
-            if (type.equals("free") || getIntent().getBooleanExtra("vipFree",false)) {
+            if (type.equals("free") || getIntent().getBooleanExtra("vipFree", false)) {
                 lGet.setVisibility(View.GONE);
                 lFree.setVisibility(View.VISIBLE);
                 lNeedbuy.setVisibility(View.GONE);
@@ -349,11 +350,10 @@ public class OtherBookDetailActivity extends BaseActivity implements MyAllBookVi
         if (bookDetailBean == null)
             return;
         this.mBookDetailBean = bookDetailBean;
-        if (bookDetailBean.getAuthor() != null) {
-            if (bookDetailBean.getAuthor().getPhoto() != null)
-                Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookDetailBean.getAuthor().getPhoto().getFileName()).into(imgCover);
-        }
-        Log.v("bbbbbbb", AudioPlayer.get().isPlaying()+"---name--" + mBookDetailBean.getId()+"==="+spUtils.getString("isSameBook", ""));
+        if (bookDetailBean.getCover() != null)
+            Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookDetailBean.getCover().getFileName()).into(imgCover);
+
+        Log.v("bbbbbbb", AudioPlayer.get().isPlaying() + "---name--" + mBookDetailBean.getId() + "===" + spUtils.getString("isSameBook", ""));
         if (AudioPlayer.get().isPlaying() && mBookDetailBean.getId().equals(spUtils.getString("isSameBook", ""))) {
             bookStagePlay.setText("播放中");
         } else if (AudioPlayer.get().isPausing() /*&& mBookDetailBean.getId().equals(spUtils.getString("isSameBook", ""))*/) {
@@ -381,7 +381,7 @@ public class OtherBookDetailActivity extends BaseActivity implements MyAllBookVi
         }
         this.mBookBean = bookBean;
         bookId = bookBean.getId();
-        Log.v("kkkkk","---1--"+bookId);
+        Log.v("kkkkk", "---1--" + bookId);
         type = bookBean.getType();
         initState(bookId, type);
         checkLike(bookId);
@@ -399,7 +399,7 @@ public class OtherBookDetailActivity extends BaseActivity implements MyAllBookVi
         }
         if (bookBean.getBook() != null) {
             bookId = bookBean.getBook().getId();
-            Log.v("kkkkk","---2--"+bookId);
+            Log.v("kkkkk", "---2--" + bookId);
             type = bookBean.getBook().getType();
             initState(bookId, type);
             checkLike(bookId);
@@ -431,7 +431,7 @@ public class OtherBookDetailActivity extends BaseActivity implements MyAllBookVi
         }
         if (playPauseBean.isPause()) {
             bookStagePlay.setText(getResources().getString(R.string.play));
-        } else if (mBookDetailBean.getId().equals(spUtils.getString("isSameBook", ""))){
+        } else if (mBookDetailBean.getId().equals(spUtils.getString("isSameBook", ""))) {
             bookStagePlay.setText("播放中");
         }
         EventBus.getDefault().removeStickyEvent(PlayPauseBean.class);
@@ -491,7 +491,7 @@ public class OtherBookDetailActivity extends BaseActivity implements MyAllBookVi
                 Log.v("yyyyyyy", "==?===4--");
                 break;
             case R.id.book_stage_needbuy_vip:
-                intent = new Intent(this,OpenUpVipActivity.class);
+                intent = new Intent(this, OpenUpVipActivity.class);
                 startActivity(intent);
                 break;
             case R.id.book_stage_needbuy_money:
@@ -542,7 +542,7 @@ public class OtherBookDetailActivity extends BaseActivity implements MyAllBookVi
                                     }  //要不点击详情页还是显现领取，详情书的状态在adapter里面控制
 /*                                    RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, true, false);
                                     EventBus.getDefault().postSticky(refreshStageBean);*/
-                                    EventBus.getDefault().postSticky(new RefreshBookCaseBean(false,true,true));//vip精品课就是免费课
+                                    EventBus.getDefault().postSticky(new RefreshBookCaseBean(false, true, true));//vip精品课就是免费课
 
                                 }
                             });
@@ -559,6 +559,7 @@ public class OtherBookDetailActivity extends BaseActivity implements MyAllBookVi
             }
         }).start();
     }
+
     private void loadStats() {
         new Thread(new Runnable() {
             @Override
@@ -566,7 +567,7 @@ public class OtherBookDetailActivity extends BaseActivity implements MyAllBookVi
                 //final HashMap<String, String> mapParams = new HashMap<String, String>();
                 //mapParams.clear();
                 //mapParams.put("authToken", spUtils.getString("authToken", ""));
-                HttpUtils.doGet(Urls.HOST_STATS+"?authToken="+spUtils.getString("authToken", ""), /*mapParams,*/ new Callback() {
+                HttpUtils.doGet(Urls.HOST_STATS + "?authToken=" + spUtils.getString("authToken", ""), /*mapParams,*/ new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                     }
@@ -592,6 +593,7 @@ public class OtherBookDetailActivity extends BaseActivity implements MyAllBookVi
             }
         }).start();
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -631,7 +633,7 @@ public class OtherBookDetailActivity extends BaseActivity implements MyAllBookVi
 
             @Override
             public void onError(Platform platform, int i, Throwable throwable) {
-                Log.v("nnnn", "----2"+throwable);
+                Log.v("nnnn", "----2" + throwable);
 
             }
 

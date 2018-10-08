@@ -202,7 +202,7 @@ public class ExpertBookDetailActivity extends BaseActivity {
             } else {
                 return false;
             }
-        }else {
+        } else {
             return false;
         }
     }
@@ -378,10 +378,9 @@ public class ExpertBookDetailActivity extends BaseActivity {
         //AudioPlayer.get().init(this);
         this.mBookDetailBean = bookDetailBean;
         EventBus.getDefault().postSticky(bookDetailBean);
-        if (bookDetailBean.getAuthor() != null) {
-            if (bookDetailBean.getAuthor().getPhoto() != null)
-                Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookDetailBean.getAuthor().getPhoto().getFileName()).into(imgCover);
-        }
+        if (bookDetailBean.getBanner() != null)
+            Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookDetailBean.getBanner().getFileName()).into(imgCover);
+
         if (AudioPlayer.get().isPlaying() && mBookDetailBean.getId().equals(spUtils.getString("isSameBook", ""))) {
             bookStageExpertPlay.setText("播放中");
         } else if (AudioPlayer.get().isPausing() && mBookDetailBean.getId().equals(spUtils.getString("isSameBook", ""))) {

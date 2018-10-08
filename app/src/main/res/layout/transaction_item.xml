@@ -30,7 +30,7 @@
             android:maxLines="1"
             android:gravity="center_vertical"
             android:ellipsize="end"
-            android:textColor="@color/common_black"
+            android:textColor="@color/gray_3"
             android:textSize="@dimen/title" />
         <TextView
             android:id="@+id/tv_time"

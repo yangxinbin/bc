@@ -138,7 +138,7 @@
                 android:layout_gravity="center"
                 android:layout_marginRight="@dimen/dp_50"
                 android:text="剩余7天"
-                android:textColor="@color/common_black"
+                android:textColor="@color/gray_3"
                 android:textSize="@dimen/dp_14"
                 android:visibility="gone" />
         </LinearLayout>

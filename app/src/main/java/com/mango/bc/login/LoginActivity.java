@@ -2,20 +2,12 @@ package com.mango.bc.login;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.EditText;
 
-import com.mango.bc.BcActivity;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
-import com.mob.tools.utils.UIHandler;
 
 import java.util.HashMap;
 
@@ -27,15 +19,11 @@ import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.wechat.friends.Wechat;
 
-public class LoginActivity extends BaseActivity  {
+public class LoginActivity extends BaseActivity {
 
-    @Bind(R.id.imageView_wechatLogin)
-    ImageView imageViewWechatLogin;
-    @Bind(R.id.textView)
-    TextView textView;
-    @Bind(R.id.button)
-    Button button;
-    private int i = 0;
+
+    @Bind(R.id.editText_phone)
+    EditText editTextPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,20 +32,34 @@ public class LoginActivity extends BaseActivity  {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.imageView_wechatLogin, R.id.button})
+    @OnClick({R.id.imageView_back, R.id.imageView_delete_phone, R.id.button_code, R.id.tv_password, R.id.l_wechat})
     public void onViewClicked(View view) {
+        Intent intent;
         switch (view.getId()) {
-            case R.id.imageView_wechatLogin:
-                //authorize(ShareSDK.getPlatform(Wechat.NAME),true);
-                wechatLogin();
-                break;
-            case R.id.button:
-                Intent intent = new Intent(this, BcActivity.class);
+            case R.id.imageView_back:
+                intent = new Intent(this, FirstActivity.class);
                 startActivity(intent);
                 finish();
                 break;
+            case R.id.imageView_delete_phone:
+                break;
+            case R.id.button_code:
+                intent = new Intent(this, CodeActivity.class);
+                intent.putExtra("num",editTextPhone.getText().toString());
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.tv_password:
+                intent = new Intent(this, PasswordLoginActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.l_wechat:
+                wechatLogin();
+                break;
         }
     }
+
     private void wechatLogin() {//要数据不要功能
         Platform wechat = ShareSDK.getPlatform(Wechat.NAME);
         //wechat.SSOSetting(false);
@@ -65,13 +67,7 @@ public class LoginActivity extends BaseActivity  {
             @Override
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
                 final String userInfo = StrUtils.format("", hashMap);
-                Log.v("ooooooooo","=="+userInfo);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        textView.setText(userInfo.toString());
-                    }
-                });
+                Log.v("ooooooooo", "==" + userInfo);
             }
 
             @Override
@@ -84,7 +80,7 @@ public class LoginActivity extends BaseActivity  {
 
             }
         });
-        if(wechat.isClientValid()){
+        if (wechat.isClientValid()) {
             //判断是否存在授权凭条的客户端，true是有客户端，false是无
         }
         //判断指定平台是否已经完成授权
@@ -100,7 +96,6 @@ public class LoginActivity extends BaseActivity  {
         wechat.showUser(null);
 
     }
-
    /* // 授权登录
     private void authorize(Platform plat, Boolean isSSO) {
         // 判断指定平台是否已经完成授权

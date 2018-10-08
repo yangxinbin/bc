@@ -77,7 +77,7 @@ public class TransactionAdapter extends RecyclerView.Adapter {
                     viewHolder.tv_title.setText(datas.get(position).getMeta());
                     viewHolder.tv_time.setText(DateUtil.getDateToString(datas.get(position).getTimestamp(),"yyyy-MM-dd HH:mm:ss"));
                     viewHolder.tv_pp.setText(datas.get(position).getPpCoin()+"积分");
-                    viewHolder.tv_pp.setTextColor(context.getResources().getColor(R.color.common_black));
+                    viewHolder.tv_pp.setTextColor(context.getResources().getColor(R.color.gray_3));
                 }else if (datas.get(position).getType().equals("receive")){
                     viewHolder.img_transaction.setImageResource(R.drawable.record_money);
                     viewHolder.tv_title.setText("从"+datas.get(position).getMeta()+"获得");
@@ -89,7 +89,7 @@ public class TransactionAdapter extends RecyclerView.Adapter {
                     viewHolder.tv_title.setText("转账给"+datas.get(position).getMeta());
                     viewHolder.tv_time.setText(DateUtil.getDateToString(datas.get(position).getTimestamp(),"yyyy-MM-dd HH:mm:ss"));
                     viewHolder.tv_pp.setText(datas.get(position).getPpCoin()+"积分");
-                    viewHolder.tv_pp.setTextColor(context.getResources().getColor(R.color.common_black));
+                    viewHolder.tv_pp.setTextColor(context.getResources().getColor(R.color.gray_3));
                 }
             }
         }

@@ -4,14 +4,15 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ffac00</color>
     <color name="black">#000000</color>
-    <color name="common_black">#333333</color>
     <color name="white">#FFFFFF</color>
     <color name="white_alp">#00FFFFFF</color>
     <color name="gray">#b2b2b2</color>
     <color name="gray_get">#f2f2f2</color>
     <color name="common_gray">#f6f6f6</color>
     <color name="common_gray_al">#ebf6f6f6</color>
-
+    <color name="gray_3">#333333</color>
+    <color name="gray_6">#666666</color>
+    <color name="gray_9">#999999</color>
     <color name="common_sign_gray">#e5e5e5</color>
     <color name="plan_gray">#888888</color>
     <color name="maskgray">#ececec</color>

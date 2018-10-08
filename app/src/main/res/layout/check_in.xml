@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:textColor="@color/common_black" />
+                android:textColor="@color/gray_3" />
 
             <TextView
                 android:id="@+id/tv_check_num"
@@ -54,7 +54,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="@color/common_black"
+                android:textColor="@color/gray_3"
                 android:textSize="@dimen/title" />
         </LinearLayout>
 

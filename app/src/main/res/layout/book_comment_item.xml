@@ -34,7 +34,7 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:padding="@dimen/dp_2"
-                android:textColor="@color/common_black"
+                android:textColor="@color/gray_3"
                 android:textSize="@dimen/textSize" />
 
             <TextView

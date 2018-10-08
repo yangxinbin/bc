@@ -27,7 +27,7 @@
                 android:layout_margin="@dimen/dp_5"
                 android:layout_weight="1"
                 android:text="发刊词"
-                android:textColor="@color/common_black"
+                android:textColor="@color/gray_3"
                 android:textSize="@dimen/textSize" />
 
             <TextView

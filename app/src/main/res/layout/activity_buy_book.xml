@@ -151,7 +151,7 @@
             android:background="@color/common_yello"
             android:gravity="center"
             android:text="实付款：4.9积分"
-            android:textColor="@color/common_black"
+            android:textColor="@color/gray_3"
             android:textSize="@dimen/textSize" />
 
         <TextView
@@ -162,7 +162,7 @@
             android:background="@color/yello"
             android:gravity="center"
             android:text="确认支付"
-            android:textColor="@color/common_black"
+            android:textColor="@color/gray_3"
             android:textSize="@dimen/textSize" />
 
     </LinearLayout>

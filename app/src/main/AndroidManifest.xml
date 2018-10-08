@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.mango.bc">
 
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
@@ -50,7 +49,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".BcActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".homepage.activity.VipDetailActivity" />
         <activity
             android:name=".homepage.activity.SearchActivity"
@@ -112,14 +111,19 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".homepage.activity.VipAutoActivity" />
         <activity android:name=".mine.activity.VipCenterActivity" />
-        <activity android:name=".login.LoginActivity">
+        <activity android:name=".login.LoginActivity" />
+        <activity android:name=".login.FirstActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.ShowUserInfoActivity"></activity>
+        <activity android:name=".login.CodeActivity" />
+        <activity android:name=".login.PasswordActivity" />
+        <activity android:name=".login.PositionActivity" />
+        <activity android:name=".login.PasswordLoginActivity" />
+        <activity android:name=".login.LikeActivity"></activity>
     </application>
 
 </manifest>

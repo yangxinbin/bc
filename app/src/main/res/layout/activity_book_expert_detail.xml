@@ -182,7 +182,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:id="@+id/tv_like_get"
-                android:textColor="@color/common_black"
+                android:textColor="@color/gray_3"
                 android:textSize="@dimen/dp_14" />
 
         </LinearLayout>
@@ -207,7 +207,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="试听"
-                android:textColor="@color/common_black"
+                android:textColor="@color/gray_3"
                 android:textSize="@dimen/dp_14" />
 
         </LinearLayout>
@@ -220,7 +220,7 @@
             android:background="@color/common_yello"
             android:gravity="center"
             android:text="50.2币购买\n会员45币"
-            android:textColor="@color/common_black"
+            android:textColor="@color/gray_3"
             android:textSize="@dimen/dp_14" />
 
         <TextView
@@ -231,7 +231,7 @@
             android:background="@color/yello"
             android:gravity="center"
             android:text="15-20币\n拼团购买"
-            android:textColor="@color/common_black"
+            android:textColor="@color/gray_3"
             android:textSize="@dimen/dp_14" />
 
     </LinearLayout>
@@ -297,7 +297,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:id="@+id/tv_like_play"
-                android:textColor="@color/common_black"
+                android:textColor="@color/gray_3"
                 android:textSize="@dimen/dp_14" />
 
         </LinearLayout>
@@ -322,7 +322,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="免费送朋友"
-                android:textColor="@color/common_black"
+                android:textColor="@color/gray_3"
                 android:textSize="@dimen/dp_14" />
 
         </LinearLayout>
@@ -335,7 +335,7 @@
             android:background="@color/yello"
             android:gravity="center"
             android:text="@string/play"
-            android:textColor="@color/common_black"
+            android:textColor="@color/gray_3"
             android:textSize="@dimen/textSize" />
 
     </LinearLayout>

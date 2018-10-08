@@ -61,6 +61,6 @@ public class Urls {
     public static final String HOST_TASKSHARE = HOST+TASKSHARE;
     public static final String HOST_VIPPACKAGE = HOST+VIPPACKAGE;
     public static final String HOST_BUYVIP = HOST+BUYVIP;
-    public static final String HOST_RECOMMENDED = HOST+RECOMMENDED;//首页
+    public static final String HOST_RECOMMENDED = HOST+RECOMMENDED; //首页
 
 }

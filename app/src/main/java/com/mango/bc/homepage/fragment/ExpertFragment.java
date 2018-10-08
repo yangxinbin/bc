@@ -189,6 +189,7 @@ public class ExpertFragment extends Fragment implements BookExpertView {
             }
         }
     };
+
     private boolean chechState(String bookId) {
         String data = spUtils.getString("allMyBook", "");
         Gson gson = new Gson();
@@ -203,6 +204,7 @@ public class ExpertFragment extends Fragment implements BookExpertView {
             return false;
         }
     }
+
     private void loadBookDetail(final Boolean ifCache, final String bookId) {
         new Thread(new Runnable() {
             @Override
@@ -291,14 +293,10 @@ public class ExpertFragment extends Fragment implements BookExpertView {
                     if (mData != null) {
                         mData.clear();
                     }
-                    if (page == 0) {
-                        for (int i = 0; i < 3; i++) {//
-                            if (i > bookBeanList.size() - 1)
-                                continue;
-                            mData.add(bookBeanList.get(i)); //一次显示page= ? 20条数据
-                        }
-                        bookExpertAdapter.setmDate(mData);
+                    for (int i = 0; i < bookBeanList.size(); i++) {
+                        mData.add(bookBeanList.get(i));
                     }
+                    bookExpertAdapter.setmDate(mData);
                 }
             });
     }

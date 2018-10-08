@@ -83,7 +83,7 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
         } else if (type == 5) {
             url = getUrl(type, context) + "?keyword=" + keyWordString + "&page=" + page;
         }
-        Log.v("pppppppppppp", "" + url);
+        Log.v("ppppppppppppp", "" + url);
         bookModel.visitBooks(context, type, url, keyWordString, page, ifCache, this);
     }
 

@@ -209,7 +209,7 @@ public class FreeFragment extends Fragment implements BookFreeView, MyAllBookVie
             } else {
                 return false;
             }
-        }else {
+        } else {
             return false;
         }
     }
@@ -388,14 +388,10 @@ public class FreeFragment extends Fragment implements BookFreeView, MyAllBookVie
                     if (mData != null) {
                         mData.clear();
                     }
-                    if (page == 0) {
-                        for (int i = 0; i < 3; i++) {//
-                            if (i > bookBeanList.size() - 1)
-                                continue;
-                            mData.add(bookBeanList.get(i)); //一次显示page= ? 20条数据
-                        }
-                        bookGirdFreeAdapter.setmDate(mData);
+                    for (int i = 0; i < bookBeanList.size(); i++) {
+                        mData.add(bookBeanList.get(i));
                     }
+                    bookGirdFreeAdapter.setmDate(mData);
                 }
             });
     }

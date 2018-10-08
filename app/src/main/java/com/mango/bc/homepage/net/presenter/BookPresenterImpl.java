@@ -75,9 +75,9 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
                 e.printStackTrace();
             }
         } else if (type == 2) {
-            url = getUrl(type, context) + "?type=paid" + "&page=" + page;
+            url = getUrl(type, context) + "?type=paid"/* + "&page=" + page*/;
         } else if (type == 3) {
-            url = getUrl(type, context) + "?type=free" + "&page=" + page;
+            url = getUrl(type, context) + "?type=free"/* + "&page=" + page*/;
         } else if (type == 4) {
             url = getUrl(type, context) + "?page=" + page;
         } else if (type == 5) {
@@ -97,10 +97,10 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
                 sburl.append(Urls.HOST_BOOKLISTCATEGORIES);//精品课列表
                 break;
             case 2:
-                sburl.append(Urls.HOST_BOOKTYPE);//大咖
+                sburl.append(Urls.HOST_RECOMMENDED);//大咖
                 break;
             case 3:
-                sburl.append(Urls.HOST_BOOKTYPE);//免费
+                sburl.append(Urls.HOST_RECOMMENDED);//免费
                 break;
             case 4:
                 sburl.append(Urls.HOST_RECENT);//最新

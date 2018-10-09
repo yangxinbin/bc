@@ -38,7 +38,7 @@ public class BookCourseAdapter extends RecyclerView.Adapter {
     }
 
     public void setIsPlaylist(boolean isPlaylist) {
-        Log.v("ssssssssss","--setIsPlaylist--");
+        Log.v("ssssssssss", "--setIsPlaylist--");
 
         this.isPlaylist = isPlaylist;
     }
@@ -68,12 +68,15 @@ public class BookCourseAdapter extends RecyclerView.Adapter {
                 viewHolder.tv_time.setText("时长：" + secToTime(datas.get(position).getDuration()));
                 if (!(datas.get(position).getIsFree() || spUtils.getBoolean("isFree", false))) {
                     viewHolder.img_txt.setImageResource(R.drawable.lock);
+                    viewHolder.tv_try.setVisibility(View.GONE);
+                } else {
+                    viewHolder.tv_try.setVisibility(View.VISIBLE);
                 }
-                Log.v("ssssssssss",isPlaylist+"-isPlaylist---"+AudioPlayer.get().getPlayPosition());
+                Log.v("ssssssssss", isPlaylist + "-isPlaylist---" + AudioPlayer.get().getPlayPosition());
 
                 if (isPlaylist && position == AudioPlayer.get().getPlayPosition() && datas.get(position).getBookId().equals(spUtils.getString("isSameBook", ""))) {
                     viewHolder.img_read.setImageResource(R.drawable.playing);
-                }else {
+                } else {
                     viewHolder.img_read.setImageResource(R.drawable.play);
                 }
                 viewHolder.img_read.setOnClickListener(new View.OnClickListener() {
@@ -141,7 +144,7 @@ public class BookCourseAdapter extends RecyclerView.Adapter {
 
     class BookCourseViewHolder extends RecyclerView.ViewHolder/* implements View.OnClickListener*/ {
         ImageView img_read, img_txt;
-        TextView tv_title, tv_time;
+        TextView tv_title, tv_time, tv_try;
 
         public BookCourseViewHolder(final View itemView) {
             super(itemView);
@@ -149,6 +152,8 @@ public class BookCourseAdapter extends RecyclerView.Adapter {
             img_txt = (ImageView) itemView.findViewById(R.id.img_txt);
             tv_title = (TextView) itemView.findViewById(R.id.tv_title);
             tv_time = (TextView) itemView.findViewById(R.id.tv_time);
+            tv_try = (TextView) itemView.findViewById(R.id.tv_try);
+
             //img_read.setOnClickListener(this);
             //img_txt.setOnClickListener(this);
 

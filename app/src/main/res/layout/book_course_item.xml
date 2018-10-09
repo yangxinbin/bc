@@ -37,15 +37,37 @@
                 android:textColor="@color/gray_3"
                 android:textSize="@dimen/textSize" />
 
-            <TextView
-                android:id="@+id/tv_time"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_margin="@dimen/dp_5"
                 android:layout_weight="1"
-                android:text="3:44"
-                android:textColor="@color/grayText"
-                android:textSize="@dimen/dp_14" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_try"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:background="@drawable/common_yellow_full_circle"
+                    android:paddingLeft="@dimen/dp_8"
+                    android:paddingRight="@dimen/dp_8"
+                    android:text="试听"
+                    android:textColor="@color/yello"
+                    android:textSize="@dimen/dp_14" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="3:44"
+                    android:textColor="@color/grayText"
+                    android:textSize="@dimen/dp_14" />
+            </LinearLayout>
+
+
         </LinearLayout>
 
         <ImageView

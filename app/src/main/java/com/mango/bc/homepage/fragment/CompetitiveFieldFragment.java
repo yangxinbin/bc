@@ -13,15 +13,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mango.bc.R;
-import com.mango.bc.homepage.activity.competitivebook.CompetitiveBookActivity;
+import com.mango.bc.homepage.activity.competitivebook.CompetitiveBookServiceActivity;
 import com.mango.bc.homepage.adapter.CompetitiveFieldAdapter;
-import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookCompetitiveFieldView;
-import com.mango.bc.homepage.net.view.BookCompetitiveView;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.NetUtil;
 
@@ -86,7 +84,7 @@ public class CompetitiveFieldFragment extends Fragment implements BookCompetitiv
     private CompetitiveFieldAdapter.OnItemClickLitener mOnClickListenner = new CompetitiveFieldAdapter.OnItemClickLitener() {
         @Override
         public void onItemClick(View view, int position) {
-            Intent intent = new Intent(getActivity(), CompetitiveBookActivity.class);
+            Intent intent = new Intent(getActivity(), CompetitiveBookServiceActivity.class);
             intent.putExtra("which",position);
             startActivity(intent);
         }
@@ -104,7 +102,7 @@ public class CompetitiveFieldFragment extends Fragment implements BookCompetitiv
 
     @OnClick(R.id.see_more)
     public void onViewClicked() {
-        Intent intent = new Intent(getContext(), CompetitiveBookActivity.class);
+        Intent intent = new Intent(getContext(), CompetitiveBookServiceActivity.class);
         intent.putExtra("which",0);
         startActivity(intent);
     }

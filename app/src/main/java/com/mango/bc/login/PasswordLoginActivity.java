@@ -31,7 +31,7 @@ public class PasswordLoginActivity extends AppCompatActivity {
         Intent intent;
         switch (view.getId()) {
             case R.id.imageView_back:
-                intent = new Intent(this, LoginActivity.class);
+                intent = new Intent(this, LoginServiceActivity.class);
                 startActivity(intent);
                 finish();
                 break;

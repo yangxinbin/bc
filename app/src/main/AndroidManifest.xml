@@ -48,30 +48,30 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".BcActivity"
+            android:name=".BcServiceActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".homepage.activity.VipDetailActivity" />
+        <activity android:name=".homepage.activity.VipDetailServiceActivity" />
         <activity
-            android:name=".homepage.activity.SearchActivity"
+            android:name=".homepage.activity.SearchServiceActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".homepage.activity.CollageActivity" />
-        <activity android:name=".homepage.activity.OpenUpVipActivity" />
-        <activity android:name=".wallet.activity.ProblemActivity" />
-        <activity android:name=".mine.activity.ExpertActivity" />
-        <activity android:name=".mine.activity.ExpertApplyActivity" />
-        <activity android:name=".wallet.activity.TransactionActivity" />
-        <activity android:name=".wallet.activity.RechargeActivity" />
-        <activity android:name=".wallet.activity.TransferActivity" />
-        <activity android:name=".wallet.activity.CurrencyActivity" />
-        <activity android:name=".homepage.activity.freebook.FreeBookActivity" />
-        <activity android:name=".homepage.activity.expertbook.ExpertBookActivity" />
-        <activity android:name=".mine.activity.FaqActivity" />
-        <activity android:name=".homepage.activity.competitivebook.CompetitiveBookActivity" />
-        <activity android:name=".mine.activity.ServiceActivity" />
-        <activity android:name=".homepage.bookdetail.ExpertBookDetailActivity" />
-        <activity android:name=".homepage.bookdetail.OtherBookDetailActivity" />
-        <activity android:name=".homepage.bookdetail.TxtActivity" />
-        <activity android:name=".homepage.bookdetail.play.PlayActivity" />
+        <activity android:name=".homepage.activity.CollageServiceActivity" />
+        <activity android:name=".homepage.activity.OpenUpVipServiceActivity" />
+        <activity android:name=".wallet.activity.ProblemServiceActivity" />
+        <activity android:name=".mine.activity.ExpertServiceActivity" />
+        <activity android:name=".mine.activity.ExpertApplyServiceActivity" />
+        <activity android:name=".wallet.activity.TransactionServiceActivity" />
+        <activity android:name=".wallet.activity.RechargeServiceActivity" />
+        <activity android:name=".wallet.activity.TransferServiceActivity" />
+        <activity android:name=".wallet.activity.CurrencyServiceActivity" />
+        <activity android:name=".homepage.activity.freebook.FreeBookServiceActivity" />
+        <activity android:name=".homepage.activity.expertbook.ExpertBookServiceActivity" />
+        <activity android:name=".mine.activity.FaqServiceActivity" />
+        <activity android:name=".homepage.activity.competitivebook.CompetitiveBookServiceActivity" />
+        <activity android:name=".mine.activity.ServiceServiceActivity" />
+        <activity android:name=".homepage.bookdetail.ExpertBookDetailServiceActivity" />
+        <activity android:name=".homepage.bookdetail.OtherBookDetailServiceActivity" />
+        <activity android:name=".homepage.bookdetail.TxtServiceActivity" />
+        <activity android:name=".homepage.bookdetail.play.PlayServiceActivity" />
         <!-- ShareSDK的activity -->
         <activity
             android:name="com.mob.tools.MobUIShell"
@@ -91,7 +91,7 @@
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop" />
-        <activity android:name=".homepage.activity.BuyBookActivity" />
+        <activity android:name=".homepage.activity.BuyBookServiceActivity" />
 
         <service android:name=".homepage.bookdetail.play.service.PlayService" />
 
@@ -107,27 +107,27 @@
         </receiver>
 
         <activity
-            android:name=".homepage.bookdetail.CommentActivity"
+            android:name=".homepage.bookdetail.CommentServiceActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".mine.activity.VipAutoActivity" />
-        <activity android:name=".mine.activity.VipCenterActivity" />
-        <activity android:name=".login.LoginActivity" />
-        <activity android:name=".login.FirstActivity">
+        <activity android:name=".mine.activity.VipAutoServiceActivity" />
+        <activity android:name=".mine.activity.VipCenterServiceActivity" />
+        <activity android:name=".login.LoginServiceActivity" />
+        <activity android:name=".login.FirstServiceActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.CodeActivity" />
-        <activity android:name=".login.PasswordActivity" />
-        <activity android:name=".login.PositionActivity" />
+        <activity android:name=".login.CodeServiceActivity" />
+        <activity android:name=".login.PasswordServiceActivity" />
+        <activity android:name=".login.PositionServiceActivity" />
         <activity android:name=".login.PasswordLoginActivity" />
-        <activity android:name=".login.LikeActivity" />
+        <activity android:name=".login.LikeServiceActivity" />
         <activity
-            android:name=".login.UserDetailActivity"
+            android:name=".login.UserDetailServiceActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".mine.activity.ApplyActivity"></activity>
+        <activity android:name=".mine.activity.ApplyServiceActivity"></activity>
     </application>
 
 </manifest>

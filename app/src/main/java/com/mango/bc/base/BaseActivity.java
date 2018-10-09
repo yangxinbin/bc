@@ -16,7 +16,6 @@ import android.view.View;
 
 import com.mango.bc.R;
 import com.mango.bc.homepage.bookdetail.play.service.PlayService;
-import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.PublicWay;
 import com.mango.bc.util.StatusBarUtil;
@@ -27,8 +26,6 @@ import com.mango.bc.util.StatusBarUtil;
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
-    private PlayService playService;
-    private PlayServiceConnection serviceConnection;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,32 +39,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);//恢复状态栏白色字体
             StatusBarUtil.setStatusBarColor(this, R.color.colorPrimaryDark);
         }
-        bindService();
     }
-
-    private void bindService() {
-        Intent intent = new Intent();
-        intent.setClass(this, PlayService.class);
-        serviceConnection = new PlayServiceConnection();
-        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
-    }
-
-    private class PlayServiceConnection implements ServiceConnection {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            playService = ((PlayService.PlayBinder) service).getService();
-            onServiceBound();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            Log.e(getClass().getSimpleName(), "service disconnected");
-        }
-    }
-
-    protected void onServiceBound() {
-    }
-
     /**
      * 设置屏幕只能竖屏
      *

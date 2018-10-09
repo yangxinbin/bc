@@ -1,7 +1,6 @@
 package com.mango.bc.homepage.activity.competitivebook.fragment;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,15 +24,12 @@ import com.mango.bc.bookcase.bean.RefreshBookCaseBean;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
 import com.mango.bc.bookcase.net.view.MyAllBookView;
-import com.mango.bc.homepage.activity.BuyBookActivity;
-import com.mango.bc.homepage.activity.freebook.FreeBookActivity;
+import com.mango.bc.homepage.activity.BuyBookServiceActivity;
 import com.mango.bc.homepage.adapter.BookComprtitiveAdapter;
 import com.mango.bc.homepage.bean.BuySuccessBean;
-import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
+import com.mango.bc.homepage.bookdetail.OtherBookDetailServiceActivity;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
-import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
-import com.mango.bc.homepage.net.bean.LoadStageBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
@@ -66,8 +62,6 @@ import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by admin on 2018/5/21.
@@ -158,14 +152,14 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
 
         @Override
         public void onItemPlayClick(View view, int position) {//播放
-            Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
+            Intent intent = new Intent(getActivity(), OtherBookDetailServiceActivity.class);
             EventBus.getDefault().postSticky(adapter.getItem(position));
             startActivity(intent);
         }
 
         @Override
         public void onItemGetClick(View view, int position) {//购买界面
-            Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
+            Intent intent = new Intent(getActivity(), OtherBookDetailServiceActivity.class);
             EventBus.getDefault().postSticky(adapter.getItem(position));
             startActivity(intent);
         }
@@ -196,7 +190,7 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
             if (tv_stage.getText().equals("播放")) {//用户没有刷新没有加载时临时调用（刷新与加载会重新与书架匹配）
                 Log.v("bbbbbbbb", "---tv_stage--" + tv_stage.getText());
             } else {
-                Intent intent = new Intent(getActivity(), BuyBookActivity.class);
+                Intent intent = new Intent(getActivity(), BuyBookServiceActivity.class);
                 EventBus.getDefault().postSticky(adapter.getItem(position));
                 EventBus.getDefault().removeStickyEvent(MyBookBean.class);
                 startActivity(intent);
@@ -209,7 +203,7 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
             if (tv_head_stage.getText().equals("播放")) {
                 Log.v("bbbbbbbb", "---tv_head_stage--" + tv_head_stage.getText());
             } else {
-                Intent intent = new Intent(getActivity(), BuyBookActivity.class);
+                Intent intent = new Intent(getActivity(), BuyBookServiceActivity.class);
                 EventBus.getDefault().postSticky(adapter.getItem(position));
                 EventBus.getDefault().removeStickyEvent(MyBookBean.class);
                 startActivity(intent);
@@ -218,7 +212,7 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
 
         @Override
         public void onItemVipGetClick(View view, int position) {
-            Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
+            Intent intent = new Intent(getActivity(), OtherBookDetailServiceActivity.class);
             intent.putExtra("vipFree", true);
             EventBus.getDefault().postSticky(adapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);

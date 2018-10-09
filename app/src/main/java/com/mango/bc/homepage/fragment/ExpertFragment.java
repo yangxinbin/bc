@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,15 +16,11 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mango.bc.R;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
-import com.mango.bc.homepage.activity.BuyBookActivity;
-import com.mango.bc.homepage.activity.expertbook.ExpertBookActivity;
-import com.mango.bc.homepage.adapter.BookExpertAdapter;
+import com.mango.bc.homepage.activity.BuyBookServiceActivity;
+import com.mango.bc.homepage.activity.expertbook.ExpertBookServiceActivity;
 import com.mango.bc.homepage.adapter.BookPaidAdapter;
 import com.mango.bc.homepage.bean.BuySuccessBean;
-import com.mango.bc.homepage.bookdetail.ExpertBookDetailActivity;
-import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
-import com.mango.bc.homepage.bookdetail.bean.PlayPauseBean;
-import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
+import com.mango.bc.homepage.bookdetail.ExpertBookDetailServiceActivity;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
@@ -140,7 +135,7 @@ public class ExpertFragment extends Fragment implements BookExpertView {
 
         @Override
         public void onItemPlayClick(View view, int position) {
-            Intent intent = new Intent(getActivity(), ExpertBookDetailActivity.class);
+            Intent intent = new Intent(getActivity(), ExpertBookDetailServiceActivity.class);
             EventBus.getDefault().postSticky(bookPaidAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             startActivity(intent);
@@ -148,7 +143,7 @@ public class ExpertFragment extends Fragment implements BookExpertView {
 
         @Override
         public void onItemGetClick(View view, int position) {
-            Intent intent = new Intent(getActivity(), ExpertBookDetailActivity.class);
+            Intent intent = new Intent(getActivity(), ExpertBookDetailServiceActivity.class);
             EventBus.getDefault().postSticky(bookPaidAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             startActivity(intent);
@@ -184,7 +179,7 @@ public class ExpertFragment extends Fragment implements BookExpertView {
             if (tv_stage.getText().equals("播放")) {
                 Log.v("bbbbbbbb", "-----" + tv_stage.getText());
             } else {
-                Intent intent = new Intent(getActivity(), BuyBookActivity.class);
+                Intent intent = new Intent(getActivity(), BuyBookServiceActivity.class);
                 EventBus.getDefault().postSticky(bookPaidAdapter.getItem(position));
                 EventBus.getDefault().removeStickyEvent(MyBookBean.class);
                 startActivity(intent);
@@ -277,7 +272,7 @@ public class ExpertFragment extends Fragment implements BookExpertView {
 
     @OnClick(R.id.see_more)
     public void onViewClicked() {
-        Intent intent = new Intent(getContext(), ExpertBookActivity.class);
+        Intent intent = new Intent(getContext(), ExpertBookServiceActivity.class);
         startActivity(intent);
     }
 

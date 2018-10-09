@@ -20,7 +20,7 @@ import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.bookcase.net.presenter.MyBookPresenter;
 import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
 import com.mango.bc.bookcase.net.view.MyFreeBookView;
-import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
+import com.mango.bc.homepage.bookdetail.OtherBookDetailServiceActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.NetUtil;
@@ -98,7 +98,7 @@ public class MyFreeFragment extends Fragment implements MyFreeBookView{
         @Override
         public void onItemClick(View view, int position) {
             spUtils.put("isFree", true);
-            Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
+            Intent intent = new Intent(getActivity(), OtherBookDetailServiceActivity.class);
             EventBus.getDefault().removeStickyEvent(BookBean.class);
             EventBus.getDefault().postSticky(myBookGirdAdapter.getItem(position));
             startActivity(intent);

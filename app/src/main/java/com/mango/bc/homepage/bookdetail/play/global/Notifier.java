@@ -16,15 +16,11 @@ import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import com.mango.bc.R;
-import com.mango.bc.homepage.bookdetail.ExpertBookDetailActivity;
 import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
-import com.mango.bc.homepage.bookdetail.play.PlayActivity;
-import com.mango.bc.homepage.bookdetail.play.constants.Extras;
 import com.mango.bc.homepage.bookdetail.play.receiver.StatusBarReceiver;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.bookdetail.play.service.PlayService;
 import com.mango.bc.homepage.bookdetail.play.utils.CoverLoader;
-import com.mango.bc.homepage.net.bean.BookBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +72,7 @@ public class Notifier {
     }
 
     private Notification buildNotification(Context context, BookMusicDetailBean music, boolean isPlaying) {
- /*        Intent intent = new Intent(context, PlayActivity.class);
+ /*        Intent intent = new Intent(context, PlayServiceActivity.class);
         context.startActivity(intent);
         intent.putExtra(Extras.EXTRA_NOTIFICATION, true);
         intent.setAction(Intent.ACTION_VIEW);

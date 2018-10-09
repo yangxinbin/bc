@@ -19,7 +19,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mango.bc.base.BaseActivity;
+import com.mango.bc.base.BaseServiceActivity;
 
 
 public class BottomBar extends View {
@@ -296,7 +296,7 @@ public class BottomBar extends View {
         int frameLayoutId = containerId;
 
         if (fragment != null) {
-            FragmentTransaction transaction = ((BaseActivity) context).getSupportFragmentManager().beginTransaction();
+            FragmentTransaction transaction = ((BaseServiceActivity) context).getSupportFragmentManager().beginTransaction();
             if (fragment.isAdded()) {
                 if (currentFragment != null) {
                     transaction.hide(currentFragment).show(fragment);

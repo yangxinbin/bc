@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/common_gray"
     android:orientation="vertical"
-    tools:context="com.mango.bc.mine.activity.ApplyActivity">
+    tools:context="com.mango.bc.mine.activity.ApplyServiceActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -19,12 +19,9 @@ import com.mango.bc.bookcase.bean.RefreshBookCaseBean;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
 import com.mango.bc.bookcase.net.view.MyAllBookView;
-import com.mango.bc.homepage.activity.freebook.FreeBookActivity;
+import com.mango.bc.homepage.activity.freebook.FreeBookServiceActivity;
 import com.mango.bc.homepage.adapter.BookGirdFreeAdapter;
-import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
-import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
-import com.mango.bc.homepage.bookdetail.bean.PlayPauseBean;
-import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
+import com.mango.bc.homepage.bookdetail.OtherBookDetailServiceActivity;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
@@ -129,7 +126,7 @@ public class FreeFragment extends Fragment implements BookFreeView, MyAllBookVie
         @Override
         public void onItemPlayClick(View view, int position) {
             Log.v("wwwwwww", "======pi");
-            Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
+            Intent intent = new Intent(getActivity(), OtherBookDetailServiceActivity.class);
             EventBus.getDefault().postSticky(bookGirdFreeAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             startActivity(intent);
@@ -138,7 +135,7 @@ public class FreeFragment extends Fragment implements BookFreeView, MyAllBookVie
         @Override
         public void onItemGetClick(View view, int position) {
             Log.v("wwwwwww", "======gi");
-            Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
+            Intent intent = new Intent(getActivity(), OtherBookDetailServiceActivity.class);
             EventBus.getDefault().postSticky(bookGirdFreeAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             startActivity(intent);
@@ -370,7 +367,7 @@ public class FreeFragment extends Fragment implements BookFreeView, MyAllBookVie
 
     @OnClick(R.id.see_more)
     public void onViewClicked() {
-        Intent intent = new Intent(getContext(), FreeBookActivity.class);
+        Intent intent = new Intent(getContext(), FreeBookServiceActivity.class);
         startActivity(intent);
     }
 

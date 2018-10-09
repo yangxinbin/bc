@@ -217,7 +217,7 @@ public class MineFragment extends Fragment {
         //EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.center_vip, R.id.imageView_to_vip, R.id.l_collage, R.id.imageVie_pic, R.id.l_class, R.id.l_get, R.id.l_time, R.id.l_code,/* R.id.l_to_vip,*/ R.id.l_to_agent, /*R.id.l_to_talent,*/ R.id.l_faq, R.id.l_service, R.id.l_setting})
+    @OnClick({R.id.center_vip, R.id.imageView_to_vip, R.id.l_collage, R.id.imageVie_pic, R.id.l_class, R.id.l_get, R.id.l_time, R.id.l_code,/* R.id.l_to_vip,*/ R.id.l_to_agent, /*R.id.l_to_talent,*/ R.id.l_faq, R.id.l_service, R.id.l_setting,R.id.l_bc})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -242,6 +242,8 @@ public class MineFragment extends Fragment {
             case R.id.l_faq:
                 intent = new Intent(getActivity(), FaqActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.l_bc:
                 break;
             case R.id.l_service:
                 intent = new Intent(getActivity(), ServiceActivity.class);

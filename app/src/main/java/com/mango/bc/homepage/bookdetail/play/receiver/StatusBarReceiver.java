@@ -7,7 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.mango.bc.homepage.bookdetail.bean.PlayBarBean;
-import com.mango.bc.homepage.bookdetail.play.PlayServiceActivity;
+import com.mango.bc.homepage.bookdetail.play.PlayActivity;
 import com.mango.bc.homepage.bookdetail.play.global.Notifier;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.util.AppUtils;
@@ -52,7 +52,7 @@ public class StatusBarReceiver extends BroadcastReceiver {
             AppUtils.collapseStatusBar(context);
             //AudioPlayer.get().stopPlayer();
         } else if (TextUtils.equals(extra, EXTRA_DETAIL)) {
-            Intent intentDetail = new Intent(context, PlayServiceActivity.class);
+            Intent intentDetail = new Intent(context, PlayActivity.class);
             AppUtils.collapseStatusBar(context);
             intentDetail.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intentDetail.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);

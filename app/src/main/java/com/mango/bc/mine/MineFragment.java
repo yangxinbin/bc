@@ -14,12 +14,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mango.bc.R;
-import com.mango.bc.homepage.activity.CollageServiceActivity;
-import com.mango.bc.homepage.activity.OpenUpVipServiceActivity;
-import com.mango.bc.mine.activity.ApplyServiceActivity;
-import com.mango.bc.mine.activity.FaqServiceActivity;
-import com.mango.bc.mine.activity.ServiceServiceActivity;
-import com.mango.bc.mine.activity.VipCenterServiceActivity;
+import com.mango.bc.homepage.activity.CollageActivity;
+import com.mango.bc.homepage.activity.OpenUpVipActivity;
+import com.mango.bc.mine.activity.ApplyActivity;
+import com.mango.bc.mine.activity.FaqActivity;
+import com.mango.bc.mine.activity.ServiceActivity;
+import com.mango.bc.mine.activity.VipCenterActivity;
 import com.mango.bc.mine.bean.StatsBean;
 import com.mango.bc.mine.bean.UserBean;
 import com.mango.bc.mine.jsonutil.AuthJsonUtils;
@@ -237,33 +237,33 @@ public class MineFragment extends Fragment {
 /*            case R.id.l_to_vip:
                 break;*/
             case R.id.l_to_agent:
-                intent = new Intent(getActivity(), ApplyServiceActivity.class);
+                intent = new Intent(getActivity(), ApplyActivity.class);
                 startActivity(intent);
                 break;
 /*            case R.id.l_to_talent:
                 break;*/
             case R.id.l_faq:
-                intent = new Intent(getActivity(), FaqServiceActivity.class);
+                intent = new Intent(getActivity(), FaqActivity.class);
                 startActivity(intent);
                 break;
             case R.id.l_bc:
                 break;
             case R.id.l_service:
-                intent = new Intent(getActivity(), ServiceServiceActivity.class);
+                intent = new Intent(getActivity(), ServiceActivity.class);
                 startActivity(intent);
                 break;
             case R.id.l_setting:
                 break;
             case R.id.imageView_to_vip:
-                intent = new Intent(getActivity(), OpenUpVipServiceActivity.class);
+                intent = new Intent(getActivity(), OpenUpVipActivity.class);
                 startActivity(intent);
                 break;
             case R.id.center_vip:
-                intent = new Intent(getActivity(), VipCenterServiceActivity.class);
+                intent = new Intent(getActivity(), VipCenterActivity.class);
                 startActivity(intent);
                 break;
             case R.id.l_collage:
-                intent = new Intent(getContext(), CollageServiceActivity.class);
+                intent = new Intent(getContext(), CollageActivity.class);
                 startActivity(intent);
                 break;
         }

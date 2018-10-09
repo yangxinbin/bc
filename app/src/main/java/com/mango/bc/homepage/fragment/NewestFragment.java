@@ -19,10 +19,10 @@ import com.mango.bc.bookcase.bean.RefreshBookCaseBean;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
 import com.mango.bc.bookcase.net.view.MyAllBookView;
-import com.mango.bc.homepage.activity.BuyBookServiceActivity;
+import com.mango.bc.homepage.activity.BuyBookActivity;
 import com.mango.bc.homepage.adapter.BookNewestAdapter;
 import com.mango.bc.homepage.bean.BuySuccessBean;
-import com.mango.bc.homepage.bookdetail.OtherBookDetailServiceActivity;
+import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.bean.LoadStageBean;
@@ -122,7 +122,7 @@ public class NewestFragment extends Fragment implements BookNewestView, MyAllBoo
     private BookNewestAdapter.OnItemClickLitener mOnClickListenner = new BookNewestAdapter.OnItemClickLitener() {
         @Override
         public void onItemPlayClick(View view, int position) {
-            Intent intent = new Intent(getActivity(), OtherBookDetailServiceActivity.class);
+            Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookNewestAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             startActivity(intent);
@@ -131,7 +131,7 @@ public class NewestFragment extends Fragment implements BookNewestView, MyAllBoo
 
         @Override
         public void onItemGetClick(View view, int position) {
-            Intent intent = new Intent(getActivity(), OtherBookDetailServiceActivity.class);
+            Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookNewestAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
             startActivity(intent);
@@ -179,7 +179,7 @@ public class NewestFragment extends Fragment implements BookNewestView, MyAllBoo
                     loadBookDetail(true, bookNewestAdapter.getItem(position).getId());
                 }
             } else {
-                Intent intent = new Intent(getActivity(), BuyBookServiceActivity.class);
+                Intent intent = new Intent(getActivity(), BuyBookActivity.class);
                 EventBus.getDefault().postSticky(bookNewestAdapter.getItem(position));
                 EventBus.getDefault().removeStickyEvent(MyBookBean.class);
                 startActivity(intent);
@@ -189,7 +189,7 @@ public class NewestFragment extends Fragment implements BookNewestView, MyAllBoo
 
         @Override
         public void onItemVipGetClick(View view, int position) {
-            Intent intent = new Intent(getActivity(), OtherBookDetailServiceActivity.class);
+            Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
             intent.putExtra("vipFree", true);
             EventBus.getDefault().postSticky(bookNewestAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context="com.mango.bc.homepage.activity.CollageServiceActivity">
+    tools:context="com.mango.bc.homepage.activity.CollageActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:padding="@dimen/dp_5"

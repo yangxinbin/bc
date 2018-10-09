@@ -2,17 +2,17 @@ package com.mango.bc.login;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
 import com.mango.bc.R;
+import com.mango.bc.base.BaseActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class PasswordLoginActivity extends AppCompatActivity {
+public class PasswordLoginActivity extends BaseActivity {
 
     @Bind(R.id.editText_phone)
     EditText editTextPhone;
@@ -31,7 +31,7 @@ public class PasswordLoginActivity extends AppCompatActivity {
         Intent intent;
         switch (view.getId()) {
             case R.id.imageView_back:
-                intent = new Intent(this, LoginServiceActivity.class);
+                intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 finish();
                 break;

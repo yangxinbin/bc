@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context="com.mango.bc.homepage.activity.OpenUpVipServiceActivity">
+    tools:context="com.mango.bc.homepage.activity.OpenUpVipActivity">
 
     <ScrollView
         android:layout_weight="1"
@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:background="@color/white"
             android:orientation="vertical"
-            tools:context="com.mango.bc.homepage.activity.OpenUpVipServiceActivity">
+            tools:context="com.mango.bc.homepage.activity.OpenUpVipActivity">
 
             <RelativeLayout
                 android:layout_width="match_parent"

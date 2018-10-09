@@ -20,7 +20,7 @@ import com.mango.bc.homepage.adapter.HomePageAdapter;
 import com.mango.bc.homepage.bean.JumpToPlayDetailBean;
 import com.mango.bc.homepage.bookdetail.bean.PlayBarBean;
 import com.mango.bc.homepage.bookdetail.play.BaseServiceFragment;
-import com.mango.bc.homepage.bookdetail.play.PlayServiceActivity;
+import com.mango.bc.homepage.bookdetail.play.PlayActivity;
 import com.mango.bc.homepage.bookdetail.play.executor.ControlPanel;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.LoadStageBean;
@@ -72,7 +72,7 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
     private MyBookPresenter myBookPresenter;
     private ControlPanel controlPanel;
     private boolean isPlayFragmentShow;
-    private PlayServiceActivity mPlayFragment;
+    private PlayActivity mPlayFragment;
     private SPUtils spUtils;
 
     @Nullable
@@ -115,7 +115,7 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
         }
         Log.v("jjjjjjjjjjjjj", "---jjjjjjjjjjj---");
         if (jumpToPlayDetailBean.isIdJump()) {
-            Intent intentDetail = new Intent(getActivity(), PlayServiceActivity.class);
+            Intent intentDetail = new Intent(getActivity(), PlayActivity.class);
             intentDetail.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intentDetail.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             intentDetail.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -141,7 +141,7 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.setCustomAnimations(R.anim.fragment_slide_up, 0);
         if (mPlayFragment == null) {
-            mPlayFragment = new PlayServiceActivity();
+            mPlayFragment = new PlayActivity();
             ft.replace(android.R.id.content, mPlayFragment);
         } else {
             ft.show(mPlayFragment);

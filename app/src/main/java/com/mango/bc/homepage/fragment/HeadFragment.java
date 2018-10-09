@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.mango.bc.R;
-import com.mango.bc.homepage.activity.CollageServiceActivity;
-import com.mango.bc.homepage.activity.SearchServiceActivity;
-import com.mango.bc.homepage.activity.VipDetailServiceActivity;
+import com.mango.bc.homepage.activity.CollageActivity;
+import com.mango.bc.homepage.activity.SearchActivity;
+import com.mango.bc.homepage.activity.VipDetailActivity;
 import com.mango.bc.util.GlideImageLoader;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -72,7 +72,7 @@ public class HeadFragment extends Fragment {
         etSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), SearchServiceActivity.class);
+                Intent intent = new Intent(getContext(), SearchActivity.class);
                 startActivity(intent);
             }
         });
@@ -125,7 +125,7 @@ public class HeadFragment extends Fragment {
         imageView.setOnBannerClickListener(new OnBannerClickListener() {
             @Override
             public void OnBannerClick(int position) {
-                Intent intent = new Intent(getContext(), VipDetailServiceActivity.class);
+                Intent intent = new Intent(getContext(), VipDetailActivity.class);
                 startActivity(intent);
             }
         });
@@ -151,18 +151,18 @@ public class HeadFragment extends Fragment {
         Intent intent;
         switch (view.getId()) {
 /*            case R.id.imageView_novip:
-                intent = new Intent(getContext(), VipDetailServiceActivity.class);
+                intent = new Intent(getContext(), VipDetailActivity.class);
                 startActivity(intent);
                 break;
             case R.id.buy_vip:
                 break;
             case R.id.l_vip:
-                //intent = new Intent(getContext(), VipAutoServiceActivity.class);//管理自动续费
-                intent = new Intent(getContext(), VipDetailServiceActivity.class);//暂时
+                //intent = new Intent(getContext(), VipAutoActivity.class);//管理自动续费
+                intent = new Intent(getContext(), VipDetailActivity.class);//暂时
                 startActivity(intent);
                 break;*/
             case R.id.imageView_collage:
-                intent = new Intent(getContext(), CollageServiceActivity.class);
+                intent = new Intent(getContext(), CollageActivity.class);
                 startActivity(intent);
                 break;
         }

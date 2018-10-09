@@ -72,7 +72,7 @@ public class Notifier {
     }
 
     private Notification buildNotification(Context context, BookMusicDetailBean music, boolean isPlaying) {
- /*        Intent intent = new Intent(context, PlayServiceActivity.class);
+ /*        Intent intent = new Intent(context, PlayActivity.class);
         context.startActivity(intent);
         intent.putExtra(Extras.EXTRA_NOTIFICATION, true);
         intent.setAction(Intent.ACTION_VIEW);

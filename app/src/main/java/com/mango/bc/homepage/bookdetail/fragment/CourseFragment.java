@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.mango.bc.R;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
-import com.mango.bc.homepage.bookdetail.TxtServiceActivity;
+import com.mango.bc.homepage.bookdetail.TxtActivity;
 import com.mango.bc.homepage.bookdetail.adapter.BookCourseAdapter;
 import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
 import com.mango.bc.homepage.bookdetail.play.BaseServiceFragment;
@@ -124,7 +124,7 @@ public class CourseFragment extends BaseServiceFragment implements OnPlayerEvent
         @Override
         public void onTxtClick(View view, int position) {
             //AppUtils.showToast(getContext(), "阅读");
-            intent = new Intent(getActivity(), TxtServiceActivity.class);
+            intent = new Intent(getActivity(), TxtActivity.class);
             intent.putExtra("position", position);
             startActivity(intent);
         }

@@ -29,10 +29,10 @@ import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.JsonUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
-import com.mango.bc.wallet.activity.CurrencyServiceActivity;
-import com.mango.bc.wallet.activity.RechargeServiceActivity;
-import com.mango.bc.wallet.activity.TransactionServiceActivity;
-import com.mango.bc.wallet.activity.TransferServiceActivity;
+import com.mango.bc.wallet.activity.CurrencyActivity;
+import com.mango.bc.wallet.activity.RechargeActivity;
+import com.mango.bc.wallet.activity.TransactionActivity;
+import com.mango.bc.wallet.activity.TransferActivity;
 import com.mango.bc.wallet.bean.CheckBean;
 import com.mango.bc.wallet.bean.CheckInBean;
 import com.mango.bc.wallet.bean.RefreshTaskBean;
@@ -265,7 +265,7 @@ public class WalletFragment extends Fragment {
         Intent intent;
         switch (view.getId()) {
             case R.id.tv_transaction_record:
-                intent = new Intent(getActivity(), TransactionServiceActivity.class);
+                intent = new Intent(getActivity(), TransactionActivity.class);
                 startActivity(intent);
                 break;
             case R.id.tv_copy:
@@ -281,15 +281,15 @@ public class WalletFragment extends Fragment {
                 AppUtils.showToast(getActivity(), "复制成功");
                 break;
             case R.id.l_recharge:
-                intent = new Intent(getActivity(), RechargeServiceActivity.class);
+                intent = new Intent(getActivity(), RechargeActivity.class);
                 startActivity(intent);
                 break;
             case R.id.l_transfer:
-                intent = new Intent(getActivity(), TransferServiceActivity.class);
+                intent = new Intent(getActivity(), TransferActivity.class);
                 startActivity(intent);
                 break;
             case R.id.l_currency:
-                intent = new Intent(getActivity(), CurrencyServiceActivity.class);
+                intent = new Intent(getActivity(), CurrencyActivity.class);
                 startActivity(intent);
                 break;
             case R.id.tv_sign:

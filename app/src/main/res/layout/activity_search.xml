@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.mango.bc.homepage.activity.SearchServiceActivity">
+    tools:context="com.mango.bc.homepage.activity.SearchActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

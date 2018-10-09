@@ -66,6 +66,7 @@ public class MyExpertFragment extends Fragment implements MyExpertBookView {
         spUtils = SPUtils.getInstance("bc", getActivity());
         myBookPresenter = new MyBookPresenterImpl(this);
         ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
         initView();
         if (NetUtil.isNetConnect(getActivity())) {
             myBookPresenter.visitBooks(getActivity(), TYPE, page, false);

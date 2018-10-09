@@ -42,26 +42,32 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
         this.bookCompetitiveFieldView = u;
         this.bookModel = new BookModelImpl();
     }
+
     public BookPresenterImpl(BookCompetitiveView u) {
         this.bookCompetitiveView = u;
         this.bookModel = new BookModelImpl();
     }
+
     public BookPresenterImpl(BookExpertView u) {
         this.bookExpertView = u;
         this.bookModel = new BookModelImpl();
     }
+
     public BookPresenterImpl(BookFreeView u) {
         this.bookFreeView = u;
         this.bookModel = new BookModelImpl();
     }
+
     public BookPresenterImpl(BookNewestView u) {
         this.bookNewestView = u;
         this.bookModel = new BookModelImpl();
     }
+
     public BookPresenterImpl(BookSearchView u) {
         this.bookSearchView = u;
         this.bookModel = new BookModelImpl();
     }
+
     @Override
     public void visitBooks(Context context, int type, String keyWordString, int page, Boolean ifCache) {
         sharedPreferences = context.getSharedPreferences("BC", MODE_PRIVATE);
@@ -82,6 +88,10 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
             url = getUrl(type, context) + "?page=" + page;
         } else if (type == 5) {
             url = getUrl(type, context) + "?keyword=" + keyWordString + "&page=" + page;
+        } else if (type == 6) {
+            url = getUrl(type, context) + "?type=paid" + "&page=" + page;
+        } else if (type == 7) {
+            url = getUrl(type, context) + "?type=free" + "&page=" + page;
         }
         Log.v("ppppppppppppp", "" + url);
         bookModel.visitBooks(context, type, url, keyWordString, page, ifCache, this);
@@ -107,6 +117,12 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
                 break;
             case 5:
                 sburl.append(Urls.HOST_SEARCH);//search
+                break;
+            case 6:
+                sburl.append(Urls.HOST_BOOKTYPE);//大咖
+                break;
+            case 7:
+                sburl.append(Urls.HOST_BOOKTYPE);//免费
                 break;
         }
         return sburl.toString();

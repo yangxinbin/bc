@@ -65,6 +65,7 @@ public class MyFreeFragment extends Fragment implements MyFreeBookView{
         spUtils = SPUtils.getInstance("bc", getActivity());
         myBookPresenter = new MyBookPresenterImpl(this);
         ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
         initView();
         if (NetUtil.isNetConnect(getActivity())){
             myBookPresenter.visitBooks(getActivity(), TYPE, page, false);
@@ -81,6 +82,7 @@ public class MyFreeFragment extends Fragment implements MyFreeBookView{
         }
         if (refreshBookCaseBean.isRefreshFree()) {
             refresh.autoRefresh();
+            Log.v("111111111111","111111111111");
             refreshBookCaseBean.setRefreshFree(false);
             //EventBus.getDefault().removeStickyEvent(RefreshBookCaseBean.class);
         }

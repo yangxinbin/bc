@@ -74,7 +74,7 @@ public class ExpertBookActivity extends BaseActivity implements BookExpertView {
     private BookExpertAdapter bookExpertAdapter;
     private boolean isFirstEnter;
     private BookPresenter bookPresenter;
-    private final int TYPE = 2;//大咖课
+    private final int TYPE = 6;//大咖课
     private int page = 0;
     public TextView tv_stage;
     private ACache mCache;

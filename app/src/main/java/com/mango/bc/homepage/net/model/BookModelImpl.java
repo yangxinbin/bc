@@ -148,7 +148,7 @@ public class BookModelImpl implements BookModel {
                                 listener.onSuccessExpertBook(beanList);
                                 listener.onSuccessMesExpertBook("请求成功");
                             } catch (Exception e) {
-                                listener.onFailMesExpertBook("请求失败",e);//java.lang.IllegalStateException: Not a JSON Object: null
+                                listener.onFailMesExpertBook("请求失败", e);//java.lang.IllegalStateException: Not a JSON Object: null
                             }
                         }
                     });
@@ -186,7 +186,7 @@ public class BookModelImpl implements BookModel {
                                 listener.onSuccessFreeBook(beanList);
                                 listener.onSuccessMesFreeBook("请求成功");
                             } catch (Exception e) {
-                                listener.onFailMesFreeBook("请求失败",e);//java.lang.IllegalStateException: Not a JSON Object: null
+                                listener.onFailMesFreeBook("请求失败", e);//java.lang.IllegalStateException: Not a JSON Object: null
                             }
                         }
                     });
@@ -225,7 +225,7 @@ public class BookModelImpl implements BookModel {
                                 listener.onSuccessNewestBook(beanList);
                                 listener.onSuccessMesNewestBook("请求成功");
                             } catch (Exception e) {
-                                listener.onFailMesNewestBook("请求失败",e);//java.lang.IllegalStateException: Not a JSON Object: null
+                                listener.onFailMesNewestBook("请求失败", e);//java.lang.IllegalStateException: Not a JSON Object: null
                             }
                         }
                     });
@@ -263,12 +263,89 @@ public class BookModelImpl implements BookModel {
                                 listener.onSuccessSearchBook(beanList);
                                 listener.onSuccessMesSearchBook("请求成功");
                             } catch (Exception e) {
-                                listener.onFailMesSearchBook("请求失败",e);//java.lang.IllegalStateException: Not a JSON Object: null
+                                listener.onFailMesSearchBook("请求失败", e);//java.lang.IllegalStateException: Not a JSON Object: null
                             }
                         }
                     });
                 }
             }).start();
+        } else if (type == 6) {//大咖课
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    if (ifCache) {//读取缓存数据
+                        String newString = mCache.getAsString("cache" + type + page);
+                        Log.v("yyyyyy", "---cache6---" + newString);
+                        if (newString != null) {
+                            List<BookBean> beanList = JsonUtils.readBookBean(newString);//data是json字段获得data的值即对象数组
+                            listener.onSuccessExpertBook(beanList);
+                            listener.onSuccessMesExpertBook("SUCCESS");
+                            return;
+                        }
+                    } else {
+                        mCache.remove("cache" + type + page);//刷新之后缓存也更新过来
+                    }
+                    HttpUtils.doGet(url, new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            listener.onFailMesExpertBook("FAILURE", e);
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            try {
+                                String string = response.body().string();
+                                Log.v("yyyyyyyyy", "*****string6*****" + string);
+                                mCache.put("cache" + type + page, string);
+                                List<BookBean> beanList = JsonUtils.readBookBean(string);
+                                listener.onSuccessExpertBook(beanList);
+                                listener.onSuccessMesExpertBook("请求成功");
+                            } catch (Exception e) {
+                                listener.onFailMesExpertBook("请求失败", e);//java.lang.IllegalStateException: Not a JSON Object: null
+                            }
+                        }
+                    });
+                }
+            }).start();
+        } else if (type == 7) {//免费课
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    if (ifCache) {//读取缓存数据
+                        String newString = mCache.getAsString("cache" + type + page);
+                        Log.v("yyyyyy", "---cache7---" + newString);
+                        if (newString != null) {
+                            List<BookBean> beanList = JsonUtils.readBookBean(newString);//data是json字段获得data的值即对象数组
+                            listener.onSuccessFreeBook(beanList);
+                            listener.onSuccessMesFreeBook("SUCCESS");
+                            return;
+                        }
+                    } else {
+                        mCache.remove("cache" + type + page);//刷新之后缓存也更新过来
+                    }
+                    HttpUtils.doGet(url, new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            listener.onFailMesFreeBook("FAILURE", e);
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            try {
+                                String string = response.body().string();
+                                Log.v("yyyyyyyyy", "*****string7*****" + string);
+                                mCache.put("cache" + type + page, string);
+                                List<BookBean> beanList = JsonUtils.readBookBean(string);
+                                listener.onSuccessFreeBook(beanList);
+                                listener.onSuccessMesFreeBook("请求成功");
+                            } catch (Exception e) {
+                                listener.onFailMesFreeBook("请求失败", e);//java.lang.IllegalStateException: Not a JSON Object: null
+                            }
+                        }
+                    });
+                }
+            }).start();
+
         }
     }
 

@@ -76,7 +76,7 @@ public class FreeBookActivity extends BaseActivity implements BookFreeView, MyAl
     private BookGirdFreeAdapter bookGirdFreeAdapter;
     private boolean isFirstEnter = true;
     private BookPresenter bookPresenter;
-    private final int TYPE = 3;//免费
+    private final int TYPE = 7;//免费
     private int page = 0;
     private MyBookPresenterImpl myBookPresenter;
     private SPUtils spUtils;

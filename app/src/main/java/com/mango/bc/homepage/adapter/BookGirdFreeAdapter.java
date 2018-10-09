@@ -105,7 +105,7 @@ public class BookGirdFreeAdapter extends RecyclerView.Adapter {
 /*                if (AudioPlayer.get().isPlaying() && datas.get(position).getId().equals(spUtils.getString("isSameBook", ""))) {
                     viewHolder.tv_free_stage.setText("播放中");
                 }else {*/
-                    viewHolder.tv_free_stage.setText("播放");//是领取
+                viewHolder.tv_free_stage.setText("播放");//是领取
                 //}
                 viewHolder.tv_free_stage.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -153,7 +153,7 @@ public class BookGirdFreeAdapter extends RecyclerView.Adapter {
             } else {
                 return false;
             }
-        }else {
+        } else {
             return false;
         }
     }

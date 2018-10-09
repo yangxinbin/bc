@@ -194,8 +194,11 @@ public class MineFragment extends Fragment {
             imageViewToVip.setVisibility(View.VISIBLE);
         }
         tvAuthNName.setText(userBean.getAlias());
-        if (userBean.getAvator() != null)
+        if (userBean.getAvator() != null){
             Glide.with(getActivity()).load(Urls.HOST_GETFILE + "?name=" + userBean.getAvator().getFileName()).into(imageViePic);
+        }else {
+            imageViePic.setImageDrawable(getResources().getDrawable(R.drawable.head_pic2));
+        }
         tvClass.setText(userBean.getStats().getPaidBooks() + "本");
         tvGet.setText(userBean.getStats().getVipGetBooks() + "本");
         tvTime.setText(userBean.getStats().getTotalDuration() + "小时");

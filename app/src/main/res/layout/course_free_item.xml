@@ -12,6 +12,7 @@
         android:id="@+id/img_free_book"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_150"
+        android:scaleType="centerCrop"
         android:src="@drawable/book_pic1" />
 
     <TextView

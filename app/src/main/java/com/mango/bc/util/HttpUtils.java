@@ -307,14 +307,14 @@ public class HttpUtils {
                 formatUrl.append("?" + key + "=").append(mapParams.get(key));//id 必须为第一位//
                 break;
             }*/
-            if (key.equals("token")) {//保证第一个
+            if (key.equals("authToken")) {//保证第一个
                 formatUrl.append("?" + key + "=").append(mapParams.get(key));//id 必须为第一位
                 break;
             }
         }
         for (String key : mapParams.keySet()) {
             builder.add(key, mapParams.get(key));
-            if (/*!key.equals("projectId") && */!key.equals("token")/* && !key.equals("username")*/) {
+            if (/*!key.equals("projectId") && */!key.equals("authToken")/* && !key.equals("username")*/) {
                 try {
                     formatUrl.append("&" + key + "=").append(URLEncoderURI.encode(mapParams.get(key), "UTF-8"));
                 } catch (UnsupportedEncodingException e) {
@@ -366,7 +366,7 @@ public class HttpUtils {
         Request request = new Request.Builder()
                 .url(formatUrl.toString())
                 .put(builder.build())
-                .addHeader("Content-Type", "application/json; charset=utf-8")
+                //.addHeader("Content-Type", "application/json; charset=utf-8")
                 .build();
         Log.v("doPutWithJson", "******request*****" + formatUrl);
         Call call = getInstance().newCall(request);

@@ -34,6 +34,7 @@ public class Urls {
     public static final String VIPPACKAGE = "/book/vip/packages";
     public static final String BUYVIP = "/wallet/buy/membership";
     public static final String RECOMMENDED = "/book/list/recommended";
+    public static final String AUTOBILL = "/wallet/stop/autoBilling";
 
 
 
@@ -62,5 +63,6 @@ public class Urls {
     public static final String HOST_VIPPACKAGE = HOST+VIPPACKAGE;
     public static final String HOST_BUYVIP = HOST+BUYVIP;
     public static final String HOST_RECOMMENDED = HOST+RECOMMENDED; //首页
+    public static final String HOST_AUTOBILL = HOST+AUTOBILL; //首页
 
 }

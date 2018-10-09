@@ -86,6 +86,7 @@ public class VipCenterActivity extends BaseActivity {
             case R.id.buy_vip:
                 Intent intent = new Intent(this,VipAutoActivity.class);
                 startActivity(intent);
+                finish();
                 break;
         }
     }

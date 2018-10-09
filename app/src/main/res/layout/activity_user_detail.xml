@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.mango.bc.login.LoginActivity">
+
+    <ImageView
+        android:id="@+id/imageView_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_5"
+        app:srcCompat="@drawable/back" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp_15"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:text="信息完善后立享7天免费VIP"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textSize" />
+
+                <TextView
+                    android:id="@+id/tv_jump"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:layout_marginRight="@dimen/dp_15"
+                    android:gravity="right"
+                    android:text="跳过"
+                    android:textColor="@color/gray_6"
+                    android:textSize="@dimen/dp_14" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/l_et_all"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_30"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:text="@string/apply_name"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textSize" />
+
+                    <EditText
+                        android:id="@+id/et_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:background="@null"
+                        android:ems="10"
+                        android:hint="@string/write_applay_name"
+                        android:inputType="textPersonName"
+                        android:textColorHint="@color/gray"
+                        android:textSize="@dimen/sencond_textSize" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="@dimen/dp_15"
+                    android:background="@color/gray"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:text="@string/old"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textSize" />
+
+                    <EditText
+                        android:id="@+id/et_old"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:background="@null"
+                        android:ems="10"
+                        android:hint="@string/write_apply_old"
+                        android:inputType="textPersonName"
+                        android:textColorHint="@color/gray"
+                        android:textSize="@dimen/sencond_textSize" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_marginRight="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:background="@color/gray"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp_15"
+                        android:text="@string/sex"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textSize" />
+
+                    <com.mango.bc.login.adapter.NoScrollGridView
+                        android:id="@+id/gv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/dp_5"
+                        android:horizontalSpacing="@dimen/dp_15"
+                        android:numColumns="3" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="@dimen/dp_15"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_marginRight="@dimen/dp_15"
+                    android:background="@color/gray"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:text="@string/zoom"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textSize" />
+
+                    <EditText
+                        android:id="@+id/et_zoom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:background="@null"
+                        android:ems="10"
+                        android:hint="@string/write_apply_zoom"
+                        android:inputType="textPersonName"
+                        android:textColorHint="@color/gray"
+                        android:textSize="@dimen/sencond_textSize" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="@dimen/dp_15"
+                    android:background="@color/gray"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:text="@string/apply_position"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textSize" />
+
+                    <EditText
+                        android:id="@+id/et_position"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:background="@null"
+                        android:ems="10"
+                        android:hint="@string/write_apply_position"
+                        android:inputType="textPersonName"
+                        android:textColorHint="@color/gray"
+                        android:textSize="@dimen/sencond_textSize" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="@dimen/dp_15"
+                    android:background="@color/gray"></View>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button_next"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_25"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginRight="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_25"
+                android:background="@drawable/yellow_full_circle"
+                android:text="确定"
+                android:textColor="@color/gray_3"
+                android:textSize="@dimen/dp_15" />
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

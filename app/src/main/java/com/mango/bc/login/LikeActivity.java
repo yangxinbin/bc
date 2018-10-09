@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.mango.bc.R;
+import com.mango.bc.base.BaseActivity;
 import com.mango.bc.login.adapter.DuoXuanAdapter;
 import com.mango.bc.login.adapter.DuoXuanLikeAdapter;
 import com.mango.bc.login.adapter.NoScrollGridView;
@@ -18,7 +19,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LikeActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class LikeActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
     @Bind(R.id.gv)
     NoScrollGridView gv;
@@ -48,6 +49,9 @@ public class LikeActivity extends AppCompatActivity implements AdapterView.OnIte
                 finish();
                 break;
             case R.id.button_next:
+                intent = new Intent(this, UserDetailActivity.class);
+                startActivity(intent);
+                finish();
                 break;
         }
     }

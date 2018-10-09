@@ -25,7 +25,7 @@ import com.mango.bc.mine.jsonutil.AuthJsonUtils;
 import com.mango.bc.util.DateUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
-import com.mango.bc.wallet.activity.ExpertApplyActivity;
+import com.mango.bc.mine.activity.ExpertApplyActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

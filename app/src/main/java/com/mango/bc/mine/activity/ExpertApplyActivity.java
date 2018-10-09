@@ -1,4 +1,4 @@
-package com.mango.bc.wallet.activity;
+package com.mango.bc.mine.activity;
 
 import android.os.Bundle;
 import android.widget.Button;

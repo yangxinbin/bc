@@ -57,8 +57,8 @@
         <activity android:name=".homepage.activity.CollageActivity" />
         <activity android:name=".homepage.activity.OpenUpVipActivity" />
         <activity android:name=".wallet.activity.ProblemActivity" />
-        <activity android:name=".wallet.activity.ExpertActivity" />
-        <activity android:name=".wallet.activity.ExpertApplyActivity" />
+        <activity android:name=".mine.activity.ExpertActivity" />
+        <activity android:name=".mine.activity.ExpertApplyActivity" />
         <activity android:name=".wallet.activity.TransactionActivity" />
         <activity android:name=".wallet.activity.RechargeActivity" />
         <activity android:name=".wallet.activity.TransferActivity" />
@@ -123,7 +123,10 @@
         <activity android:name=".login.PasswordActivity" />
         <activity android:name=".login.PositionActivity" />
         <activity android:name=".login.PasswordLoginActivity" />
-        <activity android:name=".login.LikeActivity"></activity>
+        <activity android:name=".login.LikeActivity" />
+        <activity
+            android:name=".login.UserDetailActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
     </application>
 
 </manifest>

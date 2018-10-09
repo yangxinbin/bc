@@ -128,5 +128,10 @@
     <string name="commit">提交</string>
     <string name="comment_hint">欢迎参与交流，大家把真知灼见留下来吧！</string>
     <string name="center_vip">VIP会员中心</string>
+    <string name="old">年龄</string>
+    <string name="zoom">企业</string>
+    <string name="write_apply_old">请输入您的年龄</string>
+    <string name="write_apply_zoom">请输入您的企业</string>
+    <string name="sex">性别</string>
 
 </resources>

@@ -11,30 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.mango.bc.R;
 import com.mango.bc.homepage.activity.CollageActivity;
 import com.mango.bc.homepage.activity.SearchActivity;
-import com.mango.bc.homepage.activity.VipAutoActivity;
 import com.mango.bc.homepage.activity.VipDetailActivity;
-import com.mango.bc.mine.bean.UserBean;
-import com.mango.bc.mine.jsonutil.AuthJsonUtils;
-import com.mango.bc.util.AppUtils;
-import com.mango.bc.util.DateUtil;
 import com.mango.bc.util.GlideImageLoader;
-import com.mango.bc.util.SPUtils;
-import com.mango.bc.util.Urls;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerClickListener;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +27,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HeadFragment extends Fragment {
     @Bind(R.id.et_search)

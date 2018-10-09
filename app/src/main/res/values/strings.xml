@@ -133,5 +133,7 @@
     <string name="write_apply_old">请输入您的年龄</string>
     <string name="write_apply_zoom">请输入您的企业</string>
     <string name="sex">性别</string>
-
-</resources>
+    <string name="haved_auto_vip">已开通自动续费功能</string>
+    <string name="no_haved_auto_vip">未开通自动续费功能</string>
+    <string name="auto_bt_vip">开通续费</string>
+    <string name="no_auto_bt_vip">取消续费</string></resources>

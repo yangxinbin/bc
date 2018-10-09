@@ -109,7 +109,7 @@
         <activity
             android:name=".homepage.bookdetail.CommentActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".homepage.activity.VipAutoActivity" />
+        <activity android:name=".mine.activity.VipAutoActivity" />
         <activity android:name=".mine.activity.VipCenterActivity" />
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".login.FirstActivity">

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mango.bc.R;
+import com.mango.bc.homepage.activity.CollageActivity;
 import com.mango.bc.homepage.activity.OpenUpVipActivity;
 import com.mango.bc.homepage.activity.VipDetailActivity;
 import com.mango.bc.mine.activity.FaqActivity;
@@ -260,7 +261,7 @@ public class MineFragment extends Fragment {
                 startActivity(intent);
                 break;
             case R.id.l_collage:
-                intent = new Intent(getContext(), VipDetailActivity.class);
+                intent = new Intent(getContext(), CollageActivity.class);
                 startActivity(intent);
                 break;
         }

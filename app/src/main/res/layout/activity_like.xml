@@ -45,15 +45,14 @@
                 android:textColor="@color/gray_6"
                 android:textSize="@dimen/dp_14" />
         </LinearLayout>
-        <GridView
+        <com.mango.bc.login.adapter.NoScrollGridView
             android:id="@+id/gv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_15"
-            android:horizontalSpacing="@dimen/dp_5"
             android:layout_margin="@dimen/dp_15"
+            android:horizontalSpacing="@dimen/dp_10"
             android:numColumns="3"
-            android:verticalSpacing="8dp" />
+            android:verticalSpacing="@dimen/dp_8" />
 
         <Button
             android:id="@+id/button_next"

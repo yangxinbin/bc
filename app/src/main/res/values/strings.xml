@@ -53,7 +53,7 @@
     <string name="fail_comment">获取评论失败</string>
     <string name="play">播放 ▶</string>
     <string name="txt">文稿</string>
-    <string name="transaction">没有更多交易记录</string>
+    <string name="transaction">暂无交易记录</string>
     <string name="cancel">取消</string>
 
     <string name="setting_key_mobile_network_play">mobile_network_play</string>

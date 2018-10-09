@@ -500,6 +500,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_5"
                 android:text="@string/sign_7day"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/textSize" />

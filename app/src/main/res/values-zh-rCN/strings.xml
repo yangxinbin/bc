@@ -76,7 +76,7 @@
     <string name="fail_comment">获取评论失败</string>
     <string name="play">播放 ▶</string>
     <string name="txt">文稿</string>
-    <string name="transaction">没有更多交易记录</string>
+    <string name="transaction">暂无交易记录</string>
     <string name="comment">评论</string>
     <string name="commit">提交</string>
     <string name="comment_hint">欢迎参与交流，大家把真知灼见留下来吧！</string>

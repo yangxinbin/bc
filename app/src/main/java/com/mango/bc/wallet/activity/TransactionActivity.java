@@ -6,6 +6,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.mango.bc.R;
@@ -16,7 +17,6 @@ import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
-import com.mango.bc.wallet.bean.TaskAndRewardBean;
 import com.mango.bc.wallet.adapter.TransactionAdapter;
 import com.mango.bc.wallet.bean.TransactionBean;
 import com.mango.bc.wallet.walletjsonutil.WalletJsonUtils;
@@ -45,6 +45,8 @@ public class TransactionActivity extends BaseActivity {
     RecyclerView recycle;
     @Bind(R.id.refresh)
     SmartRefreshLayout refresh;
+    @Bind(R.id.if_has)
+    ImageView ifHas;
     private int page = 0;
     private boolean isFirstEnter = true;
     private SPUtils spUtils;
@@ -118,7 +120,7 @@ public class TransactionActivity extends BaseActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Log.v("ppppppppp",page+"=="+string);
+                                    Log.v("ppppppppp", page + "==" + string);
                                     initTransactionView(transactionBeans);
                                 }
                             });
@@ -133,7 +135,14 @@ public class TransactionActivity extends BaseActivity {
     private void initTransactionView(List<TransactionBean> transactionBeans) {
         if (transactionBeans == null || transactionBeans.size() == 0) {
             AppUtils.showToast(this, getString(R.string.transaction));
+            if (page == 0) {
+                refresh.setVisibility(View.GONE);
+                ifHas.setVisibility(View.VISIBLE);
+            }
             return;
+        } else {
+            refresh.setVisibility(View.VISIBLE);
+            ifHas.setVisibility(View.GONE);
         }
         if (page == 0) {
             adapter.reMove();

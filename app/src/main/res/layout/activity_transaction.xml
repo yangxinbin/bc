@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
-    android:background="@color/common_gray"
     tools:context="com.mango.bc.wallet.activity.TransactionActivity">
+
     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dp_1"
         android:background="@color/white"
-        android:layout_width="match_parent"
-        android:gravity="center_vertical"
-        android:layout_height="wrap_content">
+        android:gravity="center_vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,5 +36,12 @@
             app:srcCompat="@drawable/back" />
     </RelativeLayout>
     <include layout="@layout/refresh_recycler"/>
+    <ImageView
+        android:id="@+id/if_has"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:src="@drawable/no_deal_record"
+        android:visibility="gone" />
 
 </LinearLayout>

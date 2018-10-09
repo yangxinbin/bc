@@ -182,7 +182,7 @@ public class BcActivity extends BaseActivity implements MyAllBookView {
                                 public void run() {
                                     spUtils.put("auth", string);
                                     UserBean userBean = AuthJsonUtils.readUserBean(string);
-                                    spUtils.put("authToken",userBean.getAuthToken());
+                                    spUtils.put("authToken", userBean.getAuthToken());
                                     ifCheckIn();
                                     Log.v("lllllllll", "=aaaa==" + userBean.isVip());
                                     EventBus.getDefault().postSticky(userBean);//刷新

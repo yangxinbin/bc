@@ -17,6 +17,7 @@ import com.mango.bc.R;
 import com.mango.bc.homepage.activity.CollageActivity;
 import com.mango.bc.homepage.activity.OpenUpVipActivity;
 import com.mango.bc.homepage.activity.VipDetailActivity;
+import com.mango.bc.mine.activity.ApplyActivity;
 import com.mango.bc.mine.activity.FaqActivity;
 import com.mango.bc.mine.activity.ServiceActivity;
 import com.mango.bc.mine.activity.VipCenterActivity;
@@ -238,7 +239,7 @@ public class MineFragment extends Fragment {
 /*            case R.id.l_to_vip:
                 break;*/
             case R.id.l_to_agent:
-                intent = new Intent(getActivity(), ExpertApplyActivity.class);
+                intent = new Intent(getActivity(), ApplyActivity.class);
                 startActivity(intent);
                 break;
 /*            case R.id.l_to_talent:

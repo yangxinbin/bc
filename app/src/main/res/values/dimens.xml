@@ -24,6 +24,7 @@
     <dimen name="dp_160">160dp</dimen>
     <dimen name="dp_180">180dp</dimen>
     <dimen name="dp_810">810dp</dimen>
+    <dimen name="dp_400">400dp</dimen>
     <dimen name="dp_80">80dp</dimen>
     <dimen name="dp_60">60dp</dimen>
     <dimen name="dp_130">130dp</dimen>

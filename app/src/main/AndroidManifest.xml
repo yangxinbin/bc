@@ -126,7 +126,8 @@
         <activity android:name=".login.LikeActivity" />
         <activity
             android:name=".login.UserDetailActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".mine.activity.ApplyActivity"></activity>
     </application>
 
 </manifest>

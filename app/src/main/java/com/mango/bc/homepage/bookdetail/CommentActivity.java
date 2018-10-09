@@ -21,6 +21,7 @@ import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
+import com.mango.bc.wallet.bean.RefreshTaskBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -116,6 +117,7 @@ public class CommentActivity extends BaseActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
                                     showDailog("提示","你的评论已提交成功，待审核通过后发布。");
                                 }
                             });

@@ -35,6 +35,7 @@ import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
+import com.mango.bc.wallet.bean.RefreshTaskBean;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -180,6 +181,7 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
                             RefreshStageBean refreshStageBean = new RefreshStageBean(true, true, true, true, true);
                             Log.v("yyyyyyy", "=====all--" + refreshStageBean.toString());
                             EventBus.getDefault().postSticky(refreshStageBean);
+                            EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
                         } else {
                             AppUtils.showToast(getActivity(), getString(R.string.check_net));
                             RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, false, false);

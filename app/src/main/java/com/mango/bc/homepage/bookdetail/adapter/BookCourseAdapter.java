@@ -68,9 +68,11 @@ public class BookCourseAdapter extends RecyclerView.Adapter {
                 viewHolder.tv_time.setText("时长：" + secToTime(datas.get(position).getDuration()));
                 if (!(datas.get(position).getIsFree() || spUtils.getBoolean("isFree", false))) {
                     viewHolder.img_txt.setImageResource(R.drawable.lock);
-                    viewHolder.tv_try.setVisibility(View.GONE);
-                } else {
+                }
+                if (datas.get(position).getIsFree()) {
                     viewHolder.tv_try.setVisibility(View.VISIBLE);
+                } else {
+                    viewHolder.tv_try.setVisibility(View.GONE);
                 }
                 Log.v("ssssssssss", isPlaylist + "-isPlaylist---" + AudioPlayer.get().getPlayPosition());
 

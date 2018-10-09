@@ -55,7 +55,8 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="试听"
                     android:textColor="@color/yello"
-                    android:textSize="@dimen/dp_14" />
+                    android:textSize="@dimen/dp_14"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/tv_time"

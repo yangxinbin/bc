@@ -70,6 +70,9 @@ public class ExpertApplyActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_point:
+                intent = new Intent(this, PointApplyActivity.class);
+                startActivity(intent);
+                finish();
                 break;
         }
     }

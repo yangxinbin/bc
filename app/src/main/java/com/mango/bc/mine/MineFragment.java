@@ -19,6 +19,7 @@ import com.mango.bc.homepage.activity.OpenUpVipActivity;
 import com.mango.bc.mine.activity.ApplyActivity;
 import com.mango.bc.mine.activity.FaqActivity;
 import com.mango.bc.mine.activity.ServiceActivity;
+import com.mango.bc.mine.activity.SettingActivity;
 import com.mango.bc.mine.activity.VipCenterActivity;
 import com.mango.bc.mine.bean.StatsBean;
 import com.mango.bc.mine.bean.UserBean;
@@ -253,6 +254,8 @@ public class MineFragment extends Fragment {
                 startActivity(intent);
                 break;
             case R.id.l_setting:
+                intent = new Intent(getActivity(), SettingActivity.class);
+                startActivity(intent);
                 break;
             case R.id.imageView_to_vip:
                 intent = new Intent(getActivity(), OpenUpVipActivity.class);

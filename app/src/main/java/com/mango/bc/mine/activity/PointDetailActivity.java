@@ -56,6 +56,7 @@ public class PointDetailActivity extends BaseActivity {
             case R.id.l_zoom:
                 intent = new Intent(this, PointZoomActivity.class);
                 startActivityForResult(intent,0);
+                finish();
                 break;
             case R.id.l_adress:
                 break;

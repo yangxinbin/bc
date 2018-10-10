@@ -128,7 +128,13 @@
             android:name=".login.UserDetailActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".mine.activity.ApplyActivity" />
-        <activity android:name=".mine.activity.PointApplyActivity"></activity>
+        <activity android:name=".mine.activity.PointApplyActivity" />
+        <activity
+            android:name=".mine.activity.PointDetailActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".mine.activity.PointZoomActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
     </application>
 
 </manifest>

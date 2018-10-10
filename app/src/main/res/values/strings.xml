@@ -143,4 +143,8 @@
     <string name="point_title">购买PPG开通节点</string>
     <string name="aliPay">支付宝</string>
     <string name="weixin">微信</string>
+    <string name="point_detail">填写节点信息</string>
+    <string name="jump">跳过</string>
+    <string name="weixin_num">微信号</string>
+    <string name="des_detail">请描述</string>
 </resources>

@@ -113,6 +113,9 @@ public class PointApplyActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.pay_ok:
+                intent = new Intent(this, PointDetailActivity.class);
+                startActivity(intent);
+                finish();
                 break;
         }
     }

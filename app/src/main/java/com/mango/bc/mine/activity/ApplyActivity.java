@@ -148,8 +148,12 @@ public class ApplyActivity extends BaseServiceActivity {
             case R.id.expert_apply:
                 intent = new Intent(this, ExpertApplyActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             case R.id.point_apply:
+                intent = new Intent(this, PointApplyActivity.class);
+                startActivity(intent);
+                finish();
                 break;
         }
     }

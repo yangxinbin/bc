@@ -1,0 +1,119 @@
+package com.mango.bc.mine.activity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.mango.bc.R;
+import com.mango.bc.base.BaseActivity;
+import com.mango.bc.homepage.adapter.SingleAdapter;
+import com.mango.bc.homepage.bean.VipType;
+import com.mango.bc.mine.adapter.SinglePayAdapter;
+import com.mango.bc.mine.adapter.SinglePointAdapter;
+
+import java.util.ArrayList;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class PointApplyActivity extends BaseActivity {
+
+    @Bind(R.id.imageView_back)
+    ImageView imageViewBack;
+    @Bind(R.id.recyclerView)
+    RecyclerView mRecyclerView;
+    @Bind(R.id.recyclerView_what)
+    RecyclerView recyclerViewWhat;
+    @Bind(R.id.tv_after)
+    TextView tvAfter;
+    @Bind(R.id.tv_before)
+    TextView tvBefore;
+    @Bind(R.id.pay_ok)
+    TextView payOk;
+    private ArrayList<VipType> datas;
+    private SinglePointAdapter adapter;
+    private SinglePayAdapter adapterWhat;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_point_apply);
+        ButterKnife.bind(this);
+        initDate();
+        initView();
+        initViewPay();
+
+    }
+    private void initDate() {
+        datas = new ArrayList<>();
+        datas.add(new VipType("10000.00 PPG", "", "1PPG=1元", "",   "享9折", "", "", "true"));
+    }
+    private void initView() {
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new SinglePointAdapter(datas);
+        mRecyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickLitener(new SinglePointAdapter.OnItemClickLitener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                adapter.setSelection(position);
+                //initDetail(adapter.getItem(position).getType());
+                //sVipPackageId = adapter.getItem(position).getVipPackageId();
+                //sAutoBilling = adapter.getItem(position).getAutoBilling();
+
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        });
+        adapter.setSelection(0);
+    }
+
+    private void initViewPay() {
+        recyclerViewWhat.setHasFixedSize(true);
+        recyclerViewWhat.setLayoutManager(new GridLayoutManager(this.getApplicationContext(), 2));
+        adapterWhat = new SinglePayAdapter(this);
+        recyclerViewWhat.setAdapter(adapterWhat);
+
+        adapterWhat.setOnItemClickLitener(new SinglePayAdapter.OnItemClickLitener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                adapterWhat.setSelection(position);
+                //initDetail(adapter.getItem(position).getType());
+                //sVipPackageId = adapter.getItem(position).getVipPackageId();
+                //sAutoBilling = adapter.getItem(position).getAutoBilling();
+
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        });
+        adapterWhat.setSelection(0);
+    }
+
+    @OnClick({R.id.imageView_back, R.id.pay_ok})
+    public void onViewClicked(View view) {
+        Intent intent;
+        switch (view.getId()) {
+            case R.id.imageView_back:
+                intent = new Intent(this, ApplyActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.pay_ok:
+                break;
+        }
+    }
+}

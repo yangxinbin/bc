@@ -1,6 +1,8 @@
 package com.mango.bc.mine.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -9,7 +11,6 @@ import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
-import com.mango.bc.base.BaseServiceActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,8 +30,8 @@ public class ExpertApplyActivity extends BaseActivity {
     EditText etCompany;
     @Bind(R.id.et_position)
     EditText etPosition;
-    @Bind(R.id.et_email)
-    EditText etEmail;
+/*    @Bind(R.id.et_email)
+    EditText etEmail;*/
     @Bind(R.id.et_phone)
     EditText etPhone;
     @Bind(R.id.l_et_all)
@@ -59,8 +60,17 @@ public class ExpertApplyActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.imageView_back)
-    public void onViewClicked() {
-        finish();
+    @OnClick({R.id.imageView_back, R.id.tv_point})
+    public void onViewClicked(View view) {
+        Intent intent;
+        switch (view.getId()) {
+            case R.id.imageView_back:
+                intent = new Intent(this, ApplyActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.tv_point:
+                break;
+        }
     }
 }

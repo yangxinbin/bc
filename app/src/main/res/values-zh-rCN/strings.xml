@@ -101,5 +101,7 @@
     <string name="weixin_num">微信号</string>
     <string name="des_detail">请描述</string>
     <string name="re_apply">重新申请</string>
-
+    <string name="select_gallery">相册</string>
+    <string name="select_camera">拍照</string>
+    <string name="select">选择获取图片方式</string>
 </resources>

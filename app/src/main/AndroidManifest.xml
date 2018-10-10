@@ -72,6 +72,16 @@
         <activity android:name=".homepage.bookdetail.OtherBookDetailActivity" />
         <activity android:name=".homepage.bookdetail.TxtActivity" />
         <activity android:name=".homepage.bookdetail.play.PlayActivity" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.mango.bc"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
         <!-- ShareSDK的activity -->
         <activity
             android:name="com.mob.tools.MobUIShell"
@@ -137,6 +147,7 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".mine.activity.SettingActivity" />
         <activity android:name=".mine.activity.AboutActivity"></activity>
+        <activity android:name=".mine.activity.user.UserChangeActivity"></activity>
     </application>
 
 </manifest>

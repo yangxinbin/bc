@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
+import com.mango.bc.mine.activity.user.UserChangeActivity;
+import com.mango.bc.util.PublicWay;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,6 +35,9 @@ public class SettingActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.l_1:
+                intent = new Intent(this, UserChangeActivity.class);
+                startActivity(intent);
+                finish();
                 break;
             case R.id.l_2:
                 break;
@@ -48,6 +53,16 @@ public class SettingActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.exit:
+                //editor.putString("isOk", "no")
+                //        .commit();
+                for (int i = 0; i < PublicWay.activityList.size(); i++) {
+                    if (null != PublicWay.activityList.get(i)) {
+                        // 关闭存放在activityList集合里面的所有activity
+                        PublicWay.activityList.get(i).finish();
+                    }
+                }
+                System.exit(0);
+                finish();
                 break;
         }
     }

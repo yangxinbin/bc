@@ -2,6 +2,7 @@ package com.mango.bc.mine.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -73,6 +74,15 @@ public class FaqActivity extends BaseActivity {
                 intent.putExtra("k2",this.getResources().getString(R.string.cancel_pp_detail));
                 startActivity(intent);
                 break;
+        }
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            finish();
+            return false;
+        } else {
+            return super.onKeyDown(keyCode, event);
         }
     }
 }

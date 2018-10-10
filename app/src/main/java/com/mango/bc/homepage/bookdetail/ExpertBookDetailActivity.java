@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -22,6 +23,7 @@ import com.mango.bc.adapter.ViewPageAdapter;
 import com.mango.bc.base.BaseServiceActivity;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.activity.BuyBookActivity;
+import com.mango.bc.homepage.activity.VipDetailActivity;
 import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
 import com.mango.bc.homepage.bookdetail.bean.PlayBarBean;
 import com.mango.bc.homepage.bookdetail.bean.PlayPauseBean;
@@ -32,6 +34,7 @@ import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
 import com.mango.bc.homepage.bookdetail.play.executor.ControlPanel;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
+import com.mango.bc.mine.activity.VipCenterActivity;
 import com.mango.bc.util.ACache;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.DensityUtil;
@@ -659,5 +662,15 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
             return;
         }*/
         super.onBackPressed();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            finish();
+            return false;
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
     }
 }

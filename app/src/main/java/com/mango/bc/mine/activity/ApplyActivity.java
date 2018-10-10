@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.mango.bc.R;
 import com.mango.bc.adapter.ViewPageAdapter;
 import com.mango.bc.base.BaseServiceActivity;
+import com.mango.bc.login.LikeActivity;
 import com.mango.bc.mine.fragment.ExpertApplyFragment;
 import com.mango.bc.mine.fragment.PointApplyFragment;
 import com.mango.bc.util.DensityUtil;
@@ -156,6 +158,15 @@ public class ApplyActivity extends BaseServiceActivity {
                 startActivity(intent);
                 finish();
                 break;
+        }
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            finish();
+            return false;
+        } else {
+            return super.onKeyDown(keyCode, event);
         }
     }
 }

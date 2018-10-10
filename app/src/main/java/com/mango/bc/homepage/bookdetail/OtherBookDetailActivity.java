@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -22,6 +23,7 @@ import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
 import com.mango.bc.bookcase.net.view.MyAllBookView;
 import com.mango.bc.homepage.activity.BuyBookActivity;
 import com.mango.bc.homepage.activity.OpenUpVipActivity;
+import com.mango.bc.homepage.activity.VipDetailActivity;
 import com.mango.bc.homepage.bookdetail.adapter.BookDetailAdapter;
 import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
 import com.mango.bc.homepage.bookdetail.bean.PlayBarBean;
@@ -30,6 +32,7 @@ import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
 import com.mango.bc.homepage.bookdetail.play.executor.ControlPanel;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
+import com.mango.bc.mine.activity.VipCenterActivity;
 import com.mango.bc.mine.bean.StatsBean;
 import com.mango.bc.mine.jsonutil.AuthJsonUtils;
 import com.mango.bc.util.ACache;
@@ -643,5 +646,15 @@ public class OtherBookDetailActivity extends BaseServiceActivity implements MyAl
         });
         // 启动分享GUI
         oks.show(getApplicationContext());
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            finish();
+            return false;
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
     }
 }

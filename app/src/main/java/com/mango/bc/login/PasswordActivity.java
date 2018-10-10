@@ -2,6 +2,7 @@ package com.mango.bc.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 
@@ -40,6 +41,18 @@ public class PasswordActivity extends BaseActivity {
                 startActivity(intent);
                 finish();
                 break;
+        }
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Intent intent;
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            intent = new Intent(this, CodeActivity.class);
+            startActivity(intent);
+            finish();
+            return false;
+        } else {
+            return super.onKeyDown(keyCode, event);
         }
     }
 }

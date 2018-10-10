@@ -2,6 +2,7 @@ package com.mango.bc.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -80,5 +81,17 @@ public class PositionActivity extends BaseActivity implements AdapterView.OnItem
             gvChooseMap.put(position, true);
         }
         adapter.setCheckItem(gvChooseMap);
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Intent intent;
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            intent = new Intent(this, PasswordActivity.class);
+            startActivity(intent);
+            finish();
+            return false;
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
     }
 }

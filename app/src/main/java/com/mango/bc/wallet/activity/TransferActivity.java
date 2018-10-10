@@ -1,6 +1,7 @@
 package com.mango.bc.wallet.activity;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,7 +10,6 @@ import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
-import com.mango.bc.base.BaseServiceActivity;
 import com.mango.bc.mine.bean.UserBean;
 import com.mango.bc.mine.jsonutil.AuthJsonUtils;
 import com.mango.bc.util.AppUtils;
@@ -153,5 +153,14 @@ public class TransferActivity extends BaseActivity {
                 });
             }
         }).start();
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            finish();
+            return false;
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
     }
 }

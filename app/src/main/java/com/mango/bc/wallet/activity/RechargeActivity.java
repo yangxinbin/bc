@@ -1,14 +1,17 @@
 package com.mango.bc.wallet.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
+import com.mango.bc.homepage.bookdetail.play.PlayActivity;
 import com.mango.bc.wallet.adapter.SingleRechargeAdapter;
 import com.mango.bc.wallet.bean.RechargeType;
 
@@ -76,6 +79,15 @@ public class RechargeActivity extends BaseActivity {
                 break;
             case R.id.buy_vip:
                 break;
+        }
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            finish();
+            return false;
+        } else {
+            return super.onKeyDown(keyCode, event);
         }
     }
 }

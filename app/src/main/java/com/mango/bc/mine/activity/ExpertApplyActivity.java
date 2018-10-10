@@ -2,6 +2,7 @@ package com.mango.bc.mine.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -106,6 +107,20 @@ public class ExpertApplyActivity extends BaseActivity {
                 startActivity(intent);
                 finish();
                 break;
+        }
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Intent intent;
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            if (expert == 0) {
+                intent = new Intent(this, ApplyActivity.class);
+                startActivity(intent);
+            }
+            finish();
+            return false;
+        } else {
+            return super.onKeyDown(keyCode, event);
         }
     }
 }

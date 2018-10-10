@@ -2,10 +2,12 @@ package com.mango.bc.homepage.bookdetail;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +17,9 @@ import android.widget.TextView;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
+import com.mango.bc.homepage.activity.VipDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
+import com.mango.bc.mine.activity.VipCenterActivity;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.SPUtils;
@@ -59,6 +63,7 @@ public class CommentActivity extends BaseActivity {
         EventBus.getDefault().register(this);
         editeNum();
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true, priority = 1)
     public void BookBeanEventBus(BookBean bookBean) {
         if (bookBean == null) {
@@ -77,6 +82,7 @@ public class CommentActivity extends BaseActivity {
             bookId = bookBean.getBook().getId();
         }
     }
+
     @OnClick({R.id.imageView_back, R.id.b_commit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -104,8 +110,8 @@ public class CommentActivity extends BaseActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Log.v("ccccccccc","---1--"+e);
-                                AppUtils.showToast(CommentActivity.this,"评论提交失败");
+                                Log.v("ccccccccc", "---1--" + e);
+                                AppUtils.showToast(CommentActivity.this, "评论提交失败");
                             }
                         });
                     }
@@ -117,15 +123,15 @@ public class CommentActivity extends BaseActivity {
                                 @Override
                                 public void run() {
                                     EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
-                                    showDailog("提示","你的评论已提交成功，待审核通过后发布。");
+                                    showDailog("提示", "你的评论已提交成功，待审核通过后发布。");
                                 }
                             });
                         } catch (final Exception e) {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Log.v("ccccccccc","---2--"+e);
-                                    AppUtils.showToast(CommentActivity.this,"评论提交失败");
+                                    Log.v("ccccccccc", "---2--" + e);
+                                    AppUtils.showToast(CommentActivity.this, "评论提交失败");
                                 }
                             });
                         }
@@ -194,5 +200,15 @@ public class CommentActivity extends BaseActivity {
         super.onDestroy();
         ButterKnife.unbind(this);
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            finish();
+            return false;
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
     }
 }

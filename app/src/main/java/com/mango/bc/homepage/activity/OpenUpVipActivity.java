@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -355,5 +356,21 @@ public class OpenUpVipActivity extends BaseActivity {
                 });
             }
         }).start();
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Intent intent;
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            if (getIntent().getBooleanExtra("center",false)){
+                intent = new Intent(this, VipCenterActivity.class);
+            }else {
+                intent = new Intent(this, VipDetailActivity.class);
+            }
+            startActivity(intent);
+            finish();
+            return false;
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
     }
 }

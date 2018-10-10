@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -122,6 +123,23 @@ public class PointApplyActivity extends BaseActivity {
                 startActivity(intent);
                 finish();
                 break;
+        }
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Intent intent;
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            if (getIntent().getBooleanExtra("expert_fail",false)){
+                intent = new Intent(this, ExpertApplyActivity.class);
+                intent.putExtra("expert", 2);//跳到申请失败页面
+            }else {
+                intent = new Intent(this, ApplyActivity.class);
+            }
+            startActivity(intent);
+            finish();
+            return false;
+        } else {
+            return super.onKeyDown(keyCode, event);
         }
     }
 }

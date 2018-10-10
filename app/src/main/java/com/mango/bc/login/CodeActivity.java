@@ -2,11 +2,14 @@ package com.mango.bc.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
+import com.mango.bc.homepage.activity.VipDetailActivity;
+import com.mango.bc.mine.activity.VipCenterActivity;
 import com.tuo.customview.VerificationCodeView;
 
 import butterknife.Bind;
@@ -46,6 +49,18 @@ public class CodeActivity extends BaseActivity {
                 break;
             case R.id.tv_reset:
                 break;
+        }
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Intent intent;
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return false;
+        } else {
+            return super.onKeyDown(keyCode, event);
         }
     }
 }

@@ -29,6 +29,7 @@ import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookSearchView;
+import com.mango.bc.mine.activity.VipCenterActivity;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.SPUtils;
@@ -159,7 +160,7 @@ public class SearchActivity extends BaseServiceActivity implements BookSearchVie
 
         @Override
         public void onItemPlayClick(View view, int position) {
-            Log.v("wwwwwww","======pi");
+            Log.v("wwwwwww", "======pi");
             Intent intent = new Intent(getBaseContext(), OtherBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookGirdSearchAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
@@ -176,7 +177,7 @@ public class SearchActivity extends BaseServiceActivity implements BookSearchVie
 
         @Override
         public void onItemFreeGetClick(View view, int position) {
-            Log.v("wwwwwww","======gi");
+            Log.v("wwwwwww", "======gi");
             Intent intent = new Intent(getBaseContext(), OtherBookDetailActivity.class);
             EventBus.getDefault().postSticky(bookGirdSearchAdapter.getItem(position));
             EventBus.getDefault().removeStickyEvent(MyBookBean.class);
@@ -419,5 +420,15 @@ public class SearchActivity extends BaseServiceActivity implements BookSearchVie
                 AppUtils.showToast(getBaseContext(), "搜索请求失败");
             }
         });
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            finish();
+            return false;
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
     }
 }

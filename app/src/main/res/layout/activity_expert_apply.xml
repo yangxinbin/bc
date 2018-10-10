@@ -296,7 +296,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="@dimen/dp_20"
                                 android:text="@string/apply_name"
-                                android:textColor="@color/black"
+                                android:textColor="@color/gray_3"
                                 android:textSize="@dimen/textSize" />
                         </LinearLayout>
 
@@ -328,7 +328,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="@dimen/dp_20"
                                 android:text="@string/apply_company"
-                                android:textColor="@color/black"
+                                android:textColor="@color/gray_3"
                                 android:textSize="@dimen/textSize" />
                         </LinearLayout>
 
@@ -360,7 +360,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="@dimen/dp_20"
                                 android:text="@string/apply_phone"
-                                android:textColor="@color/black"
+                                android:textColor="@color/gray_3"
                                 android:textSize="@dimen/textSize" />
                         </LinearLayout>
 
@@ -393,7 +393,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="@dimen/dp_20"
                                 android:text="@string/apply_position"
-                                android:textColor="@color/black"
+                                android:textColor="@color/gray_3"
                                 android:textSize="@dimen/textSize" />
                         </LinearLayout>
 

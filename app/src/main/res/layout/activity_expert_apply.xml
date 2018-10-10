@@ -52,9 +52,9 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/dp_15"
-                    android:textSize="@dimen/textSize"
+                    android:text="开通节点"
                     android:textColor="@color/gray_3"
-                    android:text="开通节点" />
+                    android:textSize="@dimen/textSize" />
             </RelativeLayout>
 
             <ImageView
@@ -174,37 +174,37 @@
                         android:textSize="@dimen/sencond_textSize" />
                 </LinearLayout>
 
-<!--                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_margin="@dimen/dp_15"
-                    android:background="@color/gray"></View>
+                <!--                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="@dimen/dp_15"
+                                    android:background="@color/gray"></View>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dp_15"
-                        android:text="@string/apply_email"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/textSize" />
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/dp_15"
+                                        android:text="@string/apply_email"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/textSize" />
 
-                    <EditText
-                        android:id="@+id/et_email"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dp_20"
-                        android:background="@null"
-                        android:ems="10"
-                        android:hint="@string/write_apply_email"
-                        android:inputType="textPersonName"
-                        android:textColorHint="@color/gray"
-                        android:textSize="@dimen/sencond_textSize" />
-                </LinearLayout>-->
+                                    <EditText
+                                        android:id="@+id/et_email"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/dp_20"
+                                        android:background="@null"
+                                        android:ems="10"
+                                        android:hint="@string/write_apply_email"
+                                        android:inputType="textPersonName"
+                                        android:textColorHint="@color/gray"
+                                        android:textSize="@dimen/sencond_textSize" />
+                                </LinearLayout>-->
 
                 <View
                     android:layout_width="match_parent"
@@ -292,7 +292,7 @@
                             <TextView
                                 android:id="@+id/tv_name"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="@dimen/dp_20"
                                 android:text="@string/apply_name"
@@ -322,73 +322,12 @@
                                 android:textSize="@dimen/textSize" />
 
                             <TextView
+                                android:id="@+id/tv_company"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="@dimen/dp_20"
                                 android:text="@string/apply_company"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/textSize" />
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="@dimen/dp_10"
-                            android:background="@color/gray"></View>
-
-                        <LinearLayout
-                            android:id="@+id/l_3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp_10"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:text="@string/apply_position"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/textSize" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="@dimen/dp_20"
-                                android:text="@string/apply_position"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/textSize" />
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="@dimen/dp_10"
-                            android:background="@color/gray"></View>
-
-                        <LinearLayout
-                            android:id="@+id/l_4"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp_10"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:text="@string/apply_email"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/textSize" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="@dimen/dp_20"
-                                android:text="@string/apply_email"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/textSize" />
                         </LinearLayout>
@@ -415,6 +354,7 @@
                                 android:textSize="@dimen/textSize" />
 
                             <TextView
+                                android:id="@+id/tv_phone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
@@ -423,6 +363,40 @@
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/textSize" />
                         </LinearLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:background="@color/gray"></View>
+
+                        <LinearLayout
+                            android:id="@+id/l_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/apply_position"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/textSize" />
+
+                            <TextView
+                                android:id="@+id/tv_position"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="@dimen/dp_20"
+                                android:text="@string/apply_position"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/textSize" />
+                        </LinearLayout>
+
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
             </LinearLayout>

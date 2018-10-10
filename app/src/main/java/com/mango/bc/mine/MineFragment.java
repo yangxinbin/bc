@@ -188,7 +188,12 @@ public class MineFragment extends Fragment {
             return;
         initView(statsBean);
     }
-
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void UserBeanEventBus(UserBean userBean) {
+        if (userBean == null)
+            return;
+        initView(userBean);
+    }
     private void initView(UserBean userBean) {
         if (userBean == null)
             return;
@@ -216,7 +221,7 @@ public class MineFragment extends Fragment {
         //以下是达人节点UI
         if (userBean.getAgencyInfo() == null)
             return;
-        agencyInfo = 3;//userBean.getAgencyInfo().getStatus();
+        agencyInfo = userBean.getAgencyInfo().getStatus();
         switch (agencyInfo) {
             case 0:
                 lToAgent.setVisibility(View.VISIBLE);

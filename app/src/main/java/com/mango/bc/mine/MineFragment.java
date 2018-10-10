@@ -88,6 +88,14 @@ public class MineFragment extends Fragment {
     TextView vipHasTime;
     @Bind(R.id.center_vip)
     LinearLayout centerVip;
+    @Bind(R.id.tv_expert_state)
+    TextView tvExpertState;
+    @Bind(R.id.l_expert)
+    LinearLayout lExpert;
+    @Bind(R.id.tv_point_get)
+    TextView tvPointGet;
+    @Bind(R.id.l_point)
+    LinearLayout lPoint;
     private SPUtils spUtils;
 
     @Nullable
@@ -194,15 +202,40 @@ public class MineFragment extends Fragment {
             imageViewToVip.setVisibility(View.VISIBLE);
         }
         tvAuthNName.setText(userBean.getAlias());
-        if (userBean.getAvator() != null){
+        if (userBean.getAvator() != null) {
             Glide.with(getActivity()).load(Urls.HOST_GETFILE + "?name=" + userBean.getAvator().getFileName()).into(imageViePic);
-        }else {
+        } else {
             imageViePic.setImageDrawable(getResources().getDrawable(R.drawable.head_pic2));
         }
         tvClass.setText(userBean.getStats().getPaidBooks() + "本");
         tvGet.setText(userBean.getStats().getVipGetBooks() + "本");
         tvTime.setText(userBean.getStats().getTotalDuration() + "小时");
         tvCode.setText(userBean.getStats().getPpCoinEarned() + "积分");
+        //以下是达人节点UI
+        if (userBean.getAgencyInfo() != null)
+            return;
+        switch (userBean.getAgencyInfo().getStatus()) {
+            case 0:
+                lToAgent.setVisibility(View.VISIBLE);
+                lExpert.setVisibility(View.GONE);
+                lPoint.setVisibility(View.GONE);
+                break;
+            case 1://申请中
+                lToAgent.setVisibility(View.GONE);
+                lExpert.setVisibility(View.VISIBLE);
+                lPoint.setVisibility(View.GONE);
+                break;
+            case 2://达人申请成功
+                lToAgent.setVisibility(View.GONE);
+                lExpert.setVisibility(View.VISIBLE);
+                lPoint.setVisibility(View.GONE);
+                break;
+            case 3://达人申请失败
+                lToAgent.setVisibility(View.GONE);
+                lExpert.setVisibility(View.VISIBLE);
+                lPoint.setVisibility(View.GONE);
+                break;
+        }
     }
 
     private void initView(StatsBean statsBean) {
@@ -221,7 +254,7 @@ public class MineFragment extends Fragment {
         //EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.center_vip, R.id.imageView_to_vip, R.id.l_collage, R.id.imageVie_pic, R.id.l_class, R.id.l_get, R.id.l_time, R.id.l_code,/* R.id.l_to_vip,*/ R.id.l_to_agent, /*R.id.l_to_talent,*/ R.id.l_faq, R.id.l_service, R.id.l_setting,R.id.l_bc})
+    @OnClick({R.id.center_vip, R.id.imageView_to_vip, R.id.l_collage, R.id.imageVie_pic, R.id.l_class, R.id.l_get, R.id.l_time, R.id.l_code,/* R.id.l_to_vip,*/ R.id.l_to_agent, /*R.id.l_to_talent,*/ R.id.l_faq, R.id.l_service, R.id.l_setting, R.id.l_bc})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {

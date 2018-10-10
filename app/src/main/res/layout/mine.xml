@@ -14,36 +14,6 @@
 
         <include layout="@layout/bookshelf_head"></include>
 
-        <!--        <LinearLayout
-                    android:id="@+id/l_to_vip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:background="@drawaapply_collagepply"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginLeft="@dimen/dp_10"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:text="@string/apply_bc"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/title" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginLeft="@dimen/dp_10"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:text="@string/earn_pp"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/textSize" />
-                </LinearLayout>-->
-
         <LinearLayout
             android:id="@+id/l_to_agent"
             android:layout_width="match_parent"
@@ -53,27 +23,83 @@
             android:layout_marginRight="@dimen/dp_15"
             android:layout_marginTop="@dimen/dp_5"
             android:background="@drawable/apply_for"
-            android:orientation="vertical">
+            android:orientation="vertical"></LinearLayout>
 
-            <!--            <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_marginLeft="@dimen/dp_10"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:text="@string/apply_bc"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/title" />
+        <LinearLayout
+            android:id="@+id/l_expert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginRight="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_5"
+            android:background="@drawable/apply2"
+            android:orientation="horizontal"
+            android:visibility="gone">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_marginLeft="@dimen/dp_10"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:text="@string/earn_pp"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/textSize" />-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:background="@drawable/yellow_full_circle_radiu20"
+                android:paddingBottom="@dimen/dp_5"
+                android:paddingLeft="@dimen/dp_15"
+                android:paddingRight="@dimen/dp_15"
+                android:paddingTop="@dimen/dp_5"
+                android:text="我是达人"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize" />
+
+            <TextView
+                android:id="@+id/tv_expert_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/dp_50"
+                android:gravity="right"
+                android:text="已获取贡献值900PPG"
+                android:textColor="@color/gray_6"
+                android:textSize="@dimen/dp_14" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/l_point"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginRight="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_5"
+            android:background="@drawable/apply2"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:background="@drawable/yellow_full_circle_radiu20"
+                android:paddingBottom="@dimen/dp_5"
+                android:paddingLeft="@dimen/dp_15"
+                android:paddingRight="@dimen/dp_15"
+                android:paddingTop="@dimen/dp_5"
+                android:text="我是节点"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize" />
+
+            <TextView
+                android:id="@+id/tv_point_get"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/dp_50"
+                android:gravity="right"
+                android:text="已获取贡献值900PPG"
+                android:textColor="@color/gray_6"
+                android:textSize="@dimen/dp_14" />
         </LinearLayout>
 
         <ImageView
@@ -140,35 +166,6 @@
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/grey_back" />
         </LinearLayout>
-        <!--<LinearLayout
-            android:id="@+id/l_to_talent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/dp_5"
-            android:background="@drawaapply_collagepply"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/apply_bc"
-                android:textColor="@color/black"
-                android:textSize="@dimen/title" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/earn_pp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/textSize" />
-        </LinearLayout>-->
 
         <LinearLayout
             android:id="@+id/l_collage"

@@ -58,6 +58,11 @@ public class ExpertApplyActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expert_apply);
         ButterKnife.bind(this);
+        initView();
+    }
+
+    private void initView() {//三个页面
+
     }
 
     @OnClick({R.id.imageView_back, R.id.tv_point})

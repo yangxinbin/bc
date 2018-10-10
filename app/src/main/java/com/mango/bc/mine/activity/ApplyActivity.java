@@ -147,6 +147,7 @@ public class ApplyActivity extends BaseServiceActivity {
                 break;
             case R.id.expert_apply:
                 intent = new Intent(this, ExpertApplyActivity.class);
+                intent.putExtra("expert",0);
                 startActivity(intent);
                 finish();
                 break;

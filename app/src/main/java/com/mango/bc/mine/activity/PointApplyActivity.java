@@ -108,7 +108,12 @@ public class PointApplyActivity extends BaseActivity {
         Intent intent;
         switch (view.getId()) {
             case R.id.imageView_back:
-                intent = new Intent(this, ApplyActivity.class);
+                if (getIntent().getBooleanExtra("expert_fail",false)){
+                    intent = new Intent(this, ExpertApplyActivity.class);
+                    intent.putExtra("expert", 2);//跳到申请失败页面
+                }else {
+                    intent = new Intent(this, ApplyActivity.class);
+                }
                 startActivity(intent);
                 finish();
                 break;

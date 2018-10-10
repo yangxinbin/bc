@@ -30,8 +30,8 @@ public class ExpertApplyActivity extends BaseActivity {
     EditText etCompany;
     @Bind(R.id.et_position)
     EditText etPosition;
-/*    @Bind(R.id.et_email)
-    EditText etEmail;*/
+    /*    @Bind(R.id.et_email)
+        EditText etEmail;*/
     @Bind(R.id.et_phone)
     EditText etPhone;
     @Bind(R.id.l_et_all)
@@ -52,17 +52,41 @@ public class ExpertApplyActivity extends BaseActivity {
     Button sureApply;
     @Bind(R.id.re_apply)
     Button reApply;
+    @Bind(R.id.tv_point)
+    TextView tvPoint;
+    private int expert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expert_apply);
         ButterKnife.bind(this);
-        initView();
+        expert = getIntent().getIntExtra("expert", 0);
+        initView(expert);
     }
 
-    private void initView() {//三个页面
-
+    private void initView(int i) {//三个页面
+        switch (i) {
+            case 0://申请
+                tvPoint.setVisibility(View.GONE);
+                applying.setVisibility(View.GONE);
+                applyFail.setVisibility(View.GONE);
+                lTvAll.setVisibility(View.GONE);
+                reApply.setVisibility(View.GONE);
+                break;
+            case 1://申请中
+                tvPoint.setVisibility(View.GONE);
+                applyFail.setVisibility(View.GONE);
+                lEtAll.setVisibility(View.GONE);
+                reApply.setVisibility(View.GONE);
+                sureApply.setVisibility(View.GONE);
+                break;
+            case 2://申请失败
+                lEtAll.setVisibility(View.GONE);
+                applying.setVisibility(View.GONE);
+                sureApply.setVisibility(View.GONE);
+                break;
+        }
     }
 
     @OnClick({R.id.imageView_back, R.id.tv_point})
@@ -70,12 +94,15 @@ public class ExpertApplyActivity extends BaseActivity {
         Intent intent;
         switch (view.getId()) {
             case R.id.imageView_back:
-                intent = new Intent(this, ApplyActivity.class);
-                startActivity(intent);
+                if (expert == 0) {
+                    intent = new Intent(this, ApplyActivity.class);
+                    startActivity(intent);
+                }
                 finish();
                 break;
             case R.id.tv_point:
                 intent = new Intent(this, PointApplyActivity.class);
+                intent.putExtra("expert_fail", true);
                 startActivity(intent);
                 finish();
                 break;

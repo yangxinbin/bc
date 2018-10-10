@@ -147,4 +147,5 @@
     <string name="jump">跳过</string>
     <string name="weixin_num">微信号</string>
     <string name="des_detail">请描述</string>
+    <string name="re_apply">重新申请</string>
 </resources>

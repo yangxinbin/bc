@@ -17,6 +17,7 @@ import com.mango.bc.R;
 import com.mango.bc.homepage.activity.CollageActivity;
 import com.mango.bc.homepage.activity.OpenUpVipActivity;
 import com.mango.bc.mine.activity.ApplyActivity;
+import com.mango.bc.mine.activity.ExpertApplyActivity;
 import com.mango.bc.mine.activity.FaqActivity;
 import com.mango.bc.mine.activity.ServiceActivity;
 import com.mango.bc.mine.activity.SettingActivity;
@@ -97,6 +98,7 @@ public class MineFragment extends Fragment {
     @Bind(R.id.l_point)
     LinearLayout lPoint;
     private SPUtils spUtils;
+    private int agencyInfo;
 
     @Nullable
     @Override
@@ -212,9 +214,10 @@ public class MineFragment extends Fragment {
         tvTime.setText(userBean.getStats().getTotalDuration() + "小时");
         tvCode.setText(userBean.getStats().getPpCoinEarned() + "积分");
         //以下是达人节点UI
-        if (userBean.getAgencyInfo() != null)
+        if (userBean.getAgencyInfo() == null)
             return;
-        switch (userBean.getAgencyInfo().getStatus()) {
+        agencyInfo = 3;//userBean.getAgencyInfo().getStatus();
+        switch (agencyInfo) {
             case 0:
                 lToAgent.setVisibility(View.VISIBLE);
                 lExpert.setVisibility(View.GONE);
@@ -224,16 +227,19 @@ public class MineFragment extends Fragment {
                 lToAgent.setVisibility(View.GONE);
                 lExpert.setVisibility(View.VISIBLE);
                 lPoint.setVisibility(View.GONE);
+                tvExpertState.setText("审核中");
                 break;
             case 2://达人申请成功
                 lToAgent.setVisibility(View.GONE);
                 lExpert.setVisibility(View.VISIBLE);
                 lPoint.setVisibility(View.GONE);
+                tvExpertState.setText("已获取贡献值900PPG");
                 break;
             case 3://达人申请失败
                 lToAgent.setVisibility(View.GONE);
                 lExpert.setVisibility(View.VISIBLE);
                 lPoint.setVisibility(View.GONE);
+                tvExpertState.setText("审核失败");
                 break;
         }
     }
@@ -254,7 +260,7 @@ public class MineFragment extends Fragment {
         //EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.center_vip, R.id.imageView_to_vip, R.id.l_collage, R.id.imageVie_pic, R.id.l_class, R.id.l_get, R.id.l_time, R.id.l_code,/* R.id.l_to_vip,*/ R.id.l_to_agent, /*R.id.l_to_talent,*/ R.id.l_faq, R.id.l_service, R.id.l_setting, R.id.l_bc})
+    @OnClick({R.id.l_expert, R.id.l_point, R.id.center_vip, R.id.imageView_to_vip, R.id.l_collage, R.id.imageVie_pic, R.id.l_class, R.id.l_get, R.id.l_time, R.id.l_code,/* R.id.l_to_vip,*/ R.id.l_to_agent, /*R.id.l_to_talent,*/ R.id.l_faq, R.id.l_service, R.id.l_setting, R.id.l_bc})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -301,6 +307,22 @@ public class MineFragment extends Fragment {
             case R.id.l_collage:
                 intent = new Intent(getContext(), CollageActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.l_expert:
+                intent = new Intent(getContext(), ExpertApplyActivity.class);
+                if (agencyInfo == 1) {
+                    intent.putExtra("expert", 1);
+                } else if (agencyInfo == 2) {
+                    //详情
+                } else if (agencyInfo == 3) {
+                    intent.putExtra("expert", 2);
+                }
+                startActivity(intent);
+                break;
+            case R.id.l_point:
+                //详情
+/*                intent = new Intent(getContext(), CollageActivity.class);
+                startActivity(intent);*/
                 break;
         }
     }

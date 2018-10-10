@@ -36,6 +36,7 @@ public class Urls {
     public static final String RECOMMENDED = "/book/list/recommended";
     public static final String AUTOBILL = "/wallet/stop/autoBilling";
     public static final String APPLYAGENCY = "/user/apply/agency";
+    public static final String GROUP = "/wallet/my/groups";
 
 
 
@@ -66,5 +67,6 @@ public class Urls {
     public static final String HOST_RECOMMENDED = HOST+RECOMMENDED; //首页
     public static final String HOST_AUTOBILL = HOST+AUTOBILL; //首页
     public static final String HOST_APPLYAGENCY = HOST+APPLYAGENCY;
+    public static final String HOST_GROUP = HOST+GROUP;//started, finished, expired
 
 }

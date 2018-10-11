@@ -271,9 +271,9 @@ public class MineFragment extends Fragment {
         //EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.bt_finish,R.id.l_expert, R.id.l_point, R.id.center_vip, R.id.imageView_to_vip, R.id.l_collage, R.id.imageVie_pic, R.id.l_class, R.id.l_get, R.id.l_time, R.id.l_code,/* R.id.l_to_vip,*/ R.id.l_to_agent, /*R.id.l_to_talent,*/ R.id.l_faq, R.id.l_service, R.id.l_setting, R.id.l_bc})
+    @OnClick({R.id.bt_finish, R.id.l_expert, R.id.l_point, R.id.center_vip, R.id.imageView_to_vip, R.id.l_collage, R.id.imageVie_pic, R.id.l_class, R.id.l_get, R.id.l_time, R.id.l_code,/* R.id.l_to_vip,*/ R.id.l_to_agent, /*R.id.l_to_talent,*/ R.id.l_faq, R.id.l_service, R.id.l_setting, R.id.l_bc})
     public void onViewClicked(View view) {
-        Intent intent;
+        Intent intent = null;
         switch (view.getId()) {
             case R.id.imageVie_pic:
                 break;
@@ -320,15 +320,17 @@ public class MineFragment extends Fragment {
                 startActivity(intent);
                 break;
             case R.id.l_expert:
-                intent = new Intent(getContext(), ExpertApplyActivity.class);
                 if (agencyInfo == 1) {
+                    intent = new Intent(getContext(), ExpertApplyActivity.class);
                     intent.putExtra("expert", 1);
+                    startActivity(intent);
                 } else if (agencyInfo == 2) {
                     //详情
                 } else if (agencyInfo == 3) {
+                    intent = new Intent(getContext(), ExpertApplyActivity.class);
                     intent.putExtra("expert", 2);
+                    startActivity(intent);
                 }
-                startActivity(intent);
                 break;
             case R.id.l_point:
                 //详情

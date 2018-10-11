@@ -28,7 +28,7 @@ public class JsonUtils {
         //JsonObject ob = jsonObject.getAsJsonObject("responseObject");
         JsonArray jsonArray = jsonObject.getAsJsonArray(va);
         for (int i = 0; i < jsonArray.size(); i++) {
-            ListEventBean news = JsonUtils.deserialize(jsonObject, ListEventBean.class);
+            ListEventBean news = GroupJsonUtils.deserialize(jsonObject, ListEventBean.class);
             beans.add(news);//这里会将所有的json对象转换为bean对象
         }
         return beans;
@@ -40,7 +40,7 @@ public class JsonUtils {
         //JsonObject ob = jsonObject.getAsJsonObject("responseObject");
         JsonArray jsonArray = jsonObject.getAsJsonArray(va);
         for (int i = 0; i < jsonArray.size(); i++) {
-            ConfigBean bean = JsonUtils.deserialize(jsonObject, ConfigBean.class);
+            ConfigBean bean = GroupJsonUtils.deserialize(jsonObject, ConfigBean.class);
             beans.add(bean);
         }
         return beans;
@@ -48,7 +48,7 @@ public class JsonUtils {
 
 /*    public static EventDetailBean readDetailBean(String res) {
         JsonObject jsonObject = new JsonParser().parse(res).getAsJsonObject();
-        EventDetailBean eventDetailBean = JsonUtils.deserialize(jsonObject, EventDetailBean.class);
+        EventDetailBean eventDetailBean = GroupJsonUtils.deserialize(jsonObject, EventDetailBean.class);
         return eventDetailBean;
     }*/
     public static List<CompetitiveFieldBean> readCompetitiveFieldBean(String res) {

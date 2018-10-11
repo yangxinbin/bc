@@ -26,11 +26,9 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class BookModelImpl implements BookModel {
-    private SharedPreferences sharedPreferences;
 
     @Override
     public void visitBooks(final Context context, final int type, final String url, final String keyWordString, final int page, final Boolean ifCache, final OnBookListener listener) {
-        sharedPreferences = context.getSharedPreferences("BC", MODE_PRIVATE);
         final ACache mCache = ACache.get(context.getApplicationContext());
         if (type == 0) {//精品tab字段
             new Thread(new Runnable() {

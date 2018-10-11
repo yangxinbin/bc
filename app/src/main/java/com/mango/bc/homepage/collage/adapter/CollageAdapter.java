@@ -3,6 +3,7 @@ package com.mango.bc.homepage.collage.adapter;
 import android.content.Context;
 import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,10 +96,11 @@ public class CollageAdapter extends RecyclerView.Adapter {
             }else if (datas.get(position).getStatus().equals("expired")){
                 viewHolder.tv_collage_state.setText("拼团失败");
             }
-            viewHolder.tv_collage_price_after.setText(datas.get(position).getPrice()+"");
-            viewHolder.tv_collage_price_before.setText(datas.get(position).getBookPrice()+"");
+            viewHolder.tv_collage_price_after.setText(datas.get(position).getPrice()+"积分");
+            viewHolder.tv_collage_price_before.setText(datas.get(position).getBookPrice()+"积分");
             viewHolder.tv_collage_price_before.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
-            viewHolder.tv_collage_time.setText("剩余" + DateUtil.getDateToString(((datas.get(position).getTimestamp()+(1000*60*60*24))-System.currentTimeMillis()), "yyyy-MM-dd")+"结束");
+            Log.v("ddddddddddddd",(datas.get(position).getTimestamp()+(1000*60*60*24)+"=="+System.currentTimeMillis())+"=="+((datas.get(position).getTimestamp()+(1000*60*60*24))-System.currentTimeMillis()));
+            viewHolder.tv_collage_time.setText("剩余" + DateUtil.getMToHMS(((datas.get(position).getTimestamp()+(1000*60*60*24))-System.currentTimeMillis()))+"结束");
             if (datas.get(position).getType().equals("three")) {
                 viewHolder.tv_collage_num.setText("3人拼团");
             } else if (datas.get(position).getType().equals("two")) {

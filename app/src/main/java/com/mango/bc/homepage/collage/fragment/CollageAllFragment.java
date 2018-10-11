@@ -84,6 +84,7 @@ public class CollageAllFragment extends Fragment implements CollageAllView {
         public void onItemClick(View view, int position) {
             Log.v("ooooo","---");
             Intent intent = new Intent(getActivity(), CollageDetailActivity.class);
+            EventBus.getDefault().postSticky(collageAdapter.getItem(position));
             startActivity(intent);
         }
 

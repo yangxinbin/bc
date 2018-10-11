@@ -92,10 +92,13 @@ public class CollageAdapter extends RecyclerView.Adapter {
                 return;
             viewHolder.tv_collage_name.setText(datas.get(position).getBookTitle());
             if (datas.get(position).getStatus().equals("started")) {
+                viewHolder.tv_collage_time.setVisibility(View.VISIBLE);
                 viewHolder.tv_collage_state.setText("拼团中");
             } else if (datas.get(position).getStatus().equals("finished")) {
+                viewHolder.tv_collage_time.setVisibility(View.GONE);
                 viewHolder.tv_collage_state.setText("完成拼团");
             } else if (datas.get(position).getStatus().equals("expired")) {
+                viewHolder.tv_collage_time.setVisibility(View.GONE);
                 viewHolder.tv_collage_state.setText("拼团失败");
             }
             viewHolder.tv_collage_price_after.setText(datas.get(position).getPrice() + "积分");

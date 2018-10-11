@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.homepage.collage.bean.CollageBean;
+import com.mango.bc.util.DateUtil;
 import com.mango.bc.util.RoundImageView;
 import com.mango.bc.util.Urls;
 
@@ -46,6 +47,14 @@ public class CollageDetailActivity extends BaseActivity {
     TextView tvName;
     @Bind(R.id.tv_time)
     TextView tvTime;
+    @Bind(R.id.tv_status)
+    TextView tvStatus;
+    @Bind(R.id.l_mes)
+    LinearLayout lMes;
+    @Bind(R.id.tv_collage_mes)
+    TextView tvCollageMes;
+    @Bind(R.id.tv_collage_delete)
+    Button tvCollageDelete;
     private Long leftTime;
 
     @Override
@@ -72,7 +81,25 @@ public class CollageDetailActivity extends BaseActivity {
         tvCollagePriceBefore.setText(collageBean.getBookPrice() + "积分");
         tvCollagePriceBefore.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
         leftTime = ((collageBean.getTimestamp() + (1000 * 60 * 60 * 24)) - System.currentTimeMillis()) / 1000;
-        handler.post(update_thread);
+        switch (getIntent().getIntExtra("status", 0)) {
+            case 0:
+                handler.post(update_thread);
+                break;
+            case 1:
+                tvCollageTime.setVisibility(View.GONE);
+                lMes.setVisibility(View.GONE);
+                tvCollageDelete.setVisibility(View.VISIBLE);
+                tvStatus.setText("拼团成功");
+                tvCollageMes.setText("拼团成功，已放入书架");
+                break;
+            case 2:
+                tvCollageTime.setVisibility(View.GONE);
+                lMes.setVisibility(View.GONE);
+                tvCollageDelete.setVisibility(View.VISIBLE);
+                tvStatus.setText("拼团失败");
+                tvCollageMes.setText("拼团失败后，我们将立即退款到您的钱包中");
+                break;
+        }
         //tvCollageTime.setText("邀请好友参团 " + DateUtil.getMToHMS(((collageBean.getTimestamp() + (1000 * 60 * 60 * 24)) - System.currentTimeMillis())) + " 后结束");
         if (collageBean.getMembers() != null) {
             lMember.removeAllViews();
@@ -87,6 +114,8 @@ public class CollageDetailActivity extends BaseActivity {
                 lMember.addView(circleImageView, i);
             }
         }
+        tvName.setText(collageBean.getBookTitle());
+        tvTime.setText(DateUtil.getDateToString(collageBean.getTimestamp(), "yyyy-MM-dd HH:mm:ss"));
         EventBus.getDefault().removeStickyEvent(CollageBean.class);
     }
 
@@ -98,18 +127,6 @@ public class CollageDetailActivity extends BaseActivity {
         return (int) (dpValue * scale + 0.5f);
     }
 
-    @OnClick({R.id.imageView_back, /*R.id.tv_collage_buy,*/ R.id.tv_collage_time})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.imageView_back:
-                finish();
-                break;
-/*            case R.id.tv_collage_buy:
-                break;*/
-            case R.id.tv_collage_time:
-                break;
-        }
-    }
 
     Handler handler = new Handler();
     Runnable update_thread = new Runnable() {
@@ -179,6 +196,22 @@ public class CollageDetailActivity extends BaseActivity {
             return false;
         } else {
             return super.onKeyDown(keyCode, event);
+        }
+    }
+
+
+    @OnClick({R.id.imageView_back, R.id.tv_collage_time, R.id.tv_collage_delete})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.imageView_back:
+                finish();
+                break;
+/*            case R.id.tv_collage_buy:
+                break;*/
+            case R.id.tv_collage_time:
+                break;
+            case R.id.tv_collage_delete:
+                break;
         }
     }
 }

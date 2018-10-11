@@ -269,7 +269,7 @@ public class MineFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-        //EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
     }
 
     @OnClick({R.id.bt_finish, R.id.l_expert, R.id.l_point, R.id.center_vip, R.id.imageView_to_vip, R.id.l_collage, R.id.imageVie_pic, R.id.l_class, R.id.l_get, R.id.l_time, R.id.l_code,/* R.id.l_to_vip,*/ R.id.l_to_agent, /*R.id.l_to_talent,*/ R.id.l_faq, R.id.l_service, R.id.l_setting, R.id.l_bc})

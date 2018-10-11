@@ -322,32 +322,33 @@ public class OpenUpVipActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onResponse(Call call, final Response response) throws IOException {
+                    public void onResponse(Call call, final Response response) {
+                        final String s;
                         try {
+                            s = response.body().string();
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    try {
-                                        if (response.body().string().equals("LOW_BALANCE")){
-                                            showDailogOpen("余额不足请充值", "");
-                                        }else {
-                                            AppUtils.showToast(OpenUpVipActivity.this, "购买成功");
-                                            loadUser();
-                                            finish();
-                                        }
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
+                                    if (s.equals("LOW_BALANCE")) {
+                                        showDailogOpen("余额不足请充值", "");
+                                    } else {
+                                        AppUtils.showToast(OpenUpVipActivity.this, "购买成功");
+                                        loadUser();
+                                        finish();
                                     }
+
                                 }
                             });
-                        } catch (Exception e) {
+                        } catch (IOException e) {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     AppUtils.showToast(OpenUpVipActivity.this, "购买失败");
                                 }
                             });
+
                         }
+
                     }
                 });
             }

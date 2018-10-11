@@ -65,7 +65,7 @@ public class CollageActivity extends BaseActivity {
         viewPagerCollage.setAdapter(vp);
         viewPagerCollage.setCurrentItem(0);
         viewPagerCollage.setOffscreenPageLimit(0);
-        viewPagerCollage.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+/*        viewPagerCollage.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
@@ -88,7 +88,7 @@ public class CollageActivity extends BaseActivity {
             public void onPageScrollStateChanged(int state) {
 
             }
-        });
+        });*/
         reflex(tabLayoutCollage);
     }
 

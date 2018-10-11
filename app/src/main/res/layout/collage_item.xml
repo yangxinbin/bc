@@ -27,7 +27,7 @@
 
             <TextView
                 android:id="@+id/tv_collage_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="我的第一本金融学启蒙书"
@@ -59,7 +59,7 @@
 
             <TextView
                 android:id="@+id/tv_collage_price_before"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_5"
                 android:layout_weight="1"

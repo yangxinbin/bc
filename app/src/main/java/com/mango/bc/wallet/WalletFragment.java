@@ -438,8 +438,8 @@ public class WalletFragment extends Fragment {
             breadcrumbsFork.setVisibility(View.VISIBLE);
             breadcrumbs.setVisibility(View.GONE);
         } else {
-            breadcrumbsFork.setVisibility(View.GONE);
-            breadcrumbs.setVisibility(View.VISIBLE);
+            //breadcrumbsFork.setVisibility(View.GONE);
+            //breadcrumbs.setVisibility(View.VISIBLE);
             try {
                 breadcrumbs.nextStep();
             } catch (IndexOutOfBoundsException e) {

@@ -69,9 +69,9 @@ public class BcActivity extends BaseServiceActivity implements MyAllBookView {
             //myBookPresenter.visitBooks(this, 3, 0, true);//获取书架的所有书
         }
         spUtils = SPUtils.getInstance("bc", this);
-        //spUtils.put("openId", "oXhi94jQkXPovBsqEs0B8QKsbM0A");
+        spUtils.put("openId", "oXhi94jQkXPovBsqEs0B8QKsbM0A");
         //假 普通
-        spUtils.put("openId", "ttttXhi94jQkXPovBsqEs0B8QKsbM0A");
+        //spUtils.put("openId", "ttttXhi94jQkXPovBsqEs0B8QKsbM0A");
         ButterKnife.bind(this);
         //进来刷新可以屏蔽
         loadUser(); //个人信息从网络拿数据

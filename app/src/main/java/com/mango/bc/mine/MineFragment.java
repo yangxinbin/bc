@@ -97,6 +97,10 @@ public class MineFragment extends Fragment {
     TextView tvPointGet;
     @Bind(R.id.l_point)
     LinearLayout lPoint;
+    @Bind(R.id.tv_finish)
+    TextView tvFinish;
+    @Bind(R.id.bt_finish)
+    TextView btFinish;
     private SPUtils spUtils;
     private int agencyInfo;
 
@@ -188,12 +192,14 @@ public class MineFragment extends Fragment {
             return;
         initView(statsBean);
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void UserBeanEventBus(UserBean userBean) {
         if (userBean == null)
             return;
         initView(userBean);
     }
+
     private void initView(UserBean userBean) {
         if (userBean == null)
             return;
@@ -265,7 +271,7 @@ public class MineFragment extends Fragment {
         //EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.l_expert, R.id.l_point, R.id.center_vip, R.id.imageView_to_vip, R.id.l_collage, R.id.imageVie_pic, R.id.l_class, R.id.l_get, R.id.l_time, R.id.l_code,/* R.id.l_to_vip,*/ R.id.l_to_agent, /*R.id.l_to_talent,*/ R.id.l_faq, R.id.l_service, R.id.l_setting, R.id.l_bc})
+    @OnClick({R.id.bt_finish,R.id.l_expert, R.id.l_point, R.id.center_vip, R.id.imageView_to_vip, R.id.l_collage, R.id.imageVie_pic, R.id.l_class, R.id.l_get, R.id.l_time, R.id.l_code,/* R.id.l_to_vip,*/ R.id.l_to_agent, /*R.id.l_to_talent,*/ R.id.l_faq, R.id.l_service, R.id.l_setting, R.id.l_bc})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -328,6 +334,8 @@ public class MineFragment extends Fragment {
                 //详情
 /*                intent = new Intent(getContext(), CollageActivity.class);
                 startActivity(intent);*/
+                break;
+            case R.id.bt_finish:
                 break;
         }
     }

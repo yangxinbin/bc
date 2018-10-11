@@ -50,12 +50,16 @@ public class DateUtil {
         return format.format(date);
     }
 
-    public static String getMToHMS(long milSecond) {
-        SimpleDateFormat formatter = new SimpleDateFormat("HH小时mm分");
+    public static String getMToHM(long milSecond) {
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
         formatter.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
         return formatter.format(milSecond);
     }
-
+    public static String getMToHMS(long milSecond) {
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        formatter.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
+        return formatter.format(milSecond);
+    }
     /**
      * 将字符串转为时间戳
      *

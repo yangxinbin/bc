@@ -18,6 +18,7 @@ import com.mango.bc.R;
 import com.mango.bc.bookcase.adapter.MyBookGirdAdapter;
 import com.mango.bc.bookcase.net.presenter.MyBookPresenter;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
+import com.mango.bc.homepage.collage.CollageDetailActivity;
 import com.mango.bc.homepage.collage.adapter.CollageAdapter;
 import com.mango.bc.homepage.collage.bean.CollageBean;
 import com.mango.bc.homepage.collage.presenter.CollagePresenter;
@@ -81,8 +82,9 @@ public class CollageAllFragment extends Fragment implements CollageAllView {
     private CollageAdapter.OnItemClickLitener mOnClickListenner = new CollageAdapter.OnItemClickLitener() {
         @Override
         public void onItemClick(View view, int position) {
-            //Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
-            //startActivity(intent);
+            Log.v("ooooo","---");
+            Intent intent = new Intent(getActivity(), CollageDetailActivity.class);
+            startActivity(intent);
         }
 
     };

@@ -146,8 +146,9 @@
             android:name=".mine.activity.PointZoomActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".mine.activity.SettingActivity" />
-        <activity android:name=".mine.activity.AboutActivity"></activity>
-        <activity android:name=".mine.activity.user.UserChangeActivity"></activity>
+        <activity android:name=".mine.activity.AboutActivity" />
+        <activity android:name=".mine.activity.user.UserChangeActivity" />
+        <activity android:name=".homepage.collage.CollageDetailActivity"></activity>
     </application>
 
 </manifest>

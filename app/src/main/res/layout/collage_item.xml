@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/l_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -14,7 +13,7 @@
         <com.mango.bc.util.RoundImageView
             android:id="@+id/img_collage_book"
             android:layout_width="@dimen/dp_100"
-            android:layout_height="@dimen/dp_150"
+            android:layout_height="@dimen/dp_130"
             android:layout_marginRight="@dimen/dp_8"
             android:scaleType="centerCrop"
             android:src="@drawable/book_pic1" />

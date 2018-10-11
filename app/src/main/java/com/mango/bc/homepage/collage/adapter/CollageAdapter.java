@@ -163,7 +163,7 @@ public class CollageAdapter extends RecyclerView.Adapter {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.book_free_item:
+                case R.id.l_item:
                     if (mOnItemClickLitener != null) {
                         mOnItemClickLitener.onItemClick(l_item, getAdapterPosition());
                     }

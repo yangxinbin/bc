@@ -138,19 +138,19 @@
                             android:layout_height="wrap_content"
                             android:text="20PPG"
                             android:textColor="@color/yello"
-                            android:textSize="@dimen/dp_14" />
+                            android:textSize="@dimen/textSize" />
 
                         <TextView
                             android:id="@+id/tv_collage_price_before"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dp_5"
+                            android:layout_marginLeft="@dimen/dp_10"
                             android:layout_weight="1"
                             android:text="36.8PPG"
                             android:textColor="@color/gray_9"
-                            android:textSize="@dimen/dp_12" />
+                            android:textSize="@dimen/dp_14" />
 
-                        <TextView
+<!--                        <TextView
                             android:id="@+id/tv_collage_buy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -161,7 +161,7 @@
                             android:paddingTop="@dimen/dp_5"
                             android:text="点击购买"
                             android:textColor="@color/yello"
-                            android:textSize="@dimen/dp_14" />
+                            android:textSize="@dimen/dp_14" />-->
                     </LinearLayout>
 
                 </LinearLayout>

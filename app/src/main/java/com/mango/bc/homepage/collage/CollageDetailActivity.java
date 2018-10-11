@@ -98,14 +98,14 @@ public class CollageDetailActivity extends BaseActivity {
         return (int) (dpValue * scale + 0.5f);
     }
 
-    @OnClick({R.id.imageView_back, R.id.tv_collage_buy, R.id.tv_collage_time})
+    @OnClick({R.id.imageView_back, /*R.id.tv_collage_buy,*/ R.id.tv_collage_time})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView_back:
                 finish();
                 break;
-            case R.id.tv_collage_buy:
-                break;
+/*            case R.id.tv_collage_buy:
+                break;*/
             case R.id.tv_collage_time:
                 break;
         }

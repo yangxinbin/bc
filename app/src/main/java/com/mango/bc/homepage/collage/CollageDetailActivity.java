@@ -146,18 +146,20 @@ public class CollageDetailActivity extends BaseActivity {
             hour = minute / 60;
             minute = minute % 60;
         }
-        String strtime="";
+        String strtime = "";
         if (hour <= 9) {
             if (minute <= 9) {
                 strtime = "邀请好友参团 0" + hour + ":0" + minute + ":" + second + " 后结束";
-            }else {
+            } else {
                 strtime = "邀请好友参团 0" + hour + ":" + minute + ":" + second + " 后结束";
             }
-        }else {
+        } else {
             if (minute <= 9) {
                 strtime = "邀请好友参团 " + hour + ":0" + minute + ":" + second + " 后结束";
+            } else {
+                strtime = "邀请好友参团 " + hour + ":" + minute + ":" + second + " 后结束";
+
             }
-            strtime = "邀请好友参团 " + hour + ":" + minute + ":" + second + " 后结束";
         }
         return strtime;
     }

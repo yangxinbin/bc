@@ -33,6 +33,10 @@
             android:layout_marginStart="@dimen/dp_10"
             app:srcCompat="@drawable/back" />
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/common_gray"></View>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,7 +56,6 @@
             app:tabSelectedTextColor="@color/yello"
             app:tabTextAppearance="@style/TabTextOther" />
     </LinearLayout>
-
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager_collage"
         android:layout_width="wrap_content"

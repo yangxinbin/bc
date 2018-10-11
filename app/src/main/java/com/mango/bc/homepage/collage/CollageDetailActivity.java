@@ -84,11 +84,13 @@ public class CollageDetailActivity extends BaseActivity {
         switch (getIntent().getIntExtra("status", 0)) {
             case 0:
                 handler.post(update_thread);
+                tvStatus.setVisibility(View.GONE);
                 break;
             case 1:
                 tvCollageTime.setVisibility(View.GONE);
                 lMes.setVisibility(View.GONE);
                 tvCollageDelete.setVisibility(View.VISIBLE);
+                tvStatus.setVisibility(View.VISIBLE);
                 tvStatus.setText("拼团成功");
                 tvCollageMes.setText("拼团成功，已放入书架");
                 break;
@@ -96,6 +98,7 @@ public class CollageDetailActivity extends BaseActivity {
                 tvCollageTime.setVisibility(View.GONE);
                 lMes.setVisibility(View.GONE);
                 tvCollageDelete.setVisibility(View.VISIBLE);
+                tvStatus.setVisibility(View.VISIBLE);
                 tvStatus.setText("拼团失败");
                 tvCollageMes.setText("拼团失败后，我们将立即退款到您的钱包中");
                 break;

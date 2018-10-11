@@ -102,7 +102,7 @@ public class CollageAdapter extends RecyclerView.Adapter {
             viewHolder.tv_collage_price_before.setText(datas.get(position).getBookPrice() + "积分");
             viewHolder.tv_collage_price_before.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
             Log.v("ddddddddddddd", (datas.get(position).getTimestamp() + (1000 * 60 * 60 * 24) + "==" + System.currentTimeMillis()) + "==" + ((datas.get(position).getTimestamp() + (1000 * 60 * 60 * 24)) - System.currentTimeMillis()));
-            viewHolder.tv_collage_time.setText("剩余" + DateUtil.getMToHMS(((datas.get(position).getTimestamp() + (1000 * 60 * 60 * 24)) - System.currentTimeMillis())) + "结束");
+            viewHolder.tv_collage_time.setText("剩余" + DateUtil.getMToHMS(((datas.get(position).getTimestamp() + (1000 * 60 * 60 * 24)) - System.currentTimeMillis())));
             if (datas.get(position).getType().equals("three")) {
                 viewHolder.tv_collage_num.setText("3人拼团");
             } else if (datas.get(position).getType().equals("two")) {
@@ -111,12 +111,13 @@ public class CollageAdapter extends RecyclerView.Adapter {
             if (datas.get(position).getBookCover() != null)
                 Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getBookCover().getFileName()).into(((CollageAdapter.CollageViewHolder) holder).img_collage_book);
             if (datas.get(position).getMembers() != null) {
+                viewHolder.l_member.removeAllViews();
                 for (int i = 0; i < datas.get(position).getMembers().size(); i++) {
                     CircleImageView circleImageView = new CircleImageView(context);
                     if (datas.get(position).getMembers().get(i).getAvator() != null) {
                         Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getMembers().get(i).getAvator().getFileName()).into(circleImageView);
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(dip2px(context, 50), dip2px(context, 50));//两个400分别为添加图片的大小
-                        params.setMargins(0,0,dip2px(context,10),0);
+                        params.setMargins(0,0,dip2px(context,5),0);
                         circleImageView.setLayoutParams(params);
                     }
                     viewHolder.l_member.addView(circleImageView, i);

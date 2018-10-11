@@ -65,6 +65,7 @@ public class OpenUpVipActivity extends BaseActivity {
     private String sVipPackageId;
     private String sAutoBilling;
     private SPUtils spUtils;
+    private Double ppg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,9 +243,9 @@ public class OpenUpVipActivity extends BaseActivity {
         Intent intent = null;
         switch (view.getId()) {
             case R.id.imageView_back:
-                if (getIntent().getBooleanExtra("center",false)){
+                if (getIntent().getBooleanExtra("center", false)) {
                     intent = new Intent(this, VipCenterActivity.class);
-                }else {
+                } else {
                     intent = new Intent(this, VipDetailActivity.class);
                 }
                 startActivity(intent);
@@ -278,6 +279,27 @@ public class OpenUpVipActivity extends BaseActivity {
         dialog.show();
     }
 
+    private void showDailogOpen(String s1, final String s2) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setIcon(R.mipmap.icon)//设置标题的图片
+                .setTitle(s1)//设置对话框的标题
+                //.setMessage(s2)//设置对话框的内容
+                //设置对话框的按钮
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).create();
+        dialog.show();
+    }
+
     private void becomeVip() {
         new Thread(new Runnable() {
             @Override
@@ -294,19 +316,28 @@ public class OpenUpVipActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 AppUtils.showToast(OpenUpVipActivity.this, "购买失败");
+                                //showDailogOpen("请检查网络连接", "");
                             }
                         });
                     }
 
                     @Override
-                    public void onResponse(Call call, Response response) throws IOException {
+                    public void onResponse(Call call, final Response response) throws IOException {
                         try {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    AppUtils.showToast(OpenUpVipActivity.this, "购买成功");
-                                    loadUser();
-                                    finish();
+                                    try {
+                                        if (response.body().string().equals("LOW_BALANCE")){
+                                            showDailogOpen("余额不足请充值", "");
+                                        }else {
+                                            AppUtils.showToast(OpenUpVipActivity.this, "购买成功");
+                                            loadUser();
+                                            finish();
+                                        }
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             });
                         } catch (Exception e) {
@@ -322,6 +353,7 @@ public class OpenUpVipActivity extends BaseActivity {
             }
         }).start();
     }
+
     private void loadUser() {
         new Thread(new Runnable() {
             @Override
@@ -357,13 +389,14 @@ public class OpenUpVipActivity extends BaseActivity {
             }
         }).start();
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         Intent intent;
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            if (getIntent().getBooleanExtra("center",false)){
+            if (getIntent().getBooleanExtra("center", false)) {
                 intent = new Intent(this, VipCenterActivity.class);
-            }else {
+            } else {
                 intent = new Intent(this, VipDetailActivity.class);
             }
             startActivity(intent);

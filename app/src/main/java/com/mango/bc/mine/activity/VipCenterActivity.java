@@ -68,6 +68,8 @@ public class VipCenterActivity extends BaseActivity {
         } else {
             imgVip.setVisibility(View.GONE);
         }
+
+
         tvVipName.setText(auth.getAlias());
         if (auth.getAvator() != null)
             Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + auth.getAvator().getFileName()).into(imageVieAuthor);
@@ -78,6 +80,12 @@ public class VipCenterActivity extends BaseActivity {
         if (auth.getStats() != null) {
             tvVipContent1.setText("VIP特权免费读了" + auth.getStats().getVipGetMemberBooks() + "本书，共节省" + auth.getStats().getBuyMemberMoneySaved() + "币");
             tvVipContent2.setText("购买大咖课程" + auth.getStats().getPaidBooks() + "节，共节省" + auth.getStats().getBuyPaidBookMoneySaved() + "币");
+        }
+        //以下是达人节点UI
+        if (auth.getAgencyInfo() == null)
+            return;
+        if (auth.getAgencyInfo().getStatus() == 2){
+            imgAgency.setVisibility(View.VISIBLE);
         }
     }
 

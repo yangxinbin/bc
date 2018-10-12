@@ -1,5 +1,6 @@
 package com.mango.bc.wallet.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,7 +11,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mango.bc.R;
+import com.mango.bc.homepage.activity.OpenUpVipActivity;
+import com.mango.bc.homepage.activity.competitivebook.CompetitiveBookActivity;
+import com.mango.bc.homepage.activity.expertbook.ExpertBookActivity;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
+import com.mango.bc.mine.activity.SettingActivity;
 import com.mango.bc.util.ACache;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.NetUtil;
@@ -191,14 +196,22 @@ public class DailyTasksFragment extends Fragment {
 
     @OnClick({R.id.tv_group, R.id.tv_paid, R.id.tv_member, R.id.tv_vip})
     public void onViewClicked(View view) {
+        Intent intent;
         switch (view.getId()) {
             case R.id.tv_group:
                 break;
             case R.id.tv_paid:
+                intent = new Intent(getActivity(), ExpertBookActivity.class);
+                startActivity(intent);
                 break;
             case R.id.tv_member:
+                intent = new Intent(getActivity(), CompetitiveBookActivity.class);
+                startActivity(intent);
                 break;
             case R.id.tv_vip:
+/*                intent = new Intent(getActivity(), OpenUpVipActivity.class);
+                startActivity(intent);*/
+                //邀请
                 break;
         }
     }

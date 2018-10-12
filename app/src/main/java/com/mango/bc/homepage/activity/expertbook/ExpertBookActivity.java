@@ -92,12 +92,14 @@ public class ExpertBookActivity extends BaseServiceActivity implements BookExper
         }
         refreshAndLoadMore();
     }
+
     @Override
     protected void onServiceBound() {
         controlPanel = new ControlPanel(flPlayBar);
         AudioPlayer.get().addOnPlayEventListener(controlPanel);
         //parseIntent();
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true, priority = 5)
     public void RefreshStageBeanEventBus(RefreshStageBean bean) {
         if (bean == null) {
@@ -184,7 +186,7 @@ public class ExpertBookActivity extends BaseServiceActivity implements BookExper
             } else {
                 return false;
             }
-        }else {
+        } else {
             return false;
         }
     }

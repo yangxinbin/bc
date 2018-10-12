@@ -30,7 +30,10 @@ public class ScreenUtils {
         }
         return result;
     }
-
+    public static int dip2px(Context context, float dpValue) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        return (int)(dpValue * scale + 0.5F);
+    }
     public static int dp2px(float dpValue) {
         final float scale = sContext.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);

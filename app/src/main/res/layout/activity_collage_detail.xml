@@ -169,7 +169,6 @@
             </LinearLayout>
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/tv_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -177,7 +176,8 @@
                 android:layout_marginTop="@dimen/dp_15"
                 android:text="拼团失败"
                 android:textColor="@color/yello"
-                android:textSize="@dimen/title" />
+                android:textSize="@dimen/title"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/tv_collage_time"
@@ -186,14 +186,15 @@
                 android:layout_margin="@dimen/dp_15"
                 android:background="@drawable/yellow_full_circle"
                 android:text="邀请好友参团 23:59:32 后结束" />
+
             <Button
-                android:visibility="gone"
                 android:id="@+id/tv_collage_delete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp_15"
                 android:background="@drawable/yellow_full_circle"
-                android:text="@string/delete" />
+                android:text="@string/delete"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_collage_mes"

@@ -54,7 +54,7 @@ public class MemberActivity extends BaseActivity {
 
     @OnClick(R.id.imageView_back)
     public void onViewClicked() {
-        Intent intent = new Intent(this, MemberActivity.class);
+        Intent intent = new Intent(this, ExpertApplyDetailActivity.class);
         startActivity(intent);
         finish();
     }

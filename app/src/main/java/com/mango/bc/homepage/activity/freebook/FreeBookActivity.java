@@ -29,7 +29,7 @@ import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.homepage.net.presenter.BookPresenterImpl;
 import com.mango.bc.homepage.net.view.BookFreeView;
 import com.mango.bc.mine.bean.StatsBean;
-import com.mango.bc.mine.jsonutil.AuthJsonUtils;
+import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.ACache;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
@@ -345,7 +345,7 @@ public class FreeBookActivity extends BaseServiceActivity implements BookFreeVie
                                 @Override
                                 public void run() {
                                     //loadUser();//更新用户信息（钱）
-                                    StatsBean statsBean = AuthJsonUtils.readStatsBean(string1);
+                                    StatsBean statsBean = MineJsonUtils.readStatsBean(string1);
                                     EventBus.getDefault().postSticky(statsBean);//刷新钱包
                                 }
                             });

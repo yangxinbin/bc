@@ -19,7 +19,7 @@ import com.mango.bc.homepage.adapter.SingleCollageTypeAdapter;
 import com.mango.bc.homepage.bean.CollageTypeBean;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.mine.bean.UserBean;
-import com.mango.bc.mine.jsonutil.AuthJsonUtils;
+import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.RoundImageView;
@@ -223,7 +223,7 @@ public class CollageBuyBookActivity extends BaseActivity {
                                 @Override
                                 public void run() {
                                     spUtils.put("auth", string);
-                                    UserBean userBean = AuthJsonUtils.readUserBean(string);
+                                    UserBean userBean = MineJsonUtils.readUserBean(string);
                                     Log.v("lllllllll", "=aaaa==" + userBean.isVip());
                                     EventBus.getDefault().postSticky(userBean);//刷新钱包，我的。
                                     Intent intent = new Intent(CollageBuyBookActivity.this, CollageActivity.class);

@@ -29,7 +29,7 @@ import com.mango.bc.bookcase.net.view.MyAllBookView;
 import com.mango.bc.homepage.HomePageFragment;
 import com.mango.bc.mine.MineFragment;
 import com.mango.bc.mine.bean.UserBean;
-import com.mango.bc.mine.jsonutil.AuthJsonUtils;
+import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.JsonUtil;
@@ -180,7 +180,7 @@ public class BcActivity extends BaseServiceActivity implements MyAllBookView {
                                 @Override
                                 public void run() {
                                     spUtils.put("auth", string);
-                                    UserBean userBean = AuthJsonUtils.readUserBean(string);
+                                    UserBean userBean = MineJsonUtils.readUserBean(string);
                                     spUtils.put("authToken", userBean.getAuthToken());
                                     ifCheckIn();
                                     Log.v("lllllllll", "=aaaa==" + userBean.isVip());

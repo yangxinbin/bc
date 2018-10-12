@@ -19,7 +19,7 @@ import com.mango.bc.homepage.bean.BuySuccessBean;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.mine.bean.StatsBean;
 import com.mango.bc.mine.bean.UserBean;
-import com.mango.bc.mine.jsonutil.AuthJsonUtils;
+import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.NetUtil;
@@ -73,7 +73,7 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
         spUtils = SPUtils.getInstance("bc", this);
         myBookPresenter = new MyBookPresenterImpl(this);
         ButterKnife.bind(this);
-        initAuth(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));
+        initAuth(MineJsonUtils.readUserBean(spUtils.getString("auth", "")));
         Log.v("ppppppp", ppCoins + "===" + prices);
         if (ppCoins < prices) {
             tvBuy.setText(getResources().getString(R.string.pp_recharge));
@@ -212,7 +212,7 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
                                 @Override
                                 public void run() {
                                     loadUser();//更新用户信息（钱）
-                                    StatsBean statsBean = AuthJsonUtils.readStatsBean(string1);
+                                    StatsBean statsBean = MineJsonUtils.readStatsBean(string1);
                                     EventBus.getDefault().postSticky(statsBean);//刷新钱包
                                 }
                             });
@@ -247,7 +247,7 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
                                 public void run() {
                                     spUtils.put("auth", string2);//刷新用户信息
                                     Log.v("cccccccccc", "-----auth----");
-                                    UserBean userBean = AuthJsonUtils.readUserBean(string2);
+                                    UserBean userBean = MineJsonUtils.readUserBean(string2);
                                     EventBus.getDefault().postSticky(userBean);//刷新钱包
                                 }
                             });

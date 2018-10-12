@@ -22,7 +22,7 @@ import android.widget.TextView;
 import com.mango.bc.R;
 import com.mango.bc.adapter.ViewPageAdapter;
 import com.mango.bc.mine.bean.UserBean;
-import com.mango.bc.mine.jsonutil.AuthJsonUtils;
+import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.DensityUtil;
 import com.mango.bc.util.HttpUtils;
@@ -131,7 +131,7 @@ public class WalletFragment extends Fragment {
         EventBus.getDefault().register(this);
         initDatas();
         init();
-        initAuth(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));
+        initAuth(MineJsonUtils.readUserBean(spUtils.getString("auth", "")));
         initChechIf(JsonUtil.readCheckInBean(spUtils.getString("checkIf", "")));
         return view;
     }
@@ -387,7 +387,7 @@ public class WalletFragment extends Fragment {
                                 @Override
                                 public void run() {
                                     spUtils.put("auth", string);
-                                    UserBean userBean = AuthJsonUtils.readUserBean(string);
+                                    UserBean userBean = MineJsonUtils.readUserBean(string);
                                     Log.v("lllllllll", "=aaaa==" + userBean.isVip());
                                     EventBus.getDefault().postSticky(userBean);//刷新钱包，我的。
                                 }

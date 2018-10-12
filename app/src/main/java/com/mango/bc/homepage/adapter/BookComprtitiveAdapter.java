@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,7 @@ import com.google.gson.reflect.TypeToken;
 import com.mango.bc.R;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.mine.bean.UserBean;
-import com.mango.bc.mine.jsonutil.AuthJsonUtils;
+import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.RoundImageView;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
@@ -66,7 +65,7 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public BookComprtitiveAdapter(Context context) {
         spUtils = SPUtils.getInstance("bc", context);
-        UserBean userBean = AuthJsonUtils.readUserBean(spUtils.getString("auth", ""));
+        UserBean userBean = MineJsonUtils.readUserBean(spUtils.getString("auth", ""));
         if (userBean != null)
             isVip = userBean.isVip();
         this.context = context;

@@ -14,7 +14,7 @@ import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.homepage.activity.OpenUpVipActivity;
 import com.mango.bc.mine.bean.UserBean;
-import com.mango.bc.mine.jsonutil.AuthJsonUtils;
+import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.DateUtil;
 import com.mango.bc.util.HttpUtils;
@@ -55,7 +55,7 @@ public class VipAutoActivity extends BaseActivity {
         setContentView(R.layout.activity_vip_auto);
         spUtils = SPUtils.getInstance("bc", this);
         ButterKnife.bind(this);
-        initView(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));
+        initView(MineJsonUtils.readUserBean(spUtils.getString("auth", "")));
     }
 
     private void initView(UserBean auth) {
@@ -184,7 +184,7 @@ public class VipAutoActivity extends BaseActivity {
                                 @Override
                                 public void run() {
                                     spUtils.put("auth", string);
-                                    UserBean userBean = AuthJsonUtils.readUserBean(string);
+                                    UserBean userBean = MineJsonUtils.readUserBean(string);
                                     initView(userBean);
                                     Log.v("lllllllll", "=aaaa==" + userBean.isVip());
                                     EventBus.getDefault().postSticky(userBean);//刷新钱包，我的。

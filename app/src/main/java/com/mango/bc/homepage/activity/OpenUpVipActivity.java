@@ -20,7 +20,7 @@ import com.mango.bc.homepage.bean.VipPackageBean;
 import com.mango.bc.homepage.bean.VipType;
 import com.mango.bc.mine.activity.VipCenterActivity;
 import com.mango.bc.mine.bean.UserBean;
-import com.mango.bc.mine.jsonutil.AuthJsonUtils;
+import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.ACache;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.DateUtil;
@@ -30,7 +30,6 @@ import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 import com.mango.bc.wallet.activity.RechargeActivity;
-import com.mango.bc.wallet.activity.TransferActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -156,7 +155,7 @@ public class OpenUpVipActivity extends BaseActivity {
 
     private void initDetail(String s) {
         calendar = Calendar.getInstance();
-        UserBean userBean = AuthJsonUtils.readUserBean(spUtils.getString("auth", ""));
+        UserBean userBean = MineJsonUtils.readUserBean(spUtils.getString("auth", ""));
         Log.v("vvvv", "====" + userBean.getBilling().getEndOn());
         if (userBean != null) {
             if (userBean.getBilling() != null) {
@@ -381,7 +380,7 @@ public class OpenUpVipActivity extends BaseActivity {
                                 @Override
                                 public void run() {
                                     spUtils.put("auth", string);
-                                    UserBean userBean = AuthJsonUtils.readUserBean(string);
+                                    UserBean userBean = MineJsonUtils.readUserBean(string);
                                     Log.v("lllllllll", "=aaaa==" + userBean.isVip());
                                     EventBus.getDefault().postSticky(userBean);//刷新钱包，我的。
                                 }

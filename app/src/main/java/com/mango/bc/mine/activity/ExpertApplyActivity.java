@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +16,7 @@ import android.widget.TextView;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.mine.bean.UserBean;
-import com.mango.bc.mine.jsonutil.AuthJsonUtils;
+import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.SPUtils;
@@ -90,7 +89,7 @@ public class ExpertApplyActivity extends BaseActivity {
         ButterKnife.bind(this);
         expert = getIntent().getIntExtra("expert", 0);
         initView(expert);
-        initViewPlay(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));
+        initViewPlay(MineJsonUtils.readUserBean(spUtils.getString("auth", "")));
     }
 
     private void initViewPlay(UserBean auth) {
@@ -251,7 +250,7 @@ public class ExpertApplyActivity extends BaseActivity {
                                 @Override
                                 public void run() {
                                     spUtils.put("auth", string);
-                                    UserBean userBean = AuthJsonUtils.readUserBean(string);
+                                    UserBean userBean = MineJsonUtils.readUserBean(string);
                                     EventBus.getDefault().postSticky(userBean);//刷新钱包，我的。
                                     showDailog("审核中，请您耐心等待。", "");
                                 }

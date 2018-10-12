@@ -13,7 +13,7 @@ import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.homepage.activity.OpenUpVipActivity;
 import com.mango.bc.mine.bean.UserBean;
-import com.mango.bc.mine.jsonutil.AuthJsonUtils;
+import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.DateUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
@@ -57,7 +57,7 @@ public class VipCenterActivity extends BaseActivity {
         setContentView(R.layout.activity_vip_center);
         spUtils = SPUtils.getInstance("bc", this);
         ButterKnife.bind(this);
-        initView(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));
+        initView(MineJsonUtils.readUserBean(spUtils.getString("auth", "")));
     }
 
     private void initView(UserBean auth) {

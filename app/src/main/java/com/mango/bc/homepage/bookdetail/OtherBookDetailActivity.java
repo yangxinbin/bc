@@ -23,7 +23,6 @@ import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
 import com.mango.bc.bookcase.net.view.MyAllBookView;
 import com.mango.bc.homepage.activity.BuyBookActivity;
 import com.mango.bc.homepage.activity.OpenUpVipActivity;
-import com.mango.bc.homepage.activity.VipDetailActivity;
 import com.mango.bc.homepage.bookdetail.adapter.BookDetailAdapter;
 import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
 import com.mango.bc.homepage.bookdetail.bean.PlayBarBean;
@@ -32,9 +31,8 @@ import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
 import com.mango.bc.homepage.bookdetail.play.executor.ControlPanel;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
-import com.mango.bc.mine.activity.VipCenterActivity;
 import com.mango.bc.mine.bean.StatsBean;
-import com.mango.bc.mine.jsonutil.AuthJsonUtils;
+import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.ACache;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
@@ -581,7 +579,7 @@ public class OtherBookDetailActivity extends BaseServiceActivity implements MyAl
                                 @Override
                                 public void run() {
                                     //loadUser();//更新用户信息（钱）
-                                    StatsBean statsBean = AuthJsonUtils.readStatsBean(string1);
+                                    StatsBean statsBean = MineJsonUtils.readStatsBean(string1);
                                     EventBus.getDefault().postSticky(statsBean);//刷新钱包
                                 }
                             });

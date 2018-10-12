@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,7 +15,7 @@ import com.google.gson.reflect.TypeToken;
 import com.mango.bc.R;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.mine.bean.UserBean;
-import com.mango.bc.mine.jsonutil.AuthJsonUtils;
+import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.RoundImageView;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
@@ -51,7 +50,7 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
     }
 
     public void setmDate(List<BookBean> data) {
-        UserBean userBean = AuthJsonUtils.readUserBean(spUtils.getString("auth", ""));
+        UserBean userBean = MineJsonUtils.readUserBean(spUtils.getString("auth", ""));
         Log.v("lllllllll", "===userBean.isVip()=" + userBean.isVip());
         if (userBean != null)
             isVip = userBean.isVip();

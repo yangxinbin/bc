@@ -27,7 +27,7 @@ import com.mango.bc.homepage.net.bean.LoadStageBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.mine.bean.UserBean;
-import com.mango.bc.mine.jsonutil.AuthJsonUtils;
+import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.NetUtil;
@@ -236,7 +236,7 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
                                 public void run() {
                                     spUtils.put("auth", string2);//刷新用户信息
                                     Log.v("cccccccccc", "-----auth----");
-                                    UserBean userBean = AuthJsonUtils.readUserBean(string2);
+                                    UserBean userBean = MineJsonUtils.readUserBean(string2);
                                     Log.v("lllllllll","=rrrr=="+userBean.isVip());
                                     EventBus.getDefault().postSticky(userBean);//刷新钱包
                                 }

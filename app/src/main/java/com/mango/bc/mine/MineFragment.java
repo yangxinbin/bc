@@ -2,6 +2,8 @@ package com.mango.bc.mine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,30 +15,42 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.mango.bc.BcActivity;
 import com.mango.bc.R;
 import com.mango.bc.homepage.activity.CollageActivity;
 import com.mango.bc.homepage.activity.OpenUpVipActivity;
 import com.mango.bc.mine.activity.ApplyActivity;
 import com.mango.bc.mine.activity.ExpertApplyActivity;
+import com.mango.bc.mine.activity.ExpertApplyDetailActivity;
 import com.mango.bc.mine.activity.FaqActivity;
 import com.mango.bc.mine.activity.ServiceActivity;
 import com.mango.bc.mine.activity.SettingActivity;
 import com.mango.bc.mine.activity.VipCenterActivity;
+import com.mango.bc.mine.bean.MemberBean;
 import com.mango.bc.mine.bean.StatsBean;
 import com.mango.bc.mine.bean.UserBean;
-import com.mango.bc.mine.jsonutil.AuthJsonUtils;
+import com.mango.bc.mine.jsonutil.MineJsonUtils;
+import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.DateUtil;
+import com.mango.bc.util.HttpUtils;
+import com.mango.bc.util.JsonUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
+import com.mango.bc.wallet.bean.CheckInBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.IOException;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * Created by admin on 2018/9/10.
@@ -112,10 +126,60 @@ public class MineFragment extends Fragment {
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         //loadUser(false); //从网络拿数据
-        initView(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));
+        initView(MineJsonUtils.readUserBean(spUtils.getString("auth", "")));
+        initMember();
         return view;
     }
 
+    private void initMember() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpUtils.doGet(Urls.HOST_MEMBER + "?authToken=" + spUtils.getString("authToken", ""), new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        mHandler.sendEmptyMessage(0);
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            String string = response.body().string();
+                            MemberBean memberBean = MineJsonUtils.readMemberBean(string);
+                            spUtils.put("member", string);
+                            Message msg = mHandler.obtainMessage();
+                            msg.obj = memberBean;
+                            msg.what = 1;
+                            msg.sendToTarget();
+                        } catch (Exception e) {
+                            mHandler.sendEmptyMessage(0);
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private MineFragment.MyHandler mHandler = new MineFragment.MyHandler();
+
+    private class MyHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0://达人成员失败
+                    AppUtils.showToast(getActivity(), "获取成员失败");
+                    break;
+                case 1://达人成员成功
+                    MemberBean memberBean = (MemberBean) msg.obj;
+                    if (memberBean == null)
+                        return;
+                    if (tvExpertState != null)
+                        tvExpertState.setText("已获取贡献值" + memberBean.getTotal() + "积分");
+                    break;
+            }
+        }
+    }
     /*
         private void loadUser(final Boolean ifCache) {
             final ACache mCache = ACache.get(getActivity().getApplicationContext());
@@ -128,7 +192,7 @@ public class MineFragment extends Fragment {
                     if (ifCache) {//读取缓存数据
                         String newString = mCache.getAsString("cache_auth");
                         if (newString != null) {
-                            UserBean userBean = AuthJsonUtils.readUserBean(newString);
+                            UserBean userBean = MineJsonUtils.readUserBean(newString);
                             Message msg = mHandler.obtainMessage();
                             msg.obj = userBean;
                             msg.what = 1;
@@ -150,7 +214,7 @@ public class MineFragment extends Fragment {
                             try {
                                 String string = response.body().string();
                                 mCache.put("cache_auth");
-                                UserBean userBean = AuthJsonUtils.readUserBean(string);
+                                UserBean userBean = MineJsonUtils.readUserBean(string);
                                 Message msg = mHandler.obtainMessage();
                                 msg.obj = userBean;
                                 msg.what = 1;
@@ -327,6 +391,9 @@ public class MineFragment extends Fragment {
                     startActivity(intent);
                 } else if (agencyInfo == 2) {
                     //详情
+                    intent = new Intent(getContext(), ExpertApplyDetailActivity.class);
+                    intent.putExtra("expert", 1);
+                    startActivity(intent);
                 } else if (agencyInfo == 3) {
                     intent = new Intent(getContext(), ExpertApplyActivity.class);
                     intent.putExtra("expert", 2);

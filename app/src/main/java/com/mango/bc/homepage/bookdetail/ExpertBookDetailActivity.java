@@ -23,6 +23,7 @@ import com.mango.bc.adapter.ViewPageAdapter;
 import com.mango.bc.base.BaseServiceActivity;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.activity.BuyBookActivity;
+import com.mango.bc.homepage.activity.CollageBuyBookActivity;
 import com.mango.bc.homepage.activity.VipDetailActivity;
 import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
 import com.mango.bc.homepage.bookdetail.bean.PlayBarBean;
@@ -588,6 +589,11 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
                 startActivityForResult(intent, 2);
                 break;
             case R.id.l_collage:
+                intent = new Intent(this, CollageBuyBookActivity.class);
+                EventBus.getDefault().postSticky(mBookBean);
+                EventBus.getDefault().removeStickyEvent(MyBookBean.class);
+                startActivity(intent);
+                //startActivityForResult(intent, 3);
                 break;//以上是购买foot
             case R.id.l_like_play:
                 like(bookId);

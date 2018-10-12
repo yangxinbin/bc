@@ -103,13 +103,14 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
         }
         bookId = bookDetailBean.getId();
         tvTitle.setText(bookDetailBean.getTitle());
-        prices = bookDetailBean.getPrice();
         if (isVip) {
             tvPpgNeed.setText(bookDetailBean.getVipPrice() + "积分");
             tvNeedPpg.setText("实付款：" + bookDetailBean.getVipPrice() + "积分");
+            prices = bookDetailBean.getVipPrice();
         } else {
             tvPpgNeed.setText(bookDetailBean.getPrice() + "积分");
             tvNeedPpg.setText("实付款：" + bookDetailBean.getPrice() + "积分");
+            prices = bookDetailBean.getPrice();
         }
 
     }

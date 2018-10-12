@@ -14,5 +14,5 @@
         android:top="1dp" />
 
     <!-- 矩形的圆角半径 -->
-    <corners android:radius="20dp" />
+    <corners android:radius="25dp" />
 </shape>

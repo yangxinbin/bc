@@ -52,10 +52,12 @@ public class PointApplyActivity extends BaseActivity {
         initViewPay();
 
     }
+
     private void initDate() {
         datas = new ArrayList<>();
-        datas.add(new VipType("10000.00 PPG", "", "1PPG=1元", "",   "享9折", "", "", "true"));
+        datas.add(new VipType("10000.00 PPG", "", "1PPG=1元", "", "享9折", "", "", "true"));
     }
+
     private void initView() {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -106,13 +108,15 @@ public class PointApplyActivity extends BaseActivity {
 
     @OnClick({R.id.imageView_back, R.id.pay_ok})
     public void onViewClicked(View view) {
-        Intent intent;
+        Intent intent = null;
         switch (view.getId()) {
             case R.id.imageView_back:
-                if (getIntent().getBooleanExtra("expert_fail",false)){
+                if (getIntent().getBooleanExtra("expert_fail", false)) {
                     intent = new Intent(this, ExpertApplyActivity.class);
                     intent.putExtra("expert", 2);//跳到申请失败页面
-                }else {
+                } else if (getIntent().getBooleanExtra("expert_detail", false)) {
+                    intent = new Intent(this, ExpertApplyDetailActivity.class);
+                } else {
                     intent = new Intent(this, ApplyActivity.class);
                 }
                 startActivity(intent);
@@ -125,14 +129,17 @@ public class PointApplyActivity extends BaseActivity {
                 break;
         }
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         Intent intent;
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            if (getIntent().getBooleanExtra("expert_fail",false)){
+            if (getIntent().getBooleanExtra("expert_fail", false)) {
                 intent = new Intent(this, ExpertApplyActivity.class);
                 intent.putExtra("expert", 2);//跳到申请失败页面
-            }else {
+            } else if (getIntent().getBooleanExtra("expert_detail", false)) {
+                intent = new Intent(this, ExpertApplyDetailActivity.class);
+            } else {
                 intent = new Intent(this, ApplyActivity.class);
             }
             startActivity(intent);

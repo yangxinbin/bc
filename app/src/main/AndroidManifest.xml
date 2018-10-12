@@ -150,7 +150,8 @@
         <activity android:name=".mine.activity.user.UserChangeActivity" />
         <activity android:name=".homepage.collage.CollageDetailActivity" />
         <activity android:name=".homepage.activity.CollageBuyBookActivity" />
-        <activity android:name=".mine.activity.ExpertApplyDetailActivity"></activity>
+        <activity android:name=".mine.activity.ExpertApplyDetailActivity" />
+        <activity android:name=".mine.activity.MemberActivity"></activity>
     </application>
 
 </manifest>

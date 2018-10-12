@@ -244,7 +244,7 @@ public class MineFragment extends Fragment {
                 lToAgent.setVisibility(View.GONE);
                 lExpert.setVisibility(View.VISIBLE);
                 lPoint.setVisibility(View.GONE);
-                tvExpertState.setText("已获取贡献值900PPG");
+                tvExpertState.setText("已获取贡献值900积分");
                 imgAgency.setVisibility(View.VISIBLE);
                 break;
             case 3://达人申请失败

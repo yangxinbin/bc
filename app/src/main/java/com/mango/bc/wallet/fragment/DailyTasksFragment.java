@@ -199,6 +199,8 @@ public class DailyTasksFragment extends Fragment {
         Intent intent;
         switch (view.getId()) {
             case R.id.tv_group:
+                intent = new Intent(getActivity(), ExpertBookActivity.class);
+                startActivity(intent);
                 break;
             case R.id.tv_paid:
                 intent = new Intent(getActivity(), ExpertBookActivity.class);

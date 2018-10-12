@@ -14,6 +14,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mango.bc.R;
 import com.mango.bc.homepage.net.bean.BookBean;
+import com.mango.bc.mine.bean.UserBean;
+import com.mango.bc.mine.jsonutil.AuthJsonUtils;
 import com.mango.bc.util.RoundImageView;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
@@ -31,6 +33,7 @@ public class BookPaidAdapter extends RecyclerView.Adapter {
     private BookPaidAdapter.OnItemClickLitener mOnItemClickLitener;
     private SPUtils spUtils;
     private List<BookBean> datas = new ArrayList<>();
+    private boolean isVip = false;
 
     public BookPaidAdapter(List<BookBean> datas) {
         this.datas = datas;
@@ -47,6 +50,10 @@ public class BookPaidAdapter extends RecyclerView.Adapter {
 
     public void setmDate(List<BookBean> data) {
         this.datas = data;
+        UserBean userBean = AuthJsonUtils.readUserBean(spUtils.getString("auth", ""));
+        Log.v("lllllllll", "===userBean.isVip()=" + userBean.isVip());
+        if (userBean != null)
+            isVip = userBean.isVip();
         this.notifyDataSetChanged();
     }
 
@@ -121,8 +128,12 @@ public class BookPaidAdapter extends RecyclerView.Adapter {
                         }
                     });
                 } else {
-                    Log.v("rrrrrrr", "==n==");
-                    ((BookPaidAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice() + "积分");//否领取
+                    Log.v("rrrrrrr", "==n=="+isVip);
+                    if (isVip){
+                        ((BookPaidAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getVipPrice() + "积分");//否领取
+                    }else {
+                        ((BookPaidAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice() + "积分");//否领取
+                    }
                     ((BookPaidAdapter.BookViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

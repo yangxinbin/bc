@@ -64,6 +64,7 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
     private MyBookPresenterImpl myBookPresenter;
     private String bookId;
     private Double ppCoins, prices;
+    private boolean isVip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +73,8 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
         spUtils = SPUtils.getInstance("bc", this);
         myBookPresenter = new MyBookPresenterImpl(this);
         ButterKnife.bind(this);
-        EventBus.getDefault().register(this);
         initAuth(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));
-        Log.v("ppppppp",ppCoins+"==="+prices);
+        Log.v("ppppppp", ppCoins + "===" + prices);
         if (ppCoins < prices) {
             tvBuy.setText(getResources().getString(R.string.pp_recharge));
         }
@@ -83,9 +83,12 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
     private void initAuth(UserBean userBean) {
         if (userBean == null)
             return;
+        isVip = userBean.isVip();
+        EventBus.getDefault().register(this);
         if (userBean.getWallet() != null) {
             ppCoins = userBean.getWallet().getPpCoins();
             tvAllPpg.setText(userBean.getWallet().getPpCoins() + "积分");
+
         }
     }
 
@@ -101,8 +104,13 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
         bookId = bookDetailBean.getId();
         tvTitle.setText(bookDetailBean.getTitle());
         prices = bookDetailBean.getPrice();
-        tvPpgNeed.setText(bookDetailBean.getPrice() + "积分");
-        tvNeedPpg.setText("实付款：" + bookDetailBean.getPrice() + "积分");
+        if (isVip) {
+            tvPpgNeed.setText(bookDetailBean.getVipPrice() + "积分");
+            tvNeedPpg.setText("实付款：" + bookDetailBean.getVipPrice() + "积分");
+        } else {
+            tvPpgNeed.setText(bookDetailBean.getPrice() + "积分");
+            tvNeedPpg.setText("实付款：" + bookDetailBean.getPrice() + "积分");
+        }
 
     }
 
@@ -165,7 +173,7 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
                                     finish();
 /*                                    RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, true, false);
                                     EventBus.getDefault().postSticky(refreshStageBean);*/
-                                    EventBus.getDefault().postSticky(new RefreshBookCaseBean(true,true,false));//两种情况
+                                    EventBus.getDefault().postSticky(new RefreshBookCaseBean(true, true, false));//两种情况
 
                                 }
                             });
@@ -251,6 +259,7 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
             }
         }).start();
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {

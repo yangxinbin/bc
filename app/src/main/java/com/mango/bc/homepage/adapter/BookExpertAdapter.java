@@ -14,6 +14,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mango.bc.R;
 import com.mango.bc.homepage.net.bean.BookBean;
+import com.mango.bc.mine.bean.UserBean;
+import com.mango.bc.mine.jsonutil.AuthJsonUtils;
 import com.mango.bc.util.RoundImageView;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
@@ -31,6 +33,7 @@ public class BookExpertAdapter extends RecyclerView.Adapter {
     private BookExpertAdapter.OnItemClickLitener mOnItemClickLitener;
     private SPUtils spUtils;
     private List<BookBean> datas = new ArrayList<>();
+    private boolean isVip = false;
 
     public BookExpertAdapter(List<BookBean> datas) {
         this.datas = datas;
@@ -47,6 +50,10 @@ public class BookExpertAdapter extends RecyclerView.Adapter {
 
     public void setmDate(List<BookBean> data) {
         this.datas = data;
+        UserBean userBean = AuthJsonUtils.readUserBean(spUtils.getString("auth", ""));
+        Log.v("lllllllll", "===userBean.isVip()=" + userBean.isVip());
+        if (userBean != null)
+            isVip = userBean.isVip();
         this.notifyDataSetChanged();
     }
 
@@ -124,7 +131,11 @@ public class BookExpertAdapter extends RecyclerView.Adapter {
                     });
                 } else {
                     Log.v("rrrrrrr", "==n==");
-                    ((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice() + "积分");//否领取
+                    if (isVip){
+                        ((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getVipPrice() + "积分");//否领取
+                    }else {
+                        ((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice() + "积分");//否领取
+                    }
                     ((BookExpertAdapter.BookViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

@@ -26,6 +26,7 @@ import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.LoadStageBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
+import com.mango.bc.mine.bean.RefreshMemberBean;
 import com.mango.bc.mine.bean.UserBean;
 import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.AppUtils;
@@ -180,6 +181,7 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
                             Log.v("yyyyyyy", "=====all--" + refreshStageBean.toString());
                             EventBus.getDefault().postSticky(refreshStageBean);
                             EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
+                            EventBus.getDefault().postSticky(new RefreshMemberBean(true));//刷新达人
                         } else {
                             AppUtils.showToast(getActivity(), getString(R.string.check_net));
                             RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, false, false);

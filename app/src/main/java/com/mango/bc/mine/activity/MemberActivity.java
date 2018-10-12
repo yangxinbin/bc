@@ -2,11 +2,11 @@ package com.mango.bc.mine.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
-import com.mango.bc.login.adapter.DuoXuanAdapter;
 import com.mango.bc.login.adapter.NoScrollGridView;
 import com.mango.bc.mine.adapter.MemberAdapter;
 import com.mango.bc.mine.bean.MemberBean;
@@ -42,8 +42,8 @@ public class MemberActivity extends BaseActivity {
     private void initMember(MemberBean member) {
         if (member == null)
             return;
-        tvNum.setText("已有成员"+member.getSize()+"人");
-        tvPpg.setText("累计收益"+member.getTotal()+"积分");
+        tvNum.setText("已有成员" + member.getSize() + "人");
+        tvPpg.setText("累计收益" + member.getTotal() + "积分");
         initView(member.getUsers());
     }
 
@@ -57,5 +57,17 @@ public class MemberActivity extends BaseActivity {
         Intent intent = new Intent(this, ExpertApplyDetailActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            Intent intent = new Intent(this, ExpertApplyDetailActivity.class);
+            startActivity(intent);
+            finish();
+            return false;
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
     }
 }

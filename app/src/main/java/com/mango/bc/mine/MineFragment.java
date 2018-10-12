@@ -27,6 +27,7 @@ import com.mango.bc.mine.activity.ServiceActivity;
 import com.mango.bc.mine.activity.SettingActivity;
 import com.mango.bc.mine.activity.VipCenterActivity;
 import com.mango.bc.mine.bean.MemberBean;
+import com.mango.bc.mine.bean.RefreshMemberBean;
 import com.mango.bc.mine.bean.StatsBean;
 import com.mango.bc.mine.bean.UserBean;
 import com.mango.bc.mine.jsonutil.MineJsonUtils;
@@ -34,9 +35,11 @@ import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.DateUtil;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.JsonUtil;
+import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 import com.mango.bc.wallet.bean.CheckInBean;
+import com.mango.bc.wallet.bean.RefreshTaskBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -127,8 +130,24 @@ public class MineFragment extends Fragment {
         EventBus.getDefault().register(this);
         //loadUser(false); //从网络拿数据
         initView(MineJsonUtils.readUserBean(spUtils.getString("auth", "")));
-        initMember();
         return view;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void RefreshMemberBeanEventBus(RefreshMemberBean bean) {
+        if (bean == null)
+            return;
+        if (bean.isRefresh()) {
+            if (NetUtil.isNetConnect(getActivity())) {
+                Log.v("ttttttttt", "-----ttt");
+                initMember();
+            } else {
+            }
+        } else {
+            bean.setRefresh(false);
+            EventBus.getDefault().postSticky(bean);
+        }
+        EventBus.getDefault().removeStickyEvent(RefreshMemberBean.class);
     }
 
     private void initMember() {

@@ -6,7 +6,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -41,6 +44,7 @@ import com.mango.bc.homepage.bookdetail.play.utils.CoverLoader;
 import com.mango.bc.homepage.bookdetail.play.utils.ScreenUtils;
 import com.mango.bc.homepage.bookdetail.play.utils.SystemUtils;
 import com.mango.bc.homepage.bookdetail.play.widget.AlbumCoverView;
+import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
@@ -53,6 +57,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -122,6 +127,7 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
     private BookCourseListAdapter adapter;
     private List<BookMusicDetailBean> bookMusicDetailBeanList = new ArrayList<>();
     private SPUtils spUtils;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +139,9 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
         initViewPager();
         //ilIndicator.create(mViewPagerContent.size());
         //initPlayMode();
+        if (MineJsonUtils.readUserBean(spUtils.getString("auth", "")) != null){
+            userId = MineJsonUtils.readUserBean(spUtils.getString("auth", "")).getId();
+        }
         onChangeImpl(AudioPlayer.get().getPlayMusic());
         AudioPlayer.get().addOnPlayEventListener(this);
     }
@@ -480,6 +489,8 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
             case R.id.iv_share:
                 //showShare();
                 shareMiniProgram();
+                //sendMiniApps();
+                Log.v("sssssssssssss","======");
                 break;
         }
     }
@@ -596,42 +607,51 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
     };
 
 
-    private void sendMiniApps(String articlePk, String title, String content, String url, Bitmap icon) {
+    private void sendMiniApps() {
         IWXAPI api;
         api = WXAPIFactory.createWXAPI(this, "wxb93480bda524daa0");
-        WXMiniProgramObject miniProgram = new WXMiniProgramObject();
-        //低版本微信打开 URL
-        miniProgram.webpageUrl = url;
-        //跳转的小程序的原始 ID
-        miniProgram.userName = "";//WechatShareUtils.MINI_APPS_ID;
-        // 小程序的 Path
-        miniProgram.path = ""/*WechatShareUtils.getMiniAppPath(articlePk)*/;
-        WXMediaMessage msg = new WXMediaMessage(miniProgram);
-        final String shareTitle = /*WechatShareUtils.getValidTitle(title)*/"";
-        if (!TextUtils.isEmpty(shareTitle)) {
-            msg.title = title;
-        }
-        final String shareDescription = /*WechatShareUtils.getValidDescription(content)*/"";
-        if (!TextUtils.isEmpty(shareDescription)) {
-            msg.description = shareDescription;
-        }
-        if (icon != null) {
-            msg.setThumbImage(icon);
-        } else {
-            Bitmap temp = BitmapFactory.decodeResource(this.getResources(),
-                    R.mipmap.icon);
-            msg.setThumbImage(temp);
-        }
-        Log.i("TAG", "sendMiniApps title: " + title);
-        //使用此方法会出现无法分享的问题
-        // Bitmap thumbBmp = Bitmap.createScaledBitmap(icon, 150, 150, true);
-        //icon.recycle();
-        // msg.thumbData = BitmapUtils.bitmapToByteArray(thumbBmp, true);
+        WXMiniProgramObject miniProgramObj = new WXMiniProgramObject();
+        miniProgramObj.webpageUrl = "https://www.baidu.com/"; // 兼容低版本的网页链接
+        miniProgramObj.miniprogramType = WXMiniProgramObject.MINIPTOGRAM_TYPE_RELEASE;// 正式版:0，测试版:1，体验版:2
+        miniProgramObj.userName = "gh_482031325125";     // 小程序原始id
+        miniProgramObj.path = "pages/home/home";            //小程序页面路径
+        WXMediaMessage msg = new WXMediaMessage(miniProgramObj);
+        msg.title = showMusic.getTitle();                    // 小程序消息title
+        msg.description = "BC大陆";               // 小程序消息desc
+        msg.thumbData = Drawable2Bytes(getResources().getDrawable(R.drawable.icon));             // 小程序消息封面图片，小于128k
         SendMessageToWX.Req req = new SendMessageToWX.Req();
-        req.transaction = "";//buildTransaction("miniProgram");
+        req.transaction = "webpage";//buildTransaction("webpage");
         req.message = msg;
-        req.scene = WXSceneSession;
+        req.scene = SendMessageToWX.Req.WXSceneSession;  // 目前支持会话
         api.sendReq(req);
+    }
+
+    // Drawable转换成byte[]
+    public byte[] Drawable2Bytes(Drawable d) {
+        Bitmap bitmap = this.drawable2Bitmap(d);
+        return this.Bitmap2Bytes(bitmap);
+    }
+
+    // Drawable转换成Bitmap
+    public Bitmap drawable2Bitmap(Drawable drawable) {
+        Bitmap bitmap = Bitmap
+                .createBitmap(
+                        drawable.getIntrinsicWidth(),
+                        drawable.getIntrinsicHeight(),
+                        drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
+                                : Bitmap.Config.RGB_565);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(),
+                drawable.getIntrinsicHeight());
+        drawable.draw(canvas);
+        return bitmap;
+    }
+
+    // Bitmap转换成byte[]
+    public byte[] Bitmap2Bytes(Bitmap bm) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        return baos.toByteArray();
     }
 
     public void shareMiniProgram() {
@@ -645,8 +665,9 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
             public void onShare(Platform platform, Platform.ShareParams paramsToShare) {
                 if (platform.getName().equals("Wechat")) {
                     paramsToShare.setShareType(Platform.SHARE_WXMINIPROGRAM);
+                    paramsToShare.setWxMiniProgramType(WXMiniProgramObject.MINIPTOGRAM_TYPE_RELEASE);
                     paramsToShare.setWxUserName("gh_482031325125");
-                    paramsToShare.setWxPath("pages/home/home");
+                    paramsToShare.setWxPath("pages/memberDetail/memberDetail?model="+"{\"bookId\":\""+showMusic.getBookId()+"\",\"userId\":\"" +userId+ "\"}");
                 }
             }
         });

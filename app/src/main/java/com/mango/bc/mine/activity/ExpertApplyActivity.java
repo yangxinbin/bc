@@ -150,7 +150,7 @@ public class ExpertApplyActivity extends BaseActivity {
                 if (!(TextUtils.isEmpty(etName.getText()) || TextUtils.isEmpty(etCompany.getText()) || TextUtils.isEmpty(etPhone.getText()) || TextUtils.isEmpty(etPosition.getText()))) {
                     applyAgency();
                 }else {
-                    AppUtils.showToast(ExpertApplyActivity.this, "请完善资料");
+                    AppUtils.showToast(ExpertApplyActivity.this, getString(R.string.finish_information));
                 }
                 break;
             case R.id.re_apply:

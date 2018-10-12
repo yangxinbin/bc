@@ -1,6 +1,11 @@
 package com.mango.bc.wallet.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +15,8 @@ import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
+import com.mango.bc.mine.activity.ExpertApplyActivity;
+import com.mango.bc.mine.activity.VipCenterActivity;
 import com.mango.bc.mine.bean.UserBean;
 import com.mango.bc.mine.jsonutil.AuthJsonUtils;
 import com.mango.bc.util.AppUtils;
@@ -43,6 +50,7 @@ public class TransferActivity extends BaseActivity {
     @Bind(R.id.bu_sure)
     Button buSure;
     private SPUtils spUtils;
+    private double ppg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +68,8 @@ public class TransferActivity extends BaseActivity {
         if (userBean == null)
             return;
         if (userBean.getWallet() != null) {
-            tvAllPp.setText("（当前余额：" + userBean.getWallet().getPpCoins() + "积分）");
+            ppg = userBean.getWallet().getPpCoins();
+            tvAllPp.setText("（当前余额：" + ppg + "积分）");
         }
     }
 
@@ -71,9 +80,43 @@ public class TransferActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.bu_sure:
-                transfer();
+                //Log.v("tttttttt",ppg+"---"+Double.parseDouble(etPurseTo.getText().toString()));
+                if (!(TextUtils.isEmpty(etPurseAdress.getText()) || TextUtils.isEmpty(etPurseTo.getText()))) {
+                    if (ppg >= Double.parseDouble(etPurseTo.getText().toString())) {
+                        transfer();
+                    } else {
+                        showDailogOpen(getString(R.string.less_ppg), "");
+                    }
+                } else {
+                    AppUtils.showToast(TransferActivity.this, getString(R.string.finish_information));
+                }
+
                 break;
         }
+    }
+
+    private void showDailogOpen(String s1, final String s2) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setIcon(R.mipmap.icon)//设置标题的图片
+                .setTitle(s1)//设置对话框的标题
+                //.setMessage(s2)//设置对话框的内容
+                //设置对话框的按钮
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(TransferActivity.this, RechargeActivity.class);
+                        startActivity(intent);
+                        finish();
+                        dialog.dismiss();
+                    }
+                }).create();
+        dialog.show();
     }
 
     private void loadUser() {
@@ -154,6 +197,7 @@ public class TransferActivity extends BaseActivity {
             }
         }).start();
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {

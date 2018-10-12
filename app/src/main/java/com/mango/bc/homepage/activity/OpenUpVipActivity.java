@@ -29,6 +29,8 @@ import com.mango.bc.util.JsonUtil;
 import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
+import com.mango.bc.wallet.activity.RechargeActivity;
+import com.mango.bc.wallet.activity.TransferActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -294,6 +296,9 @@ public class OpenUpVipActivity extends BaseActivity {
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(OpenUpVipActivity.this, RechargeActivity.class);
+                        startActivity(intent);
+                        finish();
                         dialog.dismiss();
                     }
                 }).create();
@@ -330,7 +335,7 @@ public class OpenUpVipActivity extends BaseActivity {
                                 @Override
                                 public void run() {
                                     if (s.equals("LOW_BALANCE")) {
-                                        showDailogOpen("余额不足请充值", "");
+                                        showDailogOpen(getString(R.string.less_ppg), "");
                                     } else {
                                         AppUtils.showToast(OpenUpVipActivity.this, "购买成功");
                                         loadUser();

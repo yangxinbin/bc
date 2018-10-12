@@ -80,7 +80,7 @@ public class CollageDetailActivity extends BaseActivity {
         tvCollagePriceAfter.setText(collageBean.getPrice() + "积分");
         tvCollagePriceBefore.setText(collageBean.getBookPrice() + "积分");
         tvCollagePriceBefore.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
-        leftTime = ((collageBean.getTimestamp() + (1000 * 60 * 60 * 24)) - System.currentTimeMillis()) / 1000;
+        leftTime = ((collageBean.getTimestamp() + (1000 * 60 * 60 * 23)) - System.currentTimeMillis()) / 1000;
         switch (getIntent().getIntExtra("status", 0)) {
             case 0:
                 handler.post(update_thread);

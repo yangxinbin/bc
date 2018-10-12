@@ -105,7 +105,7 @@ public class CollageAdapter extends RecyclerView.Adapter {
             viewHolder.tv_collage_price_before.setText(datas.get(position).getBookPrice() + "积分");
             viewHolder.tv_collage_price_before.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
             Log.v("ddddddddddddd", (datas.get(position).getTimestamp() + (1000 * 60 * 60 * 24) + "==" + System.currentTimeMillis()) + "==" + ((datas.get(position).getTimestamp() + (1000 * 60 * 60 * 24)) - System.currentTimeMillis()));
-            viewHolder.tv_collage_time.setText("剩余" + DateUtil.getMToHM(((datas.get(position).getTimestamp() + (1000 * 60 * 60 * 24)) - System.currentTimeMillis())));
+            viewHolder.tv_collage_time.setText("剩余" + DateUtil.getMToHM(((datas.get(position).getTimestamp() + (1000 * 60 * 60 * 23)) - System.currentTimeMillis())));
             if (datas.get(position).getType().equals("three")) {
                 viewHolder.tv_collage_num.setText("3人拼团");
             } else if (datas.get(position).getType().equals("two")) {

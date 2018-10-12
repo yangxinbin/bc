@@ -51,7 +51,7 @@ public class DateUtil {
     }
 
     public static String getMToHM(long milSecond) {
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat formatter = new SimpleDateFormat("HH时mm分");
         formatter.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
         return formatter.format(milSecond);
     }

@@ -76,6 +76,7 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
     private PlayActivity mPlayFragment;
     private SPUtils spUtils;
     private boolean isFirstInit = true;
+    private boolean isFirstRefresh = true;
 
     @Nullable
     @Override
@@ -178,9 +179,10 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
                         loadUser();
                         page = 0;
                         if (NetUtil.isNetConnect(getActivity())) {
-                            if (isFirstInit){
+                            if (isFirstRefresh){
+                                isFirstRefresh = false;
                                 RefreshStageBean refreshStageBean = new RefreshStageBean(true, true, true, true, true);
-                                Log.v("yyyyyyy", "=====all--" + refreshStageBean.toString());
+                                Log.v("llllllll", "=====all--" + refreshStageBean.toString());
                                 EventBus.getDefault().postSticky(refreshStageBean);
                             }
                             EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表

@@ -70,6 +70,8 @@ public class CollageDetailActivity extends BaseActivity {
     private SPUtils spUtils;
     private String userName;
     private String groupId;
+    private double price;
+    private int allNum,hasNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,10 +98,13 @@ public class CollageDetailActivity extends BaseActivity {
         tvCollageName.setText(title);
         if (collageBean.getType().equals("three")) {
             tvCollageNum.setText("3人拼团");
+            allNum = 3;
         } else if (collageBean.getType().equals("two")) {
             tvCollageNum.setText("2人拼团");
+            allNum = 2;
         }
-        tvCollagePriceAfter.setText(collageBean.getPrice() + "积分");
+        price = collageBean.getPrice();
+        tvCollagePriceAfter.setText(price+ "积分");
         tvCollagePriceBefore.setText(collageBean.getBookPrice() + "积分");
         tvCollagePriceBefore.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
         leftTime = ((collageBean.getTimestamp() + (1000 * 60 * 60 * 24)) - System.currentTimeMillis()) / 1000;
@@ -127,6 +132,7 @@ public class CollageDetailActivity extends BaseActivity {
         }
         //tvCollageTime.setText("邀请好友参团 " + DateUtil.getMToHMS(((collageBean.getTimestamp() + (1000 * 60 * 60 * 24)) - System.currentTimeMillis())) + " 后结束");
         if (collageBean.getMembers() != null) {
+            hasNum = collageBean.getMembers().size();
             lMember.removeAllViews();
             for (int i = 0; i < collageBean.getMembers().size(); i++) {
                 CircleImageView circleImageView = new CircleImageView(this);
@@ -243,7 +249,7 @@ public class CollageDetailActivity extends BaseActivity {
 
     private void collageWechat() {
         OnekeyShare oks = new OnekeyShare();
-        oks.setTitle(userName+"邀请你来拼团");
+        oks.setTitle("【仅剩"+(allNum-hasNum)+"人】"+userName+"邀请你来拼团："+price+"积分拼《"+title+"》");
         oks.setText("BC大陆");
         oks.setImageUrl(Urls.HOST_GETFILE + "?name="+cover);
         oks.setUrl("http://www.mob.com");

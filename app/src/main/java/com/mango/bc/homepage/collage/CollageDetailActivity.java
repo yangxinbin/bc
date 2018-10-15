@@ -245,7 +245,7 @@ public class CollageDetailActivity extends BaseActivity {
         OnekeyShare oks = new OnekeyShare();
         oks.setTitle(userName+"邀请你来拼团");
         oks.setText("BC大陆");
-        oks.setImageUrl(cover);
+        oks.setImageUrl(Urls.HOST_GETFILE + "?name="+cover);
         oks.setUrl("http://www.mob.com");
         oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
             @Override

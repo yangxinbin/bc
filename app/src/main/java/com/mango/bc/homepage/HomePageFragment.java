@@ -217,6 +217,7 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
             //mAdapter.refresh(initData());
         }
     }
+
     private void loadUser() {
         new Thread(new Runnable() {
             @Override
@@ -239,8 +240,10 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
                                     spUtils.put("auth", string2);//刷新用户信息
                                     Log.v("cccccccccc", "-----auth----");
                                     UserBean userBean = MineJsonUtils.readUserBean(string2);
-                                    Log.v("lllllllll","=rrrr=="+userBean.isVip());
-                                    EventBus.getDefault().postSticky(userBean);//刷新钱包
+                                    if (userBean != null) {
+                                        Log.v("lllllllll", "=rrrr==" + userBean.isVip());
+                                        EventBus.getDefault().postSticky(userBean);//刷新钱包
+                                    }
                                 }
                             });
                         } catch (IOException e) {
@@ -252,6 +255,7 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
             }
         }).start();
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

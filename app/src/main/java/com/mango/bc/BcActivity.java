@@ -69,8 +69,9 @@ public class BcActivity extends BaseServiceActivity implements MyAllBookView {
             //myBookPresenter.visitBooks(this, 3, 0, true);//获取书架的所有书
         }
         spUtils = SPUtils.getInstance("bc", this);
-        spUtils.put("openId", "oXhi94jQkXPovBsqEs0B8QKsbM0A");
+        //spUtils.put("openId", "oXhi94jQkXPovBsqEs0B8QKsbM0A");
         //假 普通
+        //spUtils.put("openId", "oetTo5r15v1y6B2DNwRuiS22JaFo");
         //spUtils.put("openId", "ttttXhi94jQkXPovBsqEs0B8QKsbM0A");
         ButterKnife.bind(this);
         //进来刷新可以屏蔽
@@ -165,6 +166,7 @@ public class BcActivity extends BaseServiceActivity implements MyAllBookView {
                 final HashMap<String, String> mapParams = new HashMap<String, String>();
                 mapParams.clear();
                 mapParams.put("openId", spUtils.getString("openId", ""));
+                Log.v("qqqqqqqqqqq1111", spUtils.getString("openId", ""));
                 HttpUtils.doPost(Urls.HOST_AUTH, mapParams, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -181,10 +183,12 @@ public class BcActivity extends BaseServiceActivity implements MyAllBookView {
                                 public void run() {
                                     spUtils.put("auth", string);
                                     UserBean userBean = MineJsonUtils.readUserBean(string);
-                                    spUtils.put("authToken", userBean.getAuthToken());
-                                    ifCheckIn();
-                                    Log.v("lllllllll", "=aaaa==" + userBean.isVip());
-                                    EventBus.getDefault().postSticky(userBean);//刷新
+                                    if (userBean != null){
+                                        spUtils.put("authToken", userBean.getAuthToken());
+                                        ifCheckIn();
+                                        Log.v("lllllllll", "=aaaa==" + userBean.isVip());
+                                        EventBus.getDefault().postSticky(userBean);//刷新
+                                    }
                                 }
                             });
                         } catch (IOException e) {

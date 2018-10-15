@@ -76,7 +76,7 @@ public class VipCenterActivity extends BaseActivity {
         if (auth.getBilling() != null)
             tvVipTime.setText("至" + DateUtil.getDateToString(auth.getBilling().getEndOn(), "yyyy-MM-dd"));
 
-        tvBookReadDay.setText("BC大陆已经陪你读书" + ((System.currentTimeMillis() - auth.getCreatedOn()) / (1000 * 60 * 60 * 24)) + "天");
+        tvBookReadDay.setText("BC大陆已经陪你读书" + auth.getStats().getAgeDays()/*((System.currentTimeMillis() - auth.getCreatedOn()) / (1000 * 60 * 60 * 24))*/ + "天");
         if (auth.getStats() != null) {
             tvVipContent1.setText("VIP特权免费读了" + auth.getStats().getVipGetMemberBooks() + "本书，共节省" + auth.getStats().getBuyMemberMoneySaved() + "币");
             tvVipContent2.setText("购买大咖课程" + auth.getStats().getPaidBooks() + "节，共节省" + auth.getStats().getBuyPaidBookMoneySaved() + "币");

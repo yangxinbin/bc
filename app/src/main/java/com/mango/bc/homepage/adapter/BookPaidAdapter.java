@@ -157,8 +157,10 @@ public class BookPaidAdapter extends RecyclerView.Adapter {
             Type listType = new TypeToken<List<String>>() {
             }.getType();
             List<String> list = gson.fromJson(data, listType);
+            Log.v("llllllll","******1");
             if (list == null)
                 return false;
+            Log.v("llllllll","******2"+list.contains(bookId));
             if (list.contains(bookId)) {
                 return true;
             } else {

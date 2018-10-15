@@ -168,7 +168,6 @@ public class MyBookModelImpl implements MyBookModel {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.v("llllllll", "---s--");
                     final HashMap<String, String> mapParams = new HashMap<String, String>();
                     final List<String> list = new ArrayList<String>();
                     mapParams.clear();
@@ -208,6 +207,7 @@ public class MyBookModelImpl implements MyBookModel {
                                 for (int i = 0; i < beanList.size(); i++) {
                                     list.add(beanList.get(i).getBook().getId());
                                 }
+                                Log.v("llllllll", "---s--"+list.size());
                                 Gson gson = new Gson();
                                 String data = gson.toJson(list);
                                 spUtils.put("allMyBook", data);

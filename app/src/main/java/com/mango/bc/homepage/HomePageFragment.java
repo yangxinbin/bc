@@ -75,6 +75,7 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
     private boolean isPlayFragmentShow;
     private PlayActivity mPlayFragment;
     private SPUtils spUtils;
+    private boolean isFirstInit = true;
 
     @Nullable
     @Override
@@ -84,7 +85,7 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
         myBookPresenter = new MyBookPresenterImpl(this);
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
-        initView();
+        //initView();
         refreshAndLoadMore();
         return view;
     }
@@ -163,6 +164,7 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
             flPlayBar.setVisibility(View.VISIBLE);//播放控件
         homePageAdapter = new HomePageAdapter(getActivity());
         recycle.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        recycle.setAdapter(homePageAdapter);
     }
 
     private void refreshAndLoadMore() {
@@ -176,9 +178,11 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
                         loadUser();
                         page = 0;
                         if (NetUtil.isNetConnect(getActivity())) {
-                            RefreshStageBean refreshStageBean = new RefreshStageBean(true, true, true, true, true);
-                            Log.v("yyyyyyy", "=====all--" + refreshStageBean.toString());
-                            EventBus.getDefault().postSticky(refreshStageBean);
+                            if (isFirstInit){
+                                RefreshStageBean refreshStageBean = new RefreshStageBean(true, true, true, true, true);
+                                Log.v("yyyyyyy", "=====all--" + refreshStageBean.toString());
+                                EventBus.getDefault().postSticky(refreshStageBean);
+                            }
                             EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
                             EventBus.getDefault().postSticky(new RefreshMemberBean(true));//刷新达人
                         } else {
@@ -263,7 +267,19 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
 
     @Override
     public void addSuccess(String s) {
-        Log.v("1111111","========================");
-
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (isFirstInit) {
+                    Log.v("llllllll","========================");
+                    isFirstInit = false;
+                    initView();
+                }else {
+                    RefreshStageBean refreshStageBean = new RefreshStageBean(true, true, true, true, true);
+                    Log.v("yyyyyyy", "=====all--" + refreshStageBean.toString());
+                    EventBus.getDefault().postSticky(refreshStageBean);
+                }
+            }
+        });
     }
 }

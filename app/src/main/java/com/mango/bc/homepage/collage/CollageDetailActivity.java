@@ -14,17 +14,26 @@ import com.bumptech.glide.Glide;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.homepage.collage.bean.CollageBean;
+import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.DateUtil;
 import com.mango.bc.util.RoundImageView;
+import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
+import com.tencent.mm.opensdk.modelmsg.WXMiniProgramObject;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.HashMap;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CollageDetailActivity extends BaseActivity {
@@ -56,22 +65,35 @@ public class CollageDetailActivity extends BaseActivity {
     @Bind(R.id.tv_collage_delete)
     Button tvCollageDelete;
     private Long leftTime;
+    private String title;
+    private String cover;
+    private SPUtils spUtils;
+    private String userName;
+    private String groupId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collage_detail);
+        spUtils = SPUtils.getInstance("bc", this);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
+        if (MineJsonUtils.readUserBean(spUtils.getString("auth", "")) != null){
+            userName = MineJsonUtils.readUserBean(spUtils.getString("auth", "")).getAlias();
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void CollageBeanEventBus(CollageBean collageBean) { //首页进来 需要判断 是否可以播放 是否要钱购买
         if (collageBean == null)
             return;
-        if (collageBean.getBookCover() != null)
-            Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + collageBean.getBookCover().getFileName()).into(imgCollageBook);
-        tvCollageName.setText(collageBean.getBookTitle());
+        if (collageBean.getBookCover() != null){
+            cover = collageBean.getBookCover().getFileName();
+            Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + cover).into(imgCollageBook);
+        }
+        groupId = collageBean.getId();
+        title = collageBean.getBookTitle();
+        tvCollageName.setText(title);
         if (collageBean.getType().equals("three")) {
             tvCollageNum.setText("3人拼团");
         } else if (collageBean.getType().equals("two")) {
@@ -212,9 +234,45 @@ public class CollageDetailActivity extends BaseActivity {
 /*            case R.id.tv_collage_buy:
                 break;*/
             case R.id.tv_collage_time:
+                collageWechat();
                 break;
             case R.id.tv_collage_delete:
                 break;
         }
     }
+
+    private void collageWechat() {
+        OnekeyShare oks = new OnekeyShare();
+        oks.setTitle(userName+"邀请你来拼团");
+        oks.setText("BC大陆");
+        oks.setImageUrl(cover);
+        oks.setUrl("http://www.mob.com");
+        oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
+            @Override
+            public void onShare(Platform platform, Platform.ShareParams paramsToShare) {
+                if (platform.getName().equals("Wechat")) {
+                    paramsToShare.setShareType(Platform.SHARE_WXMINIPROGRAM);
+                    paramsToShare.setWxMiniProgramType(WXMiniProgramObject.MINIPTOGRAM_TYPE_RELEASE);
+                    paramsToShare.setWxUserName("gh_482031325125");
+                    paramsToShare.setWxPath("pages/groupBuy/groupBuy?model="+groupId);
+                }
+            }
+        });
+        oks.setCallback(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                //shareNum();
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+            }
+        });
+        oks.show(getApplicationContext());
+    }
+
 }

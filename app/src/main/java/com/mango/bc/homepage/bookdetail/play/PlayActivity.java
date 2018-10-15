@@ -655,6 +655,7 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
     }
 
     public void shareMiniProgram() {
+        Log.v("xxxxxxxxx", "-userId----" + userId);
         OnekeyShare oks = new OnekeyShare();
         oks.setTitle(showMusic.getTitle());
         oks.setText("BC大陆");

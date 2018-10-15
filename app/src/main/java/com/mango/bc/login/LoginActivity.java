@@ -72,11 +72,11 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
                 final String userInfo = StrUtils.format("", hashMap);
-                Log.v("ooooooooo", "==" + userInfo);
+                Log.v("ooooooooo", platform.getDb().getUserIcon()+"==" + userInfo);
                 spUtils.put("openId", platform.getDb().get("unionid"));
                 Log.v("qqqqqqqqqqq", spUtils.getString("openId", ""));
-                Intent intent = new Intent(LoginActivity.this, BcActivity.class);
-                intent.putExtra("wechat",true);
+                Intent intent = new Intent(LoginActivity.this, WechatLoginActivity.class);
+                intent.putExtra("img",platform.getDb().getUserIcon());
                 startActivity(intent);
                 finish();
             }

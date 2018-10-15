@@ -117,10 +117,10 @@ public class MyBookPresenterImpl implements MyBookPresenter, OnMyBookListener {
         myFreeBookView.addSuccess(msg);
     }
 
-/*    @Override
+    @Override
     public void onAllBookSuccessMes(String msg) {
         myAllBookView.addSuccess(msg);
-    }*/
+    }
 
     @Override
     public void onCompetitiveFailMes(String msg, Exception e) {

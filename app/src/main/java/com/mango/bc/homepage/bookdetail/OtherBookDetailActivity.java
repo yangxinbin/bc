@@ -655,4 +655,9 @@ public class OtherBookDetailActivity extends BaseServiceActivity implements MyAl
             return super.onKeyDown(keyCode, event);
         }
     }
+
+    @Override
+    public void addSuccess(String s) {
+
+    }
 }

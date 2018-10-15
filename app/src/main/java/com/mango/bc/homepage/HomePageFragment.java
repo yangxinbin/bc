@@ -163,7 +163,6 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
             flPlayBar.setVisibility(View.VISIBLE);//播放控件
         homePageAdapter = new HomePageAdapter(getActivity());
         recycle.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-        recycle.setAdapter(homePageAdapter);
     }
 
     private void refreshAndLoadMore() {
@@ -262,4 +261,9 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
         ButterKnife.unbind(this);
     }
 
+    @Override
+    public void addSuccess(String s) {
+        Log.v("1111111","========================");
+
+    }
 }

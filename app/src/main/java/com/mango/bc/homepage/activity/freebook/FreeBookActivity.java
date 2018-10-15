@@ -471,4 +471,9 @@ public class FreeBookActivity extends BaseServiceActivity implements BookFreeVie
         ButterKnife.unbind(this);
         EventBus.getDefault().unregister(this);
     }
+
+    @Override
+    public void addSuccess(String s) {
+
+    }
 }

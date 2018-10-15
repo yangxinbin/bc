@@ -569,6 +569,11 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
         });
     }
 
+    @Override
+    public void addSuccess(String s) {
+
+    }
+
     private class MyHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {

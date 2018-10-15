@@ -424,4 +424,9 @@ public class NewestFragment extends Fragment implements BookNewestView, MyAllBoo
             }
         });
     }
+
+    @Override
+    public void addSuccess(String s) {
+
+    }
 }

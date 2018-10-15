@@ -187,7 +187,7 @@ public class MyBookModelImpl implements MyBookModel {
                             Gson gson = new Gson();
                             String data = gson.toJson(list);
                             spUtils.put("allMyBook", data);
-                            //listener.onAllBookSuccessMes("请求成功");
+                            listener.onAllBookSuccessMes("请求成功");
                             return;
                         }
                     } else {
@@ -211,7 +211,7 @@ public class MyBookModelImpl implements MyBookModel {
                                 Gson gson = new Gson();
                                 String data = gson.toJson(list);
                                 spUtils.put("allMyBook", data);
-                                //listener.onAllBookSuccessMes("请求成功");
+                                listener.onAllBookSuccessMes("请求成功");
                             } catch (Exception e) {
                                 //listener.onAllBookFailMes("请求失败", e);//java.lang.IllegalStateException: Not a JSON Object: null
                             }

@@ -250,6 +250,11 @@ public class BcActivity extends BaseServiceActivity implements MyAllBookView {
 
     private BcActivity.MyHandler mHandler = new BcActivity.MyHandler();
 
+    @Override
+    public void addSuccess(String s) {
+
+    }
+
     private class MyHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {

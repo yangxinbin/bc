@@ -270,4 +270,9 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
             return super.onKeyDown(keyCode, event);
         }
     }
+
+    @Override
+    public void addSuccess(String s) {
+
+    }
 }

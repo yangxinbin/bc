@@ -17,7 +17,7 @@ public interface OnMyBookListener {
     void onCompetitiveBookSuccessMes(String msg);
     void onExpertBookSuccessMes(String msg);
     void onFreeBookSuccessMes(String msg);
-    //void onAllBookSuccessMes(String msg);
+    void onAllBookSuccessMes(String msg);
 
     void onCompetitiveFailMes(String msg, Exception e);
     void onExpertFailMes(String msg, Exception e);

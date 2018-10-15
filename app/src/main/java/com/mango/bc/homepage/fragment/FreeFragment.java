@@ -408,4 +408,8 @@ public class FreeFragment extends Fragment implements BookFreeView, MyAllBookVie
         });
     }
 
+    @Override
+    public void addSuccess(String s) {
+
+    }
 }

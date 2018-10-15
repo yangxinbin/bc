@@ -104,7 +104,7 @@ public class ExpertFragment extends Fragment implements BookExpertView {
         if (bean.getExpertBook()) {
             bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);//刷新从网络。
             bean.setExpertBook(false);//刷新完修改状态
-            Log.v("yyyyyyy", "=====3--" + bean.toString());
+            Log.v("yyyyyyy", "=====2--" + bean.toString());
             EventBus.getDefault().postSticky(bean);
         } else {
             //bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//缓存。

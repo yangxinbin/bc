@@ -146,12 +146,17 @@
             android:name=".mine.activity.PointZoomActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".mine.activity.SettingActivity" />
-        <activity android:name=".mine.activity.AboutActivity" />
-        <activity android:name=".mine.activity.user.UserChangeActivity" />
+        <activity android:name=".mine.activity.setting.AboutActivity" />
+        <activity android:name=".mine.activity.setting.UserChangeActivity" />
         <activity android:name=".homepage.collage.CollageDetailActivity" />
         <activity android:name=".homepage.activity.CollageBuyBookActivity" />
         <activity android:name=".mine.activity.ExpertApplyDetailActivity" />
-        <activity android:name=".mine.activity.MemberActivity"></activity>
+        <activity android:name=".mine.activity.MemberActivity" />
+        <activity android:name=".mine.activity.setting.ChangePhoneActivity" />
+        <activity android:name=".mine.activity.setting.BunbleWechatActivity" />
+        <activity android:name=".mine.activity.setting.ChangePasswordActivity" />
+        <activity android:name=".mine.activity.setting.ForgetPasswordActivity" />
+        <activity android:name=".mine.activity.setting.SettingPasswordActivity"></activity>
     </application>
 
 </manifest>

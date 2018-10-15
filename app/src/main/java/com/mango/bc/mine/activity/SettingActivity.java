@@ -8,7 +8,12 @@ import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
-import com.mango.bc.mine.activity.user.UserChangeActivity;
+import com.mango.bc.mine.activity.setting.AboutActivity;
+import com.mango.bc.mine.activity.setting.BunbleWechatActivity;
+import com.mango.bc.mine.activity.setting.ChangePasswordActivity;
+import com.mango.bc.mine.activity.setting.ChangePhoneActivity;
+import com.mango.bc.mine.activity.setting.ForgetPasswordActivity;
+import com.mango.bc.mine.activity.setting.UserChangeActivity;
 import com.mango.bc.util.PublicWay;
 
 import butterknife.Bind;
@@ -40,12 +45,24 @@ public class SettingActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.l_2:
+                intent = new Intent(this, ChangePhoneActivity.class);
+                startActivity(intent);
+                finish();
                 break;
             case R.id.l_3:
+                intent = new Intent(this, BunbleWechatActivity.class);
+                startActivity(intent);
+                finish();
                 break;
             case R.id.l_4:
+                intent = new Intent(this, ChangePasswordActivity.class);
+                startActivity(intent);
+                finish();
                 break;
             case R.id.l_5:
+                intent = new Intent(this, ForgetPasswordActivity.class);
+                startActivity(intent);
+                finish();
                 break;
             case R.id.l_6:
                 intent = new Intent(this, AboutActivity.class);

@@ -184,7 +184,6 @@ public class MyBookModelImpl implements MyBookModel {
                             for (int i = 0; i < beanList.size(); i++) {
                                 list.add(beanList.get(i).getBook().getId());
                             }
-                            Log.v("llllllll", "-----" + list.size());
                             Gson gson = new Gson();
                             String data = gson.toJson(list);
                             spUtils.put("allMyBook", data);
@@ -206,12 +205,9 @@ public class MyBookModelImpl implements MyBookModel {
                                 String string = response.body().string();
                                 mCache.put("cache_my" + type + page, string);
                                 List<MyBookBean> beanList = MyBookJsonUtils.readMyBookBean(string);
-                                Log.v("llllllll", "--2---");
-
                                 for (int i = 0; i < beanList.size(); i++) {
                                     list.add(beanList.get(i).getBook().getId());
                                 }
-                                Log.v("llllllll", "---up_my--"+beanList.size());
                                 Gson gson = new Gson();
                                 String data = gson.toJson(list);
                                 spUtils.put("allMyBook", data);

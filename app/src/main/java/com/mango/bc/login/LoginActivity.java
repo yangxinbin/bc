@@ -76,6 +76,7 @@ public class LoginActivity extends BaseActivity {
                 spUtils.put("openId", platform.getDb().get("unionid"));
                 Log.v("qqqqqqqqqqq", spUtils.getString("openId", ""));
                 Intent intent = new Intent(LoginActivity.this, BcActivity.class);
+                intent.putExtra("wechat",true);
                 startActivity(intent);
                 finish();
             }

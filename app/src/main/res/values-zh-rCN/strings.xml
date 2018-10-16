@@ -8,7 +8,7 @@
     <string name="search">搜索</string>
     <string name="my_wallet">我的钱包</string>
     <string name="transaction_record">交易记录</string>
-    <string name="total_balance">总余额（PP币）</string>
+    <string name="total_balance">总余额（积分）</string>
     <string name="Can_be_presented">可提现余额</string>
     <string name="no_mention">不可提现余额</string>
     <string name="copy">复制</string>

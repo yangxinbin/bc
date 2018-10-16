@@ -60,12 +60,12 @@ public class RechargeActivity extends BaseActivity {
 
     private void initData() {
         datas = new ArrayList<>();
-        datas.add(new RechargeType("6 PPG","6元"));
-        datas.add(new RechargeType("38 PPG","38元"));
-        datas.add(new RechargeType("68 PG","68元"));
-        datas.add(new RechargeType("108 PG","108元"));
-        datas.add(new RechargeType("208 PG","208元"));
-        datas.add(new RechargeType("388 PG","388元"));
+        datas.add(new RechargeType("6 积分","6元"));
+        datas.add(new RechargeType("38 积分","38元"));
+        datas.add(new RechargeType("68 积分","68元"));
+        datas.add(new RechargeType("108 积分","108元"));
+        datas.add(new RechargeType("208 积分","208元"));
+        datas.add(new RechargeType("388 积分","388元"));
     }
 
     private void intList() {

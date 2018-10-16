@@ -74,7 +74,7 @@ public class MemberAdapter extends BaseAdapter {
             viewHolder.imageVie_pic.setImageDrawable(mContext.getResources().getDrawable(R.drawable.head_pic2));
         }
         viewHolder.tv_name.setText(beans.get(position).getAlias());
-        viewHolder.tv_get.setText(beans.get(position).getWalletAddress());
+        viewHolder.tv_get.setText(beans.get(position).getCommission());
         return containView;
     }
 }

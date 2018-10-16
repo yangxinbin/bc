@@ -9,9 +9,9 @@ import java.util.List;
 public class MemberBean {
 
     /**
-     * total : 13.36
-     * size : 1
-     * users : [{"userId":"5b991c74c6987a31a42779f1","type":"general","agencyInfo":{"realName":"","company":"","position":"","phone":"","recommendedBy":"","level":0,"status":0},"alias":"KK","walletAddress":"13.36","avator":{"id":"5bc00b762557b905d888975a","alias":"avator","fileName":"15393125021706388.avator","contentType":"image/jpeg","size":1024,"createdOn":1539312502170}}]
+     * total : 26.72
+     * size : 2
+     * users : [{"userId":"5b991c74c6987a31a42779f1","type":"general","agencyInfo":{"realName":"","company":"","position":"","phone":"","recommendedBy":"","level":0,"status":0},"alias":"KK","walletAddress":"0x6e83c04be7c15170b695fa5be0cf047f","commission":"13.36","avator":{"id":"5bc00b762557b905d888975a","alias":"avator","fileName":"15393125021706388.avator","contentType":"image/jpeg","size":1024,"createdOn":1539312502170}},{"userId":"5b839f3804440c1224e1cea7","type":"general","agencyInfo":{"realName":"","company":"","position":"","phone":"","recommendedBy":"","level":0,"status":0},"alias":"嘻嘻","walletAddress":"0x5a06281007f928c010089bfcdb0804c0","commission":"13.36","avator":{"id":"5bc07efc2557b905d888989a","alias":"avator","fileName":"15393420766652274.avator","contentType":"image/jpeg","size":1024,"createdOn":1539342076665}}]
      */
 
     private double total;
@@ -48,7 +48,8 @@ public class MemberBean {
          * type : general
          * agencyInfo : {"realName":"","company":"","position":"","phone":"","recommendedBy":"","level":0,"status":0}
          * alias : KK
-         * walletAddress : 13.36
+         * walletAddress : 0x6e83c04be7c15170b695fa5be0cf047f
+         * commission : 13.36
          * avator : {"id":"5bc00b762557b905d888975a","alias":"avator","fileName":"15393125021706388.avator","contentType":"image/jpeg","size":1024,"createdOn":1539312502170}
          */
 
@@ -57,6 +58,7 @@ public class MemberBean {
         private AgencyInfoBean agencyInfo;
         private String alias;
         private String walletAddress;
+        private String commission;
         private AvatorBean avator;
 
         public String getUserId() {
@@ -97,6 +99,14 @@ public class MemberBean {
 
         public void setWalletAddress(String walletAddress) {
             this.walletAddress = walletAddress;
+        }
+
+        public String getCommission() {
+            return commission;
+        }
+
+        public void setCommission(String commission) {
+            this.commission = commission;
         }
 
         public AvatorBean getAvator() {

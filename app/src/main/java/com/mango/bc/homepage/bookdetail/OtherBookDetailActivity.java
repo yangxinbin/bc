@@ -42,6 +42,7 @@ import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 import com.mango.bc.view.likeview.PraiseView;
 import com.mango.bc.wallet.bean.RefreshTaskBean;
+import com.tencent.mm.opensdk.modelmsg.WXMiniProgramObject;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -58,6 +59,7 @@ import butterknife.OnClick;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -117,6 +119,9 @@ public class OtherBookDetailActivity extends BaseServiceActivity implements MyAl
     private BookBean mBookBean;
     private MyBookPresenterImpl myBookPresenter;
     private ControlPanel controlPanel;
+    private String userId;
+    private String title;
+    private String cover;
 
 
     @Override
@@ -129,6 +134,9 @@ public class OtherBookDetailActivity extends BaseServiceActivity implements MyAl
         ButterKnife.bind(this);
         recycle.setNestedScrollingEnabled(false);
         EventBus.getDefault().register(this);
+        if (MineJsonUtils.readUserBean(spUtils.getString("auth", "")) != null){
+            userId = MineJsonUtils.readUserBean(spUtils.getString("auth", "")).getId();
+        }
     }
 
     @Override
@@ -348,6 +356,10 @@ public class OtherBookDetailActivity extends BaseServiceActivity implements MyAl
     private void initBookDetailView(BookDetailBean bookDetailBean) {
         if (bookDetailBean == null)
             return;
+        title = bookDetailBean.getTitle();
+        if (bookDetailBean.getCover() != null){
+            cover = bookDetailBean.getCover().getFileName();
+        }
         this.mBookDetailBean = bookDetailBean;
         if (bookDetailBean.getCover() != null)
             Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + bookDetailBean.getCover().getFileName()).into(imgCover);
@@ -609,44 +621,34 @@ public class OtherBookDetailActivity extends BaseServiceActivity implements MyAl
 
     private void showShare() {
         OnekeyShare oks = new OnekeyShare();
-        //关闭sso授权
-        oks.disableSSOWhenAuthorize();
-
-        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间等使用
-        oks.setTitle(mBookDetailBean.getTitle());
-        // titleUrl是标题的网络链接，QQ和QQ空间等使用
-        oks.setTitleUrl("http://sharesdk.cn");
-        // text是分享文本，所有平台都需要这个字段
-        oks.setText(mBookDetailBean.getSubtitle());
-        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-        oks.setImageUrl(Urls.HOST_GETFILE + "?name=" + mBookDetailBean.getCover().getFileName());//确保SDcard下面存在此张图片
-        // url在微信、微博，Facebook等平台中使用
-        oks.setUrl(Urls.HOST_GETFILE + "?name=" + mBookDetailBean.getDescriptionImages().get(0).getFileName());
-        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
-        oks.setComment("我是测试评论文本");
-        // site是分享此内容的网站名称，仅在QQ空间使用
-        oks.setSite(getString(R.string.app_name));
-        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-        oks.setSiteUrl("http://sharesdk.cn");
+        oks.setTitle(title);
+        oks.setText("BC大陆");
+        oks.setImageUrl(Urls.HOST_GETFILE + "?name=" +cover);
+        oks.setUrl("http://www.mob.com");
+        oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
+            @Override
+            public void onShare(Platform platform, Platform.ShareParams paramsToShare) {
+                if (platform.getName().equals("Wechat")) {
+                    paramsToShare.setShareType(Platform.SHARE_WXMINIPROGRAM);
+                    paramsToShare.setWxMiniProgramType(WXMiniProgramObject.MINIPTOGRAM_TYPE_RELEASE);
+                    paramsToShare.setWxUserName("gh_482031325125");
+                    paramsToShare.setWxPath("pages/freeBookDetail/freeBookDetail?model=" + "{\"bookId\":\""+bookId+"\",\"userId\":\"" +userId+ "\"}");
+                }
+            }
+        });
         oks.setCallback(new PlatformActionListener() {
             @Override
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-                Log.v("nnnnn", "----1");
             }
 
             @Override
             public void onError(Platform platform, int i, Throwable throwable) {
-                Log.v("nnnn", "----2" + throwable);
-
             }
 
             @Override
             public void onCancel(Platform platform, int i) {
-                Log.v("nnnn", "----3");
-
             }
         });
-        // 启动分享GUI
         oks.show(getApplicationContext());
     }
 

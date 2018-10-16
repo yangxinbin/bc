@@ -36,6 +36,7 @@ import com.mango.bc.homepage.bookdetail.play.executor.ControlPanel;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.mine.activity.VipCenterActivity;
+import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.ACache;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.DensityUtil;
@@ -45,6 +46,7 @@ import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 import com.mango.bc.view.likeview.PraiseView;
 import com.mango.bc.wallet.bean.RefreshTaskBean;
+import com.tencent.mm.opensdk.modelmsg.WXMiniProgramObject;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -61,7 +63,10 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -121,6 +126,9 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
     private BookBean mBookBean;
     private ControlPanel controlPanel;
     private boolean isPlayFragmentShow;
+    private String title;
+    private String cover;
+    private String userId;
     //private PlayActivity mPlayFragment;
 
     @Override
@@ -136,6 +144,9 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
         init();
         if (getIntent().getBooleanExtra("bookCourse", false)) {
             viewPager.setCurrentItem(1);
+        }
+        if (MineJsonUtils.readUserBean(spUtils.getString("auth", "")) != null){
+            userId = MineJsonUtils.readUserBean(spUtils.getString("auth", "")).getId();
         }
     }
 
@@ -380,6 +391,10 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
         if (bookDetailBean == null)
             return;
         //AudioPlayer.get().init(this);
+        title = bookDetailBean.getTitle();
+        if (bookDetailBean.getCover() != null){
+            cover = bookDetailBean.getCover().getFileName();
+        }
         this.mBookDetailBean = bookDetailBean;
         EventBus.getDefault().postSticky(bookDetailBean);
         if (bookDetailBean.getBanner() != null)
@@ -425,7 +440,7 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
         if (bookBean.getBook() != null) {
             bookId = bookBean.getBook().getId();
             type = bookBean.getBook().getType();
-            if (getIntent().getBooleanExtra("gift",false)) {
+            if (getIntent().getBooleanExtra("gift", false)) {
                 initState(false, "");
             } else {
                 initState(chechState(bookId), type);
@@ -641,27 +656,34 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
 
     private void showShare() {
         OnekeyShare oks = new OnekeyShare();
-        //关闭sso授权
-        oks.disableSSOWhenAuthorize();
+        oks.setTitle(title);
+        oks.setText("BC大陆");
+        oks.setImageUrl(Urls.HOST_GETFILE + "?name=" +cover);
+        oks.setUrl("http://www.mob.com");
+        oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
+            @Override
+            public void onShare(Platform platform, Platform.ShareParams paramsToShare) {
+                if (platform.getName().equals("Wechat")) {
+                    paramsToShare.setShareType(Platform.SHARE_WXMINIPROGRAM);
+                    paramsToShare.setWxMiniProgramType(WXMiniProgramObject.MINIPTOGRAM_TYPE_RELEASE);
+                    paramsToShare.setWxUserName("gh_482031325125");
+                    paramsToShare.setWxPath("pages/classDetail/classDetail?model=" + "{\"bookId\":\""+bookId+"\",\"userId\":\"" +userId+ "\"}");
+                }
+            }
+        });
+        oks.setCallback(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+            }
 
-        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间等使用
-        oks.setTitle(mBookDetailBean.getTitle());
-        // titleUrl是标题的网络链接，QQ和QQ空间等使用
-        oks.setTitleUrl("http://sharesdk.cn");
-        // text是分享文本，所有平台都需要这个字段
-        oks.setText(mBookDetailBean.getSubtitle());
-        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-        oks.setImageUrl(Urls.HOST_GETFILE + "?name=" + mBookDetailBean.getCover().getFileName());//确保SDcard下面存在此张图片
-        // url在微信、微博，Facebook等平台中使用
-        oks.setUrl(Urls.HOST_GETFILE + "?name=" + mBookDetailBean.getDescriptionImages().get(0).getFileName());
-        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
-        oks.setComment("我是测试评论文本");
-        // site是分享此内容的网站名称，仅在QQ空间使用
-        oks.setSite(getString(R.string.app_name));
-        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-        oks.setSiteUrl("http://sharesdk.cn");
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+            }
 
-        // 启动分享GUI
+            @Override
+            public void onCancel(Platform platform, int i) {
+            }
+        });
         oks.show(getApplicationContext());
     }
 

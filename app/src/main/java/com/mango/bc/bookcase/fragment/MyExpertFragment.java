@@ -75,6 +75,7 @@ public class MyExpertFragment extends Fragment implements MyExpertBookView {
         refreshAndLoadMore();
         return view;
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void RefreshBookCaseBeanEventBus(RefreshBookCaseBean refreshBookCaseBean) {
         if (refreshBookCaseBean == null) {
@@ -86,6 +87,7 @@ public class MyExpertFragment extends Fragment implements MyExpertBookView {
             //EventBus.getDefault().removeStickyEvent(RefreshBookCaseBean.class);
         }
     }
+
     private void initView() {
         myBookGirdAdapter = new MyBookGirdAdapter(getActivity());
         recycle.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 3));
@@ -100,6 +102,20 @@ public class MyExpertFragment extends Fragment implements MyExpertBookView {
             Intent intent = new Intent(getActivity(), ExpertBookDetailActivity.class);
             EventBus.getDefault().removeStickyEvent(BookBean.class);
             EventBus.getDefault().postSticky(myBookGirdAdapter.getItem(position));
+            startActivity(intent);
+        }
+
+        @Override
+        public void onDeleteClick(View view, int position) {
+
+        }
+
+        @Override
+        public void onButGiftClick(View view, int position) {
+            Intent intent = new Intent(getActivity(), ExpertBookDetailActivity.class);
+            EventBus.getDefault().removeStickyEvent(BookBean.class);
+            EventBus.getDefault().postSticky(myBookGirdAdapter.getItem(position));
+            intent.putExtra("gift",true);
             startActivity(intent);
         }
 

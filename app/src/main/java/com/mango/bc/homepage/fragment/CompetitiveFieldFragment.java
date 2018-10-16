@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.mango.bc.R;
 import com.mango.bc.homepage.activity.competitivebook.CompetitiveBookActivity;
 import com.mango.bc.homepage.adapter.CompetitiveFieldAdapter;
+import com.mango.bc.homepage.adapter.FieldAdapter;
 import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.homepage.net.presenter.BookPresenter;
@@ -44,6 +45,7 @@ public class CompetitiveFieldFragment extends Fragment implements BookCompetitiv
     private BookPresenter bookPresenter;
     private final int TYPE = 0;
     private int page = -1;
+    private FieldAdapter fieldAdapter;
 
     @Nullable
     @Override
@@ -57,6 +59,7 @@ public class CompetitiveFieldFragment extends Fragment implements BookCompetitiv
         }else {
             bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//true从缓存读数据，false从网络读数据。
         }
+        initViewfork();
         return view;
     }
 
@@ -74,6 +77,25 @@ public class CompetitiveFieldFragment extends Fragment implements BookCompetitiv
             //bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//缓存。
         }
     }
+    private void initViewfork() {
+        fieldAdapter = new FieldAdapter(getActivity());
+        recycle.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 3));
+        recycle.setAdapter(fieldAdapter);
+        fieldAdapter.setOnItemClickLitener(mOnClickListenner1);
+    }
+
+    private FieldAdapter.OnItemClickLitener mOnClickListenner1 = new FieldAdapter.OnItemClickLitener() {
+        @Override
+        public void onItemClick(View view, int position) {
+            Intent intent = new Intent(getActivity(), CompetitiveBookActivity.class);
+            intent.putExtra("which",position);
+            startActivity(intent);
+        }
+
+/*        @Override
+        public void onStageClick(View view, int position) {
+        }*/
+    };
 
     private void initView() {
         competitiveFieldAdapter = new CompetitiveFieldAdapter(listS);
@@ -129,7 +151,7 @@ public class CompetitiveFieldFragment extends Fragment implements BookCompetitiv
         if (getActivity() != null) getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                initView();
+                //initView();
             }
         });
     }

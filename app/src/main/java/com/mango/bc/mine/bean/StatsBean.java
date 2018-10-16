@@ -11,15 +11,11 @@ public class StatsBean {
      * vipGetMemberBooks : 0
      * buyMemberMoneySaved : 0.0
      * buyPaidBookMoneySaved : 0.0
-     * paidBooks : 3
-     * vipBooks : 59
-     * totalDuration : 0
-     * ppCoinEarned : 127.74
-     * paidBookSaving : 0.0
-     * memberBookSaving : 58.8
-     * ageDays : 88
-     * updatedOn : 20181015
-     * lastCalculateDate : null
+     * paidBooks : 1
+     * vipGetBooks : 17
+     * totalDuration : 0.0
+     * ppCoinEarned : 16.02
+     * lastCalculateDate : 1
      */
 
     private long createDate;
@@ -27,14 +23,46 @@ public class StatsBean {
     private double buyMemberMoneySaved;
     private double buyPaidBookMoneySaved;
     private int paidBooks;
-    private int vipBooks;
-    private int totalDuration;
-    private double ppCoinEarned;
+    private int vipGetBooks;
+    private double totalDuration;
     private double paidBookSaving;
     private double memberBookSaving;
+    private double ppCoinEarned;
+    private int lastCalculateDate;
     private int ageDays;
     private int updatedOn;
-    private Object lastCalculateDate;
+
+    public double getPaidBookSaving() {
+        return paidBookSaving;
+    }
+
+    public void setPaidBookSaving(double paidBookSaving) {
+        this.paidBookSaving = paidBookSaving;
+    }
+
+    public double getMemberBookSaving() {
+        return memberBookSaving;
+    }
+
+    public void setMemberBookSaving(double memberBookSaving) {
+        this.memberBookSaving = memberBookSaving;
+    }
+
+    public int getAgeDays() {
+        return ageDays;
+    }
+
+    public void setAgeDays(int ageDays) {
+        this.ageDays = ageDays;
+    }
+
+    public int getUpdatedOn() {
+        return updatedOn;
+    }
+
+    public void setUpdatedOn(int updatedOn) {
+        this.updatedOn = updatedOn;
+    }
 
     public long getCreateDate() {
         return createDate;
@@ -76,19 +104,19 @@ public class StatsBean {
         this.paidBooks = paidBooks;
     }
 
-    public int getVipBooks() {
-        return vipBooks;
+    public int getVipGetBooks() {
+        return vipGetBooks;
     }
 
-    public void setVipBooks(int vipBooks) {
-        this.vipBooks = vipBooks;
+    public void setVipGetBooks(int vipGetBooks) {
+        this.vipGetBooks = vipGetBooks;
     }
 
-    public int getTotalDuration() {
+    public double getTotalDuration() {
         return totalDuration;
     }
 
-    public void setTotalDuration(int totalDuration) {
+    public void setTotalDuration(double totalDuration) {
         this.totalDuration = totalDuration;
     }
 
@@ -100,43 +128,11 @@ public class StatsBean {
         this.ppCoinEarned = ppCoinEarned;
     }
 
-    public double getPaidBookSaving() {
-        return paidBookSaving;
-    }
-
-    public void setPaidBookSaving(double paidBookSaving) {
-        this.paidBookSaving = paidBookSaving;
-    }
-
-    public double getMemberBookSaving() {
-        return memberBookSaving;
-    }
-
-    public void setMemberBookSaving(double memberBookSaving) {
-        this.memberBookSaving = memberBookSaving;
-    }
-
-    public int getAgeDays() {
-        return ageDays;
-    }
-
-    public void setAgeDays(int ageDays) {
-        this.ageDays = ageDays;
-    }
-
-    public int getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(int updatedOn) {
-        this.updatedOn = updatedOn;
-    }
-
-    public Object getLastCalculateDate() {
+    public int getLastCalculateDate() {
         return lastCalculateDate;
     }
 
-    public void setLastCalculateDate(Object lastCalculateDate) {
+    public void setLastCalculateDate(int lastCalculateDate) {
         this.lastCalculateDate = lastCalculateDate;
     }
 }

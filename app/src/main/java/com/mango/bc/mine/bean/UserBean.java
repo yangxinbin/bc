@@ -512,7 +512,7 @@ public class UserBean {
         private double buyMemberMoneySaved;
         private double buyPaidBookMoneySaved;
         private int paidBooks;
-        private int vipBooks;
+        private int vipGetBooks;
         private double totalDuration;
         private double ppCoinEarned;
         private double paidBookSaving;
@@ -561,12 +561,12 @@ public class UserBean {
             this.paidBooks = paidBooks;
         }
 
-        public int getVipBooks() {
-            return vipBooks;
+        public int getVipGetBooks() {
+            return vipGetBooks;
         }
 
-        public void setVipBooks(int vipBooks) {
-            this.vipBooks = vipBooks;
+        public void setVipGetBooks(int vipBooks) {
+            this.vipGetBooks = vipBooks;
         }
 
         public double getTotalDuration() {

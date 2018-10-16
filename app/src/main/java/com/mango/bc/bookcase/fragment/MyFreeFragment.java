@@ -2,6 +2,7 @@ package com.mango.bc.bookcase.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,8 +24,12 @@ import com.mango.bc.bookcase.net.view.MyFreeBookView;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.AppUtils;
+import com.mango.bc.util.HttpUtils;
+import com.mango.bc.util.JsonUtil;
 import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.SPUtils;
+import com.mango.bc.util.Urls;
+import com.mango.bc.wallet.bean.CheckInBean;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -35,16 +40,21 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * Created by admin on 2018/9/5.
  */
 
-public class MyFreeFragment extends Fragment implements MyFreeBookView{
+public class MyFreeFragment extends Fragment implements MyFreeBookView {
     @Bind(R.id.recycle)
     RecyclerView recycle;
     @Bind(R.id.refresh)
@@ -57,6 +67,7 @@ public class MyFreeFragment extends Fragment implements MyFreeBookView{
     private final int TYPE = 2;//免费
     private int page = 0;
     private SPUtils spUtils;
+    private String id;
 
     @Nullable
     @Override
@@ -67,14 +78,15 @@ public class MyFreeFragment extends Fragment implements MyFreeBookView{
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         initView();
-        if (NetUtil.isNetConnect(getActivity())){
+        if (NetUtil.isNetConnect(getActivity())) {
             myBookPresenter.visitBooks(getActivity(), TYPE, page, false);
-        }else {
+        } else {
             myBookPresenter.visitBooks(getActivity(), TYPE, page, true);
         }
         refreshAndLoadMore();
         return view;
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void RefreshBookCaseBeanEventBus(RefreshBookCaseBean refreshBookCaseBean) {
         if (refreshBookCaseBean == null) {
@@ -82,7 +94,7 @@ public class MyFreeFragment extends Fragment implements MyFreeBookView{
         }
         if (refreshBookCaseBean.isRefreshFree()) {
             refresh.autoRefresh();
-            Log.v("111111111111","111111111111");
+            Log.v("111111111111", "111111111111");
             refreshBookCaseBean.setRefreshFree(false);
             //EventBus.getDefault().removeStickyEvent(RefreshBookCaseBean.class);
         }
@@ -94,6 +106,7 @@ public class MyFreeFragment extends Fragment implements MyFreeBookView{
         recycle.setAdapter(myBookGirdAdapter);
         myBookGirdAdapter.setOnItemClickLitener(mOnClickListenner);
     }
+
     private MyBookGirdAdapter.OnItemClickLitener mOnClickListenner = new MyBookGirdAdapter.OnItemClickLitener() {
         @Override
         public void onItemClick(View view, int position) {
@@ -104,7 +117,69 @@ public class MyFreeFragment extends Fragment implements MyFreeBookView{
             startActivity(intent);
         }
 
+        @Override
+        public void onDeleteClick(View view, int position) {
+            //myBookGirdAdapter.deleteItem(position);
+            deleteGift(position);
+        }
+
+        @Override
+        public void onButGiftClick(View view, int position) {
+            Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
+            EventBus.getDefault().removeStickyEvent(BookBean.class);
+            EventBus.getDefault().postSticky(myBookGirdAdapter.getItem(position));
+            intent.putExtra("gift",true);
+            startActivity(intent);
+        }
+
     };
+
+    private void deleteGift(final int position) {
+        if (myBookGirdAdapter.getItem(position).getBook() != null){
+            id = myBookGirdAdapter.getItem(position).getBook().getId();
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
+                mapParams.put("bookId", id);
+                HttpUtils.doPost(Urls.HOST_DELETEGIFT, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                AppUtils.showToast(getActivity(),"删除失败");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AppUtils.showToast(getActivity(),"删除成功");
+                                    myBookGirdAdapter.deleteItem(position);
+                                }
+                            });
+                        } catch (Exception e) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AppUtils.showToast(getActivity(),"删除失败");
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
+
     private void refreshAndLoadMore() {
         refresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -165,7 +240,7 @@ public class MyFreeFragment extends Fragment implements MyFreeBookView{
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Log.v("doPostAll", page +"==="+bookBeanList.size());
+                Log.v("doPostAll", page + "===" + bookBeanList.size());
                 if (bookBeanList == null || bookBeanList.size() == 0) {
                     if (page == 0) {
                         refresh.setVisibility(View.GONE);

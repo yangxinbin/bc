@@ -304,7 +304,7 @@ public class MineFragment extends Fragment {
             imageViePic.setImageDrawable(getResources().getDrawable(R.drawable.head_pic2));
         }
         tvClass.setText(userBean.getStats().getPaidBooks() + "本");
-        tvGet.setText(userBean.getStats().getVipBooks() + "本");
+        tvGet.setText(userBean.getStats().getVipGetBooks() + "本");
         tvTime.setText(userBean.getStats().getTotalDuration() + "小时");
         tvCode.setText(userBean.getStats().getPpCoinEarned() + "积分");
         //以下是达人节点UI
@@ -343,7 +343,7 @@ public class MineFragment extends Fragment {
         if (statsBean == null)
             return;
         tvClass.setText(statsBean.getPaidBooks() + "本");
-        tvGet.setText(statsBean.getVipBooks() + "本");
+        tvGet.setText(statsBean.getVipGetBooks() + "本");
         tvTime.setText(statsBean.getTotalDuration() + "小时");
         tvCode.setText(statsBean.getPpCoinEarned() + "积分");
     }

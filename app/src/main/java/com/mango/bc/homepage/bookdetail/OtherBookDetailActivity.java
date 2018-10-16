@@ -327,8 +327,8 @@ public class OtherBookDetailActivity extends BaseServiceActivity implements MyAl
         }).start();
     }
 
-    private void initState(String bookId, String type) {
-        if (chechState(bookId)) {
+    private void initState(boolean state, String type) {
+        if (state) {
             lGet.setVisibility(View.VISIBLE);//进去播放界面
             lFree.setVisibility(View.GONE);//进去免费领取界面
             lNeedbuy.setVisibility(View.GONE);//进去购买领取界面
@@ -382,7 +382,7 @@ public class OtherBookDetailActivity extends BaseServiceActivity implements MyAl
         bookId = bookBean.getId();
         Log.v("kkkkk", "---1--" + bookId);
         type = bookBean.getType();
-        initState(bookId, type);
+        initState(chechState(bookId), type);
         checkLike(bookId);
         if (NetUtil.isNetConnect(this)) {
             loadBookDetail(false, bookId);
@@ -398,9 +398,13 @@ public class OtherBookDetailActivity extends BaseServiceActivity implements MyAl
         }
         if (bookBean.getBook() != null) {
             bookId = bookBean.getBook().getId();
-            Log.v("kkkkk", "---2--" + bookId);
             type = bookBean.getBook().getType();
-            initState(bookId, type);
+            Log.v("kkkkk", type + "---2--" + bookId);
+            if (getIntent().getBooleanExtra("gift",false)) {
+                initState(false, "free");
+            } else {
+                initState(chechState(bookId), type);
+            }
             checkLike(bookId);
             if (NetUtil.isNetConnect(this)) {
                 loadBookDetail(false, bookId);

@@ -22,6 +22,8 @@ import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
 import com.mango.bc.bookcase.net.view.MyCompetitiveBookView;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
 import com.mango.bc.homepage.net.bean.BookBean;
+import com.mango.bc.mine.bean.UserBean;
+import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.SPUtils;
@@ -57,6 +59,7 @@ public class MyCompetitiveFragment extends Fragment implements MyCompetitiveBook
     private final int TYPE = 1;//精品
     private int page = 0;
     private SPUtils spUtils;
+    private boolean isVip = false;
 
     @Nullable
     @Override
@@ -73,6 +76,10 @@ public class MyCompetitiveFragment extends Fragment implements MyCompetitiveBook
             myBookPresenter.visitBooks(getActivity(), TYPE, page, true);
         }
         refreshAndLoadMore();
+        UserBean userBean = MineJsonUtils.readUserBean(spUtils.getString("auth", ""));
+        Log.v("lllllllll", "===userBean.isVip()=" + userBean.isVip());
+        if (userBean != null)
+            isVip = userBean.isVip();
         return view;
     }
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
@@ -100,6 +107,24 @@ public class MyCompetitiveFragment extends Fragment implements MyCompetitiveBook
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
             EventBus.getDefault().removeStickyEvent(BookBean.class);
             EventBus.getDefault().postSticky(myBookGirdAdapter.getItem(position));
+            startActivity(intent);
+        }
+
+        @Override
+        public void onDeleteClick(View view, int position) {
+
+        }
+
+        @Override
+        public void onButGiftClick(View view, int position) {
+            Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
+            EventBus.getDefault().removeStickyEvent(BookBean.class);
+            EventBus.getDefault().postSticky(myBookGirdAdapter.getItem(position));
+            if (isVip){
+                intent.putExtra("gift",true);//vip
+            }else {
+                intent.putExtra("gift",false);
+            }
             startActivity(intent);
         }
 

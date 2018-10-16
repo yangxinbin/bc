@@ -10,6 +10,7 @@ import android.widget.EditText;
 import com.mango.bc.BcActivity;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
+import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.SPUtils;
 
 import java.util.HashMap;
@@ -83,7 +84,12 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onError(Platform platform, int i, Throwable throwable) {
-
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        AppUtils.showToast(LoginActivity.this,"微信登录失败");
+                    }
+                });
             }
 
             @Override

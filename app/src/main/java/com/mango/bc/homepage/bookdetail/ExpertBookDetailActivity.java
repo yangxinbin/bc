@@ -179,8 +179,8 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
         isPlayFragmentShow = false;
     }*/
 
-    private void initState(String bookId, String type) {
-        if (chechState(bookId)) {
+    private void initState(boolean state, String type) {
+        if (state) {
             spUtils.put("isFree", true);
             lGet.setVisibility(View.GONE);
             lPlayExpert.setVisibility(View.VISIBLE);//进去播放界面
@@ -408,7 +408,7 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
         this.mBookBean = bookBean;
         bookId = bookBean.getId();
         type = bookBean.getType();
-        initState(bookId, type);
+        initState(chechState(bookId), type);
         checkLike(bookId);
         if (NetUtil.isNetConnect(this)) {
             loadBookDetail(false, bookId);
@@ -425,7 +425,11 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
         if (bookBean.getBook() != null) {
             bookId = bookBean.getBook().getId();
             type = bookBean.getBook().getType();
-            initState(bookId, type);
+            if (getIntent().getBooleanExtra("gift",false)) {
+                initState(false, "");
+            } else {
+                initState(chechState(bookId), type);
+            }
             checkLike(bookId);
             if (NetUtil.isNetConnect(this)) {
                 loadBookDetail(false, bookId);
@@ -488,7 +492,7 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
                     lPlayExpert.setVisibility(View.GONE);
                 } else {
                     l2.setVisibility(View.GONE);
-                    initState(bookId, type);
+                    initState(chechState(bookId), type);
                 }
             }
 

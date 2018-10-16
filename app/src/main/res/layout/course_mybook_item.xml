@@ -8,12 +8,49 @@
     android:orientation="vertical"
     android:padding="@dimen/dp_5">
 
-    <com.mango.bc.util.RoundImageView
-        android:id="@+id/img_free_book"
+    <FrameLayout
+        android:id="@+id/f_buy"
         android:layout_width="match_parent"
-        android:scaleType="centerCrop"
-        android:layout_height="@dimen/dp_150"
-        android:src="@drawable/book_pic1" />
+        android:layout_height="@dimen/dp_150">
+
+        <com.mango.bc.util.RoundImageView
+            android:id="@+id/img_free_book"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/book_pic1" />
+
+        <TextView
+            android:id="@+id/textView_gift_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/yello"
+            android:gravity="center"
+            android:padding="@dimen/dp_2"
+            android:text="2018-10-23到期"
+            android:visibility="gone"
+            android:textColor="@color/gray_3"
+            android:textSize="@dimen/dp_12" />
+
+        <TextView
+            android:id="@+id/textView_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/img_free_book"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="bottom"
+            android:background="@color/red"
+            android:gravity="center"
+            android:padding="@dimen/dp_15"
+            android:text="删除"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/tv_free_title"

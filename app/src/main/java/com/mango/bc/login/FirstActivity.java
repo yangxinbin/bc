@@ -67,10 +67,14 @@ public class FirstActivity extends BaseActivity {
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
                 final String userInfo = StrUtils.format("", hashMap);
                 spUtils.put("openId", platform.getDb().get("unionid"));
-                Intent intent = new Intent(FirstActivity.this, BunblePhoneActivity.class);
-                intent.putExtra("wechat", true);
+                Intent intent;
+                if (true){
+                    intent = new Intent(FirstActivity.this, BcActivity.class);
+                    intent.putExtra("wechat", true);
+                }else {
+                    intent = new Intent(FirstActivity.this, BunblePhoneActivity.class);
+                }
                 startActivity(intent);
-                finish();
                 finish();
             }
 

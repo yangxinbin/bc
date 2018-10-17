@@ -130,7 +130,7 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
                         //final Bitmap bitmap = BitmapFactory.decodeByteArray(Picture, 0, Picture.length);
                         //通过imageview，设置图片
                         bitmap = streamToBitmap(input);
-                        mCache.put("bookDetail" + fileName, bitmap);
+                        mCache.put("bookDetail" + fileName, bitmap,60*60*24*2);//有效期2天
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {

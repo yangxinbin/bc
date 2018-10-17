@@ -38,12 +38,14 @@ public class BunblePhoneActivity extends BaseActivity {
             case R.id.imageView_back:
                 intent = new Intent(BunblePhoneActivity.this, FirstActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             case R.id.get_code:
                 break;
             case R.id.button_password_ok:
                 intent = new Intent(BunblePhoneActivity.this, PositionActivity.class);
                 startActivity(intent);
+                finish();
                 break;
         }
     }

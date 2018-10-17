@@ -67,13 +67,9 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
     FrameLayout flPlayBar;
     private boolean isFirstEnter = true;
     private HomePageAdapter homePageAdapter;
-    private BookPresenter bookPresenter;
-    private final int TYPE = 3;
     private int page = 0;
     private MyBookPresenter myBookPresenter;
     private ControlPanel controlPanel;
-    private boolean isPlayFragmentShow;
-    private PlayActivity mPlayFragment;
     private SPUtils spUtils;
     private boolean isFirstInit = true;
     private boolean isFirstRefresh = true;
@@ -95,7 +91,6 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
     protected void onServiceBound() {
         controlPanel = new ControlPanel(flPlayBar);
         AudioPlayer.get().addOnPlayEventListener(controlPanel);
-        //parseIntent();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)

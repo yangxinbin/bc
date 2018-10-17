@@ -128,7 +128,6 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
     private boolean isPlayFragmentShow;
     private String title;
     private String cover;
-    private String userId;
     //private PlayActivity mPlayFragment;
 
     @Override
@@ -144,9 +143,6 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
         init();
         if (getIntent().getBooleanExtra("bookCourse", false)) {
             viewPager.setCurrentItem(1);
-        }
-        if (MineJsonUtils.readUserBean(spUtils.getString("auth", "")) != null){
-            userId = MineJsonUtils.readUserBean(spUtils.getString("auth", "")).getId();
         }
     }
 
@@ -667,7 +663,7 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
                     paramsToShare.setShareType(Platform.SHARE_WXMINIPROGRAM);
                     paramsToShare.setWxMiniProgramType(WXMiniProgramObject.MINIPTOGRAM_TYPE_RELEASE);
                     paramsToShare.setWxUserName("gh_482031325125");
-                    paramsToShare.setWxPath("pages/classDetail/classDetail?model=" + "{\"bookId\":\""+bookId+"\",\"userId\":\"" +userId+ "\"}");
+                    paramsToShare.setWxPath("/pages/giftBook/giftBook?model=" + "\""+bookId+"\"");
                 }
             }
         });

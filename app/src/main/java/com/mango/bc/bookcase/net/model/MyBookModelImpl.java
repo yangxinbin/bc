@@ -196,6 +196,7 @@ public class MyBookModelImpl implements MyBookModel {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             //listener.onAllBookFailMes("请求失败", e);//java.lang.IllegalStateException: Not a JSON Object: null
+                            Log.v("llllllll", e + "---fffffffffffff1--");
                         }
 
                         @Override
@@ -204,16 +205,19 @@ public class MyBookModelImpl implements MyBookModel {
                                 String string = response.body().string();
                                 mCache.put("cache_my" + type + page, string);
                                 List<MyBookBean> beanList = MyBookJsonUtils.readMyBookBean(string);
+                                Log.v("llllllll", "---beanList.size()--" + beanList.size());
                                 for (int i = 0; i < beanList.size(); i++) {
-                                    list.add(beanList.get(i).getBook().getId());
+                                    if (beanList.get(i).getBook() != null)
+                                        list.add(beanList.get(i).getBook().getId());
                                 }
-                                Log.v("llllllll", "---s--"+list.size());
+                                Log.v("llllllll", "---s--" + list.size());
                                 Gson gson = new Gson();
                                 String data = gson.toJson(list);
                                 spUtils.put("allMyBook", data);
                                 listener.onAllBookSuccessMes("请求成功");
                             } catch (Exception e) {
                                 //listener.onAllBookFailMes("请求失败", e);//java.lang.IllegalStateException: Not a JSON Object: null
+                                Log.v("llllllll", e + "---fffffffffffff2--");
                             }
                         }
                     });

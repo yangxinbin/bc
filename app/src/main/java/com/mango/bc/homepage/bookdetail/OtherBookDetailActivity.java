@@ -119,7 +119,6 @@ public class OtherBookDetailActivity extends BaseServiceActivity implements MyAl
     private BookBean mBookBean;
     private MyBookPresenterImpl myBookPresenter;
     private ControlPanel controlPanel;
-    private String userId;
     private String title;
     private String cover;
 
@@ -134,9 +133,6 @@ public class OtherBookDetailActivity extends BaseServiceActivity implements MyAl
         ButterKnife.bind(this);
         recycle.setNestedScrollingEnabled(false);
         EventBus.getDefault().register(this);
-        if (MineJsonUtils.readUserBean(spUtils.getString("auth", "")) != null){
-            userId = MineJsonUtils.readUserBean(spUtils.getString("auth", "")).getId();
-        }
     }
 
     @Override
@@ -632,7 +628,7 @@ public class OtherBookDetailActivity extends BaseServiceActivity implements MyAl
                     paramsToShare.setShareType(Platform.SHARE_WXMINIPROGRAM);
                     paramsToShare.setWxMiniProgramType(WXMiniProgramObject.MINIPTOGRAM_TYPE_RELEASE);
                     paramsToShare.setWxUserName("gh_482031325125");
-                    paramsToShare.setWxPath("pages/freeBookDetail/freeBookDetail?model=" + "{\"bookId\":\""+bookId+"\",\"userId\":\"" +userId+ "\"}");
+                    paramsToShare.setWxPath("/pages/giftBook/giftBook?model=" + "\""+bookId+"\"");
                 }
             }
         });

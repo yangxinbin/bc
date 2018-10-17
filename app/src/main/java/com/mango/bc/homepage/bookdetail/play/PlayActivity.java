@@ -139,7 +139,7 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
         initViewPager();
         //ilIndicator.create(mViewPagerContent.size());
         //initPlayMode();
-        if (MineJsonUtils.readUserBean(spUtils.getString("auth", "")) != null){
+        if (MineJsonUtils.readUserBean(spUtils.getString("auth", "")) != null) {
             userId = MineJsonUtils.readUserBean(spUtils.getString("auth", "")).getId();
         }
         onChangeImpl(AudioPlayer.get().getPlayMusic());
@@ -458,39 +458,43 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
                 //intent.putExtra("bookCourse",true);
                 //startActivity(intent);
                 BookDetailBean bookBean = JsonBookDetailUtils.readBookDetailBean(spUtils.getString("bookDetail", ""));
-                Log.v("xxxxxxxxx", "-----" + spUtils.getString("bookDetail", ""));
-                bookMusicDetailBeanList.clear();//防止叠加
-                if (bookBean.getChapters() != null)
-                    for (int i = 0; i < bookBean.getChapters().size(); i++) {
-                        Log.v("xxxxxxxxxxx", bookBean.getChapters().get(i).isFree() + "-----" + spUtils.getBoolean("isFree", false));
-                        if (bookBean.getChapters().get(i).isFree() || spUtils.getBoolean("isFree", false)) {
-                            BookMusicDetailBean bookMusicDetailBean = new BookMusicDetailBean();
-                            bookMusicDetailBean.setBookId(bookBean.getId());
-                            Log.v("xxxxxxxxx", "---isSameBook--" + bookBean.getId());
-                            spUtils.put("isSameBook", bookBean.getId());
-                            //bookMusicDetailBean.setContentImages(bookBean.getChapters().get(i).getContentImages().get(i).getFileName());
-                            bookMusicDetailBean.setName(bookBean.getAuthor().getName());
-                            bookMusicDetailBean.setTitle(bookBean.getTitle());
-                            bookMusicDetailBean.setIsFree(bookBean.getChapters().get(i).isFree());
-                            bookMusicDetailBean.setMp3Name(bookBean.getChapters().get(i).getTitle());
-                            if (bookBean.getCover() != null)
-                                bookMusicDetailBean.setCoverPath(Urls.HOST_GETFILE + "?name=" + bookBean.getCover().getFileName());
-                            if (bookBean.getChapters().get(i).getAudio() != null)
-                                bookMusicDetailBean.setMp3Path(Urls.HOST_GETFILE + "?name=" + bookBean.getChapters().get(i).getAudio().getFileName());
-                            bookMusicDetailBean.setDuration(bookBean.getChapters().get(i).getDuration());
-                            bookMusicDetailBeanList.add(bookMusicDetailBean);
-                        } else {
-                            continue;
-                        }
+                if (bookBean != null) {
+                    Log.v("xxxxxxxxx", "-----" + spUtils.getString("bookDetail", ""));
+                    bookMusicDetailBeanList.clear();//防止叠加
+                    if (bookBean.getChapters() != null)
+                        for (int i = 0; i < bookBean.getChapters().size(); i++) {
+                            Log.v("xxxxxxxxxxx", bookBean.getChapters().get(i).isFree() + "-----" + spUtils.getBoolean("isFree", false));
+                            if (bookBean.getChapters().get(i).isFree() || spUtils.getBoolean("isFree", false)) {
+                                BookMusicDetailBean bookMusicDetailBean = new BookMusicDetailBean();
+                                bookMusicDetailBean.setBookId(bookBean.getId());
+                                bookMusicDetailBean.setType(bookBean.getType());
+                                Log.v("xxxxxxxxx", "---isSameBook--" + bookBean.getId());
+                                spUtils.put("isSameBook", bookBean.getId());
+                                //bookMusicDetailBean.setContentImages(bookBean.getChapters().get(i).getContentImages().get(i).getFileName());
+                                bookMusicDetailBean.setName(bookBean.getAuthor().getName());
+                                bookMusicDetailBean.setTitle(bookBean.getTitle());
+                                bookMusicDetailBean.setIsFree(bookBean.getChapters().get(i).isFree());
+                                bookMusicDetailBean.setMp3Name(bookBean.getChapters().get(i).getTitle());
+                                if (bookBean.getCover() != null)
+                                    bookMusicDetailBean.setCoverPath(Urls.HOST_GETFILE + "?name=" + bookBean.getCover().getFileName());
+                                if (bookBean.getChapters().get(i).getAudio() != null)
+                                    bookMusicDetailBean.setMp3Path(Urls.HOST_GETFILE + "?name=" + bookBean.getChapters().get(i).getAudio().getFileName());
+                                bookMusicDetailBean.setDuration(bookBean.getChapters().get(i).getDuration());
+                                bookMusicDetailBeanList.add(bookMusicDetailBean);
+                            } else {
+                                continue;
+                            }
 
-                    }
+                        }
+                }
+
                 showPopupWindow(this, bookMusicDetailBeanList);
                 break;
             case R.id.iv_share:
                 //showShare();
                 shareMiniProgram();
                 //sendMiniApps();
-                Log.v("sssssssssssss","======");
+                Log.v("sssssssssssss", "======");
                 break;
         }
     }
@@ -668,7 +672,13 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
                     paramsToShare.setShareType(Platform.SHARE_WXMINIPROGRAM);
                     paramsToShare.setWxMiniProgramType(WXMiniProgramObject.MINIPTOGRAM_TYPE_RELEASE);
                     paramsToShare.setWxUserName("gh_482031325125");
-                    paramsToShare.setWxPath("pages/memberDetail/memberDetail?model="+"{\"bookId\":\""+showMusic.getBookId()+"\",\"userId\":\"" +userId+ "\"}");
+                    if (showMusic.getType().equals("paid")) {
+                        paramsToShare.setWxPath("pages/classDetail/classDetail?model=" + "{\"bookId\":\"" + showMusic.getBookId() + "\",\"userId\":\"" + userId + "\"}");
+                    } else if (showMusic.getType().equals("member")) {
+                        paramsToShare.setWxPath("pages/memberDetail/memberDetail?model=" + "{\"bookId\":\"" + showMusic.getBookId() + "\",\"userId\":\"" + userId + "\"}");
+                    } else if (showMusic.getType().equals("free")) {
+                        paramsToShare.setWxPath("pages/freeBookDetail/freeBookDetail?model=" + "{\"bookId\":\"" + showMusic.getBookId() + "\",\"userId\":\"" + userId + "\"}");
+                    }
                 }
             }
         });

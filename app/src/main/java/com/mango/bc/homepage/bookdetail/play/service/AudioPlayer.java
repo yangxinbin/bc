@@ -73,31 +73,36 @@ public class AudioPlayer {
         this.context = context.getApplicationContext();
         musicList.clear();
         BookDetailBean bookBean = JsonBookDetailUtils.readBookDetailBean(spUtils.getString("bookDetail", ""));
-        Log.v("bbbbbbb", "-----" + spUtils.getString("bookDetail", ""));
-        if (bookBean.getChapters() != null)
-            for (int i = 0; i < bookBean.getChapters().size(); i++) {
-                Log.v("bbbbbbb", bookBean.getChapters().get(i).isFree() + "-----" + spUtils.getBoolean("isFree", false));
-                if (bookBean.getChapters().get(i).isFree() || spUtils.getBoolean("isFree", false)) {
-                    BookMusicDetailBean bookMusicDetailBean = new BookMusicDetailBean();
-                    bookMusicDetailBean.setBookId(bookBean.getId());
-                    Log.v("bbbbbbb", "---isSameBook--" + bookBean.getId());
-                    spUtils.put("isSameBook", bookBean.getId());
-                    //bookMusicDetailBean.setContentImages(bookBean.getChapters().get(i).getContentImages().get(i).getFileName());
-                    bookMusicDetailBean.setName(bookBean.getAuthor().getName());
-                    bookMusicDetailBean.setTitle(bookBean.getTitle());
-                    bookMusicDetailBean.setIsFree(bookBean.getChapters().get(i).isFree());
-                    bookMusicDetailBean.setMp3Name(bookBean.getChapters().get(i).getTitle());
-                    if (bookBean.getCover() != null)
-                        bookMusicDetailBean.setCoverPath(Urls.HOST_GETFILE + "?name=" + bookBean.getCover().getFileName());
-                    if (bookBean.getChapters().get(i).getAudio() != null)
-                        bookMusicDetailBean.setMp3Path(Urls.HOST_GETFILE + "?name=" + bookBean.getChapters().get(i).getAudio().getFileName());
-                    bookMusicDetailBean.setDuration(bookBean.getChapters().get(i).getDuration());
-                    musicList.add(bookMusicDetailBean);
-                } else {
-                    continue;
-                }
+        if (bookBean != null) {
+            Log.v("bbbbbbb", "-----" + spUtils.getString("bookDetail", ""));
+            if (bookBean.getChapters() != null)
+                for (int i = 0; i < bookBean.getChapters().size(); i++) {
+                    Log.v("bbbbbbb", bookBean.getChapters().get(i).isFree() + "-----" + spUtils.getBoolean("isFree", false));
+                    if (bookBean.getChapters().get(i).isFree() || spUtils.getBoolean("isFree", false)) {
+                        BookMusicDetailBean bookMusicDetailBean = new BookMusicDetailBean();
+                        bookMusicDetailBean.setBookId(bookBean.getId());
+                        bookMusicDetailBean.setType(bookBean.getType());
+                        Log.v("bbbbbbb", "---isSameBook--" + bookBean.getId());
+                        spUtils.put("isSameBook", bookBean.getId());
+                        //bookMusicDetailBean.setContentImages(bookBean.getChapters().get(i).getContentImages().get(i).getFileName());
+                        if (bookBean.getAuthor() != null)
+                            bookMusicDetailBean.setName(bookBean.getAuthor().getName());
+                        bookMusicDetailBean.setTitle(bookBean.getTitle());
+                        bookMusicDetailBean.setIsFree(bookBean.getChapters().get(i).isFree());
+                        bookMusicDetailBean.setMp3Name(bookBean.getChapters().get(i).getTitle());
+                        if (bookBean.getCover() != null)
+                            bookMusicDetailBean.setCoverPath(Urls.HOST_GETFILE + "?name=" + bookBean.getCover().getFileName());
+                        if (bookBean.getChapters().get(i).getAudio() != null)
+                            bookMusicDetailBean.setMp3Path(Urls.HOST_GETFILE + "?name=" + bookBean.getChapters().get(i).getAudio().getFileName());
+                        bookMusicDetailBean.setDuration(bookBean.getChapters().get(i).getDuration());
+                        musicList.add(bookMusicDetailBean);
+                    } else {
+                        continue;
+                    }
 
-            }
+                }
+        }
+
         audioFocusManager = new AudioFocusManager(context);
         mediaPlayer = new MediaPlayer();
         handler = new Handler(Looper.getMainLooper());

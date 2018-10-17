@@ -14,6 +14,15 @@ public class BookMusicDetailBean {
     private int duration;
     private boolean isFree;
     private String contentImages;
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getContentImages() {
         return contentImages;

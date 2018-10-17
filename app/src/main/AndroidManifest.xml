@@ -157,7 +157,8 @@
         <activity android:name=".mine.activity.setting.ChangePasswordActivity" />
         <activity android:name=".mine.activity.setting.ForgetPasswordActivity" />
         <activity android:name=".mine.activity.setting.SettingPasswordActivity" />
-        <activity android:name=".login.WechatLoginActivity"></activity>
+        <activity android:name=".login.WechatLoginActivity" />
+        <activity android:name=".login.BunblePhoneActivity"></activity>
     </application>
 
 </manifest>

@@ -22,8 +22,8 @@ import butterknife.OnClick;
 
 public class SettingActivity extends BaseActivity {
 
-    @Bind(R.id.tv_wenxin_state)
-    TextView tvWenxinState;
+/*    @Bind(R.id.tv_wenxin_state)
+    TextView tvWenxinState;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class SettingActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.imageView_back, R.id.l_1, R.id.l_2, R.id.l_3, R.id.l_4, R.id.l_5, R.id.l_6, R.id.exit})
+    @OnClick({R.id.imageView_back, R.id.l_1,/* R.id.l_2, R.id.l_3, R.id.l_4, R.id.l_5,*/ R.id.l_6, R.id.exit})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -44,7 +44,7 @@ public class SettingActivity extends BaseActivity {
                 startActivity(intent);
                 finish();
                 break;
-            case R.id.l_2:
+            /*case R.id.l_2:
                 intent = new Intent(this, ChangePhoneActivity.class);
                 startActivity(intent);
                 finish();
@@ -63,7 +63,7 @@ public class SettingActivity extends BaseActivity {
                 intent = new Intent(this, ForgetPasswordActivity.class);
                 startActivity(intent);
                 finish();
-                break;
+                break;*/
             case R.id.l_6:
                 intent = new Intent(this, AboutActivity.class);
                 startActivity(intent);

@@ -70,7 +70,7 @@
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/grey_back" />
             </LinearLayout>
-            <LinearLayout
+<!--            <LinearLayout
                 android:id="@+id/l_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -178,9 +178,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/grey_back" />
-            </LinearLayout>
+            </LinearLayout>-->
             <LinearLayout
-                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_5"
                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

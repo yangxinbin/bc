@@ -249,7 +249,7 @@ public class CollageDetailActivity extends BaseActivity {
 
     private void collageWechat() {
         OnekeyShare oks = new OnekeyShare();
-        oks.setTitle("【仅剩"+(allNum-hasNum)+"人】"+userName+"邀请你来拼团："+price+"积分拼《"+title+"》");
+        oks.setTitle("【仅剩"+(allNum-hasNum)+"人】"+userName+"邀请你"+price+"积分拼《"+title+"》");
         oks.setText("BC大陆");
         oks.setImageUrl(Urls.HOST_GETFILE + "?name="+cover);
         oks.setUrl("http://www.mob.com");
@@ -260,7 +260,7 @@ public class CollageDetailActivity extends BaseActivity {
                     paramsToShare.setShareType(Platform.SHARE_WXMINIPROGRAM);
                     paramsToShare.setWxMiniProgramType(WXMiniProgramObject.MINIPTOGRAM_TYPE_RELEASE);
                     paramsToShare.setWxUserName("gh_482031325125");
-                    paramsToShare.setWxPath("pages/groupBuy/groupBuy?model="+groupId);
+                    paramsToShare.setWxPath("pages/groupBuy/groupBuy?model="+"\""+groupId+"\"");
                 }
             }
         });

@@ -43,6 +43,7 @@ public class BookCommentAdapter extends RecyclerView.Adapter {
     public BookCommentAdapter(Context context) {
         this.context = context;
     }
+
     public void setmDate(List<CommentBean> data) {
         this.datas = data;
         this.notifyDataSetChanged();
@@ -53,9 +54,11 @@ public class BookCommentAdapter extends RecyclerView.Adapter {
         this.datas = m;
         this.notifyDataSetChanged();
     }
+
     public CommentBean getItem(int position) {
         return datas == null ? null : datas.get(position);
     }
+
     /**
      * 添加列表项     * @param item
      */
@@ -65,6 +68,7 @@ public class BookCommentAdapter extends RecyclerView.Adapter {
         }
         this.notifyDataSetChanged();
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_comment_item, parent, false);
@@ -76,10 +80,13 @@ public class BookCommentAdapter extends RecyclerView.Adapter {
         if (holder instanceof BookCommentAdapter.BookCommentViewHolder) {
             final BookCommentAdapter.BookCommentViewHolder viewHolder = (BookCommentAdapter.BookCommentViewHolder) holder;
             if (datas.get(position) != null) {
-                Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getCommentBy().getAvator().getFileName()).into(viewHolder.img_author);
-                viewHolder.tv_author.setText(datas.get(position).getCommentBy().getAlias());
+                if (datas.get(position).getCommentBy() != null) {
+                    if (datas.get(position).getCommentBy().getAvator() != null)
+                        Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getCommentBy().getAvator().getFileName()).into(viewHolder.img_author);
+                    viewHolder.tv_author.setText(datas.get(position).getCommentBy().getAlias());
+                }
                 viewHolder.tv_comment.setText(datas.get(position).getComment());
-                viewHolder.tv_time.setText(DateUtil.getDateToString(datas.get(position).getCreateOn(),"yyyy-MM-dd HH:mm:ss"));
+                viewHolder.tv_time.setText(DateUtil.getDateToString(datas.get(position).getCreateOn(), "yyyy-MM-dd HH:mm:ss"));
                 Log.v("uuuuuuuuuuuu", "----" + Urls.HOST_GETFILE + "?name=" + datas.get(position));
             }
         }
@@ -93,7 +100,7 @@ public class BookCommentAdapter extends RecyclerView.Adapter {
 
     class BookCommentViewHolder extends RecyclerView.ViewHolder {
         CircleImageView img_author;
-        TextView tv_author,tv_comment,tv_time;
+        TextView tv_author, tv_comment, tv_time;
 
         public BookCommentViewHolder(final View itemView) {
             super(itemView);

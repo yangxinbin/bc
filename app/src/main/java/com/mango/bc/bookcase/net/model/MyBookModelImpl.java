@@ -181,7 +181,8 @@ public class MyBookModelImpl implements MyBookModel {
                         if (newString != null) {
                             List<MyBookBean> beanList = MyBookJsonUtils.readMyBookBean(newString);//data是json字段获得data的值即对象数组
                             for (int i = 0; i < beanList.size(); i++) {
-                                list.add(beanList.get(i).getBook().getId());
+                                if (beanList.get(i).getBook() != null)
+                                    list.add(beanList.get(i).getBook().getId());
                             }
                             Gson gson = new Gson();
                             String data = gson.toJson(list);

@@ -167,7 +167,11 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
         refresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
-                myBookPresenter.visitBooks(getActivity(), 3, 0, false);//刷新书架的所有书(比其它先访问)
+                if (NetUtil.isNetConnect(getActivity())) {
+                    myBookPresenter.visitBooks(getActivity(), 3, 0, false);//刷新书架的所有书(比其它先访问)
+                }else {
+                    myBookPresenter.visitBooks(getActivity(), 3, 0, true);//获取书架的所有书
+                }
                 refreshLayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -185,7 +189,6 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
                         } else {
                             AppUtils.showToast(getActivity(), getString(R.string.check_net));
                             RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, false, false);
-                            myBookPresenter.visitBooks(getActivity(), 3, 0, true);//获取书架的所有书
                             EventBus.getDefault().postSticky(refreshStageBean);
                         }
                         refreshLayout.finishRefresh();

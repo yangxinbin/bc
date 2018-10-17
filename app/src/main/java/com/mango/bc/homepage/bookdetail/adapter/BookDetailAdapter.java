@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
@@ -19,12 +20,17 @@ import android.widget.ProgressBar;
 
 import com.mango.bc.R;
 import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
+import com.mango.bc.homepage.bookdetail.bean.CommentBean;
+import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
 import com.mango.bc.homepage.net.bean.BookBean;
+import com.mango.bc.util.ACache;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
+import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.Urls;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.SoftReference;
@@ -80,16 +86,36 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
             if (datas.get(position).getFileName() != null) {
                 //Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName()).into(viewHolder.img_book_detail);
                 Log.v("uuuuuuuuuuuu", "----" + Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName());
-                setIamge(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName(), viewHolder.img_book_detail);
+                if (NetUtil.isNetConnect(context)) {
+                    setIamge(false, datas.get(position).getFileName(), viewHolder.img_book_detail);
+                } else {
+                    setIamge(true, datas.get(position).getFileName(), viewHolder.img_book_detail);
+                }
             }
         }
     }
 
-    private void setIamge(final String url, final ImageView imageView) {
+    private void setIamge(final Boolean ifCache, final String fileName, final ImageView imageView) {
+        final ACache mCache = ACache.get(context);
         new Thread(new Runnable() {
             @Override
             public void run() {
-                HttpUtils.doGet(url, new Callback() {
+                if (ifCache) {//读取缓存数据
+                    final Bitmap bitmap = mCache.getAsBitmap("bookDetail" + fileName);
+                    if (bitmap != null) {
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog_load.dismiss();
+                                imageView.setImageBitmap(bitmap);
+                            }
+                        });
+                        return;
+                    }
+                } else {
+                    mCache.remove("bookDetail" + fileName);//刷新之后缓存也更新过来
+                }
+                HttpUtils.doGet(Urls.HOST_GETFILE + "?name=" + fileName, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
 
@@ -104,6 +130,7 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
                         //final Bitmap bitmap = BitmapFactory.decodeByteArray(Picture, 0, Picture.length);
                         //通过imageview，设置图片
                         bitmap = streamToBitmap(input);
+                        mCache.put("bookDetail" + fileName, bitmap);
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {

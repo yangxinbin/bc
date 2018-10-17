@@ -20,8 +20,12 @@ import com.mango.bc.homepage.bookdetail.adapter.BookCommentAdapter;
 import com.mango.bc.homepage.bookdetail.bean.CommentBean;
 import com.mango.bc.homepage.bookdetail.jsonutil.JsonBookDetailUtils;
 import com.mango.bc.homepage.net.bean.BookBean;
+import com.mango.bc.homepage.net.bean.CompetitiveFieldBean;
+import com.mango.bc.homepage.net.jsonutils.JsonUtils;
+import com.mango.bc.util.ACache;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
+import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.Urls;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -64,7 +68,11 @@ public class CommentFragment extends Fragment {
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         initView();
-        vivistNet(page);
+        if (NetUtil.isNetConnect(getActivity())){
+            vivistNet(false,page);
+        }else {
+            vivistNet(true,page);
+        }
         return view;
     }
 
@@ -77,6 +85,7 @@ public class CommentFragment extends Fragment {
         Log.v("uuuuuuuuuuuu", "--3--");
         //EventBus.getDefault().removeStickyEvent(MyBookBean.class);//展示完删除
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void MyBookBeanEventBus(MyBookBean bookBean) {  //书架进来  不需要判断 直接可以播放
         if (bookBean == null) {
@@ -108,7 +117,11 @@ public class CommentFragment extends Fragment {
                     public void run() {
                         page = 0;
                         Log.v("zzzzzzzzz", "-------onRefresh-------" + page);
-                        vivistNet(page);
+                        if (NetUtil.isNetConnect(getActivity())){
+                            vivistNet(false,page);
+                        }else {
+                            vivistNet(true,page);
+                        }
                         refreshLayout.finishRefresh();
                     }
                 }, 500);
@@ -122,7 +135,11 @@ public class CommentFragment extends Fragment {
                     public void run() {
                         page++;
                         Log.v("zzzzzzzzz", "-------onLoadMore-------" + page);
-                        vivistNet(page);
+                        if (NetUtil.isNetConnect(getActivity())){
+                            vivistNet(false,page);
+                        }else {
+                            vivistNet(true,page);
+                        }
                         refreshLayout.finishLoadMore();
 
                     }
@@ -141,27 +158,43 @@ public class CommentFragment extends Fragment {
         }
     }
 
-    private void vivistNet(final int page) {
+    private void vivistNet(final Boolean ifCache, final int page) {
+        final ACache mCache = ACache.get(getActivity());
         new Thread(new Runnable() {
             @Override
             public void run() {
+                if (ifCache) {//读取缓存数据
+                    String newString = mCache.getAsString("comment"+bookId+ page);
+                    if (newString != null) {
+                        List<CommentBean> beanList = JsonBookDetailUtils.readCommentBean(newString);//data是json字段获得data的值即对象数组
+                        Message msg = mHandler.obtainMessage();
+                        msg.obj = beanList;
+                        msg.what = 1;
+                        msg.sendToTarget();
+                        return;
+                    }
+                } else {
+                    mCache.remove("comment"+bookId+ page);//刷新之后缓存也更新过来
+                }
                 HttpUtils.doGet(Urls.HOST_COMMENT + "?bookId=" + bookId + "&page=" + page, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         mHandler.sendEmptyMessage(0);
-                        Log.v("zzzzzzzzz", Urls.HOST_COMMENT + "?bookId=" + bookId + "&page=" + page+"-------onFailure-------" + e);
+                        Log.v("zzzzzzzzz", Urls.HOST_COMMENT + "?bookId=" + bookId + "&page=" + page + "-------onFailure-------" + e);
                     }
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
+                        String s = response.body().string();
                         try {
-                            List<CommentBean> beanList = JsonBookDetailUtils.readCommentBean(response.body().string());//data是json字段获得data的值即对象数组
+                            mCache.put("comment"+bookId+ page, s);
+                            List<CommentBean> beanList = JsonBookDetailUtils.readCommentBean(s);//data是json字段获得data的值即对象数组
                             Message msg = mHandler.obtainMessage();
                             msg.obj = beanList;
                             msg.what = 1;
                             msg.sendToTarget();
                         } catch (Exception e) {
-                            Log.v("zzzzzzzzz", Urls.HOST_COMMENT + "?bookId=" + bookId + "&page=" + page+"-------Exception-------" + e);
+                            Log.v("zzzzzzzzz", Urls.HOST_COMMENT + "?bookId=" + bookId + "&page=" + page + "-------Exception-------" + e);
                             mHandler.sendEmptyMessage(0);
                         }
                     }

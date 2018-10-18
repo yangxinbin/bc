@@ -367,7 +367,7 @@ public class OtherBookDetailActivity extends BaseServiceActivity implements MyAl
             bookStagePlay.setText(getResources().getString(R.string.play));
         }
         tvTitle.setText(bookDetailBean.getTitle());
-        tvBuyer.setText(bookDetailBean.getSold() + "人已售：");
+        tvBuyer.setText(bookDetailBean.getSold() + "人已购买");
         likeNum = bookDetailBean.getLikes();
         tvLikePlay.setText(bookDetailBean.getLikes() + "");
         tvLikeFree.setText(bookDetailBean.getLikes() + "");

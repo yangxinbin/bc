@@ -1,7 +1,11 @@
 package com.mango.bc.wallet.fragment;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -16,6 +20,7 @@ import com.mango.bc.homepage.activity.competitivebook.CompetitiveBookActivity;
 import com.mango.bc.homepage.activity.expertbook.ExpertBookActivity;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.mine.activity.SettingActivity;
+import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.ACache;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.NetUtil;
@@ -24,6 +29,7 @@ import com.mango.bc.util.Urls;
 import com.mango.bc.wallet.bean.RefreshTaskBean;
 import com.mango.bc.wallet.bean.TaskAndRewardBean;
 import com.mango.bc.wallet.walletjsonutil.WalletJsonUtils;
+import com.tencent.mm.opensdk.modelmsg.WXMiniProgramObject;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -36,6 +42,10 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -79,6 +89,8 @@ public class DailyTasksFragment extends Fragment {
     TextView tvVip;
     private SPUtils spUtils;
     private ACache mCache;
+    private String userId;
+    private String alias;
 
     @Nullable
     @Override
@@ -92,6 +104,10 @@ public class DailyTasksFragment extends Fragment {
             loadReward(false);
         } else {
             loadReward(true);
+        }
+        if (MineJsonUtils.readUserBean(spUtils.getString("auth", "")) != null) {
+            userId = MineJsonUtils.readUserBean(spUtils.getString("auth", "")).getId();
+            alias = MineJsonUtils.readUserBean(spUtils.getString("auth", "")).getAlias();
         }
         return view;
     }
@@ -214,7 +230,48 @@ public class DailyTasksFragment extends Fragment {
 /*                intent = new Intent(getActivity(), OpenUpVipActivity.class);
                 startActivity(intent);*/
                 //邀请
+                showShare();
                 break;
         }
+    }
+    private void showShare() {
+        OnekeyShare oks = new OnekeyShare();
+        oks.setTitle(alias+"邀请你加入BC大陆VIP");
+        oks.setText("BC大陆");
+        oks.setImageData(BitmapFactory.decodeResource(getResources(),R.drawable.icon));
+        oks.setUrl("http://www.mob.com");
+        oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
+            @Override
+            public void onShare(Platform platform, Platform.ShareParams paramsToShare) {
+                if (platform.getName().equals("Wechat")) {
+                    paramsToShare.setShareType(Platform.SHARE_WXMINIPROGRAM);
+                    paramsToShare.setWxMiniProgramType(WXMiniProgramObject.MINIPTOGRAM_TYPE_RELEASE);
+                    paramsToShare.setWxUserName("gh_482031325125");
+                    paramsToShare.setWxPath("pages/becomeVip/becomeVip?model=" + "\""+userId+"\"");
+                }
+            }
+        });
+        oks.setCallback(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+            }
+        });
+        oks.show(getActivity());
+    }
+    private String getResourcesUri(@DrawableRes int id) {
+        Resources resources = getResources();
+        String uriPath = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+                resources.getResourcePackageName(id) + "/" +
+                resources.getResourceTypeName(id) + "/" +
+                resources.getResourceEntryName(id);
+        return uriPath;
     }
 }

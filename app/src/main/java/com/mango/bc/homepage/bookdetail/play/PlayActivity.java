@@ -677,6 +677,7 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
                     } else if (showMusic.getType().equals("member")) {
                         paramsToShare.setWxPath("pages/memberDetail/memberDetail?model=" + "{\"bookId\":\"" + showMusic.getBookId() + "\",\"userId\":\"" + userId + "\"}");
                     } else if (showMusic.getType().equals("free")) {
+                        Log.v("444444444","pages/freeBookDetail/freeBookDetail?model=" + "{\"bookId\":\"" + showMusic.getBookId() + "\",\"userId\":\"" + userId + "\"}");
                         paramsToShare.setWxPath("pages/freeBookDetail/freeBookDetail?model=" + "{\"bookId\":\"" + showMusic.getBookId() + "\",\"userId\":\"" + userId + "\"}");
                     }
                 }

@@ -20,6 +20,7 @@ import com.mango.bc.R;
 import com.mango.bc.homepage.activity.CollageActivity;
 import com.mango.bc.homepage.activity.OpenUpVipActivity;
 import com.mango.bc.mine.activity.ApplyActivity;
+import com.mango.bc.mine.activity.BcCardActivity;
 import com.mango.bc.mine.activity.ExpertApplyActivity;
 import com.mango.bc.mine.activity.ExpertApplyDetailActivity;
 import com.mango.bc.mine.activity.FaqActivity;
@@ -382,6 +383,8 @@ public class MineFragment extends Fragment {
                 startActivity(intent);
                 break;
             case R.id.l_bc:
+                intent = new Intent(getActivity(), BcCardActivity.class);
+                startActivity(intent);
                 break;
             case R.id.l_service:
                 intent = new Intent(getActivity(), ServiceActivity.class);

@@ -160,7 +160,8 @@
         <activity android:name=".login.WechatLoginActivity" />
         <activity android:name=".login.BunblePhoneActivity" />
         <activity android:name=".mine.activity.BcCardActivity" />
-        <activity android:name=".mine.activity.RefereeActivity"></activity>
+        <activity android:name=".mine.activity.RefereeActivity" />
+        <activity android:name=".mine.activity.TeachActivity"></activity>
     </application>
 
 </manifest>

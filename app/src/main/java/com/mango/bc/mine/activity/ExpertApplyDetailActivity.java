@@ -72,6 +72,9 @@ public class ExpertApplyDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_teach:
+                intent = new Intent(this, TeachActivity.class);
+                startActivity(intent);
+                finish();
                 break;
             case R.id.tv_copy:
                 //添加到剪切板

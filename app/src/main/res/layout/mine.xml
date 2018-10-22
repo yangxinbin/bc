@@ -266,10 +266,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="@dimen/dp_5"
-                android:text="已激活"
+                android:text="未激活"
                 android:textColor="@color/gray_6"
-                android:textSize="@dimen/dp_14"
-                android:visibility="gone" />
+                android:textSize="@dimen/dp_14" />
 
             <ImageView
                 android:layout_width="wrap_content"

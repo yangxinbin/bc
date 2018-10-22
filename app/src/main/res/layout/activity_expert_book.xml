@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context="com.mango.bc.homepage.activity.freebook.FreeBookActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:gravity="center_vertical"
         android:padding="@dimen/dp_5">
 
@@ -34,6 +34,11 @@
             android:layout_marginStart="@dimen/dp_10"
             app:srcCompat="@drawable/back" />
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/common_gray"></View>
 
     <RelativeLayout
         android:layout_width="match_parent"

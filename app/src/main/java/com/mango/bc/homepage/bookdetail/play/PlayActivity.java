@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
@@ -16,7 +15,6 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -74,8 +72,6 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-import static com.tencent.mm.opensdk.modelmsg.SendMessageToWX.Req.WXSceneSession;
-
 
 /**
  * 正在播放界面
@@ -113,6 +109,10 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
     ImageView ivList;
     @Bind(R.id.iv_share)
     ImageView ivShare;
+    @Bind(R.id.iv_prev_15)
+    ImageView ivPrev15;
+    @Bind(R.id.iv_next_15)
+    ImageView ivNext15;
     private AlbumCoverView mAlbumCoverView;
     //private LrcView mLrcViewSingle;
     //private LrcView mLrcViewFull;
@@ -160,6 +160,8 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
         ivPlay.setOnClickListener(this);
         ivPrev.setOnClickListener(this);
         ivNext.setOnClickListener(this);
+        ivPrev15.setOnClickListener(this);
+        ivNext15.setOnClickListener(this);
         sbProgress.setOnSeekBarChangeListener(this);
         //sbVolume.setOnSeekBarChangeListener(this);
         vpPlayPage.addOnPageChangeListener(this);
@@ -256,8 +258,14 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
             case R.id.iv_play:
                 play();
                 break;
+            case R.id.iv_next_15:
+                next15();
+                break;
             case R.id.iv_next:
                 next();
+                break;
+            case R.id.iv_prev_15:
+                prev15();
                 break;
             case R.id.iv_prev:
                 prev();
@@ -357,6 +365,13 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
         AudioPlayer.get().prev();
     }
 
+    private void prev15() {
+        AudioPlayer.get().seekTo(mLastProgress-15*1000);
+    }
+
+    private void next15() {
+        AudioPlayer.get().seekTo(mLastProgress+15*1000);
+    }
 /*    private void switchPlayMode() {
         PlayModeEnum mode = PlayModeEnum.valueOf(Preferences.getPlayMode());
         switch (mode) {
@@ -677,7 +692,7 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
                     } else if (showMusic.getType().equals("member")) {
                         paramsToShare.setWxPath("pages/memberDetail/memberDetail?model=" + "{\"bookId\":\"" + showMusic.getBookId() + "\",\"userId\":\"" + userId + "\"}");
                     } else if (showMusic.getType().equals("free")) {
-                        Log.v("444444444","pages/freeBookDetail/freeBookDetail?model=" + "{\"bookId\":\"" + showMusic.getBookId() + "\",\"userId\":\"" + userId + "\"}");
+                        Log.v("444444444", "pages/freeBookDetail/freeBookDetail?model=" + "{\"bookId\":\"" + showMusic.getBookId() + "\",\"userId\":\"" + userId + "\"}");
                         paramsToShare.setWxPath("pages/freeBookDetail/freeBookDetail?model=" + "{\"bookId\":\"" + showMusic.getBookId() + "\",\"userId\":\"" + userId + "\"}");
                     }
                 }

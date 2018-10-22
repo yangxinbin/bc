@@ -169,7 +169,7 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
             public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
                 if (NetUtil.isNetConnect(getActivity())) {
                     myBookPresenter.visitBooks(getActivity(), 3, 0, false);//刷新书架的所有书(比其它先访问)
-                }else {
+                } else {
                     myBookPresenter.visitBooks(getActivity(), 3, 0, true);//获取书架的所有书
                 }
                 refreshLayout.getLayout().postDelayed(new Runnable() {
@@ -178,7 +178,7 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
                         loadUser();
                         page = 0;
                         if (NetUtil.isNetConnect(getActivity())) {
-                            if (isFirstRefresh){
+                            if (isFirstRefresh) {
                                 isFirstRefresh = false;
                                 RefreshStageBean refreshStageBean = new RefreshStageBean(true, true, true, true, true);
                                 Log.v("llllllll", "=====all--" + refreshStageBean.toString());
@@ -237,18 +237,19 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
                     public void onResponse(Call call, final Response response) {
                         try {
                             final String string2 = response.body().string();
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    spUtils.put("auth", string2);//刷新用户信息
-                                    Log.v("cccccccccc", "-----auth----");
-                                    UserBean userBean = MineJsonUtils.readUserBean(string2);
-                                    if (userBean != null) {
-                                        Log.v("lllllllll", "=rrrr==" + userBean.isVip());
-                                        EventBus.getDefault().postSticky(userBean);//刷新钱包
+                            if (getActivity() != null)
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        spUtils.put("auth", string2);//刷新用户信息
+                                        Log.v("cccccccccc", "-----auth----");
+                                        UserBean userBean = MineJsonUtils.readUserBean(string2);
+                                        if (userBean != null) {
+                                            Log.v("lllllllll", "=rrrr==" + userBean.isVip());
+                                            EventBus.getDefault().postSticky(userBean);//刷新钱包
+                                        }
                                     }
-                                }
-                            });
+                                });
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -271,10 +272,10 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
             @Override
             public void run() {
                 if (isFirstInit) {
-                    Log.v("llllllll","========================");
+                    Log.v("llllllll", "========================");
                     isFirstInit = false;
                     initView();
-                }else {
+                } else {
                     RefreshStageBean refreshStageBean = new RefreshStageBean(true, true, true, true, true);
                     Log.v("yyyyyyy", "=====all--" + refreshStageBean.toString());
                     EventBus.getDefault().postSticky(refreshStageBean);

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 
 import com.mango.bc.R;
 import com.mango.bc.bookcase.adapter.MyBookGirdAdapter;
+import com.mango.bc.bookcase.adapter.MyExpertBookGirdAdapter;
 import com.mango.bc.bookcase.bean.RefreshBookCaseBean;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.bookcase.net.presenter.MyBookPresenter;
@@ -51,7 +53,7 @@ public class MyExpertFragment extends Fragment implements MyExpertBookView {
     SmartRefreshLayout refresh;
     @Bind(R.id.img_nobook)
     ImageView imgNobook;
-    private MyBookGirdAdapter myBookGirdAdapter;
+    private MyExpertBookGirdAdapter myBookGirdAdapter;
     private boolean isFirstEnter = true;
     private MyBookPresenter myBookPresenter;
     private final int TYPE = 0;//大咖
@@ -89,13 +91,13 @@ public class MyExpertFragment extends Fragment implements MyExpertBookView {
     }
 
     private void initView() {
-        myBookGirdAdapter = new MyBookGirdAdapter(getActivity());
-        recycle.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 3));
+        myBookGirdAdapter = new MyExpertBookGirdAdapter(getActivity());
+        recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
         recycle.setAdapter(myBookGirdAdapter);
         myBookGirdAdapter.setOnItemClickLitener(mOnClickListenner);
     }
 
-    private MyBookGirdAdapter.OnItemClickLitener mOnClickListenner = new MyBookGirdAdapter.OnItemClickLitener() {
+    private MyExpertBookGirdAdapter.OnItemClickLitener mOnClickListenner = new MyExpertBookGirdAdapter.OnItemClickLitener() {
         @Override
         public void onItemClick(View view, int position) {
             spUtils.put("isFree", true);

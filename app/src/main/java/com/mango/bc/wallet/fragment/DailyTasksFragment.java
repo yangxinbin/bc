@@ -140,12 +140,13 @@ public class DailyTasksFragment extends Fragment {
                     String newString = mCache.getAsString("task");
                     if (newString != null) {
                         final List<TaskAndRewardBean> taskAndRewardBeans = WalletJsonUtils.readTaskAndRewardBean(newString);
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                initRewardView(taskAndRewardBeans);
-                            }
-                        });
+                        if (getActivity() != null)
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    initRewardView(taskAndRewardBeans);
+                                }
+                            });
                         return;
                     }
                 } else {
@@ -164,12 +165,13 @@ public class DailyTasksFragment extends Fragment {
                             String string = response.body().string();
                             mCache.put("task");
                             final List<TaskAndRewardBean> taskAndRewardBeans = WalletJsonUtils.readTaskAndRewardBean(string);
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    initRewardView(taskAndRewardBeans);
-                                }
-                            });
+                            if (getActivity() != null)
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initRewardView(taskAndRewardBeans);
+                                    }
+                                });
                         } catch (Exception e) {
                         }
                     }
@@ -234,11 +236,12 @@ public class DailyTasksFragment extends Fragment {
                 break;
         }
     }
+
     private void showShare() {
         OnekeyShare oks = new OnekeyShare();
-        oks.setTitle(alias+"邀请你加入BC大陆VIP");
+        oks.setTitle(alias + "邀请你加入BC大陆VIP");
         oks.setText("BC大陆");
-        oks.setImageData(BitmapFactory.decodeResource(getResources(),R.drawable.icon));
+        oks.setImageData(BitmapFactory.decodeResource(getResources(), R.drawable.icon));
         oks.setUrl("http://www.mob.com");
         oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
             @Override
@@ -247,7 +250,7 @@ public class DailyTasksFragment extends Fragment {
                     paramsToShare.setShareType(Platform.SHARE_WXMINIPROGRAM);
                     paramsToShare.setWxMiniProgramType(WXMiniProgramObject.MINIPTOGRAM_TYPE_RELEASE);
                     paramsToShare.setWxUserName("gh_482031325125");
-                    paramsToShare.setWxPath("pages/becomeVip/becomeVip?model=" + "\""+userId+"\"");
+                    paramsToShare.setWxPath("pages/becomeVip/becomeVip?model=" + "\"" + userId + "\"");
                 }
             }
         });
@@ -266,6 +269,7 @@ public class DailyTasksFragment extends Fragment {
         });
         oks.show(getActivity());
     }
+
     private String getResourcesUri(@DrawableRes int id) {
         Resources resources = getResources();
         String uriPath = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +

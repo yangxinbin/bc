@@ -93,22 +93,24 @@ public class AlreadyObtainedFragment extends Fragment {
         }
         return view;
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void RefreshTaskEventBus(RefreshTaskBean bean) {
         if (bean == null) {
             return;
         }
-        if (bean.getIfTaskRefresh()){
+        if (bean.getIfTaskRefresh()) {
             if (NetUtil.isNetConnect(getActivity())) {
                 Log.v("ttttttttt", "-----rr");
                 loadReward(false);
             } else {
                 loadReward(true);
             }
-        }else {
+        } else {
             loadReward(true);
         }
     }
+
     private void loadReward(final Boolean ifCache) {
         new Thread(new Runnable() {
             @Override
@@ -120,12 +122,13 @@ public class AlreadyObtainedFragment extends Fragment {
                     String newString = mCache.getAsString("reward");
                     if (newString != null) {
                         final List<TaskAndRewardBean> taskAndRewardBeans = WalletJsonUtils.readTaskAndRewardBean(newString);
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                initRewardView(taskAndRewardBeans);
-                            }
-                        });
+                        if (getActivity() != null)
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    initRewardView(taskAndRewardBeans);
+                                }
+                            });
                         return;
                     }
                 } else {
@@ -143,12 +146,13 @@ public class AlreadyObtainedFragment extends Fragment {
                             String string = response.body().string();
                             mCache.put("reward");
                             final List<TaskAndRewardBean> taskAndRewardBeans = WalletJsonUtils.readTaskAndRewardBean(string);
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    initRewardView(taskAndRewardBeans);
-                                }
-                            });
+                            if (getActivity() != null)
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initRewardView(taskAndRewardBeans);
+                                    }
+                                });
                         } catch (Exception e) {
                         }
                     }
@@ -160,29 +164,29 @@ public class AlreadyObtainedFragment extends Fragment {
     private void initRewardView(List<TaskAndRewardBean> taskAndRewardBeans) {
         if (taskAndRewardBeans == null)
             return;
-        tvLike.setText("已点赞" + taskAndRewardBeans.get(0).getCount()+"次");
-        tvLikeNum.setText(taskAndRewardBeans.get(0).getEarning()+"积分");
+        tvLike.setText("已点赞" + taskAndRewardBeans.get(0).getCount() + "次");
+        tvLikeNum.setText(taskAndRewardBeans.get(0).getEarning() + "积分");
 
-        tvShare.setText("已分享" + taskAndRewardBeans.get(1).getCount()+"次");
-        tvShareNum.setText(taskAndRewardBeans.get(1).getEarning()+"积分");
+        tvShare.setText("已分享" + taskAndRewardBeans.get(1).getCount() + "次");
+        tvShareNum.setText(taskAndRewardBeans.get(1).getEarning() + "积分");
 
-        tvComment.setText("已评论" + taskAndRewardBeans.get(2).getCount()+"次");
-        tvCommentNum.setText(taskAndRewardBeans.get(2).getEarning()+"积分");
+        tvComment.setText("已评论" + taskAndRewardBeans.get(2).getCount() + "次");
+        tvCommentNum.setText(taskAndRewardBeans.get(2).getEarning() + "积分");
 
-        tvOnline.setText("总共阅读" + taskAndRewardBeans.get(3).getCount()+"分钟");
-        tvOnlineNum.setText(taskAndRewardBeans.get(3).getEarning()+"积分");
+        tvOnline.setText("总共阅读" + taskAndRewardBeans.get(3).getCount() + "分钟");
+        tvOnlineNum.setText(taskAndRewardBeans.get(3).getEarning() + "积分");
 
-        tvGroup.setText("已完成拼团" + taskAndRewardBeans.get(4).getCount()+"次");
-        tvGroupNum.setText(taskAndRewardBeans.get(4).getEarning()+"积分");
+        tvGroup.setText("已完成拼团" + taskAndRewardBeans.get(4).getCount() + "次");
+        tvGroupNum.setText(taskAndRewardBeans.get(4).getEarning() + "积分");
 
         //tvPaid.setText("推荐大咖课");
-        tvPaidNum.setText(taskAndRewardBeans.get(5).getEarning()+"积分");
+        tvPaidNum.setText(taskAndRewardBeans.get(5).getEarning() + "积分");
 
-        tvMemberNum.setText(taskAndRewardBeans.get(6).getEarning()+"积分");
+        tvMemberNum.setText(taskAndRewardBeans.get(6).getEarning() + "积分");
 
-        tvSignNum.setText(taskAndRewardBeans.get(7).getEarning()+"积分");
+        tvSignNum.setText(taskAndRewardBeans.get(7).getEarning() + "积分");
 
-        tvVipNum.setText(taskAndRewardBeans.get(8).getEarning()+"积分");
+        tvVipNum.setText(taskAndRewardBeans.get(8).getEarning() + "积分");
 
     }
 

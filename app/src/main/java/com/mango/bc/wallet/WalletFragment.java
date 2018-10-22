@@ -366,6 +366,7 @@ public class WalletFragment extends Fragment {
             }
         }
     }
+
     private void loadUser() {
         new Thread(new Runnable() {
             @Override
@@ -383,15 +384,16 @@ public class WalletFragment extends Fragment {
                         final String string;
                         try {
                             string = response.body().string();
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    spUtils.put("auth", string);
-                                    UserBean userBean = MineJsonUtils.readUserBean(string);
-                                    Log.v("lllllllll", "=aaaa==" + userBean.isVip());
-                                    EventBus.getDefault().postSticky(userBean);//刷新钱包，我的。
-                                }
-                            });
+                            if (getActivity() != null)
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        spUtils.put("auth", string);
+                                        UserBean userBean = MineJsonUtils.readUserBean(string);
+                                        Log.v("lllllllll", "=aaaa==" + userBean.isVip());
+                                        EventBus.getDefault().postSticky(userBean);//刷新钱包，我的。
+                                    }
+                                });
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

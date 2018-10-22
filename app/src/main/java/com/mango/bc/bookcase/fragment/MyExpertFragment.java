@@ -117,7 +117,7 @@ public class MyExpertFragment extends Fragment implements MyExpertBookView {
             Intent intent = new Intent(getActivity(), ExpertBookDetailActivity.class);
             EventBus.getDefault().removeStickyEvent(BookBean.class);
             EventBus.getDefault().postSticky(myBookGirdAdapter.getItem(position));
-            intent.putExtra("gift",true);
+            intent.putExtra("gift", true);
             startActivity(intent);
         }
 
@@ -180,33 +180,34 @@ public class MyExpertFragment extends Fragment implements MyExpertBookView {
 
     @Override
     public void addExpertBook(final List<MyBookBean> bookBeanList) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Log.v("doPostAll", page + "===" + bookBeanList.size());
-                if (bookBeanList == null || bookBeanList.size() == 0) {
-                    if (page == 0) {
-                        refresh.setVisibility(View.GONE);
-                        imgNobook.setVisibility(View.VISIBLE);
+        if (getActivity() != null)
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.v("doPostAll", page + "===" + bookBeanList.size());
+                    if (bookBeanList == null || bookBeanList.size() == 0) {
+                        if (page == 0) {
+                            refresh.setVisibility(View.GONE);
+                            imgNobook.setVisibility(View.VISIBLE);
+                            return;
+                        }
+                        AppUtils.showToast(getActivity(), getString(R.string.date_over));
                         return;
+                    } else {
+                        refresh.setVisibility(View.VISIBLE);
+                        imgNobook.setVisibility(View.GONE);
                     }
-                    AppUtils.showToast(getActivity(), getString(R.string.date_over));
-                    return;
-                } else {
-                    refresh.setVisibility(View.VISIBLE);
-                    imgNobook.setVisibility(View.GONE);
-                }
-                if (page == 0) {
-                    myBookGirdAdapter.reMove();
-                    myBookGirdAdapter.setmDate(bookBeanList);
-                } else {
-                    //加载更多
-                    for (int i = 0; i < bookBeanList.size(); i++) {
-                        myBookGirdAdapter.addItem(bookBeanList.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
+                    if (page == 0) {
+                        myBookGirdAdapter.reMove();
+                        myBookGirdAdapter.setmDate(bookBeanList);
+                    } else {
+                        //加载更多
+                        for (int i = 0; i < bookBeanList.size(); i++) {
+                            myBookGirdAdapter.addItem(bookBeanList.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
+                        }
                     }
                 }
-            }
-        });
+            });
     }
 
     @Override
@@ -216,11 +217,12 @@ public class MyExpertFragment extends Fragment implements MyExpertBookView {
 
     @Override
     public void addFail(String f) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                AppUtils.showToast(getActivity(), "免费课程书架请求失败");
-            }
-        });
+        if (getActivity() != null)
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    AppUtils.showToast(getActivity(), "免费课程书架请求失败");
+                }
+            });
     }
 }

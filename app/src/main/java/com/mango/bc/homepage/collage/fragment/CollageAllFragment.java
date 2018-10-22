@@ -79,23 +79,25 @@ public class CollageAllFragment extends Fragment implements CollageAllView {
         recycle.setAdapter(collageAdapter);
         collageAdapter.setOnItemClickLitener(mOnClickListenner);
     }
+
     private CollageAdapter.OnItemClickLitener mOnClickListenner = new CollageAdapter.OnItemClickLitener() {
         @Override
         public void onItemClick(View view, int position) {
-            Log.v("ooooo","---");
+            Log.v("ooooo", "---");
             Intent intent = new Intent(getActivity(), CollageDetailActivity.class);
             EventBus.getDefault().postSticky(collageAdapter.getItem(position));
-            if (collageAdapter.getItem(position).getStatus().equals("started")){
-                intent.putExtra("status",0);
-            }else if (collageAdapter.getItem(position).getStatus().equals("finished")){
-                intent.putExtra("status",1);
-            }else if (collageAdapter.getItem(position).getStatus().equals("expired")){
-                intent.putExtra("status",2);
+            if (collageAdapter.getItem(position).getStatus().equals("started")) {
+                intent.putExtra("status", 0);
+            } else if (collageAdapter.getItem(position).getStatus().equals("finished")) {
+                intent.putExtra("status", 1);
+            } else if (collageAdapter.getItem(position).getStatus().equals("expired")) {
+                intent.putExtra("status", 2);
             }
             startActivity(intent);
         }
 
     };
+
     private void refreshAndLoadMore() {
         refresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -151,33 +153,34 @@ public class CollageAllFragment extends Fragment implements CollageAllView {
 
     @Override
     public void addCollageAll(final List<CollageBean> collageBeans) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Log.v("doPostAll", page + "===" + collageBeans.size());
-                if (collageBeans == null || collageBeans.size() == 0) {
-                    if (page == 0) {
-                        refresh.setVisibility(View.GONE);
-                        imgNocollage.setVisibility(View.VISIBLE);
+        if (getActivity() != null)
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.v("doPostAll", page + "===" + collageBeans.size());
+                    if (collageBeans == null || collageBeans.size() == 0) {
+                        if (page == 0) {
+                            refresh.setVisibility(View.GONE);
+                            imgNocollage.setVisibility(View.VISIBLE);
+                            return;
+                        }
+                        AppUtils.showToast(getActivity(), getString(R.string.date_over));
                         return;
+                    } else {
+                        refresh.setVisibility(View.VISIBLE);
+                        imgNocollage.setVisibility(View.GONE);
                     }
-                    AppUtils.showToast(getActivity(), getString(R.string.date_over));
-                    return;
-                } else {
-                    refresh.setVisibility(View.VISIBLE);
-                    imgNocollage.setVisibility(View.GONE);
-                }
-                if (page == 0) {
-                    collageAdapter.reMove();
-                    collageAdapter.setmDate(collageBeans);
-                } else {
-                    //加载更多
-                    for (int i = 0; i < collageBeans.size(); i++) {
-                        collageAdapter.addItem(collageBeans.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
+                    if (page == 0) {
+                        collageAdapter.reMove();
+                        collageAdapter.setmDate(collageBeans);
+                    } else {
+                        //加载更多
+                        for (int i = 0; i < collageBeans.size(); i++) {
+                            collageAdapter.addItem(collageBeans.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
+                        }
                     }
                 }
-            }
-        });
+            });
     }
 
     @Override
@@ -187,11 +190,12 @@ public class CollageAllFragment extends Fragment implements CollageAllView {
 
     @Override
     public void addFailCollageAll(String f) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                AppUtils.showToast(getActivity(), "拼团列表请求失败");
-            }
-        });
+        if (getActivity() != null)
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    AppUtils.showToast(getActivity(), "拼团列表请求失败");
+                }
+            });
     }
 }

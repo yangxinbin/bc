@@ -82,6 +82,7 @@ public class MyCompetitiveFragment extends Fragment implements MyCompetitiveBook
             isVip = userBean.isVip();
         return view;
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void RefreshBookCaseBeanEventBus(RefreshBookCaseBean refreshBookCaseBean) {
         if (refreshBookCaseBean == null) {
@@ -93,6 +94,7 @@ public class MyCompetitiveFragment extends Fragment implements MyCompetitiveBook
             //EventBus.getDefault().removeStickyEvent(RefreshBookCaseBean.class);
         }
     }
+
     private void initView() {
         myBookGirdAdapter = new MyBookGirdAdapter(getActivity());
         recycle.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 3));
@@ -120,10 +122,10 @@ public class MyCompetitiveFragment extends Fragment implements MyCompetitiveBook
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
             EventBus.getDefault().removeStickyEvent(BookBean.class);
             EventBus.getDefault().postSticky(myBookGirdAdapter.getItem(position));
-            if (isVip){
-                intent.putExtra("gift",true);//vip
-            }else {
-                intent.putExtra("gift",false);
+            if (isVip) {
+                intent.putExtra("gift", true);//vip
+            } else {
+                intent.putExtra("gift", false);
             }
             startActivity(intent);
         }
@@ -187,33 +189,34 @@ public class MyCompetitiveFragment extends Fragment implements MyCompetitiveBook
 
     @Override
     public void addCompetitiveBook(final List<MyBookBean> bookBeanList) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Log.v("doPostAll", page + "===" + bookBeanList.size());
-                if (bookBeanList == null || bookBeanList.size() == 0) {
-                    if (page == 0) {
-                        refresh.setVisibility(View.GONE);
-                        imgNobook.setVisibility(View.VISIBLE);
+        if (getActivity() != null)
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.v("doPostAll", page + "===" + bookBeanList.size());
+                    if (bookBeanList == null || bookBeanList.size() == 0) {
+                        if (page == 0) {
+                            refresh.setVisibility(View.GONE);
+                            imgNobook.setVisibility(View.VISIBLE);
+                            return;
+                        }
+                        AppUtils.showToast(getActivity(), getString(R.string.date_over));
                         return;
+                    } else {
+                        refresh.setVisibility(View.VISIBLE);
+                        imgNobook.setVisibility(View.GONE);
                     }
-                    AppUtils.showToast(getActivity(), getString(R.string.date_over));
-                    return;
-                } else {
-                    refresh.setVisibility(View.VISIBLE);
-                    imgNobook.setVisibility(View.GONE);
-                }
-                if (page == 0) {
-                    myBookGirdAdapter.reMove();
-                    myBookGirdAdapter.setmDate(bookBeanList);
-                } else {
-                    //加载更多
-                    for (int i = 0; i < bookBeanList.size(); i++) {
-                        myBookGirdAdapter.addItem(bookBeanList.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
+                    if (page == 0) {
+                        myBookGirdAdapter.reMove();
+                        myBookGirdAdapter.setmDate(bookBeanList);
+                    } else {
+                        //加载更多
+                        for (int i = 0; i < bookBeanList.size(); i++) {
+                            myBookGirdAdapter.addItem(bookBeanList.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
+                        }
                     }
                 }
-            }
-        });
+            });
     }
 
     @Override
@@ -223,11 +226,12 @@ public class MyCompetitiveFragment extends Fragment implements MyCompetitiveBook
 
     @Override
     public void addFail(String f) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                AppUtils.showToast(getActivity(), "免费课程书架请求失败");
-            }
-        });
+        if (getActivity() != null)
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    AppUtils.showToast(getActivity(), "免费课程书架请求失败");
+                }
+            });
     }
 }

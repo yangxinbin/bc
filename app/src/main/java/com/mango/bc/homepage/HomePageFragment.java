@@ -268,19 +268,20 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
 
     @Override
     public void addSuccess(String s) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (isFirstInit) {
-                    Log.v("llllllll", "========================");
-                    isFirstInit = false;
-                    initView();
-                } else {
-                    RefreshStageBean refreshStageBean = new RefreshStageBean(true, true, true, true, true);
-                    Log.v("yyyyyyy", "=====all--" + refreshStageBean.toString());
-                    EventBus.getDefault().postSticky(refreshStageBean);
+        if (getActivity() != null)
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (isFirstInit) {
+                        Log.v("llllllll", "========================");
+                        isFirstInit = false;
+                        initView();
+                    } else {
+                        RefreshStageBean refreshStageBean = new RefreshStageBean(true, true, true, true, true);
+                        Log.v("yyyyyyy", "=====all--" + refreshStageBean.toString());
+                        EventBus.getDefault().postSticky(refreshStageBean);
+                    }
                 }
-            }
-        });
+            });
     }
 }

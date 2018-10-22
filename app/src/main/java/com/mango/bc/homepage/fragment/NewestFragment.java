@@ -215,40 +215,43 @@ public class NewestFragment extends Fragment implements BookNewestView, MyAllBoo
                 HttpUtils.doPost(Urls.HOST_BUYBOOK, mapParams, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                AppUtils.showToast(getActivity(), "领取失败");
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        try {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    tv_stage.setText("播放");//领取成功
-                                    loadStats();
-                                    if (NetUtil.isNetConnect(getActivity())) {
-                                        myBookPresenter.visitBooks(getActivity(), 3, 0, false);//获取书架的所有书(加入刷新)
-                                    } else {
-                                        myBookPresenter.visitBooks(getActivity(), 3, 0, true);//获取书架的所有书(加入刷新)
-                                    }  //要不点击详情页还是显现领取，详情书的状态在adapter里面控制
-/*                                    RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, true, false);
-                                    EventBus.getDefault().postSticky(refreshStageBean);*/
-                                    EventBus.getDefault().postSticky(new RefreshBookCaseBean(false, true, true));
-
-                                }
-                            });
-                        } catch (Exception e) {
+                        if (getActivity() != null)
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     AppUtils.showToast(getActivity(), "领取失败");
                                 }
                             });
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            if (getActivity() != null)
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        tv_stage.setText("播放");//领取成功
+                                        loadStats();
+                                        if (NetUtil.isNetConnect(getActivity())) {
+                                            myBookPresenter.visitBooks(getActivity(), 3, 0, false);//获取书架的所有书(加入刷新)
+                                        } else {
+                                            myBookPresenter.visitBooks(getActivity(), 3, 0, true);//获取书架的所有书(加入刷新)
+                                        }  //要不点击详情页还是显现领取，详情书的状态在adapter里面控制
+/*                                    RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, true, false);
+                                    EventBus.getDefault().postSticky(refreshStageBean);*/
+                                        EventBus.getDefault().postSticky(new RefreshBookCaseBean(false, true, true));
+
+                                    }
+                                });
+                        } catch (Exception e) {
+                            if (getActivity() != null)
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        AppUtils.showToast(getActivity(), "领取失败");
+                                    }
+                                });
                         }
                     }
                 });
@@ -272,14 +275,15 @@ public class NewestFragment extends Fragment implements BookNewestView, MyAllBoo
                     public void onResponse(Call call, final Response response) {
                         try {
                             final String string1 = response.body().string();
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    //loadUser();//更新用户信息（钱）
-                                    StatsBean statsBean = MineJsonUtils.readStatsBean(string1);
-                                    EventBus.getDefault().postSticky(statsBean);//刷新钱包
-                                }
-                            });
+                            if (getActivity() != null)
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        //loadUser();//更新用户信息（钱）
+                                        StatsBean statsBean = MineJsonUtils.readStatsBean(string1);
+                                        EventBus.getDefault().postSticky(statsBean);//刷新钱包
+                                    }
+                                });
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -314,13 +318,14 @@ public class NewestFragment extends Fragment implements BookNewestView, MyAllBoo
                     Log.v("yyyyyy", "---cache5---" + newString);
                     if (newString != null) {
                         spUtils.put("bookDetail", newString);
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                AudioPlayer.get().init(getActivity());
-                                AudioPlayer.get().play(0);//第一个开始播放
-                            }
-                        });
+                        if (getActivity() != null)
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AudioPlayer.get().init(getActivity());
+                                    AudioPlayer.get().play(0);//第一个开始播放
+                                }
+                            });
                         return;
                     }
                 } else {
@@ -329,12 +334,13 @@ public class NewestFragment extends Fragment implements BookNewestView, MyAllBoo
                 HttpUtils.doGet(Urls.HOST_BOOKDETAIL + "/" + bookId, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                AppUtils.showToast(getActivity(), "播放失败");
-                            }
-                        });
+                        if (getActivity() != null)
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AppUtils.showToast(getActivity(), "播放失败");
+                                }
+                            });
                     }
 
                     @Override
@@ -343,20 +349,22 @@ public class NewestFragment extends Fragment implements BookNewestView, MyAllBoo
                             String string = response.body().string();
                             mCache.put("bookDetail" + bookId, string);
                             spUtils.put("bookDetail", string);
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    AudioPlayer.get().init(getActivity());
-                                    AudioPlayer.get().play(0);//第一个开始播放
-                                }
-                            });
+                            if (getActivity() != null)
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        AudioPlayer.get().init(getActivity());
+                                        AudioPlayer.get().play(0);//第一个开始播放
+                                    }
+                                });
                         } catch (Exception e) {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    AppUtils.showToast(getActivity(), "播放失败");
-                                }
-                            });
+                            if (getActivity() != null)
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        AppUtils.showToast(getActivity(), "播放失败");
+                                    }
+                                });
                         }
                     }
                 });

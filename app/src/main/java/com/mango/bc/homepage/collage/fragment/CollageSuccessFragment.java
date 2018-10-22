@@ -138,33 +138,34 @@ public class CollageSuccessFragment extends Fragment implements CollageSuccessVi
 
     @Override
     public void addCollageSuccess(final List<CollageBean> collageBeans) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Log.v("doPostAll", page + "===" + collageBeans.size());
-                if (collageBeans == null || collageBeans.size() == 0) {
-                    if (page == 0) {
-                        refresh.setVisibility(View.GONE);
-                        imgNocollage.setVisibility(View.VISIBLE);
+        if (getActivity() != null)
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.v("doPostAll", page + "===" + collageBeans.size());
+                    if (collageBeans == null || collageBeans.size() == 0) {
+                        if (page == 0) {
+                            refresh.setVisibility(View.GONE);
+                            imgNocollage.setVisibility(View.VISIBLE);
+                            return;
+                        }
+                        AppUtils.showToast(getActivity(), getString(R.string.date_over));
                         return;
+                    } else {
+                        refresh.setVisibility(View.VISIBLE);
+                        imgNocollage.setVisibility(View.GONE);
                     }
-                    AppUtils.showToast(getActivity(), getString(R.string.date_over));
-                    return;
-                } else {
-                    refresh.setVisibility(View.VISIBLE);
-                    imgNocollage.setVisibility(View.GONE);
-                }
-                if (page == 0) {
-                    collageAdapter.reMove();
-                    collageAdapter.setmDate(collageBeans);
-                } else {
-                    //加载更多
-                    for (int i = 0; i < collageBeans.size(); i++) {
-                        collageAdapter.addItem(collageBeans.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
+                    if (page == 0) {
+                        collageAdapter.reMove();
+                        collageAdapter.setmDate(collageBeans);
+                    } else {
+                        //加载更多
+                        for (int i = 0; i < collageBeans.size(); i++) {
+                            collageAdapter.addItem(collageBeans.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
+                        }
                     }
                 }
-            }
-        });
+            });
     }
 
     @Override
@@ -174,11 +175,12 @@ public class CollageSuccessFragment extends Fragment implements CollageSuccessVi
 
     @Override
     public void addFailCollageSuccess(String f) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                AppUtils.showToast(getActivity(), "拼团列表请求失败");
-            }
-        });
+        if (getActivity() != null)
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    AppUtils.showToast(getActivity(), "拼团列表请求失败");
+                }
+            });
     }
 }

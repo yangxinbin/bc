@@ -211,15 +211,16 @@ public class ExpertFragment extends Fragment implements BookExpertView {
                     Log.v("yyyyyy", "---cache5---" + newString);
                     if (newString != null) {
                         spUtils.put("bookDetail", newString);
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                AudioPlayer.get().init(getActivity());
-                                AudioPlayer.get().play(0);//第一个开始播放
+                        if (getActivity() != null)
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AudioPlayer.get().init(getActivity());
+                                    AudioPlayer.get().play(0);//第一个开始播放
 //                                tv_stage.setText("播放中");
 
-                            }
-                        });
+                                }
+                            });
                         return;
                     }
                 } else {
@@ -228,12 +229,13 @@ public class ExpertFragment extends Fragment implements BookExpertView {
                 HttpUtils.doGet(Urls.HOST_BOOKDETAIL + "/" + bookId, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                AppUtils.showToast(getActivity(), "播放失败");
-                            }
-                        });
+                        if (getActivity() != null)
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AppUtils.showToast(getActivity(), "播放失败");
+                                }
+                            });
                     }
 
                     @Override
@@ -242,20 +244,22 @@ public class ExpertFragment extends Fragment implements BookExpertView {
                             String string = response.body().string();
                             mCache.put("bookDetail" + bookId, string);
                             spUtils.put("bookDetail", string);
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    AudioPlayer.get().init(getActivity());
-                                    AudioPlayer.get().play(0);//第一个开始播放
-                                }
-                            });
+                            if (getActivity() != null)
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        AudioPlayer.get().init(getActivity());
+                                        AudioPlayer.get().play(0);//第一个开始播放
+                                    }
+                                });
                         } catch (Exception e) {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    AppUtils.showToast(getActivity(), "播放失败");
-                                }
-                            });
+                            if (getActivity() != null)
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        AppUtils.showToast(getActivity(), "播放失败");
+                                    }
+                                });
                         }
                     }
                 });

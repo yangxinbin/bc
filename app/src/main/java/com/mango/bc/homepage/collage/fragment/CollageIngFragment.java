@@ -65,12 +65,14 @@ public class CollageIngFragment extends Fragment implements CollageIngView {
         refreshAndLoadMore();
         return view;
     }
+
     private void initView() {
         collageAdapter = new CollageAdapter(getActivity());
         recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
         recycle.setAdapter(collageAdapter);
         collageAdapter.setOnItemClickLitener(mOnClickListenner);
     }
+
     private CollageAdapter.OnItemClickLitener mOnClickListenner = new CollageAdapter.OnItemClickLitener() {
         @Override
         public void onItemClick(View view, int position) {
@@ -79,6 +81,7 @@ public class CollageIngFragment extends Fragment implements CollageIngView {
         }
 
     };
+
     private void refreshAndLoadMore() {
         refresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -135,33 +138,34 @@ public class CollageIngFragment extends Fragment implements CollageIngView {
 
     @Override
     public void addCollageIng(final List<CollageBean> collageBeans) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Log.v("doPostAll", page + "===" + collageBeans.size());
-                if (collageBeans == null || collageBeans.size() == 0) {
-                    if (page == 0) {
-                        refresh.setVisibility(View.GONE);
-                        imgNocollage.setVisibility(View.VISIBLE);
+        if (getActivity() != null)
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.v("doPostAll", page + "===" + collageBeans.size());
+                    if (collageBeans == null || collageBeans.size() == 0) {
+                        if (page == 0) {
+                            refresh.setVisibility(View.GONE);
+                            imgNocollage.setVisibility(View.VISIBLE);
+                            return;
+                        }
+                        AppUtils.showToast(getActivity(), getString(R.string.date_over));
                         return;
+                    } else {
+                        refresh.setVisibility(View.VISIBLE);
+                        imgNocollage.setVisibility(View.GONE);
                     }
-                    AppUtils.showToast(getActivity(), getString(R.string.date_over));
-                    return;
-                } else {
-                    refresh.setVisibility(View.VISIBLE);
-                    imgNocollage.setVisibility(View.GONE);
-                }
-                if (page == 0) {
-                    collageAdapter.reMove();
-                    collageAdapter.setmDate(collageBeans);
-                } else {
-                    //加载更多
-                    for (int i = 0; i < collageBeans.size(); i++) {
-                        collageAdapter.addItem(collageBeans.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
+                    if (page == 0) {
+                        collageAdapter.reMove();
+                        collageAdapter.setmDate(collageBeans);
+                    } else {
+                        //加载更多
+                        for (int i = 0; i < collageBeans.size(); i++) {
+                            collageAdapter.addItem(collageBeans.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
+                        }
                     }
                 }
-            }
-        });
+            });
     }
 
     @Override
@@ -171,11 +175,12 @@ public class CollageIngFragment extends Fragment implements CollageIngView {
 
     @Override
     public void addFailCollageIng(String f) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                AppUtils.showToast(getActivity(), "拼团列表请求失败");
-            }
-        });
+        if (getActivity() != null)
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    AppUtils.showToast(getActivity(), "拼团列表请求失败");
+                }
+            });
     }
 }

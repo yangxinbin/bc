@@ -128,14 +128,14 @@ public class MyFreeFragment extends Fragment implements MyFreeBookView {
             Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
             EventBus.getDefault().removeStickyEvent(BookBean.class);
             EventBus.getDefault().postSticky(myBookGirdAdapter.getItem(position));
-            intent.putExtra("gift",true);
+            intent.putExtra("gift", true);
             startActivity(intent);
         }
 
     };
 
     private void deleteGift(final int position) {
-        if (myBookGirdAdapter.getItem(position).getBook() != null){
+        if (myBookGirdAdapter.getItem(position).getBook() != null) {
             id = myBookGirdAdapter.getItem(position).getBook().getId();
         }
         new Thread(new Runnable() {
@@ -148,31 +148,34 @@ public class MyFreeFragment extends Fragment implements MyFreeBookView {
                 HttpUtils.doPost(Urls.HOST_DELETEGIFT, mapParams, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                AppUtils.showToast(getActivity(),"删除失败");
-                            }
-                        });
+                        if (getActivity() != null)
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AppUtils.showToast(getActivity(), "删除失败");
+                                }
+                            });
                     }
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         try {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    AppUtils.showToast(getActivity(),"删除成功");
-                                    myBookGirdAdapter.deleteItem(position);
-                                }
-                            });
+                            if (getActivity() != null)
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        AppUtils.showToast(getActivity(), "删除成功");
+                                        myBookGirdAdapter.deleteItem(position);
+                                    }
+                                });
                         } catch (Exception e) {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    AppUtils.showToast(getActivity(),"删除失败");
-                                }
-                            });
+                            if (getActivity() != null)
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        AppUtils.showToast(getActivity(), "删除失败");
+                                    }
+                                });
                         }
                     }
                 });
@@ -237,33 +240,34 @@ public class MyFreeFragment extends Fragment implements MyFreeBookView {
 
     @Override
     public void addFreeBook(final List<MyBookBean> bookBeanList) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Log.v("doPostAll", page + "===" + bookBeanList.size());
-                if (bookBeanList == null || bookBeanList.size() == 0) {
-                    if (page == 0) {
-                        refresh.setVisibility(View.GONE);
-                        imgNobook.setVisibility(View.VISIBLE);
+        if (getActivity() != null)
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.v("doPostAll", page + "===" + bookBeanList.size());
+                    if (bookBeanList == null || bookBeanList.size() == 0) {
+                        if (page == 0) {
+                            refresh.setVisibility(View.GONE);
+                            imgNobook.setVisibility(View.VISIBLE);
+                            return;
+                        }
+                        AppUtils.showToast(getActivity(), getString(R.string.date_over));
                         return;
+                    } else {
+                        refresh.setVisibility(View.VISIBLE);
+                        imgNobook.setVisibility(View.GONE);
                     }
-                    AppUtils.showToast(getActivity(), getString(R.string.date_over));
-                    return;
-                } else {
-                    refresh.setVisibility(View.VISIBLE);
-                    imgNobook.setVisibility(View.GONE);
-                }
-                if (page == 0) {
-                    myBookGirdAdapter.reMove();
-                    myBookGirdAdapter.setmDate(bookBeanList);
-                } else {
-                    //加载更多
-                    for (int i = 0; i < bookBeanList.size(); i++) {
-                        myBookGirdAdapter.addItem(bookBeanList.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
+                    if (page == 0) {
+                        myBookGirdAdapter.reMove();
+                        myBookGirdAdapter.setmDate(bookBeanList);
+                    } else {
+                        //加载更多
+                        for (int i = 0; i < bookBeanList.size(); i++) {
+                            myBookGirdAdapter.addItem(bookBeanList.get(i));//addItem里面记得要notifyDataSetChanged 否则第一次加载不会显示数据
+                        }
                     }
                 }
-            }
-        });
+            });
     }
 
     @Override
@@ -273,11 +277,12 @@ public class MyFreeFragment extends Fragment implements MyFreeBookView {
 
     @Override
     public void addFail(String f) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                AppUtils.showToast(getActivity(), "免费课程书架请求失败");
-            }
-        });
+        if (getActivity() != null)
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    AppUtils.showToast(getActivity(), "免费课程书架请求失败");
+                }
+            });
     }
 }

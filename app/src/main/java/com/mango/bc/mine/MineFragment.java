@@ -24,6 +24,7 @@ import com.mango.bc.mine.activity.BcCardActivity;
 import com.mango.bc.mine.activity.ExpertApplyActivity;
 import com.mango.bc.mine.activity.ExpertApplyDetailActivity;
 import com.mango.bc.mine.activity.FaqActivity;
+import com.mango.bc.mine.activity.RefereeActivity;
 import com.mango.bc.mine.activity.ServiceActivity;
 import com.mango.bc.mine.activity.SettingActivity;
 import com.mango.bc.mine.activity.VipCenterActivity;
@@ -356,11 +357,15 @@ public class MineFragment extends Fragment {
         EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.bt_finish, R.id.l_expert, R.id.l_point, R.id.center_vip, R.id.imageView_to_vip, R.id.l_collage, R.id.imageVie_pic, R.id.l_class, R.id.l_get, R.id.l_time, R.id.l_code,/* R.id.l_to_vip,*/ R.id.l_to_agent, /*R.id.l_to_talent,*/ R.id.l_faq, R.id.l_service, R.id.l_setting, R.id.l_bc})
+    @OnClick({R.id.tv_referee,R.id.bt_finish, R.id.l_expert, R.id.l_point, R.id.center_vip, R.id.imageView_to_vip, R.id.l_collage, R.id.imageVie_pic, R.id.l_class, R.id.l_get, R.id.l_time, R.id.l_code,/* R.id.l_to_vip,*/ R.id.l_to_agent, /*R.id.l_to_talent,*/ R.id.l_faq, R.id.l_service, R.id.l_setting, R.id.l_bc})
     public void onViewClicked(View view) {
         Intent intent = null;
         switch (view.getId()) {
             case R.id.imageVie_pic:
+                break;
+            case R.id.tv_referee:
+                intent = new Intent(getActivity(), RefereeActivity.class);
+                startActivity(intent);
                 break;
             case R.id.l_class:
                 break;

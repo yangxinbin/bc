@@ -159,7 +159,8 @@
         <activity android:name=".mine.activity.setting.SettingPasswordActivity" />
         <activity android:name=".login.WechatLoginActivity" />
         <activity android:name=".login.BunblePhoneActivity" />
-        <activity android:name=".mine.activity.BcCardActivity"></activity>
+        <activity android:name=".mine.activity.BcCardActivity" />
+        <activity android:name=".mine.activity.RefereeActivity"></activity>
     </application>
 
 </manifest>

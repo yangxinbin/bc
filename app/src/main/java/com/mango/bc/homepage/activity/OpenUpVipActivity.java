@@ -203,7 +203,7 @@ public class OpenUpVipActivity extends BaseActivity {
             }
             datas.add(new VipType("连续包月VIP", "首月特价", "每月仅需" + new11 + "PPG，自动续费可随时取消", "", new12 + "PPG", vipPackageBeans.get(0).getBillingType(), vipPackageBeans.get(0).getId(), "true"));
         }
-        if (vipPackageBeans.get(1) != null) {
+/*        if (vipPackageBeans.get(1) != null) {
             String s21 = vipPackageBeans.get(1).getAutoBillingFee() + "";
             String new21 = s21;
             if (s21.endsWith(".0")) {
@@ -215,7 +215,7 @@ public class OpenUpVipActivity extends BaseActivity {
                 new22 = s22.substring(0, s22.length() - 2);
             }
             datas.add(new VipType("连续包年VIP", "八折优惠", "每年仅需" + new21 + "PPG，自动续费可随时取消", "", new22 + "PPG", vipPackageBeans.get(1).getBillingType(), vipPackageBeans.get(1).getId(), "true"));
-        }
+        }*/
         if (vipPackageBeans.get(0) != null) {
             String s13 = vipPackageBeans.get(0).getManualBillingFee() + "";
             String new13 = s13;

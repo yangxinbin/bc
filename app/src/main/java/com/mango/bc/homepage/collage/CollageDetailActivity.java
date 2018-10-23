@@ -104,8 +104,8 @@ public class CollageDetailActivity extends BaseActivity {
             allNum = 2;
         }
         price = collageBean.getPrice();
-        tvCollagePriceAfter.setText(price+ "积分");
-        tvCollagePriceBefore.setText(collageBean.getBookPrice() + "积分");
+        tvCollagePriceAfter.setText(price+ "PPG");
+        tvCollagePriceBefore.setText(collageBean.getBookPrice() + "PPG");
         tvCollagePriceBefore.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
         leftTime = ((collageBean.getTimestamp() + (1000 * 60 * 60 * 24)) - System.currentTimeMillis()) / 1000;
         switch (getIntent().getIntExtra("status", 0)) {
@@ -249,7 +249,7 @@ public class CollageDetailActivity extends BaseActivity {
 
     private void collageWechat() {
         OnekeyShare oks = new OnekeyShare();
-        oks.setTitle("【仅剩"+(allNum-hasNum)+"人】"+userName+"邀请你"+price+"积分拼《"+title+"》");
+        oks.setTitle("【仅剩"+(allNum-hasNum)+"人】"+userName+"邀请你"+price+"PPG拼《"+title+"》");
         oks.setText("BC大陆");
         oks.setImageUrl(Urls.HOST_GETFILE + "?name="+cover);
         oks.setUrl("http://www.mob.com");

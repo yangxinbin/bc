@@ -87,7 +87,7 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
         EventBus.getDefault().register(this);
         if (userBean.getWallet() != null) {
             ppCoins = userBean.getWallet().getPpCoins();
-            tvAllPpg.setText(userBean.getWallet().getPpCoins() + "积分");
+            tvAllPpg.setText(userBean.getWallet().getPpCoins() + "PPG");
 
         }
     }
@@ -104,12 +104,12 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
         bookId = bookDetailBean.getId();
         tvTitle.setText(bookDetailBean.getTitle());
         if (isVip) {
-            tvPpgNeed.setText(bookDetailBean.getVipPrice() + "积分");
-            tvNeedPpg.setText("实付款：" + bookDetailBean.getVipPrice() + "积分");
+            tvPpgNeed.setText(bookDetailBean.getVipPrice() + "PPG");
+            tvNeedPpg.setText("实付款：" + bookDetailBean.getVipPrice() + "PPG");
             prices = bookDetailBean.getVipPrice();
         } else {
-            tvPpgNeed.setText(bookDetailBean.getPrice() + "积分");
-            tvNeedPpg.setText("实付款：" + bookDetailBean.getPrice() + "积分");
+            tvPpgNeed.setText(bookDetailBean.getPrice() + "PPG");
+            tvNeedPpg.setText("实付款：" + bookDetailBean.getPrice() + "PPG");
             prices = bookDetailBean.getPrice();
         }
 

@@ -240,7 +240,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/dp_10"
                 android:gravity="center"
-                android:text="获得BC积分"
+                android:text="获得PPG"
                 android:textColor="@color/black"
                 android:textSize="@dimen/dp_12" />
 
@@ -251,7 +251,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/dp_10"
                 android:gravity="center"
-                android:text="1.8BC积分"
+                android:text="1.8PPG"
                 android:textColor="@color/yello"
                 android:textSize="@dimen/dp_14" />
         </LinearLayout>

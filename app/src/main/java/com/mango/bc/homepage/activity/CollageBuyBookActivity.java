@@ -88,12 +88,12 @@ public class CollageBuyBookActivity extends BaseActivity {
         }
         bookId = bookDetailBean.getId();
         tvTitle.setText(bookDetailBean.getTitle());
-        tvPpgBefore.setText(bookDetailBean.getPrice() + "积分");
-        tvUnneedPpg.setText("原价:" + bookDetailBean.getPrice() + "积分");
+        tvPpgBefore.setText(bookDetailBean.getPrice() + "PPG");
+        tvUnneedPpg.setText("原价:" + bookDetailBean.getPrice() + "PPG");
         tvPpgBefore.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
         tvUnneedPpg.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
-        tvPpgAfter.setText(bookDetailBean.getGroupBuy2Price() + "积分");
-        tvNeedPpg.setText("实付款:" + bookDetailBean.getGroupBuy2Price() + "积分  ");
+        tvPpgAfter.setText(bookDetailBean.getGroupBuy2Price() + "PPG");
+        tvNeedPpg.setText("实付款:" + bookDetailBean.getGroupBuy2Price() + "PPG  ");
         typeCollage = "two";
         initDate(bookDetailBean);
     }
@@ -116,8 +116,8 @@ public class CollageBuyBookActivity extends BaseActivity {
             @Override
             public void onItemClick(View view, int position) {
                 adapterWhat.setSelection(position);
-                tvPpgAfter.setText(adapterWhat.getItem(position).getPpg() + "积分");
-                tvNeedPpg.setText("实付款:" + adapterWhat.getItem(position).getPpg() + "积分  ");
+                tvPpgAfter.setText(adapterWhat.getItem(position).getPpg() + "PPG");
+                tvNeedPpg.setText("实付款:" + adapterWhat.getItem(position).getPpg() + "PPG  ");
                 if (adapterWhat.getItem(position).getNum().startsWith("2")) {
                     typeCollage = "two";
                 } else {

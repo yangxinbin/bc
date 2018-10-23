@@ -101,8 +101,8 @@ public class CollageAdapter extends RecyclerView.Adapter {
                 viewHolder.tv_collage_time.setVisibility(View.GONE);
                 viewHolder.tv_collage_state.setText("拼团失败");
             }
-            viewHolder.tv_collage_price_after.setText(datas.get(position).getPrice() + "积分");
-            viewHolder.tv_collage_price_before.setText(datas.get(position).getBookPrice() + "积分");
+            viewHolder.tv_collage_price_after.setText(datas.get(position).getPrice() + "PPG");
+            viewHolder.tv_collage_price_before.setText(datas.get(position).getBookPrice() + "PPG");
             viewHolder.tv_collage_price_before.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
             Log.v("ddddddddddddd", (datas.get(position).getTimestamp() + (1000 * 60 * 60 * 24) + "==" + System.currentTimeMillis()) + "==" + ((datas.get(position).getTimestamp() + (1000 * 60 * 60 * 24)) - System.currentTimeMillis()));
             viewHolder.tv_collage_time.setText("剩余" + DateUtil.getMToHM(((datas.get(position).getTimestamp() + (1000 * 60 * 60 * 24)) - System.currentTimeMillis())));

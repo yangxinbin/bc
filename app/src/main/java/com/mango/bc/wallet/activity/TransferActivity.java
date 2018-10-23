@@ -66,7 +66,7 @@ public class TransferActivity extends BaseActivity {
             return;
         if (userBean.getWallet() != null) {
             ppg = userBean.getWallet().getPpCoins();
-            tvAllPp.setText("（当前余额：" + ppg + "积分）");
+            tvAllPp.setText("（当前余额：" + ppg + "PPG）");
         }
     }
 

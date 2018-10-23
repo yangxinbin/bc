@@ -85,7 +85,7 @@
                         android:ellipsize="end"
                         android:gravity="bottom"
                         android:maxLines="1"
-                        android:text="4.9积分"
+                        android:text="4.9PPG"
                         android:textColor="@color/grayText"
                         android:textSize="@dimen/textSize" />
 
@@ -97,7 +97,7 @@
                         android:ellipsize="end"
                         android:gravity="bottom"
                         android:maxLines="1"
-                        android:text="3.9积分"
+                        android:text="3.9PPG"
                         android:textColor="@color/black"
                         android:textSize="@dimen/textSize" />
                 </LinearLayout>
@@ -158,7 +158,7 @@
             android:layout_weight="1"
             android:background="@color/common_yello"
             android:gravity="right|center_vertical"
-            android:text="实付款:4.9积分  "
+            android:text="实付款:4.9PPG  "
             android:textColor="@color/gray_3"
             android:textSize="@dimen/textSize" />
 
@@ -169,7 +169,7 @@
             android:layout_weight="1"
             android:background="@color/common_yello"
             android:gravity="center_vertical"
-            android:text="原价:4.9积分"
+            android:text="原价:4.9PPG"
             android:textColor="@color/gray_9"
             android:textSize="@dimen/textSize" />
 

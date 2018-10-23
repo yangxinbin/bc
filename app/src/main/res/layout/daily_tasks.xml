@@ -32,7 +32,7 @@
                 android:layout_marginBottom="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_weight="1"
-                android:text="限10次，0.1BC积分/次"
+                android:text="限10次，0.1PPG/次"
                 android:textColor="@color/plan_gray"
                 android:textSize="@dimen/dp_12" />
 
@@ -90,7 +90,7 @@
                 android:layout_marginBottom="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_weight="1"
-                android:text="限10次，0.1BC积分/次"
+                android:text="限10次，0.1PPG/次"
                 android:textColor="@color/plan_gray"
                 android:textSize="@dimen/dp_12" />
 
@@ -148,7 +148,7 @@
                 android:layout_marginBottom="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_weight="1"
-                android:text="限10次，0.1BC积分/次"
+                android:text="限10次，0.1PPG/次"
                 android:textColor="@color/plan_gray"
                 android:textSize="@dimen/dp_12" />
 
@@ -206,7 +206,7 @@
                 android:layout_marginBottom="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_weight="1"
-                android:text="10分钟0.2BC，限50分钟"
+                android:text="10分钟0.2PPG，限50分钟"
                 android:textColor="@color/plan_gray"
                 android:textSize="@dimen/dp_12" />
 

@@ -105,7 +105,7 @@ public class BookPaidAdapter extends RecyclerView.Adapter {
                 ((BookPaidAdapter.BookViewHolder) holder).tv_detail.setText(datas.get(position).getSubtitle());
                 if (datas.get(position).getBanner() != null)
                     Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getBanner().getFileName()).into(((BookPaidAdapter.BookViewHolder) holder).img_book);
-                //((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice() + "积分");
+                //((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice() + "PPG");
                 if (chechState(datas.get(position).getId())) {//拿书id遍历判断
                     Log.v("rrrrrrr", "==y==");
 /*                    if (AudioPlayer.get().isPlaying() && datas.get(position).getId().equals(spUtils.getString("isSameBook", ""))) {
@@ -129,9 +129,9 @@ public class BookPaidAdapter extends RecyclerView.Adapter {
                 } else {
                     Log.v("rrrrrrr", "==n=="+isVip);
                     if (isVip){
-                        ((BookPaidAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getVipPrice() + "积分");//否领取
+                        ((BookPaidAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getVipPrice() + "PPG");//否领取
                     }else {
-                        ((BookPaidAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice() + "积分");//否领取
+                        ((BookPaidAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice() + "PPG");//否领取
                     }
                     ((BookPaidAdapter.BookViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
                         @Override

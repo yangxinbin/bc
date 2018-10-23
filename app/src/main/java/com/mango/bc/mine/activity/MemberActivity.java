@@ -43,7 +43,7 @@ public class MemberActivity extends BaseActivity {
         if (member == null)
             return;
         tvNum.setText("已有成员" + member.getSize() + "人");
-        tvPpg.setText("累计收益" + member.getTotal() + "积分");
+        tvPpg.setText("累计收益" + member.getTotal() + "PPG");
         initView(member.getUsers());
     }
 

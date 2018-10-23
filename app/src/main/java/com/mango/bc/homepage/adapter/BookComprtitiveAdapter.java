@@ -125,7 +125,7 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             if (((HeadViewHolder) holder) != null && mData.get(position) != null) {
                 ((HeadViewHolder) holder).tv_head_title.setText(mData.get(position).getTitle());
                 ((HeadViewHolder) holder).tv_head_detail.setText(mData.get(position).getSubtitle());
-                ((HeadViewHolder) holder).tv_head_bc.setText(mData.get(position).getPrice() + "BC积分");
+                ((HeadViewHolder) holder).tv_head_bc.setText(mData.get(position).getPrice() + "PPG");
                 if (mData.get(position).getCover() != null)
                     Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + mData.get(position).getCover().getFileName()).into(((HeadViewHolder) holder).img_head_book);
                 if (chechState(mData.get(position).getId())) {//拿书id遍历判断
@@ -213,7 +213,7 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                             }
                         });
                     } else {
-                        ((ItemViewHolder) holder).tv_stage.setText(mData.get(position).getPrice() + "积分");//否领取
+                        ((ItemViewHolder) holder).tv_stage.setText(mData.get(position).getPrice() + "PPG");//否领取
                         ((ItemViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {

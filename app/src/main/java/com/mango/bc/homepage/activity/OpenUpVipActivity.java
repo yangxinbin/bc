@@ -201,7 +201,7 @@ public class OpenUpVipActivity extends BaseActivity {
             if (s12.endsWith(".0")) {
                 new12 = s12.substring(0, s12.length() - 2);
             }
-            datas.add(new VipType("连续包月VIP", "首月特价", "每月仅需" + new11 + "积分，自动续费可随时取消", "", new12 + "积分", vipPackageBeans.get(0).getBillingType(), vipPackageBeans.get(0).getId(), "true"));
+            datas.add(new VipType("连续包月VIP", "首月特价", "每月仅需" + new11 + "PPG，自动续费可随时取消", "", new12 + "PPG", vipPackageBeans.get(0).getBillingType(), vipPackageBeans.get(0).getId(), "true"));
         }
         if (vipPackageBeans.get(1) != null) {
             String s21 = vipPackageBeans.get(1).getAutoBillingFee() + "";
@@ -214,7 +214,7 @@ public class OpenUpVipActivity extends BaseActivity {
             if (s22.endsWith(".0")) {
                 new22 = s22.substring(0, s22.length() - 2);
             }
-            datas.add(new VipType("连续包年VIP", "八折优惠", "每年仅需" + new21 + "积分，自动续费可随时取消", "", new22 + "积分", vipPackageBeans.get(1).getBillingType(), vipPackageBeans.get(1).getId(), "true"));
+            datas.add(new VipType("连续包年VIP", "八折优惠", "每年仅需" + new21 + "PPG，自动续费可随时取消", "", new22 + "PPG", vipPackageBeans.get(1).getBillingType(), vipPackageBeans.get(1).getId(), "true"));
         }
         if (vipPackageBeans.get(0) != null) {
             String s13 = vipPackageBeans.get(0).getManualBillingFee() + "";
@@ -222,7 +222,7 @@ public class OpenUpVipActivity extends BaseActivity {
             if (s13.endsWith(".0")) {
                 new13 = s13.substring(0, s13.length() - 2);
             }
-            datas.add(new VipType("包月VIP", "", "", "", new13 + "积分", vipPackageBeans.get(0).getBillingType(), vipPackageBeans.get(0).getId(), "false"));
+            datas.add(new VipType("包月VIP", "", "", "", new13 + "PPG", vipPackageBeans.get(0).getBillingType(), vipPackageBeans.get(0).getId(), "false"));
 
         }
         if (vipPackageBeans.get(1) != null) {
@@ -231,7 +231,7 @@ public class OpenUpVipActivity extends BaseActivity {
             if (s23.endsWith(".0")) {
                 new23 = s23.substring(0, s23.length() - 2);
             }
-            datas.add(new VipType("包年VIP", "", "", "", new23 + "积分", vipPackageBeans.get(1).getBillingType(), vipPackageBeans.get(1).getId(), "false"));
+            datas.add(new VipType("包年VIP", "", "", "", new23 + "PPG", vipPackageBeans.get(1).getBillingType(), vipPackageBeans.get(1).getId(), "false"));
         }
         intView();
         adapter.setSelection(0);

@@ -196,7 +196,7 @@ public class MineFragment extends Fragment {
                     if (memberBean == null)
                         return;
                     if (tvExpertState != null)
-                        tvExpertState.setText("已获取贡献值" + memberBean.getTotal() + "积分");
+                        tvExpertState.setText("已获取贡献值" + memberBean.getTotal() + "PPG");
                     break;
             }
         }
@@ -308,7 +308,7 @@ public class MineFragment extends Fragment {
         tvClass.setText(userBean.getStats().getPaidBooks() + "本");
         tvGet.setText(userBean.getStats().getVipGetBooks() + "本");
         tvTime.setText(userBean.getStats().getTotalDuration() + "小时");
-        tvCode.setText(userBean.getStats().getPpCoinEarned() + "积分");
+        tvCode.setText(userBean.getStats().getPpCoinEarned() + "PPG");
         //以下是达人节点UI
         if (userBean.getAgencyInfo() == null)
             return;
@@ -329,7 +329,7 @@ public class MineFragment extends Fragment {
                 lToAgent.setVisibility(View.GONE);
                 lExpert.setVisibility(View.VISIBLE);
                 lPoint.setVisibility(View.GONE);
-                tvExpertState.setText("已获取贡献值900积分");
+                tvExpertState.setText("已获取贡献值900PPG");
                 imgAgency.setVisibility(View.VISIBLE);
                 break;
             case 3://达人申请失败
@@ -347,7 +347,7 @@ public class MineFragment extends Fragment {
         tvClass.setText(statsBean.getPaidBooks() + "本");
         tvGet.setText(statsBean.getVipGetBooks() + "本");
         tvTime.setText(statsBean.getTotalDuration() + "小时");
-        tvCode.setText(statsBean.getPpCoinEarned() + "积分");
+        tvCode.setText(statsBean.getPpCoinEarned() + "PPG");
     }
 
     @Override

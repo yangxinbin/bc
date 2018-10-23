@@ -63,7 +63,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/dp_5"
                     android:gravity="center_vertical"
-                    android:text="(1元=1BC积分)"
+                    android:text="(1元=1PPG)"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/dp_12" />
             </LinearLayout>

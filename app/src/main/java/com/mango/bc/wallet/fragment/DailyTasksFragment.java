@@ -184,24 +184,24 @@ public class DailyTasksFragment extends Fragment {
         if (taskAndRewardBeans == null)
             return;
         tvLikeRate.setText("进度" + taskAndRewardBeans.get(0).getCount() + "/10");
-        tvLikeNum.setText("已获得" + taskAndRewardBeans.get(0).getEarning() + "积分");
+        tvLikeNum.setText("已获得" + taskAndRewardBeans.get(0).getEarning() + "PPG");
 
         tvShareRate.setText("进度" + taskAndRewardBeans.get(1).getCount() + "/10");
-        tvShareNum.setText("已获得" + taskAndRewardBeans.get(1).getEarning() + "积分");
+        tvShareNum.setText("已获得" + taskAndRewardBeans.get(1).getEarning() + "PPG");
 
         tvCommentRate.setText("进度" + taskAndRewardBeans.get(2).getCount() + "/10");
-        tvCommentNum.setText("已获得" + taskAndRewardBeans.get(2).getEarning() + "积分");
+        tvCommentNum.setText("已获得" + taskAndRewardBeans.get(2).getEarning() + "PPG");
 
         tvOnlineRate.setText("已阅读" + taskAndRewardBeans.get(3).getCount() + "分钟");
-        tvOnlineNum.setText("已获得" + taskAndRewardBeans.get(3).getEarning() + "积分");
+        tvOnlineNum.setText("已获得" + taskAndRewardBeans.get(3).getEarning() + "PPG");
 
-        tvGroupNum.setText("已获得" + taskAndRewardBeans.get(4).getEarning() + "积分");
+        tvGroupNum.setText("已获得" + taskAndRewardBeans.get(4).getEarning() + "PPG");
 
-        tvPaidNum.setText("已获得" + taskAndRewardBeans.get(5).getEarning() + "积分");
+        tvPaidNum.setText("已获得" + taskAndRewardBeans.get(5).getEarning() + "PPG");
 
-        tvMemberNum.setText("已获得" + taskAndRewardBeans.get(6).getEarning() + "积分");
+        tvMemberNum.setText("已获得" + taskAndRewardBeans.get(6).getEarning() + "PPG");
 
-        tvVipNum.setText("已获得" + taskAndRewardBeans.get(7).getEarning() + "积分");
+        tvVipNum.setText("已获得" + taskAndRewardBeans.get(7).getEarning() + "PPG");
 
     }
 

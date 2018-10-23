@@ -147,7 +147,7 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
                             }
                         });
                     } else {
-                        ((BookNewestAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice() + "积分");//否领取
+                        ((BookNewestAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice() + "PPG");//否领取
                         ((BookNewestAdapter.BookViewHolder) holder).tv_stage.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {

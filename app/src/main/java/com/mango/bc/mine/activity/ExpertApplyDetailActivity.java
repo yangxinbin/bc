@@ -49,7 +49,7 @@ public class ExpertApplyDetailActivity extends BaseActivity {
     private void initMember(MemberBean member) {
         if (member == null)
             return;
-        tvMemberState.setText(member.getSize() + "人收益" + member.getTotal() + "积分");
+        tvMemberState.setText(member.getSize() + "人收益" + member.getTotal() + "PPG");
     }
 
 

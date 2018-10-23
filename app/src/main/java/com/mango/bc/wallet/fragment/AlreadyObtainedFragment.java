@@ -165,28 +165,28 @@ public class AlreadyObtainedFragment extends Fragment {
         if (taskAndRewardBeans == null)
             return;
         tvLike.setText("已点赞" + taskAndRewardBeans.get(0).getCount() + "次");
-        tvLikeNum.setText(taskAndRewardBeans.get(0).getEarning() + "积分");
+        tvLikeNum.setText(taskAndRewardBeans.get(0).getEarning() + "PPG");
 
         tvShare.setText("已分享" + taskAndRewardBeans.get(1).getCount() + "次");
-        tvShareNum.setText(taskAndRewardBeans.get(1).getEarning() + "积分");
+        tvShareNum.setText(taskAndRewardBeans.get(1).getEarning() + "PPG");
 
         tvComment.setText("已评论" + taskAndRewardBeans.get(2).getCount() + "次");
-        tvCommentNum.setText(taskAndRewardBeans.get(2).getEarning() + "积分");
+        tvCommentNum.setText(taskAndRewardBeans.get(2).getEarning() + "PPG");
 
         tvOnline.setText("总共阅读" + taskAndRewardBeans.get(3).getCount() + "分钟");
-        tvOnlineNum.setText(taskAndRewardBeans.get(3).getEarning() + "积分");
+        tvOnlineNum.setText(taskAndRewardBeans.get(3).getEarning() + "PPG");
 
         tvGroup.setText("已完成拼团" + taskAndRewardBeans.get(4).getCount() + "次");
-        tvGroupNum.setText(taskAndRewardBeans.get(4).getEarning() + "积分");
+        tvGroupNum.setText(taskAndRewardBeans.get(4).getEarning() + "PPG");
 
         //tvPaid.setText("推荐大咖课");
-        tvPaidNum.setText(taskAndRewardBeans.get(5).getEarning() + "积分");
+        tvPaidNum.setText(taskAndRewardBeans.get(5).getEarning() + "PPG");
 
-        tvMemberNum.setText(taskAndRewardBeans.get(6).getEarning() + "积分");
+        tvMemberNum.setText(taskAndRewardBeans.get(6).getEarning() + "PPG");
 
-        tvSignNum.setText(taskAndRewardBeans.get(7).getEarning() + "积分");
+        tvSignNum.setText(taskAndRewardBeans.get(7).getEarning() + "PPG");
 
-        tvVipNum.setText(taskAndRewardBeans.get(8).getEarning() + "积分");
+        tvVipNum.setText(taskAndRewardBeans.get(8).getEarning() + "PPG");
 
     }
 

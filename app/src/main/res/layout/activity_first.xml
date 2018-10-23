@@ -73,7 +73,8 @@
             android:gravity="center"
             android:text="微信登录"
             android:textColor="@color/gray_3"
-            android:textSize="@dimen/textSize" />
+            android:textSize="@dimen/textSize"
+            android:textStyle="bold" />
         <!--    <Button
                 android:id="@+id/button_begin"
                 android:layout_width="match_parent"

@@ -6,13 +6,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import com.mango.bc.R;
 import com.mango.bc.base.BaseServiceActivity;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.bookdetail.adapter.MyTxtDetailAdapter;
 import com.mango.bc.homepage.bookdetail.adapter.TxtDetailAdapter;
+import com.mango.bc.homepage.bookdetail.bean.PlayBarBean;
 import com.mango.bc.homepage.bookdetail.play.PlayActivity;
+import com.mango.bc.homepage.bookdetail.play.executor.ControlPanel;
+import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
 
 import org.greenrobot.eventbus.EventBus;
@@ -31,6 +36,9 @@ public class TxtActivity extends BaseServiceActivity {
     private TxtDetailAdapter txtDetailAdapter;
     private MyTxtDetailAdapter myTxtDetailAdapter;
     private int position;
+    @Bind(R.id.fl_play_bar)
+    FrameLayout flPlayBar;
+    private ControlPanel controlPanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +47,27 @@ public class TxtActivity extends BaseServiceActivity {
         ButterKnife.bind(this);
         position = getIntent().getIntExtra("position", -1);//-1 代表除大咖课其它课跳过来的
         EventBus.getDefault().register(this);
+        if (AudioPlayer.get().isPlaying() || AudioPlayer.get().isPausing())
+            flPlayBar.setVisibility(View.VISIBLE);//播放控件
     }
 
+    @Override
+    protected void onServiceBound() {
+        controlPanel = new ControlPanel(flPlayBar);
+        AudioPlayer.get().addOnPlayEventListener(controlPanel);
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void PlayBarBeanEventBus(PlayBarBean playBarBean) {
+        if (playBarBean == null) {
+            return;
+        }
+        Log.v("iiiiiiiiiiiiii", "---iiiihhhhiiiii---");
+        if (!playBarBean.isShowBar()) {
+            flPlayBar.setVisibility(View.GONE);//播放控件
+            Log.v("iiiiiiiiiiiiii", "----h---");
+        }
+        EventBus.getDefault().removeStickyEvent(PlayBarBean.class);
+    }
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void BookBeanEventBus(BookBean bookBean) {
         if (bookBean == null) {

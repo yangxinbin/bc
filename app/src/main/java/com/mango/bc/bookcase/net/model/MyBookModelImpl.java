@@ -59,7 +59,7 @@ public class MyBookModelImpl implements MyBookModel {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             Log.v("doPostAll", "^^^^^onFailure^^^^^" + e);
-                            listener.onCompetitiveFailMes("FAILURE", e);
+                            listener.onExpertFailMes("FAILURE", e);
                         }
 
                         @Override

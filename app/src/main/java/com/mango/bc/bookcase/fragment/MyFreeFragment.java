@@ -1,5 +1,7 @@
 package com.mango.bc.bookcase.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
@@ -120,7 +122,7 @@ public class MyFreeFragment extends Fragment implements MyFreeBookView {
         @Override
         public void onDeleteClick(View view, int position) {
             //myBookGirdAdapter.deleteItem(position);
-            deleteGift(position);
+            showDailog("确定删除吗 ？", "",position);
         }
 
         @Override
@@ -133,7 +135,27 @@ public class MyFreeFragment extends Fragment implements MyFreeBookView {
         }
 
     };
-
+    private void showDailog(String s1, final String s2, final int position) {
+        AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                .setIcon(R.mipmap.icon)//设置标题的图片
+                .setTitle(s1)//设置对话框的标题
+                //.setMessage(s2)//设置对话框的内容
+                //设置对话框的按钮
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteGift(position);
+                        dialog.dismiss();
+                    }
+                }).create();
+        dialog.show();
+    }
     private void deleteGift(final int position) {
         if (myBookGirdAdapter.getItem(position).getBook() != null) {
             id = myBookGirdAdapter.getItem(position).getBook().getId();

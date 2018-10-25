@@ -1,5 +1,7 @@
 package com.mango.bc.bookcase.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,8 +27,10 @@ import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.mine.bean.UserBean;
 import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.AppUtils;
+import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.SPUtils;
+import com.mango.bc.util.Urls;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -37,10 +41,15 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * Created by admin on 2018/9/5.
@@ -60,6 +69,7 @@ public class MyCompetitiveFragment extends Fragment implements MyCompetitiveBook
     private int page = 0;
     private SPUtils spUtils;
     private boolean isVip = false;
+    private String id;
 
     @Nullable
     @Override
@@ -114,7 +124,7 @@ public class MyCompetitiveFragment extends Fragment implements MyCompetitiveBook
 
         @Override
         public void onDeleteClick(View view, int position) {
-
+            showDailog("确定删除吗 ？", "",position);
         }
 
         @Override
@@ -131,7 +141,75 @@ public class MyCompetitiveFragment extends Fragment implements MyCompetitiveBook
         }
 
     };
+    private void showDailog(String s1, final String s2, final int position) {
+        AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                .setIcon(R.mipmap.icon)//设置标题的图片
+                .setTitle(s1)//设置对话框的标题
+                //.setMessage(s2)//设置对话框的内容
+                //设置对话框的按钮
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteGift(position);
+                        dialog.dismiss();
+                    }
+                }).create();
+        dialog.show();
+    }
+    private void deleteGift(final int position) {
+        if (myBookGirdAdapter.getItem(position).getBook() != null) {
+            id = myBookGirdAdapter.getItem(position).getBook().getId();
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
+                mapParams.put("bookId", id);
+                HttpUtils.doPost(Urls.HOST_DELETEGIFT, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        if (getActivity() != null)
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AppUtils.showToast(getActivity(), "删除失败");
+                                }
+                            });
+                    }
 
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            if (getActivity() != null)
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        AppUtils.showToast(getActivity(), "删除成功");
+                                        myBookGirdAdapter.deleteItem(position);
+                                    }
+                                });
+                        } catch (Exception e) {
+                            if (getActivity() != null)
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        AppUtils.showToast(getActivity(), "删除失败");
+                                    }
+                                });
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
     private void refreshAndLoadMore() {
         refresh.setOnRefreshListener(new OnRefreshListener() {
             @Override

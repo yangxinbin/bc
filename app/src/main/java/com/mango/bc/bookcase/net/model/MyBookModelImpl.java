@@ -58,7 +58,7 @@ public class MyBookModelImpl implements MyBookModel {
                     HttpUtils.doPost(url, mapParams, new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
-                            Log.v("doPostAll", "^^^^^onFailure^^^^^" + e);
+                            Log.v("doPostAll", "^^^^^onFailure^^^-^^" + e);
                             listener.onExpertFailMes("FAILURE", e);
                         }
 

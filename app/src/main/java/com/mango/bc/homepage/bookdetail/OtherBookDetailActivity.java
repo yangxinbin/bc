@@ -374,7 +374,7 @@ public class OtherBookDetailActivity extends BaseServiceActivity implements MyAl
         tvLikeNeedbuy.setText(bookDetailBean.getLikes() + "");
         bookStageNeedbuyMoney.setText(bookDetailBean.getPrice() + "PPG免费读");//还要判断是否是VIP
         if (bookDetailBean.getDescriptionImages() != null) {
-            bookDetailAdapter = new BookDetailAdapter(bookDetailBean.getDescriptionImages(), this);
+            bookDetailAdapter = new BookDetailAdapter(bookDetailBean.getDescriptionImages(), this,bookId);
             recycle.setLayoutManager(new LinearLayoutManager(this));
             recycle.setAdapter(bookDetailAdapter);
             Log.v("uuuuuuuuuuuu", "--?--");

@@ -51,11 +51,13 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
     private Handler mHandler = new Handler(Looper.getMainLooper()); //获取主线程的Handler
     private Dialog dialog_load;
     private Bitmap bitmap;
+    private String id;
 
-    public BookDetailAdapter(List<BookDetailBean.DescriptionImagesBean> datas, Context context) {
+    public BookDetailAdapter(List<BookDetailBean.DescriptionImagesBean> datas, Context context, String id) {
         createLoadDailog(context);
         this.context = context;
         this.datas = datas;
+        this.id = id;
     }
 
     public void createLoadDailog(final Context context) {
@@ -64,7 +66,7 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
         dialog_load.setContentView(view);
         Window window = dialog_load.getWindow();
         //设置弹出窗口大小
-        window.setLayout(WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         //设置显示位置
         window.setGravity(Gravity.CENTER);
         //设置动画效果
@@ -80,15 +82,19 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof BookDetailAdapter.BookDetailViewHolder) {
             final BookDetailAdapter.BookDetailViewHolder viewHolder = (BookDetailAdapter.BookDetailViewHolder) holder;
             if (datas.get(position).getFileName() != null) {
                 //Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName()).into(viewHolder.img_book_detail);
                 Log.v("uuuuuuuuuuuu", "----" + Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName());
                 if (NetUtil.isNetConnect(context)) {
+                    Log.v("yyyyyyy", id + "---1--!!----" + datas.get(position).getFileName());
+
                     setIamge(false, datas.get(position).getFileName(), viewHolder.img_book_detail);
                 } else {
+                    Log.v("yyyyyyy", id + "--2---!!----" + datas.get(position).getFileName());
+
                     setIamge(true, datas.get(position).getFileName(), viewHolder.img_book_detail);
                 }
             }
@@ -101,11 +107,12 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
             @Override
             public void run() {
                 if (ifCache) {//读取缓存数据
-                    final Bitmap bitmap = mCache.getAsBitmap("bookDetail" + fileName);
+                    final Bitmap bitmap = mCache.getAsBitmap(id + fileName);
                     if (bitmap != null) {
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
+                                Log.v("yyyyyyy", "-----!!----" + fileName);
                                 dialog_load.dismiss();
                                 imageView.setImageBitmap(bitmap);
                             }
@@ -113,7 +120,7 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
                         return;
                     }
                 } else {
-                    mCache.remove("bookDetail" + fileName);//刷新之后缓存也更新过来
+                    mCache.remove(id + fileName);//刷新之后缓存也更新过来
                 }
                 HttpUtils.doGet(Urls.HOST_GETFILE + "?name=" + fileName, new Callback() {
                     @Override
@@ -130,7 +137,7 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
                         //final Bitmap bitmap = BitmapFactory.decodeByteArray(Picture, 0, Picture.length);
                         //通过imageview，设置图片
                         bitmap = streamToBitmap(input);
-                        mCache.put("bookDetail" + fileName, bitmap,60*60*24*2);//有效期2天
+                        mCache.put(id + fileName, bitmap, 60 * 60 * 24 * 2);//有效期2天
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {

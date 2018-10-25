@@ -44,13 +44,13 @@ public class DetailFragment extends Fragment {
         if (bookBean == null) {
             return;
         }
-        Log.v("uuuuuuuuuuuu", "--1--");
+        Log.v("uuuuuuuuuuuu", "--1q--");
         if (bookBean.getDescriptionImages() != null) {
-            bookDetailAdapter = new BookDetailAdapter(bookBean.getDescriptionImages(), getActivity());
+            bookDetailAdapter = new BookDetailAdapter(bookBean.getDescriptionImages(), getActivity(),bookBean.getId());
             recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
             recycle.setAdapter(bookDetailAdapter);
         }
-        //EventBus.getDefault().removeStickyEvent(MyBookBean.class);//展示完删除
+        EventBus.getDefault().removeStickyEvent(BookDetailBean.class);//展示完删除
     }
 
     @Override

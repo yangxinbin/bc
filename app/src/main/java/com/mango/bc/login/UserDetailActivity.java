@@ -63,9 +63,13 @@ public class UserDetailActivity extends BaseActivity implements AdapterView.OnIt
         Intent intent;
         switch (view.getId()) {
             case R.id.imageView_back:
-                intent = new Intent(this, LikeActivity.class);
-                startActivity(intent);
-                finish();
+                if (getIntent().getBooleanExtra("perfect", false)) {
+                    finish();
+                } else {
+                    intent = new Intent(this, LikeActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
                 break;
             case R.id.tv_jump:
                 intent = new Intent(this, BcActivity.class);

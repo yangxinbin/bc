@@ -19,6 +19,7 @@ import com.mango.bc.BcActivity;
 import com.mango.bc.R;
 import com.mango.bc.homepage.activity.CollageActivity;
 import com.mango.bc.homepage.activity.OpenUpVipActivity;
+import com.mango.bc.login.UserDetailActivity;
 import com.mango.bc.mine.activity.ApplyActivity;
 import com.mango.bc.mine.activity.BcCardActivity;
 import com.mango.bc.mine.activity.ExpertApplyActivity;
@@ -469,6 +470,9 @@ public class MineFragment extends Fragment {
                 startActivity(intent);*/
                 break;
             case R.id.bt_finish:
+                intent = new Intent(getContext(), UserDetailActivity.class);
+                intent.putExtra("perfect", true);
+                startActivity(intent);
                 break;
         }
     }

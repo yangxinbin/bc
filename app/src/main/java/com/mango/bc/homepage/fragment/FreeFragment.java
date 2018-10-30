@@ -353,6 +353,7 @@ public class FreeFragment extends Fragment implements BookFreeView, MyAllBookVie
                                     public void run() {
                                         //loadUser();//更新用户信息（钱）
                                         StatsBean statsBean = MineJsonUtils.readStatsBean(string1);
+                                        spUtils.put("stats", string1);
                                         EventBus.getDefault().postSticky(statsBean);//刷新钱包
                                     }
                                 });

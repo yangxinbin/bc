@@ -575,10 +575,10 @@ public class OtherBookDetailActivity extends BaseServiceActivity implements MyAl
         new Thread(new Runnable() {
             @Override
             public void run() {
-                //final HashMap<String, String> mapParams = new HashMap<String, String>();
-                //mapParams.clear();
-                //mapParams.put("authToken", spUtils.getString("authToken", ""));
-                HttpUtils.doGet(Urls.HOST_STATS + "?authToken=" + spUtils.getString("authToken", ""), /*mapParams,*/ new Callback() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
+                HttpUtils.doPost(Urls.HOST_STATS/* + "?authToken=" + spUtils.getString("authToken", "")*/, mapParams, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                     }

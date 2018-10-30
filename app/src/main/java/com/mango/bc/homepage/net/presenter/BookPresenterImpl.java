@@ -1,7 +1,6 @@
 package com.mango.bc.homepage.net.presenter;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.mango.bc.homepage.net.bean.BookBean;
@@ -36,7 +35,6 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
     private BookSearchView bookSearchView;
 
     private BookModel bookModel;
-    private SharedPreferences sharedPreferences;
 
     public BookPresenterImpl(BookCompetitiveFieldView u) {
         this.bookCompetitiveFieldView = u;
@@ -70,7 +68,6 @@ public class BookPresenterImpl implements BookPresenter, OnBookListener {
 
     @Override
     public void visitBooks(Context context, int type, String keyWordString, int page, Boolean ifCache) {
-        sharedPreferences = context.getSharedPreferences("BC", MODE_PRIVATE);
         String url = null;
         if (type == 0) {
             url = getUrl(type, context);

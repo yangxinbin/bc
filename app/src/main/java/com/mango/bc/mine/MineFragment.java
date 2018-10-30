@@ -48,6 +48,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -130,11 +131,46 @@ public class MineFragment extends Fragment {
         spUtils = SPUtils.getInstance("bc", getActivity());
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
+        loadStats();
         //loadUser(false); //从网络拿数据
         initView(MineJsonUtils.readUserBean(spUtils.getString("auth", "")));
         return view;
     }
+    private void loadStats() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
+                HttpUtils.doPost(Urls.HOST_STATS/* + "?authToken=" + spUtils.getString("authToken", "")*/, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                    }
 
+                    @Override
+                    public void onResponse(Call call, final Response response) {
+                        try {
+                            final String string1 = response.body().string();
+                            if (getActivity() != null)
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        //loadUser();//更新用户信息（钱）
+                                        StatsBean statsBean = MineJsonUtils.readStatsBean(string1);
+                                        spUtils.put("stats", string1);
+                                        initView(statsBean);
+                                    }
+                                });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+            }
+        }).start();
+    }
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void RefreshMemberBeanEventBus(RefreshMemberBean bean) {
         if (bean == null)
@@ -305,10 +341,10 @@ public class MineFragment extends Fragment {
         } else {
             imageViePic.setImageDrawable(getResources().getDrawable(R.drawable.head_pic2));
         }
-        tvClass.setText(userBean.getStats().getPaidBooks() + "本");
-        tvGet.setText(userBean.getStats().getVipGetBooks() + "本");
+/*        tvClass.setText(userBean.getStats().getPaidBooks() + "本");
+        tvGet.setText(userBean.getStats().getVipBooks() + "本");
         tvTime.setText(userBean.getStats().getTotalDuration() + "小时");
-        tvCode.setText(userBean.getStats().getPpCoinEarned() + "PPG");
+        tvCode.setText(userBean.getStats().getPpCoinEarned() + "PPG");*/
         //以下是达人节点UI
         if (userBean.getAgencyInfo() == null)
             return;
@@ -345,7 +381,7 @@ public class MineFragment extends Fragment {
         if (statsBean == null)
             return;
         tvClass.setText(statsBean.getPaidBooks() + "本");
-        tvGet.setText(statsBean.getVipGetBooks() + "本");
+        tvGet.setText(statsBean.getVipBooks() + "本");
         tvTime.setText(statsBean.getTotalDuration() + "小时");
         tvCode.setText(statsBean.getPpCoinEarned() + "PPG");
     }

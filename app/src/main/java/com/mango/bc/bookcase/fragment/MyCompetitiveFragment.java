@@ -78,8 +78,8 @@ public class MyCompetitiveFragment extends Fragment implements MyCompetitiveBook
         spUtils = SPUtils.getInstance("bc", getActivity());
         myBookPresenter = new MyBookPresenterImpl(this);
         ButterKnife.bind(this, view);
-        EventBus.getDefault().register(this);
         initView();
+        EventBus.getDefault().register(this);
         if (NetUtil.isNetConnect(getActivity())) {
             myBookPresenter.visitBooks(getActivity(), TYPE, page, false);
         } else {
@@ -87,7 +87,6 @@ public class MyCompetitiveFragment extends Fragment implements MyCompetitiveBook
         }
         refreshAndLoadMore();
         UserBean userBean = MineJsonUtils.readUserBean(spUtils.getString("auth", ""));
-        Log.v("lllllllll", "===userBean.isVip()=" + userBean.isVip());
         if (userBean != null)
             isVip = userBean.isVip();
         return view;

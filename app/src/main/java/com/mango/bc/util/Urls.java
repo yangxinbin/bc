@@ -6,8 +6,8 @@ package com.mango.bc.util;
 
 public class Urls {
     //public static final String HOST = "http://192.168.1.145:8000/bcms";
-    //public static final String HOST = "https://cms.bccontinent.com/bcms";
-    public static final String HOST = "https://api.bccontinent.com/bcms";
+    public static final String HOST = "https://cms.bccontinent.com/bcms";
+    //public static final String HOST = "https://api.bccontinent.com/bcms";
 
     public static final String BOOKCATEGORIES = "/book/categories";
     public static final String BOOKLISTCATEGORIES = "/book/list/category";
@@ -17,7 +17,7 @@ public class Urls {
     public static final String SEARCH = "/book/list/keyword";
     public static final String COMMENT = "/book/comments";
     public static final String LIBRARY = "/book/my/library";
-    public static final String AUTH = "/user/weixin/app/auth";
+    public static final String AUTH = "/v2/user/weixin/app/auth";
     public static final String IFCHECK = "/task/can/i/check/in";
     public static final String CHECK = "/task/check/in";
     public static final String IFLIKE = "/task/do/i/like";
@@ -28,17 +28,17 @@ public class Urls {
     public static final String TRANSACTIONS = "/wallet/transactions";
     public static final String TRANSFER = "/wallet/transfer";
     public static final String BUYBOOK = "/wallet/buy/book";
-    public static final String STATS = "/user/my/stats";
+    public static final String STATS = "/v2/user/my/stats";
     public static final String TASKCOMMENT = "/task/comment";
     public static final String TASKSHARE = "/task/share";
     public static final String VIPPACKAGE = "/book/vip/packages";
     public static final String BUYVIP = "/wallet/buy/membership";
     public static final String RECOMMENDED = "/book/list/recommended";
     public static final String AUTOBILL = "/wallet/stop/autoBilling";
-    public static final String APPLYAGENCY = "/user/apply/agency";
+    public static final String APPLYAGENCY = "/v2/user/apply/agency";
     public static final String GROUP = "/wallet/my/groups";
     public static final String CREATEGROUP = "/wallet/create/group";
-    public static final String MEMBER = "/user/my/member";
+    public static final String MEMBER = "/v2/user/my/member";
     public static final String DELETEGIFT = "/book/gift";
 
 

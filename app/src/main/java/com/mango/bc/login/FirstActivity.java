@@ -67,6 +67,7 @@ public class FirstActivity extends BaseActivity {
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
                 final String userInfo = StrUtils.format("", hashMap);
                 spUtils.put("openId", platform.getDb().get("unionid"));
+                Log.v("uuuuuuuuu","----"+platform.getDb().get("unionid"));
                 Intent intent;
                 if (true){
                     intent = new Intent(FirstActivity.this, BcActivity.class);

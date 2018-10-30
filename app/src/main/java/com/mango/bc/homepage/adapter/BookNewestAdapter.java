@@ -51,7 +51,6 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
 
     public void setmDate(List<BookBean> data) {
         UserBean userBean = MineJsonUtils.readUserBean(spUtils.getString("auth", ""));
-        Log.v("lllllllll", "===userBean.isVip()=" + userBean.isVip());
         if (userBean != null)
             isVip = userBean.isVip();
         this.datas = data;

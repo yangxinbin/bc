@@ -325,7 +325,7 @@ public class MineFragment extends Fragment {
     private void initView(UserBean userBean) {
         if (userBean == null)
             return;
-        Log.v("cccccccccc", "-----R--2--" + spUtils.getString("auth", ""));
+        Log.v("cccccccccc", "------R--2--" + spUtils.getString("auth", ""));
         if (userBean.isVip()) {
             imgVip.setVisibility(View.VISIBLE);
             centerVip.setVisibility(View.VISIBLE);

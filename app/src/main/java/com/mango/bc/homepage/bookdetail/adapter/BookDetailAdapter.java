@@ -98,6 +98,7 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
                             @Override
                             public void run() {
                                 dialog_load.dismiss();
+                                Log.v("xxxxxxxxxxxxxx", "---xx-");
                                 viewHolder.img_book_detail.setImageBitmap(bitmap);
                             }
                         });

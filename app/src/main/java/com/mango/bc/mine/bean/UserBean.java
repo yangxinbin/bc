@@ -1,5 +1,7 @@
 package com.mango.bc.mine.bean;
 
+import java.util.List;
+
 /**
  * Created by admin on 2018/9/17.
  */
@@ -9,18 +11,18 @@ public class UserBean {
     /**
      * id : 5b8a3d4b04440c0a48a33a05
      * username : oXhi94jQkXPovBsqEs0B8QKsbM0A
-     * unionId : oXhi94jQkXPovBsqEs0B8QKsbM0A
+     * unionId : oetTo5r15v1y6B2DNwRuiS22JaFo
+     * phone : null
      * openId : oXhi94jQkXPovBsqEs0B8QKsbM0A
      * alias : 杨鑫斌
      * type : agency
-     * avator : {"id":"5bcfcceb1fd8420388aaccee","alias":"avator","fileName":"15403450672134495.avator","contentType":"image/jpeg","size":1024,"createdOn":1540345067213}
-     * authToken : eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1NDA0NTk5OTA1MDIsImFsaWFzIjoi5p2o6ZGr5paMIiwiaWQiOiI1YjhhM2Q0YjA0NDQwYzBhNDhhMzNhMDUiLCJ0eXBlIjoiYWdlbmN5Iiwid2FsbGV0QWRkcmVzcyI6IjB4ZTcyZTM4N2FmMTJlMDg2YWVlY2M4ZWYxOWM3NzFjYzgiLCJleHAiOjQxMzI0NTk5OTAsInVzZXJuYW1lIjoib1hoaTk0alFrWFBvdkJzcUVzMEI4UUtzYk0wQSJ9.Lktpi2cqWTkkZKTNEE0FvlDOQukpng4Fed_-TAW6rRqs7F2nvEiZAhLVCZi-TLKbtkV5KoE2PJfwJYmYxWH0jQ
-     * agencyInfo : {"realName":"kk","company":"mango","position":"ceo ","phone":"18318836309","recommendedBy":"","level":0,"status":2}
-     * profile : {"role":"","interest":"","industry":"","name":"","age":0,"gender":"","companyName":"","position":""}
-     * wallet : {"id":"5b8a3d4b04440c0a48a33a05","blockChainWalletAddress":"","walletAddress":"0xe72e387af12e086aeecc8ef19c771cc8","ppCoins":79394.8}
+     * avator : {"id":"5bd8710e1fd8420cd4b068da","alias":"avator","fileName":"15409113748273474.avator","contentType":"image/jpeg","size":1024,"createdOn":1540911374827}
+     * authToken : eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1NDA5NTY5NDIxNDcsImFsaWFzIjoi5p2o6ZGr5paMIiwiaWQiOiI1YjhhM2Q0YjA0NDQwYzBhNDhhMzNhMDUiLCJ0eXBlIjoiYWdlbmN5Iiwid2FsbGV0QWRkcmVzcyI6IjB4ZTcyZTM4N2FmMTJlMDg2YWVlY2M4ZWYxOWM3NzFjYzgiLCJleHAiOjQxMzI5NTY5NDIsInVzZXJuYW1lIjoib1hoaTk0alFrWFBvdkJzcUVzMEI4UUtzYk0wQSJ9.Ttot2ew-DMddyhiPqLpgYvHptI5tsilyvRzjFmvPdI8CisF33OCb8cbcU-bYVEDranN_8y5dxt3M420i8KHR0g
+     * agencyInfo : {"realName":"kk","company":"mango","position":"ceo ","phone":"18318836309","recommendedBy":null,"level":0,"status":2}
+     * profile : {"role":["从业者","散户"],"interest":["小白学堂","技术开发"],"industry":"it","name":"leo","age":18,"gender":"男","companyName":"mango","position":"software"}
+     * wallet : {"id":"5b8a3d4b04440c0a48a33a05","blockChainWalletAddress":null,"walletAddress":"0xe72e387af12e086aeecc8ef19c771cc8","ppCoins":79396.1}
      * billing : {"startOn":1538135914379,"endOn":1559044714381,"billingAmount":28,"billingType":"monthly","auto":true}
      * vip : true
-     * stats : {"createDate":1538015317854,"vipGetMemberBooks":0,"buyMemberMoneySaved":0,"buyPaidBookMoneySaved":0,"paidBooks":2,"vipBooks":0,"totalDuration":0,"ppCoinEarned":9.38,"paidBookSaving":0,"memberBookSaving":58.8,"ageDays":0,"updatedOn":20181016,"lastCalculateDate":null}
      * status : null
      * createdOn : 1538015317854
      */
@@ -28,6 +30,7 @@ public class UserBean {
     private String id;
     private String username;
     private String unionId;
+    private Object phone;
     private String openId;
     private String alias;
     private String type;
@@ -38,7 +41,6 @@ public class UserBean {
     private WalletBean wallet;
     private BillingBean billing;
     private boolean vip;
-    private StatsBean stats;
     private Object status;
     private long createdOn;
 
@@ -64,6 +66,14 @@ public class UserBean {
 
     public void setUnionId(String unionId) {
         this.unionId = unionId;
+    }
+
+    public Object getPhone() {
+        return phone;
+    }
+
+    public void setPhone(Object phone) {
+        this.phone = phone;
     }
 
     public String getOpenId() {
@@ -146,14 +156,6 @@ public class UserBean {
         this.vip = vip;
     }
 
-    public StatsBean getStats() {
-        return stats;
-    }
-
-    public void setStats(StatsBean stats) {
-        this.stats = stats;
-    }
-
     public Object getStatus() {
         return status;
     }
@@ -172,12 +174,12 @@ public class UserBean {
 
     public static class AvatorBean {
         /**
-         * id : 5bcfcceb1fd8420388aaccee
+         * id : 5bd8710e1fd8420cd4b068da
          * alias : avator
-         * fileName : 15403450672134495.avator
+         * fileName : 15409113748273474.avator
          * contentType : image/jpeg
          * size : 1024
-         * createdOn : 1540345067213
+         * createdOn : 1540911374827
          */
 
         private String id;
@@ -242,7 +244,7 @@ public class UserBean {
          * company : mango
          * position : ceo
          * phone : 18318836309
-         * recommendedBy :
+         * recommendedBy : null
          * level : 0
          * status : 2
          */
@@ -251,7 +253,7 @@ public class UserBean {
         private String company;
         private String position;
         private String phone;
-        private String recommendedBy;
+        private Object recommendedBy;
         private int level;
         private int status;
 
@@ -287,11 +289,11 @@ public class UserBean {
             this.phone = phone;
         }
 
-        public String getRecommendedBy() {
+        public Object getRecommendedBy() {
             return recommendedBy;
         }
 
-        public void setRecommendedBy(String recommendedBy) {
+        public void setRecommendedBy(Object recommendedBy) {
             this.recommendedBy = recommendedBy;
         }
 
@@ -314,40 +316,24 @@ public class UserBean {
 
     public static class ProfileBean {
         /**
-         * role :
-         * interest :
-         * industry :
-         * name :
-         * age : 0
-         * gender :
-         * companyName :
-         * position :
+         * role : ["从业者","散户"]
+         * interest : ["小白学堂","技术开发"]
+         * industry : it
+         * name : leo
+         * age : 18
+         * gender : 男
+         * companyName : mango
+         * position : software
          */
 
-        private String role;
-        private String interest;
         private String industry;
         private String name;
         private int age;
         private String gender;
         private String companyName;
         private String position;
-
-        public String getRole() {
-            return role;
-        }
-
-        public void setRole(String role) {
-            this.role = role;
-        }
-
-        public String getInterest() {
-            return interest;
-        }
-
-        public void setInterest(String interest) {
-            this.interest = interest;
-        }
+        private List<String> role;
+        private List<String> interest;
 
         public String getIndustry() {
             return industry;
@@ -396,18 +382,34 @@ public class UserBean {
         public void setPosition(String position) {
             this.position = position;
         }
+
+        public List<String> getRole() {
+            return role;
+        }
+
+        public void setRole(List<String> role) {
+            this.role = role;
+        }
+
+        public List<String> getInterest() {
+            return interest;
+        }
+
+        public void setInterest(List<String> interest) {
+            this.interest = interest;
+        }
     }
 
     public static class WalletBean {
         /**
          * id : 5b8a3d4b04440c0a48a33a05
-         * blockChainWalletAddress :
+         * blockChainWalletAddress : null
          * walletAddress : 0xe72e387af12e086aeecc8ef19c771cc8
-         * ppCoins : 79394.8
+         * ppCoins : 79396.1
          */
 
         private String id;
-        private String blockChainWalletAddress;
+        private Object blockChainWalletAddress;
         private String walletAddress;
         private double ppCoins;
 
@@ -419,11 +421,11 @@ public class UserBean {
             this.id = id;
         }
 
-        public String getBlockChainWalletAddress() {
+        public Object getBlockChainWalletAddress() {
             return blockChainWalletAddress;
         }
 
-        public void setBlockChainWalletAddress(String blockChainWalletAddress) {
+        public void setBlockChainWalletAddress(Object blockChainWalletAddress) {
             this.blockChainWalletAddress = blockChainWalletAddress;
         }
 
@@ -497,142 +499,6 @@ public class UserBean {
 
         public void setAuto(boolean auto) {
             this.auto = auto;
-        }
-    }
-
-    public static class StatsBean {
-        /**
-         * createDate : 1538015317854
-         * vipGetMemberBooks : 0
-         * buyMemberMoneySaved : 0.0
-         * buyPaidBookMoneySaved : 0.0
-         * paidBooks : 2
-         * vipBooks : 0
-         * totalDuration : 0.0
-         * ppCoinEarned : 9.38
-         * paidBookSaving : 0.0
-         * memberBookSaving : 58.8
-         * ageDays : 0
-         * updatedOn : 20181016
-         * lastCalculateDate : null
-         */
-
-        private long createDate;
-        private int vipGetMemberBooks;
-        private double buyMemberMoneySaved;
-        private double buyPaidBookMoneySaved;
-        private int paidBooks;
-        private int vipBooks;
-        private double totalDuration;
-        private double ppCoinEarned;
-        private double paidBookSaving;
-        private double memberBookSaving;
-        private int ageDays;
-        private int updatedOn;
-        private Object lastCalculateDate;
-
-        public long getCreateDate() {
-            return createDate;
-        }
-
-        public void setCreateDate(long createDate) {
-            this.createDate = createDate;
-        }
-
-        public int getVipGetMemberBooks() {
-            return vipGetMemberBooks;
-        }
-
-        public void setVipGetMemberBooks(int vipGetMemberBooks) {
-            this.vipGetMemberBooks = vipGetMemberBooks;
-        }
-
-        public double getBuyMemberMoneySaved() {
-            return buyMemberMoneySaved;
-        }
-
-        public void setBuyMemberMoneySaved(double buyMemberMoneySaved) {
-            this.buyMemberMoneySaved = buyMemberMoneySaved;
-        }
-
-        public double getBuyPaidBookMoneySaved() {
-            return buyPaidBookMoneySaved;
-        }
-
-        public void setBuyPaidBookMoneySaved(double buyPaidBookMoneySaved) {
-            this.buyPaidBookMoneySaved = buyPaidBookMoneySaved;
-        }
-
-        public int getPaidBooks() {
-            return paidBooks;
-        }
-
-        public void setPaidBooks(int paidBooks) {
-            this.paidBooks = paidBooks;
-        }
-
-        public int getVipBooks() {
-            return vipBooks;
-        }
-
-        public void setVipBooks(int vipBooks) {
-            this.vipBooks = vipBooks;
-        }
-
-        public double getTotalDuration() {
-            return totalDuration;
-        }
-
-        public void setTotalDuration(double totalDuration) {
-            this.totalDuration = totalDuration;
-        }
-
-        public double getPpCoinEarned() {
-            return ppCoinEarned;
-        }
-
-        public void setPpCoinEarned(double ppCoinEarned) {
-            this.ppCoinEarned = ppCoinEarned;
-        }
-
-        public double getPaidBookSaving() {
-            return paidBookSaving;
-        }
-
-        public void setPaidBookSaving(double paidBookSaving) {
-            this.paidBookSaving = paidBookSaving;
-        }
-
-        public double getMemberBookSaving() {
-            return memberBookSaving;
-        }
-
-        public void setMemberBookSaving(double memberBookSaving) {
-            this.memberBookSaving = memberBookSaving;
-        }
-
-        public int getAgeDays() {
-            return ageDays;
-        }
-
-        public void setAgeDays(int ageDays) {
-            this.ageDays = ageDays;
-        }
-
-        public int getUpdatedOn() {
-            return updatedOn;
-        }
-
-        public void setUpdatedOn(int updatedOn) {
-            this.updatedOn = updatedOn;
-        }
-
-        public Object getLastCalculateDate() {
-            return lastCalculateDate;
-        }
-
-        public void setLastCalculateDate(Object lastCalculateDate) {
-            this.lastCalculateDate = lastCalculateDate;
         }
     }
 }

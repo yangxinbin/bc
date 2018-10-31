@@ -70,7 +70,7 @@ public class FirstActivity extends BaseActivity {
                 spUtils.put("openId", platform.getDb().get("unionid"));
                 Log.v("uuuuuuuuu","----"+platform.getDb().get("unionid"));
                 Intent intent;
-                if (false){
+                if (true){
                     intent = new Intent(FirstActivity.this, BcActivity.class);
                     intent.putExtra("wechat", true);
                 }else {

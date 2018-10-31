@@ -10,9 +10,16 @@ import android.widget.TextView;
 import com.mango.bc.BcActivity;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
+import com.mango.bc.mine.bean.UserBean;
+import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.AppUtils;
+import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.SPUtils;
+import com.mango.bc.util.Urls;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.IOException;
 import java.util.HashMap;
 
 import butterknife.Bind;
@@ -22,6 +29,9 @@ import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.wechat.friends.Wechat;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class FirstActivity extends BaseActivity {
 
@@ -68,16 +78,8 @@ public class FirstActivity extends BaseActivity {
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
                 final String userInfo = StrUtils.format("", hashMap);
                 spUtils.put("openId", platform.getDb().get("unionid"));
-                Log.v("uuuuuuuuu","-----"+platform.getDb().get("unionid"));
-                Intent intent;
-                if (true){
-                    intent = new Intent(FirstActivity.this, BcActivity.class);
-                    intent.putExtra("wechat", true);
-                }else {
-                    intent = new Intent(FirstActivity.this, BunblePhoneActivity.class);
-                }
-                startActivity(intent);
-                finish();
+                Log.v("uuuuuuuuu", "-----" + platform.getDb().get("unionid"));
+                loadUser(platform.getDb().get("unionid"));
             }
 
             @Override
@@ -110,5 +112,66 @@ public class FirstActivity extends BaseActivity {
         //wechat.authorize();
         wechat.showUser(null);
 
+    }
+
+    private void loadUser(final String unionid) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("openId", unionid);
+                Log.v("qqqqqqqqqqq1111", spUtils.getString("openId", ""));
+                HttpUtils.doPost(Urls.HOST_AUTH, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                AppUtils.showToast(FirstActivity.this,"登录失败");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onResponse(Call call, final Response response) {
+                        final String string;
+                        try {
+                            string = response.body().string();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    spUtils.put("auth", string);
+                                    UserBean userBean = MineJsonUtils.readUserBean(string);
+                                    if (userBean != null) {
+                                        spUtils.put("authToken", userBean.getAuthToken());
+                                        EventBus.getDefault().postSticky(userBean);//刷新
+                                        Intent intent = null;
+                                        if (userBean.getUserProfile() != null) {
+                                            if (userBean.getUserProfile().getRealName() != null) {
+                                                intent = new Intent(FirstActivity.this, BcActivity.class);
+                                                intent.putExtra("wechat", true);
+                                            } else {
+                                                intent = new Intent(FirstActivity.this, BunblePhoneActivity.class);
+                                            }
+                                        }
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                }
+                            });
+                        } catch (IOException e) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AppUtils.showToast(FirstActivity.this,"登录失败");
+                                }
+                            });
+                        }
+
+                    }
+                });
+            }
+        }).start();
     }
 }

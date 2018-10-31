@@ -78,7 +78,8 @@ public class BcActivity extends BaseServiceActivity implements MyAllBookView {
         //spUtils.put("openId", "ttttXhi94jQkXPovBsqEs0B8QKsbM0A");
         ButterKnife.bind(this);
         //进来刷新可以屏蔽
-        loadUser(); //个人信息从网络拿数据
+        //loadUser(); //个人信息从网络拿数据
+        ifCheckIn();
         initPage();
     }
 

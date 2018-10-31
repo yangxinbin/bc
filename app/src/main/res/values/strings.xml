@@ -155,4 +155,6 @@
     <string name="delete">删除</string>
     <string name="less_ppg">余额不足请充值</string>
     <string name="finish_information">请完善资料</string>
+    <string name="code_fail">验证码发送失败</string>
+    <string name="bunble_fail">绑定失败</string>
 </resources>

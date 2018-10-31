@@ -47,7 +47,8 @@ public class FirstActivity extends BaseActivity {
                 wechatLogin();
                 break;
             case R.id.tv_see:
-                intent = new Intent(this, BcActivity.class);
+                //intent = new Intent(this, BcActivity.class);
+                intent = new Intent(FirstActivity.this, BunblePhoneActivity.class);
                 startActivity(intent);
                 finish();
                 break;
@@ -69,7 +70,7 @@ public class FirstActivity extends BaseActivity {
                 spUtils.put("openId", platform.getDb().get("unionid"));
                 Log.v("uuuuuuuuu","----"+platform.getDb().get("unionid"));
                 Intent intent;
-                if (true){
+                if (false){
                     intent = new Intent(FirstActivity.this, BcActivity.class);
                     intent.putExtra("wechat", true);
                 }else {

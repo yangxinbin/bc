@@ -59,7 +59,7 @@ public class PositionActivity extends BaseActivity implements AdapterView.OnItem
         Intent intent;
         switch (view.getId()) {
             case R.id.imageView_back:
-                intent = new Intent(this, PasswordActivity.class);
+                intent = new Intent(this, BunblePhoneActivity.class);
                 startActivity(intent);
                 finish();
                 break;
@@ -86,7 +86,7 @@ public class PositionActivity extends BaseActivity implements AdapterView.OnItem
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         Intent intent;
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            intent = new Intent(this, PasswordActivity.class);
+            intent = new Intent(this, BunblePhoneActivity.class);
             startActivity(intent);
             finish();
             return false;

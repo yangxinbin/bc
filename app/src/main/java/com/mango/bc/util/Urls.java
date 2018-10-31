@@ -40,6 +40,8 @@ public class Urls {
     public static final String CREATEGROUP = "/wallet/create/group";
     public static final String MEMBER = "/v2/user/my/member";
     public static final String DELETEGIFT = "/book/gift";
+    public static final String SEND = "/v2/user/send";
+    public static final String VERIFY = "/v2/user/verify";
 
 
 
@@ -75,5 +77,7 @@ public class Urls {
     public static final String HOST_CREATEGROUP = HOST+CREATEGROUP;
     public static final String HOST_MEMBER = HOST+MEMBER;
     public static final String HOST_DELETEGIFT = HOST+DELETEGIFT;
+    public static final String HOST_SEND = HOST+SEND;
+    public static final String HOST_VERIFY = HOST+VERIFY;
 
 }

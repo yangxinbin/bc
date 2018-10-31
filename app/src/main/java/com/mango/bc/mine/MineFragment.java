@@ -19,6 +19,7 @@ import com.mango.bc.BcActivity;
 import com.mango.bc.R;
 import com.mango.bc.homepage.activity.CollageActivity;
 import com.mango.bc.homepage.activity.OpenUpVipActivity;
+import com.mango.bc.login.PositionActivity;
 import com.mango.bc.login.UserDetailActivity;
 import com.mango.bc.mine.activity.ApplyActivity;
 import com.mango.bc.mine.activity.BcCardActivity;
@@ -29,6 +30,7 @@ import com.mango.bc.mine.activity.RefereeActivity;
 import com.mango.bc.mine.activity.ServiceActivity;
 import com.mango.bc.mine.activity.SettingActivity;
 import com.mango.bc.mine.activity.VipCenterActivity;
+import com.mango.bc.mine.activity.setting.UserChangeActivity;
 import com.mango.bc.mine.bean.MemberBean;
 import com.mango.bc.mine.bean.RefreshMemberBean;
 import com.mango.bc.mine.bean.StatsBean;
@@ -376,6 +378,13 @@ public class MineFragment extends Fragment {
                 tvExpertState.setText("审核失败");
                 break;
         }
+        if (userBean.getUserProfile() != null){
+            if (userBean.getUserProfile().getRealName() != null){
+                btFinish.setText("查看信息");
+            }else {
+                btFinish.setText("完善信息");
+            }
+        }
     }
 
     private void initView(StatsBean statsBean) {
@@ -445,21 +454,21 @@ public class MineFragment extends Fragment {
                 startActivity(intent);
                 break;
             case R.id.l_collage:
-                intent = new Intent(getContext(), CollageActivity.class);
+                intent = new Intent(getActivity(), CollageActivity.class);
                 startActivity(intent);
                 break;
             case R.id.l_expert:
                 if (agencyInfo == 1) {
-                    intent = new Intent(getContext(), ExpertApplyActivity.class);
+                    intent = new Intent(getActivity(), ExpertApplyActivity.class);
                     intent.putExtra("expert", 1);
                     startActivity(intent);
                 } else if (agencyInfo == 2) {
                     //详情
-                    intent = new Intent(getContext(), ExpertApplyDetailActivity.class);
+                    intent = new Intent(getActivity(), ExpertApplyDetailActivity.class);
                     intent.putExtra("expert", 1);
                     startActivity(intent);
                 } else if (agencyInfo == 3) {
-                    intent = new Intent(getContext(), ExpertApplyActivity.class);
+                    intent = new Intent(getActivity(), ExpertApplyActivity.class);
                     intent.putExtra("expert", 2);
                     startActivity(intent);
                 }
@@ -470,8 +479,12 @@ public class MineFragment extends Fragment {
                 startActivity(intent);*/
                 break;
             case R.id.bt_finish:
-                intent = new Intent(getContext(), UserDetailActivity.class);
-                intent.putExtra("perfect", true);
+                if ("查看信息".equals(btFinish.getText().toString())){
+                    intent = new Intent(getActivity(), UserChangeActivity.class);
+                }else if ("完善信息".equals(btFinish.getText().toString())){
+                    intent = new Intent(getActivity(), PositionActivity.class);
+                    intent.putExtra("perfect", true);
+                }
                 startActivity(intent);
                 break;
         }

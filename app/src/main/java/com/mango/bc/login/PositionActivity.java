@@ -61,9 +61,13 @@ public class PositionActivity extends BaseActivity implements AdapterView.OnItem
         Intent intent;
         switch (view.getId()) {
             case R.id.imageView_back:
-                intent = new Intent(this, BunblePhoneActivity.class);
-                startActivity(intent);
-                finish();
+                if (getIntent().getBooleanExtra("perfect", false)) {
+                    finish();
+                }else {
+                    intent = new Intent(this, BunblePhoneActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
                 break;
             case R.id.button_next:
                 for (Map.Entry<Integer, Boolean> entry : gvChooseMap.entrySet()) {
@@ -104,9 +108,13 @@ public class PositionActivity extends BaseActivity implements AdapterView.OnItem
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         Intent intent;
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            intent = new Intent(this, BunblePhoneActivity.class);
-            startActivity(intent);
-            finish();
+            if (getIntent().getBooleanExtra("perfect", false)) {
+                finish();
+            }else {
+                intent = new Intent(this, BunblePhoneActivity.class);
+                startActivity(intent);
+                finish();
+            }
             return false;
         } else {
             return super.onKeyDown(keyCode, event);

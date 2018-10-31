@@ -81,13 +81,9 @@ public class UserDetailActivity extends BaseActivity implements AdapterView.OnIt
         Intent intent;
         switch (view.getId()) {
             case R.id.imageView_back:
-                if (getIntent().getBooleanExtra("perfect", false)) {
-                    finish();
-                } else {
-                    intent = new Intent(this, LikeActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
+                intent = new Intent(this, LikeActivity.class);
+                startActivity(intent);
+                finish();
                 break;
             case R.id.tv_jump:
                 intent = new Intent(this, BcActivity.class);
@@ -96,7 +92,7 @@ public class UserDetailActivity extends BaseActivity implements AdapterView.OnIt
                 break;
             case R.id.button_next:
                 sex = list.get(currentPosition);
-                if (!(TextUtils.isEmpty(identity) || TextUtils.isEmpty(hobbies) || TextUtils.isEmpty(etName.getText()) || TextUtils.isEmpty(etOld.getText())|| TextUtils.isEmpty(etZoom.getText())|| TextUtils.isEmpty(etPosition.getText()))) {
+                if (!(TextUtils.isEmpty(identity) || TextUtils.isEmpty(hobbies) || TextUtils.isEmpty(etName.getText()) || TextUtils.isEmpty(etOld.getText()) || TextUtils.isEmpty(etZoom.getText()) || TextUtils.isEmpty(etPosition.getText()))) {
                     addProfile();
                 } else {
                     AppUtils.showToast(UserDetailActivity.this, getString(R.string.finish_information));
@@ -174,13 +170,9 @@ public class UserDetailActivity extends BaseActivity implements AdapterView.OnIt
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         Intent intent;
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            if (getIntent().getBooleanExtra("perfect", false)) {
-                finish();
-            } else {
-                intent = new Intent(this, LikeActivity.class);
-                startActivity(intent);
-                finish();
-            }
+            intent = new Intent(this, LikeActivity.class);
+            startActivity(intent);
+            finish();
             return false;
         } else {
             return super.onKeyDown(keyCode, event);

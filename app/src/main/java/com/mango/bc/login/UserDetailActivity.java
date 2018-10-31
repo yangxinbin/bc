@@ -95,9 +95,13 @@ public class UserDetailActivity extends BaseActivity implements AdapterView.OnIt
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         Intent intent;
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            intent = new Intent(this, LikeActivity.class);
-            startActivity(intent);
-            finish();
+            if (getIntent().getBooleanExtra("perfect", false)) {
+                finish();
+            } else {
+                intent = new Intent(this, LikeActivity.class);
+                startActivity(intent);
+                finish();
+            }
             return false;
         } else {
             return super.onKeyDown(keyCode, event);

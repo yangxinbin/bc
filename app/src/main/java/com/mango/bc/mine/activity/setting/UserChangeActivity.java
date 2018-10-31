@@ -23,11 +23,17 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.mine.activity.SettingActivity;
+import com.mango.bc.mine.bean.UserBean;
+import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.AppUtils;
+import com.mango.bc.util.DateUtil;
 import com.mango.bc.util.PhotoUtils;
+import com.mango.bc.util.SPUtils;
+import com.mango.bc.util.Urls;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -93,17 +99,50 @@ public class UserChangeActivity extends BaseActivity {
     private static final int OUTPUT_X = 480;
     private static final int OUTPUT_Y = 480;
     private String TAG = "UserChangeActivity";
+    private SPUtils spUtils;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_change);
+        spUtils = SPUtils.getInstance("bc", this);
         ButterKnife.bind(this);
         //申明对象
         getImageAndMes();//后台请求数据
+        initView(MineJsonUtils.readUserBean(spUtils.getString("auth", "")));
+
     }
 
+    private void initView(UserBean userBean) {
+        if (userBean == null)
+            return;
+        if (userBean.getAvator() != null) {
+            Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + userBean.getAvator().getFileName()).into(circleImageView);
+        } else {
+            circleImageView.setImageDrawable(getResources().getDrawable(R.drawable.head_pic2));
+        }
+        textView1.setText(userBean.getAlias());
+        //textView2.setText(userBean.getAlias());
+        if (userBean.getUserProfile() != null) {
+            StringBuffer s1 = new StringBuffer();
+            StringBuffer s2 = new StringBuffer();
+            for (int j = 0; j < userBean.getUserProfile().getIdentity().size(); j++) {
+                s1.append(userBean.getUserProfile().getIdentity().get(j) + " ");
+            }
+            for (int i = 0; i < userBean.getUserProfile().getHobbies().size(); i++) {
+                s2.append(userBean.getUserProfile().getHobbies().get(i) + " ");
+            }
+            textView3.setText(s1);
+            textView4.setText(s2);
+            textView5.setText(userBean.getUserProfile().getRealName());
+            textView6.setText(userBean.getUserProfile().getAge());
+            textView7.setText(userBean.getUserProfile().getSex());
+            textView8.setText(userBean.getUserProfile().getCompany());
+            textView9.setText(userBean.getUserProfile().getDuty());
+        }
+
+    }
 /*    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void userMessageEventBus(UserMessageBean bean) {
         textView1.setText(bean.getResponseObject().getName());

@@ -12,14 +12,14 @@ public class UserBean {
      * id : 5b8a3d4b04440c0a48a33a05
      * username : oXhi94jQkXPovBsqEs0B8QKsbM0A
      * unionId : oetTo5r15v1y6B2DNwRuiS22JaFo
-     * phone : null
+     * phone :
      * openId : oXhi94jQkXPovBsqEs0B8QKsbM0A
      * alias : 杨鑫斌
      * type : agency
      * avator : {"id":"5bd8710e1fd8420cd4b068da","alias":"avator","fileName":"15409113748273474.avator","contentType":"image/jpeg","size":1024,"createdOn":1540911374827}
-     * authToken : eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1NDA5NTY5NDIxNDcsImFsaWFzIjoi5p2o6ZGr5paMIiwiaWQiOiI1YjhhM2Q0YjA0NDQwYzBhNDhhMzNhMDUiLCJ0eXBlIjoiYWdlbmN5Iiwid2FsbGV0QWRkcmVzcyI6IjB4ZTcyZTM4N2FmMTJlMDg2YWVlY2M4ZWYxOWM3NzFjYzgiLCJleHAiOjQxMzI5NTY5NDIsInVzZXJuYW1lIjoib1hoaTk0alFrWFBvdkJzcUVzMEI4UUtzYk0wQSJ9.Ttot2ew-DMddyhiPqLpgYvHptI5tsilyvRzjFmvPdI8CisF33OCb8cbcU-bYVEDranN_8y5dxt3M420i8KHR0g
+     * authToken : eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1NDA5Njc0MDk1OTQsImFsaWFzIjoi5p2o6ZGr5paMIiwiaWQiOiI1YjhhM2Q0YjA0NDQwYzBhNDhhMzNhMDUiLCJ0eXBlIjoiYWdlbmN5Iiwid2FsbGV0QWRkcmVzcyI6IjB4ZTcyZTM4N2FmMTJlMDg2YWVlY2M4ZWYxOWM3NzFjYzgiLCJleHAiOjQxMzI5Njc0MDksInVzZXJuYW1lIjoib1hoaTk0alFrWFBvdkJzcUVzMEI4UUtzYk0wQSJ9.XVG6l4g7D9XAcGjuaxZyTQiANjcbeH9LOCHTRvq7oo6fgaC9tuCVFiBmbpf04OCvQ9H1yIS4EEJkz-J-qb2glA
      * agencyInfo : {"realName":"kk","company":"mango","position":"ceo ","phone":"18318836309","recommendedBy":null,"level":0,"status":2}
-     * profile : {"role":["从业者","散户"],"interest":["小白学堂","技术开发"],"industry":"it","name":"leo","age":18,"gender":"男","companyName":"mango","position":"software"}
+     * userProfile : {"identity":["创业者","从业者"],"hobbies":["小白学堂","技术开发"],"realName":"leo","age":"19","sex":"男","company":"mango","duty":"software"}
      * wallet : {"id":"5b8a3d4b04440c0a48a33a05","blockChainWalletAddress":null,"walletAddress":"0xe72e387af12e086aeecc8ef19c771cc8","ppCoins":79396.1}
      * billing : {"startOn":1538135914379,"endOn":1559044714381,"billingAmount":28,"billingType":"monthly","auto":true}
      * vip : true
@@ -30,14 +30,14 @@ public class UserBean {
     private String id;
     private String username;
     private String unionId;
-    private Object phone;
+    private String phone;
     private String openId;
     private String alias;
     private String type;
     private AvatorBean avator;
     private String authToken;
     private AgencyInfoBean agencyInfo;
-    private ProfileBean profile;
+    private UserProfileBean userProfile;
     private WalletBean wallet;
     private BillingBean billing;
     private boolean vip;
@@ -68,11 +68,11 @@ public class UserBean {
         this.unionId = unionId;
     }
 
-    public Object getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Object phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -124,12 +124,12 @@ public class UserBean {
         this.agencyInfo = agencyInfo;
     }
 
-    public ProfileBean getProfile() {
-        return profile;
+    public UserProfileBean getUserProfile() {
+        return userProfile;
     }
 
-    public void setProfile(ProfileBean profile) {
-        this.profile = profile;
+    public void setUserProfile(UserProfileBean userProfile) {
+        this.userProfile = userProfile;
     }
 
     public WalletBean getWallet() {
@@ -314,89 +314,79 @@ public class UserBean {
         }
     }
 
-    public static class ProfileBean {
+    public static class UserProfileBean {
         /**
-         * role : ["从业者","散户"]
-         * interest : ["小白学堂","技术开发"]
-         * industry : it
-         * name : leo
-         * age : 18
-         * gender : 男
-         * companyName : mango
-         * position : software
+         * identity : ["创业者","从业者"]
+         * hobbies : ["小白学堂","技术开发"]
+         * realName : leo
+         * age : 19
+         * sex : 男
+         * company : mango
+         * duty : software
          */
 
-        private String industry;
-        private String name;
-        private int age;
-        private String gender;
-        private String companyName;
-        private String position;
-        private List<String> role;
-        private List<String> interest;
+        private String realName;
+        private String age;
+        private String sex;
+        private String company;
+        private String duty;
+        private List<String> identity;
+        private List<String> hobbies;
 
-        public String getIndustry() {
-            return industry;
+        public String getRealName() {
+            return realName;
         }
 
-        public void setIndustry(String industry) {
-            this.industry = industry;
+        public void setRealName(String realName) {
+            this.realName = realName;
         }
 
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public int getAge() {
+        public String getAge() {
             return age;
         }
 
-        public void setAge(int age) {
+        public void setAge(String age) {
             this.age = age;
         }
 
-        public String getGender() {
-            return gender;
+        public String getSex() {
+            return sex;
         }
 
-        public void setGender(String gender) {
-            this.gender = gender;
+        public void setSex(String sex) {
+            this.sex = sex;
         }
 
-        public String getCompanyName() {
-            return companyName;
+        public String getCompany() {
+            return company;
         }
 
-        public void setCompanyName(String companyName) {
-            this.companyName = companyName;
+        public void setCompany(String company) {
+            this.company = company;
         }
 
-        public String getPosition() {
-            return position;
+        public String getDuty() {
+            return duty;
         }
 
-        public void setPosition(String position) {
-            this.position = position;
+        public void setDuty(String duty) {
+            this.duty = duty;
         }
 
-        public List<String> getRole() {
-            return role;
+        public List<String> getIdentity() {
+            return identity;
         }
 
-        public void setRole(List<String> role) {
-            this.role = role;
+        public void setIdentity(List<String> identity) {
+            this.identity = identity;
         }
 
-        public List<String> getInterest() {
-            return interest;
+        public List<String> getHobbies() {
+            return hobbies;
         }
 
-        public void setInterest(List<String> interest) {
-            this.interest = interest;
+        public void setHobbies(List<String> hobbies) {
+            this.hobbies = hobbies;
         }
     }
 

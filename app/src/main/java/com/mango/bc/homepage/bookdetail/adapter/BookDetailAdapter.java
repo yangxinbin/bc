@@ -52,9 +52,11 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
     private Dialog dialog_load;
     private Bitmap bitmap;
     private String id;
+    private final ACache mCache;
 
     public BookDetailAdapter(List<BookDetailBean.DescriptionImagesBean> datas, Context context, String id) {
         createLoadDailog(context);
+        mCache = ACache.get(context);
         this.context = context;
         this.datas = datas;
         this.id = id;
@@ -90,8 +92,18 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
                 Log.v("uuuuuuuuuuuu", "----" + Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName());
                 if (NetUtil.isNetConnect(context)) {
                     Log.v("yyyyyyy", id + "---1--!!----" + datas.get(position).getFileName());
-
-                    setIamge(false, datas.get(position).getFileName(), viewHolder.img_book_detail);
+                    final Bitmap bitmap = mCache.getAsBitmap(id + datas.get(position).getFileName());
+                    if (bitmap != null) {
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog_load.dismiss();
+                                viewHolder.img_book_detail.setImageBitmap(bitmap);
+                            }
+                        });
+                    } else {
+                        setIamge(false, datas.get(position).getFileName(), viewHolder.img_book_detail);
+                    }
                 } else {
                     Log.v("yyyyyyy", id + "--2---!!----" + datas.get(position).getFileName());
 
@@ -102,7 +114,6 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
     }
 
     private void setIamge(final Boolean ifCache, final String fileName, final ImageView imageView) {
-        final ACache mCache = ACache.get(context);
         new Thread(new Runnable() {
             @Override
             public void run() {

@@ -23,7 +23,8 @@
             android:gravity="end"
             android:text="随便看看 >>"
             android:textColor="@color/gray_9"
-            android:textSize="@dimen/textSize" />
+            android:textSize="@dimen/textSize"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/imageView3"

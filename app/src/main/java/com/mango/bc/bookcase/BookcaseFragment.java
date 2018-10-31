@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.mango.bc.bookcase.bean.RefreshBookCaseBean;
 import com.mango.bc.bookcase.fragment.MyCompetitiveFragment;
 import com.mango.bc.bookcase.fragment.MyExpertFragment;
 import com.mango.bc.bookcase.fragment.MyFreeFragment;
+import com.mango.bc.homepage.bookdetail.bean.PlayBarBean;
 import com.mango.bc.homepage.bookdetail.bean.PlayPauseBean;
 import com.mango.bc.homepage.bookdetail.play.BaseServiceFragment;
 import com.mango.bc.homepage.bookdetail.play.executor.ControlPanel;
@@ -69,16 +71,32 @@ public class BookcaseFragment extends BaseServiceFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.bookcase, container, false);
         ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
         initDatas();
         init();
         return view;
     }
+
     @Override
     protected void onServiceBound() {
         controlPanel = new ControlPanel(flPlayBar);
         AudioPlayer.get().addOnPlayEventListener(controlPanel);
         //parseIntent();
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void PlayBarBeanEventBus(PlayBarBean playBarBean) {
+        if (playBarBean == null) {
+            return;
+        }
+        Log.v("iiiiiiiiiiiiii", "---iiiihhhhiiiii---");
+        if (!playBarBean.isShowBar()) {
+            flPlayBar.setVisibility(View.GONE);//播放控件
+            Log.v("iiiiiiiiiiiiii", "----h---");
+        }
+        EventBus.getDefault().removeStickyEvent(PlayBarBean.class);
+    }
+
     private void initDatas() {
         //  mDatas = new ArrayList<String>(Arrays.asList("       我的事件       ", "       全部事件       "));
         mDatas = new ArrayList<String>(Arrays.asList("大咖课程", "精品课程", "免费课程"));
@@ -86,6 +104,8 @@ public class BookcaseFragment extends BaseServiceFragment {
     }
 
     private void init() {
+        if (AudioPlayer.get().isPlaying() || AudioPlayer.get().isPausing())
+            flPlayBar.setVisibility(View.VISIBLE);//播放控件
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         ViewPageAdapter vp = new ViewPageAdapter(getFragmentManager(), mfragments, mDatas);
         tabLayout.setupWithViewPager(viewPager);
@@ -100,7 +120,7 @@ public class BookcaseFragment extends BaseServiceFragment {
         setHasOptionsMenu(true);
     }
 
-    public void reflex(final TabLayout tabLayout){
+    public void reflex(final TabLayout tabLayout) {
         //了解源码得知 线的宽度是根据 tabView的宽度来设置的
         tabLayout.post(new Runnable() {
             @Override
@@ -132,7 +152,7 @@ public class BookcaseFragment extends BaseServiceFragment {
 
                         //设置tab左右间距为10dp  注意这里不能使用Padding 因为源码中线的宽度是根据 tabView的宽度来设置的
                         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) tabView.getLayoutParams();
-                        params.width = width ;
+                        params.width = width;
                         params.leftMargin = dp20;
                         params.rightMargin = dp20;
                         tabView.setLayoutParams(params);

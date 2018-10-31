@@ -123,7 +123,7 @@ public class UserChangeActivity extends BaseActivity {
             circleImageView.setImageDrawable(getResources().getDrawable(R.drawable.head_pic2));
         }
         textView1.setText(userBean.getAlias());
-        //textView2.setText(userBean.getAlias());
+        textView2.setText(userBean.getPhone());
         if (userBean.getUserProfile() != null) {
             StringBuffer s1 = new StringBuffer();
             StringBuffer s2 = new StringBuffer();

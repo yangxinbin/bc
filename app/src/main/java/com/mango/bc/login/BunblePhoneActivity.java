@@ -55,7 +55,7 @@ public class BunblePhoneActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.get_code:
-                if (etPhone.getText().length() == 11) {
+                if (etPhone.getText().toString().trim().length() == 11) {
                     timer.start();
                     getPhoneCode();
                 } else {
@@ -63,15 +63,18 @@ public class BunblePhoneActivity extends BaseActivity {
                 }
                 break;
             case R.id.button_password_ok:
-                if (etPhone.getText().length() == 11) {
-                    if (etCode.getText().length() != 0){
+/*                if (etPhone.getText().toString().trim().length() == 11) {
+                    if (etCode.getText().toString().trim().length() != 0){
                         bunblePhone();
                     }else {
                         AppUtils.showToast(getBaseContext(), "请输入验证码");
                     }
                 } else {
                     AppUtils.showToast(getBaseContext(), "请输入正确的手机号码");
-                }
+                }*/
+                intent = new Intent(BunblePhoneActivity.this, PositionActivity.class);
+                startActivity(intent);
+                finish();
                 break;
         }
     }

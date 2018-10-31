@@ -2,6 +2,7 @@ package com.mango.bc.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,6 +28,7 @@ public class PositionActivity extends BaseActivity implements AdapterView.OnItem
     private List<String> list;
     private DuoXuanAdapter adapter;
     private Map<Integer, Boolean> gvChooseMap = new HashMap<Integer, Boolean>();
+    private List<String> listPositions = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,13 +66,28 @@ public class PositionActivity extends BaseActivity implements AdapterView.OnItem
                 finish();
                 break;
             case R.id.button_next:
+                for (Map.Entry<Integer, Boolean> entry : gvChooseMap.entrySet()) {
+                    listPositions.add(list.get(entry.getKey()));
+                }
                 intent = new Intent(this, LikeActivity.class);
+                intent.putExtra("position",listToString(listPositions));
                 startActivity(intent);
                 finish();
                 break;
         }
     }
-
+    private String listToString(List<String> stringList) {
+        StringBuffer stringBuffer = new StringBuffer();
+        for (int i = 0; i < stringList.size(); i++) {
+            if (i == stringList.size() - 1) {
+                stringBuffer.append(stringList.get(i));
+                break;
+            }
+            stringBuffer.append(stringList.get(i) + ",");
+        }
+        Log.v("uuuuuuuu","----"+stringBuffer.toString());
+        return stringBuffer.toString();
+    }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (view.isActivated()) {
@@ -82,6 +99,7 @@ public class PositionActivity extends BaseActivity implements AdapterView.OnItem
         }
         adapter.setCheckItem(gvChooseMap);
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         Intent intent;

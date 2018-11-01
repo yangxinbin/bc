@@ -63,7 +63,7 @@ public class BunblePhoneActivity extends BaseActivity {
                 }
                 break;
             case R.id.button_password_ok:
-/*                if (etPhone.getText().toString().trim().length() == 11) {
+                if (etPhone.getText().toString().trim().length() == 11) {
                     if (etCode.getText().toString().trim().length() != 0){
                         bunblePhone();
                     }else {
@@ -71,10 +71,10 @@ public class BunblePhoneActivity extends BaseActivity {
                     }
                 } else {
                     AppUtils.showToast(getBaseContext(), "请输入正确的手机号码");
-                }*/
-                intent = new Intent(BunblePhoneActivity.this, PositionActivity.class);
+                }
+/*                intent = new Intent(BunblePhoneActivity.this, PositionActivity.class);
                 startActivity(intent);
-                finish();
+                finish();*/
                 break;
         }
     }

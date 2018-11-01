@@ -96,7 +96,20 @@ public class TransactionAdapter extends RecyclerView.Adapter {
                     viewHolder.tv_time.setText(DateUtil.getDateToString(datas.get(position).getTimestamp(),"yyyy-MM-dd HH:mm:ss"));
                     viewHolder.tv_pp.setText(datas.get(position).getPpCoin()+"PPG");
                     viewHolder.tv_pp.setTextColor(context.getResources().getColor(R.color.red));
+                }else if (datas.get(position).getType().equals("topup")){
+                    viewHolder.img_transaction.setImageResource(R.drawable.record_money);
+                    viewHolder.tv_title.setText("充值");
+                    viewHolder.tv_time.setText(DateUtil.getDateToString(datas.get(position).getTimestamp(),"yyyy-MM-dd HH:mm:ss"));
+                    viewHolder.tv_pp.setText(datas.get(position).getPpCoin()+"PPG");
+                    viewHolder.tv_pp.setTextColor(context.getResources().getColor(R.color.red));
+                }else if (datas.get(position).getType().equals("withdraw")){
+                    viewHolder.img_transaction.setImageResource(R.drawable.record_money);
+                    viewHolder.tv_title.setText("提现");
+                    viewHolder.tv_time.setText(DateUtil.getDateToString(datas.get(position).getTimestamp(),"yyyy-MM-dd HH:mm:ss"));
+                    viewHolder.tv_pp.setText(datas.get(position).getPpCoin()+"PPG");
+                    viewHolder.tv_pp.setTextColor(context.getResources().getColor(R.color.gray_3));
                 }
+
             }
         }
     }

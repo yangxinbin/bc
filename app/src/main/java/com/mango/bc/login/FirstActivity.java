@@ -47,6 +47,14 @@ public class FirstActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
+        if (!this.isTaskRoot()) {
+            Intent mainIntent = getIntent();
+            String action = mainIntent.getAction();
+            if (mainIntent.hasCategory(Intent.CATEGORY_LAUNCHER) && action.equals(Intent.ACTION_MAIN)) {
+                finish();
+                return;
+            }
+        }
         spUtils = SPUtils.getInstance("bc", this);
         ButterKnife.bind(this);
     }
@@ -137,7 +145,7 @@ public class FirstActivity extends BaseActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                AppUtils.showToast(FirstActivity.this,"登录失败");
+                                AppUtils.showToast(FirstActivity.this, "登录失败");
                             }
                         });
                     }
@@ -156,7 +164,7 @@ public class FirstActivity extends BaseActivity {
                                         spUtils.put("authToken", userBean.getAuthToken());
                                         EventBus.getDefault().postSticky(userBean);//刷新
                                         Intent intent = null;
-                                        if (userBean.getUserProfile() != null ) {
+                                        if (userBean.getUserProfile() != null) {
                                             if (userBean.getUserProfile().getRealName() != null || "true".equals(spUtils.getString("skip", ""))) {
                                                 intent = new Intent(FirstActivity.this, BcActivity.class);
                                                 intent.putExtra("wechat", true);
@@ -173,7 +181,7 @@ public class FirstActivity extends BaseActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    AppUtils.showToast(FirstActivity.this,"登录失败");
+                                    AppUtils.showToast(FirstActivity.this, "登录失败");
                                 }
                             });
                         }

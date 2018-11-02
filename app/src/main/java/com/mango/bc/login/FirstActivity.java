@@ -156,8 +156,8 @@ public class FirstActivity extends BaseActivity {
                                         spUtils.put("authToken", userBean.getAuthToken());
                                         EventBus.getDefault().postSticky(userBean);//刷新
                                         Intent intent = null;
-                                        if (userBean.getUserProfile() != null) {
-                                            if (userBean.getUserProfile().getRealName() != null) {
+                                        if (userBean.getUserProfile() != null ) {
+                                            if (userBean.getUserProfile().getRealName() != null || "true".equals(spUtils.getString("skip", ""))) {
                                                 intent = new Intent(FirstActivity.this, BcActivity.class);
                                                 intent.putExtra("wechat", true);
                                             } else {

@@ -86,6 +86,7 @@ public class UserDetailActivity extends BaseActivity implements AdapterView.OnIt
                 finish();
                 break;
             case R.id.tv_jump:
+                spUtils.put("skip", "true");
                 intent = new Intent(this, BcActivity.class);
                 startActivity(intent);
                 finish();

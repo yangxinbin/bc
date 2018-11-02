@@ -483,7 +483,7 @@ public class UserChangeActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.circleImageView:
-                showTypeDialog();
+                //showTypeDialog();
                 break;
             case R.id.r1:
                 break;

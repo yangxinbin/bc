@@ -39,6 +39,7 @@ public class FirstActivity extends BaseActivity {
     @Bind(R.id.tv_see)
     TextView tvSee;
     private SPUtils spUtils;
+    private boolean isFirstEnter = true;
 /*    @Bind(R.id.button_begin)
     Button buttonBegin;*/
 
@@ -56,7 +57,10 @@ public class FirstActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.l_wechat:
                 if (NetUtil.isNetConnect(this)) {
-                    wechatLogin();
+                    if (isFirstEnter) {
+                        isFirstEnter = false;
+                        wechatLogin();//只能点一次
+                    }
                 } else {
                     AppUtils.showToast(this, getResources().getString(R.string.check_net));
                 }

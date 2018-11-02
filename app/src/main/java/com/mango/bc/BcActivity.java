@@ -63,20 +63,17 @@ public class BcActivity extends BaseServiceActivity implements MyAllBookView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bc);
         myBookPresenter = new MyBookPresenterImpl(this);
+        spUtils = SPUtils.getInstance("bc", this);
         if (NetUtil.isNetConnect(this)) {
             //myBookPresenter.visitBooks(this,3,0,false);//获取书架的所有书
         } else {
             AppUtils.showToast(this, getResources().getString(R.string.check_net));
             //myBookPresenter.visitBooks(this, 3, 0, true);//获取书架的所有书
         }
-        spUtils = SPUtils.getInstance("bc", this);
-        if (getIntent().getBooleanExtra("wechat",false)){
+/*        if (getIntent().getBooleanExtra("wechat",false)){
         }else {
             spUtils.put("openId", "oXhi94jQkXPovBsqEs0B8QKsbM0A");
-        }
-        //假 普通
-        //spUtils.put("openId", "oetTo5r15v1y6B2DNwRuiS22JaFo");
-        //spUtils.put("openId", "ttttXhi94jQkXPovBsqEs0B8QKsbM0A");
+        }*/
         ButterKnife.bind(this);
         //进来刷新可以屏蔽
         //loadUser(); //个人信息从网络拿数据
@@ -188,7 +185,7 @@ public class BcActivity extends BaseServiceActivity implements MyAllBookView {
                                 public void run() {
                                     spUtils.put("auth", string);
                                     UserBean userBean = MineJsonUtils.readUserBean(string);
-                                    if (userBean != null){
+                                    if (userBean != null) {
                                         spUtils.put("authToken", userBean.getAuthToken());
                                         ifCheckIn();
                                         Log.v("llll1lllll", "=aaaa==" + userBean.isVip());
@@ -293,6 +290,7 @@ public class BcActivity extends BaseServiceActivity implements MyAllBookView {
             }
         }
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {

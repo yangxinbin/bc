@@ -31,6 +31,7 @@ import com.mango.bc.homepage.HomePageFragment;
 import com.mango.bc.mine.MineFragment;
 import com.mango.bc.mine.bean.UserBean;
 import com.mango.bc.mine.jsonutil.MineJsonUtils;
+import com.mango.bc.util.ActivityCollector;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.JsonUtil;
@@ -64,16 +65,17 @@ public class BcActivity extends BaseServiceActivity implements MyAllBookView {
         setContentView(R.layout.activity_bc);
         myBookPresenter = new MyBookPresenterImpl(this);
         spUtils = SPUtils.getInstance("bc", this);
+        ActivityCollector.addActivity(this);
         if (NetUtil.isNetConnect(this)) {
             //myBookPresenter.visitBooks(this,3,0,false);//获取书架的所有书
         } else {
             AppUtils.showToast(this, getResources().getString(R.string.check_net));
             //myBookPresenter.visitBooks(this, 3, 0, true);//获取书架的所有书
         }
-/*        if (getIntent().getBooleanExtra("wechat",false)){
+        if (getIntent().getBooleanExtra("wechat",false)){
         }else {
             spUtils.put("openId", "oXhi94jQkXPovBsqEs0B8QKsbM0A");
-        }*/
+        }
         ButterKnife.bind(this);
         //进来刷新可以屏蔽
         //loadUser(); //个人信息从网络拿数据
@@ -291,11 +293,42 @@ public class BcActivity extends BaseServiceActivity implements MyAllBookView {
         }
     }
 
+    //返回键监听实现
+    public interface FragmentBackListener {
+        void onBackForward();
+    }
+
+    private FragmentBackListener backListener;
+    private boolean isInterception = false;
+
+    public void setBackListener(FragmentBackListener backListener) {
+        this.backListener = backListener;
+    }
+    //是否拦截
+    public boolean isInterception() {
+        return isInterception;
+    }
+
+    public void setInterception(boolean isInterception) {
+        this.isInterception = isInterception;
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            return false; //返回交给fragment
+            if (isInterception()) {
+                if (backListener != null) {
+                    backListener.onBackForward();
+                    return false;
+                }
+            }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
     }
 }

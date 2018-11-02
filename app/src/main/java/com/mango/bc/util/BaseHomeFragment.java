@@ -1,40 +1,39 @@
-package com.mango.bc.homepage.bookdetail.play;
+package com.mango.bc.util;
 
-import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.graphics.Color;
 import android.media.AudioManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.StyleRes;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.hwangjr.rxbus.RxBus;
-import com.mango.bc.homepage.bookdetail.play.preference.Preferences;
+import com.mango.bc.BcActivity;
+import com.mango.bc.R;
 import com.mango.bc.homepage.bookdetail.play.service.PlayService;
 import com.mango.bc.homepage.bookdetail.play.utils.PermissionReq;
-import com.mango.bc.homepage.bookdetail.play.utils.ViewBinder;
 
+import io.reactivex.disposables.Disposable;
 
 /**
- * 基类<br>
- * Created by wcy on 2015/11/26.
+ * Created by Administrator on 2018/11/2 0002.
  */
-public abstract class BaseServiceFragment extends Fragment {
+
+public class BaseHomeFragment extends Fragment implements BcActivity.FragmentBackListener {
+    protected Disposable disposable;
+    protected final String TAG = this.getClass().getSimpleName();
+    //返回键点击间隔时间计算
+    private long exitTime = 0;
+    //捕捉返回键点击动作
     protected Handler handler;
     protected PlayService playService;
     private ServiceConnection serviceConnection;
@@ -64,16 +63,45 @@ public abstract class BaseServiceFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
+    public void onBackForward() {
+        //和上次点击返回键的时间间隔
+        long intervalTime = System.currentTimeMillis() - exitTime;
+        if (intervalTime > 2000) {
+            Toast.makeText(getActivity(), getString(R.string.exit_sure), Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            ActivityCollector.finishAll();
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        //注册监听
+        ((BcActivity) getActivity()).setBackListener(this);
+        ((BcActivity) getActivity()).setInterception(true);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        //取消监听
+        ((BcActivity) getActivity()).setBackListener(null);
+        ((BcActivity) getActivity()).setInterception(false);
+    }
+
+    @Override
+    public void onDestroyView() {
         RxBus.get().unregister(this);
-        super.onDestroy();
+        super.onDestroyView();
+        unsubscribe();
     }
 
 
     private void bindService() {
         Intent intent = new Intent();
         intent.setClass(getActivity(), PlayService.class);
-        serviceConnection = new PlayServiceConnection();
+        serviceConnection = new BaseHomeFragment.PlayServiceConnection();
         getActivity().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
@@ -101,5 +129,11 @@ public abstract class BaseServiceFragment extends Fragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void unsubscribe() {
+        if (disposable != null && !disposable.isDisposed()) {
+            disposable.dispose();
+        }
     }
 }

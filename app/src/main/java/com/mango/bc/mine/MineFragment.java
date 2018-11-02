@@ -37,6 +37,7 @@ import com.mango.bc.mine.bean.StatsBean;
 import com.mango.bc.mine.bean.UserBean;
 import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.AppUtils;
+import com.mango.bc.util.BaseHomeFragment;
 import com.mango.bc.util.DateUtil;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.JsonUtil;
@@ -65,7 +66,7 @@ import okhttp3.Response;
  * Created by admin on 2018/9/10.
  */
 
-public class MineFragment extends Fragment {
+public class MineFragment extends BaseHomeFragment {
     @Bind(R.id.imageVie_pic)
     CircleImageView imageViePic;
     @Bind(R.id.tv_class)

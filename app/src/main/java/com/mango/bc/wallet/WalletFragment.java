@@ -24,6 +24,7 @@ import com.mango.bc.adapter.ViewPageAdapter;
 import com.mango.bc.mine.bean.UserBean;
 import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.AppUtils;
+import com.mango.bc.util.BaseHomeFragment;
 import com.mango.bc.util.DensityUtil;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.JsonUtil;
@@ -62,7 +63,7 @@ import okhttp3.Response;
  * Created by admin on 2018/9/3.
  */
 
-public class WalletFragment extends Fragment {
+public class WalletFragment extends BaseHomeFragment {
     @Bind(R.id.tv_transaction_record)
     TextView tvTransactionRecord;
     @Bind(R.id.tv_all_pp)

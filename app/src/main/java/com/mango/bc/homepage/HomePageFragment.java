@@ -1,7 +1,5 @@
 package com.mango.bc.homepage;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,17 +19,16 @@ import com.mango.bc.bookcase.net.view.MyAllBookView;
 import com.mango.bc.homepage.adapter.HomePageAdapter;
 import com.mango.bc.homepage.bean.JumpToPlayDetailBean;
 import com.mango.bc.homepage.bookdetail.bean.PlayBarBean;
-import com.mango.bc.homepage.bookdetail.play.BaseServiceFragment;
 import com.mango.bc.homepage.bookdetail.play.PlayActivity;
 import com.mango.bc.homepage.bookdetail.play.executor.ControlPanel;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.LoadStageBean;
 import com.mango.bc.homepage.net.bean.RefreshStageBean;
-import com.mango.bc.homepage.net.presenter.BookPresenter;
 import com.mango.bc.mine.bean.RefreshMemberBean;
 import com.mango.bc.mine.bean.UserBean;
 import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.AppUtils;
+import com.mango.bc.util.BaseHomeFragment;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.SPUtils;
@@ -61,7 +57,7 @@ import okhttp3.Response;
  * Created by admin on 2018/9/3.
  */
 
-public class HomePageFragment extends BaseServiceFragment implements MyAllBookView {
+public class HomePageFragment extends BaseHomeFragment implements MyAllBookView {
     @Bind(R.id.recycle)
     RecyclerView recycle;
     @Bind(R.id.refresh)
@@ -288,7 +284,7 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
             });
     }
 
-    @Override
+/*    @Override
     public void onResume() {
         super.onResume();
         getView().setFocusableInTouchMode(true);
@@ -330,5 +326,6 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
         });
         // 显示对话框
         builder.show();
-    }
+    }*/
+
 }

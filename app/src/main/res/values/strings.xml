@@ -158,4 +158,6 @@
     <string name="code_fail">验证码发送失败</string>
     <string name="bunble_fail">绑定失败</string>
     <string name="send_fail">提交失败</string>
+    <string name="exit_sure">再按一次退出</string>
+
 </resources>

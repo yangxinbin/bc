@@ -15,15 +15,13 @@ import android.widget.TextView;
 
 import com.mango.bc.R;
 import com.mango.bc.adapter.ViewPageAdapter;
-import com.mango.bc.bookcase.bean.RefreshBookCaseBean;
 import com.mango.bc.bookcase.fragment.MyCompetitiveFragment;
 import com.mango.bc.bookcase.fragment.MyExpertFragment;
 import com.mango.bc.bookcase.fragment.MyFreeFragment;
 import com.mango.bc.homepage.bookdetail.bean.PlayBarBean;
-import com.mango.bc.homepage.bookdetail.bean.PlayPauseBean;
-import com.mango.bc.homepage.bookdetail.play.BaseServiceFragment;
 import com.mango.bc.homepage.bookdetail.play.executor.ControlPanel;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
+import com.mango.bc.util.BaseHomeFragment;
 import com.mango.bc.util.DensityUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -42,7 +40,7 @@ import butterknife.ButterKnife;
  * Created by admin on 2018/9/3.
  */
 
-public class BookcaseFragment extends BaseServiceFragment {
+public class BookcaseFragment extends BaseHomeFragment {
     /*    @Bind(R.id.imageVie_pic)
         CircleImageView imageVieP;
         @Bind(R.id.tv_class)

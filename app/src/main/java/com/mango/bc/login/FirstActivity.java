@@ -75,9 +75,9 @@ public class FirstActivity extends BaseActivity {
                 break;
             case R.id.tv_see:
                 //intent = new Intent(this, BcActivity.class);
-                intent = new Intent(FirstActivity.this, BunblePhoneActivity.class);
-                startActivity(intent);
-                finish();
+                //intent = new Intent(FirstActivity.this, BunblePhoneActivity.class);
+                //startActivity(intent);
+                //finish();
                 break;
 /*            case R.id.button_begin:
                 intent = new Intent(this, LoginActivity.class);

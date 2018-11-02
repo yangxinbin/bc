@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -291,5 +292,12 @@ public class BcActivity extends BaseServiceActivity implements MyAllBookView {
                     break;
             }
         }
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return false; //返回交给fragment
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

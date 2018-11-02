@@ -1,5 +1,7 @@
 package com.mango.bc.homepage;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -283,5 +286,49 @@ public class HomePageFragment extends BaseServiceFragment implements MyAllBookVi
                     }
                 }
             });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    // handle back button
+                    // 处理fragment的返回事件
+                    Log.v("iiiiiiiiiii", "-----------1");
+                    exitDialog(true);
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    private void exitDialog(boolean b) {
+        // 创建退出对话框
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        //builder.setIcon(R.drawable.exit);
+        // 设置对话框标题
+        builder.setTitle("确定要退出吗?");
+        // 设置对话框消息
+        //builder.setMessage("确定要退出吗?");
+        //监听下方button点击事件
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                getActivity().finish();
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+        // 显示对话框
+        builder.show();
     }
 }

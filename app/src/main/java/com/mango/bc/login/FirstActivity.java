@@ -14,6 +14,7 @@ import com.mango.bc.mine.bean.UserBean;
 import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
+import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 
@@ -54,7 +55,11 @@ public class FirstActivity extends BaseActivity {
         Intent intent;
         switch (view.getId()) {
             case R.id.l_wechat:
-                wechatLogin();
+                if (NetUtil.isNetConnect(this)) {
+                    wechatLogin();
+                } else {
+                    AppUtils.showToast(this, getResources().getString(R.string.check_net));
+                }
                 break;
             case R.id.tv_see:
                 //intent = new Intent(this, BcActivity.class);

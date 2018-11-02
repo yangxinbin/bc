@@ -40,11 +40,12 @@ public class CompetitiveFieldFragment extends Fragment implements BookCompetitiv
     TextView seeMore;
     @Bind(R.id.recycle)
     RecyclerView recycle;
-    private List<String> listS = new ArrayList<>();
-    private CompetitiveFieldAdapter competitiveFieldAdapter;
+    //private List<String> listS = new ArrayList<>();
+    private List<String> icons = new ArrayList<>();
+    //private CompetitiveFieldAdapter competitiveFieldAdapter;
     private BookPresenter bookPresenter;
     private final int TYPE = 0;
-    private int page = -1;
+    private int page = 0;
     private FieldAdapter fieldAdapter;
 
     @Nullable
@@ -54,12 +55,11 @@ public class CompetitiveFieldFragment extends Fragment implements BookCompetitiv
         bookPresenter = new BookPresenterImpl(this);
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
-        if (NetUtil.isNetConnect(getActivity())){
+        if (NetUtil.isNetConnect(getActivity())) {
             //bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);//true从缓存读数据，false从网络读数据。
-        }else {
+        } else {
             bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//true从缓存读数据，false从网络读数据。
         }
-        initViewfork();
         return view;
     }
 
@@ -69,7 +69,11 @@ public class CompetitiveFieldFragment extends Fragment implements BookCompetitiv
             return;
         }
         if (bean.getCompetitiveField()) {
-            bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);//刷新从网络。
+            if (NetUtil.isNetConnect(getActivity())) {
+                bookPresenter.visitBooks(getActivity(), TYPE, "", page, false);//true从缓存读数据，false从网络读数据。
+            } else {
+                bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//true从缓存读数据，false从网络读数据。
+            }
             bean.setCompetitiveField(false);//刷新完修改状态
             Log.v("yyyyyyy", "=====1--" + bean.toString());
             EventBus.getDefault().postSticky(bean);
@@ -77,8 +81,9 @@ public class CompetitiveFieldFragment extends Fragment implements BookCompetitiv
             //bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//缓存。
         }
     }
+
     private void initViewfork() {
-        fieldAdapter = new FieldAdapter(getActivity());
+        fieldAdapter = new FieldAdapter(getActivity(), icons);
         recycle.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 3));
         recycle.setAdapter(fieldAdapter);
         fieldAdapter.setOnItemClickLitener(mOnClickListenner1);
@@ -88,7 +93,7 @@ public class CompetitiveFieldFragment extends Fragment implements BookCompetitiv
         @Override
         public void onItemClick(View view, int position) {
             Intent intent = new Intent(getActivity(), CompetitiveBookActivity.class);
-            intent.putExtra("which",position);
+            intent.putExtra("which", position);
             startActivity(intent);
         }
 
@@ -97,17 +102,18 @@ public class CompetitiveFieldFragment extends Fragment implements BookCompetitiv
         }*/
     };
 
-    private void initView() {
+/*    private void initView() {
         competitiveFieldAdapter = new CompetitiveFieldAdapter(listS);
         recycle.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 4));
         recycle.setAdapter(competitiveFieldAdapter);
         competitiveFieldAdapter.setOnItemClickLitener(mOnClickListenner);
-    }
+    }*/
+
     private CompetitiveFieldAdapter.OnItemClickLitener mOnClickListenner = new CompetitiveFieldAdapter.OnItemClickLitener() {
         @Override
         public void onItemClick(View view, int position) {
             Intent intent = new Intent(getActivity(), CompetitiveBookActivity.class);
-            intent.putExtra("which",position);
+            intent.putExtra("which", position);
             startActivity(intent);
         }
 
@@ -115,6 +121,7 @@ public class CompetitiveFieldFragment extends Fragment implements BookCompetitiv
         public void onStageClick(View view, int position) {
         }*/
     };
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -125,7 +132,7 @@ public class CompetitiveFieldFragment extends Fragment implements BookCompetitiv
     @OnClick(R.id.see_more)
     public void onViewClicked() {
         Intent intent = new Intent(getContext(), CompetitiveBookActivity.class);
-        intent.putExtra("which",0);
+        intent.putExtra("which", 0);
         startActivity(intent);
     }
 
@@ -138,10 +145,15 @@ public class CompetitiveFieldFragment extends Fragment implements BookCompetitiv
                 @Override
                 public void run() {
                     Log.v("yyyyyy", "----------" + competitiveFieldBeanList.size());
-                    listS.clear();
+                    //listS.clear();
+                    icons.clear();
                     for (int i = 0; i < competitiveFieldBeanList.size(); i++) {
-                        listS.add(competitiveFieldBeanList.get(i).getName());
+                        //listS.add(competitiveFieldBeanList.get(i).getName());
+                        if (competitiveFieldBeanList.get(i).getIcon() != null) {
+                            icons.add(competitiveFieldBeanList.get(i).getIcon().getFileName());
+                        }
                     }
+                    initViewfork();
                 }
             });
     }

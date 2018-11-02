@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mango.bc.R;
+import com.mango.bc.util.Urls;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,8 @@ public class FieldAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private List<String> datas = new ArrayList<>();
 
-    public FieldAdapter(List<String> datas) {
+    public FieldAdapter(Context context, List<String> datas) {
+        this.mContext = context;
         this.datas = datas;
     }
 
@@ -54,7 +57,13 @@ public class FieldAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof FieldAdapter.FinefieldViewHolder) {
             final FieldAdapter.FinefieldViewHolder viewHolder = (FieldAdapter.FinefieldViewHolder) holder;
-            switch (position) {
+            if (datas != null) {
+                Log.v("kkkkkkk", "=====" + Urls.HOST_GETFILE + "?name=" + datas.get(position));
+                Glide.with(mContext).load(Urls.HOST_GETFILE + "?name=" + datas.get(position)).into(viewHolder.img);
+            } else {
+                viewHolder.img.setImageDrawable(mContext.getResources().getDrawable(R.drawable.school));
+            }
+/*            switch (position) {
                 case 0:
                     viewHolder.img.setImageDrawable(mContext.getResources().getDrawable(R.drawable.school));
                     break;
@@ -76,7 +85,7 @@ public class FieldAdapter extends RecyclerView.Adapter {
                 case 6:
                     viewHolder.img.setImageDrawable(mContext.getResources().getDrawable(R.drawable.property));
                     break;
-            }
+            }*/
         }
     }
 

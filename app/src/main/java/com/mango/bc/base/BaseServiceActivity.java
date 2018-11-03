@@ -58,4 +58,11 @@ public abstract class BaseServiceActivity extends BaseActivity {
 
     protected void onServiceBound() {
     }
+
+    @Override
+    protected void onDestroy() {
+        // TODO 自动生成的方法存根
+        super.onDestroy();
+        unbindService(serviceConnection);
+    }
 }

@@ -66,6 +66,7 @@ public abstract class BaseServiceFragment extends Fragment {
     @Override
     public void onDestroy() {
         RxBus.get().unregister(this);
+        getActivity().unbindService(serviceConnection);
         super.onDestroy();
     }
 

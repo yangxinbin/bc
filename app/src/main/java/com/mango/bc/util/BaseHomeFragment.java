@@ -93,6 +93,7 @@ public class BaseHomeFragment extends Fragment implements BcActivity.FragmentBac
     @Override
     public void onDestroyView() {
         RxBus.get().unregister(this);
+        getActivity().unbindService(serviceConnection);
         super.onDestroyView();
         unsubscribe();
     }

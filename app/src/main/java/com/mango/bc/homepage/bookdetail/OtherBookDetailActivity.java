@@ -452,8 +452,8 @@ public class OtherBookDetailActivity extends BaseServiceActivity implements MyAl
     protected void onDestroy() {
         super.onDestroy();
         Log.v("dddddddddddd", "-----ddd1---");
-        if (bookDetailAdapter != null)
-            bookDetailAdapter.recycleBitmap();
+/*        if (bookDetailAdapter != null)
+            bookDetailAdapter.recycleBitmap();*/
         ButterKnife.unbind(this);
         EventBus.getDefault().unregister(this);
         EventBus.getDefault().removeStickyEvent(BookBean.class);//展示完删除

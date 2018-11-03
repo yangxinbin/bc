@@ -302,10 +302,14 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
                                 public void run() {
                                     Log.v("tttttttttt", "------" + string);
                                     if (string.equals("true")) {
-                                        l_like_get.setChecked(true);
-                                        l_like_play.setChecked(true);
-                                        l_like_play.setClickable(false);
-                                        l_like_get.setClickable(false);
+                                        if (l_like_get != null) {
+                                            l_like_get.setChecked(true);
+                                            l_like_get.setClickable(false);
+                                        }
+                                        if (l_like_play != null) {
+                                            l_like_play.setChecked(true);
+                                            l_like_play.setClickable(false);
+                                        }
                                     }/*else {
                                     l_like_play.setChecked(false);
                                     lLikeFree.setChecked(false);
@@ -388,7 +392,7 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
             return;
         //AudioPlayer.get().init(this);
         title = bookDetailBean.getTitle();
-        if (bookDetailBean.getCover() != null){
+        if (bookDetailBean.getCover() != null) {
             cover = bookDetailBean.getCover().getFileName();
         }
         this.mBookDetailBean = bookDetailBean;
@@ -568,13 +572,6 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
-        EventBus.getDefault().unregister(this);
-    }
-
     @OnClick({R.id.et_comment, R.id.imageView_back, R.id.l_like_play, R.id.l_share_play_expert, R.id.book_stage_expert_play, R.id.l_like_get, R.id.l_try, R.id.l_buy, R.id.l_collage})
     public void onViewClicked(View view) {
         Intent intent;
@@ -654,7 +651,7 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
         OnekeyShare oks = new OnekeyShare();
         oks.setTitle(title);
         oks.setText("BC大陆");
-        oks.setImageUrl(Urls.HOST_GETFILE + "?name=" +cover);
+        oks.setImageUrl(Urls.HOST_GETFILE + "?name=" + cover);
         oks.setUrl("http://www.mob.com");
         oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
             @Override
@@ -663,7 +660,7 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
                     paramsToShare.setShareType(Platform.SHARE_WXMINIPROGRAM);
                     paramsToShare.setWxMiniProgramType(WXMiniProgramObject.MINIPTOGRAM_TYPE_RELEASE);
                     paramsToShare.setWxUserName("gh_482031325125");
-                    paramsToShare.setWxPath("/pages/giftBook/giftBook?model=" + "\""+bookId+"\"");
+                    paramsToShare.setWxPath("/pages/giftBook/giftBook?model=" + "\"" + bookId + "\"");
                 }
             }
         });
@@ -700,5 +697,14 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
         } else {
             return super.onKeyDown(keyCode, event);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+        EventBus.getDefault().unregister(this);
+        EventBus.getDefault().removeStickyEvent(BookBean.class);//展示完删除
+        EventBus.getDefault().removeStickyEvent(MyBookBean.class);
     }
 }

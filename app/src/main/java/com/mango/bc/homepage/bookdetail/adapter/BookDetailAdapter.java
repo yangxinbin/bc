@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -18,6 +19,9 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.mango.bc.R;
 import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
 import com.mango.bc.homepage.bookdetail.bean.CommentBean;
@@ -50,7 +54,7 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
     private List<BookDetailBean.DescriptionImagesBean> datas = new ArrayList<>();
     private Handler mHandler = new Handler(Looper.getMainLooper()); //获取主线程的Handler
     private Dialog dialog_load;
-    private Bitmap bitmap;
+    //private Bitmap bitmap;
     private String id;
     private final ACache mCache;
 
@@ -90,7 +94,16 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
             if (datas.get(position).getFileName() != null) {
                 //Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName()).into(viewHolder.img_book_detail);
                 Log.v("uuuuuuuuuuuu", "----" + Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName());
-                if (NetUtil.isNetConnect(context)) {
+                Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName())
+                        .into(new SimpleTarget<Drawable>() {
+                            @Override
+                            public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
+                                dialog_load.dismiss();
+                                viewHolder.img_book_detail.setImageDrawable(resource);
+                            }
+                        });
+                //.into(viewHolder.img_book_detail);
+                /*if (NetUtil.isNetConnect(context)) {
                     Log.v("yyyyyyy", id + "---1--!!----" + datas.get(position).getFileName());
                     final Bitmap bitmap = mCache.getAsBitmap(id + datas.get(position).getFileName());
                     if (bitmap != null) {
@@ -99,7 +112,7 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
                             public void run() {
                                 dialog_load.dismiss();
                                 Log.v("xxxxxxxxxxxxxx", "---xx-");
-                                viewHolder.img_book_detail.setImageBitmap(bitmap);
+                                //viewHolder.img_book_detail.setImageBitmap(bitmap);
                             }
                         });
                     } else {
@@ -107,14 +120,14 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
                     }
                 } else {
                     Log.v("yyyyyyy", id + "--2---!!----" + datas.get(position).getFileName());
-
                     setIamge(true, datas.get(position).getFileName(), viewHolder.img_book_detail);
-                }
+                }*/
             }
         }
     }
 
-    private void setIamge(final Boolean ifCache, final String fileName, final ImageView imageView) {
+
+/*    private void setIamge(final Boolean ifCache, final String fileName, final ImageView imageView) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -155,13 +168,13 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
                             public void run() {
                                 dialog_load.dismiss();
                                 imageView.setImageBitmap(bitmap);
-/*                                mHandler.postDelayed(new Runnable() {
+*//*                                mHandler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
                                         bitmap.recycle();  //一秒之后回收
                                         System.gc();//提醒系统即时回收
                                     }
-                                },1000);*/
+                                },1000);*//*
                             }
                         });
                     }
@@ -215,7 +228,7 @@ public class BookDetailAdapter extends RecyclerView.Adapter {
     private static int getImageMemory(int imagewidth, int imageheight, int inSampleSize) {
         Log.v("sssssss", "--2--" + (imagewidth / inSampleSize) * (imageheight / inSampleSize) * 3 / 1024);
         return (imagewidth / inSampleSize) * (imageheight / inSampleSize) * 3 / 1024;
-    }
+    }*/
 
     @Override
     public int getItemCount() {

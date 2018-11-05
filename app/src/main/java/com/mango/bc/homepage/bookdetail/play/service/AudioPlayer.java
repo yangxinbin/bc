@@ -76,6 +76,10 @@ public class AudioPlayer {
     }
 
     public void init(Context context) {
+        if (isPlaying() || isPausing()) {
+        } else {
+            spUtils.put("start", 0L);
+        }
         stopPlayer();
         if (mediaPlayer != null) {
             Log.v("mmmmmmmmmmmm", "-----mmmm---");
@@ -179,7 +183,7 @@ public class AudioPlayer {
 
         setPlayPosition(position);
         BookMusicDetailBean music = getPlayMusic();
-        spUtils.put("start",System.currentTimeMillis());
+        spUtils.put("start", System.currentTimeMillis());
         try {
             mediaPlayer.reset();
             mediaPlayer.setDataSource(music.getMp3Path());
@@ -298,7 +302,9 @@ public class AudioPlayer {
 
     public void stopPlayer() {
         EventBus.getDefault().postSticky(new PlayPauseBean(true));
-        learnTime(System.currentTimeMillis());
+        if (spUtils.getLong("start", 0L) != 0L) {
+            learnTime(System.currentTimeMillis());
+        }
         if (isIdle()) {
             return;
         }
@@ -314,8 +320,8 @@ public class AudioPlayer {
                 final HashMap<String, String> mapParams = new HashMap<String, String>();
                 mapParams.clear();
                 mapParams.put("authToken", spUtils.getString("authToken", ""));
-                mapParams.put("seconds", (over-spUtils.getLong("start",over))/1000+"");
-                Log.v("oooooooooooo",(over-spUtils.getLong("start",over))/1000+"");
+                mapParams.put("seconds", (over - spUtils.getLong("start", over)) / 1000 + "");
+                Log.v("oooooooooooo", (over - spUtils.getLong("start", over)) / 1000 + "");
                 HttpUtils.doPost(Urls.HOST_USAGE, mapParams, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -376,6 +382,7 @@ public class AudioPlayer {
             }
         }).start();
     }
+
     public void next() {
         if (musicList.isEmpty()) {
             return;

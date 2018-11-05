@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.mine.activity.PointApplyActivity;
+import com.mango.bc.mine.activity.setting.UserChangeActivity;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.SPUtils;
@@ -50,8 +51,11 @@ public class BunblePhoneActivity extends BaseActivity {
         Intent intent;
         switch (view.getId()) {
             case R.id.imageView_back:
-                intent = new Intent(BunblePhoneActivity.this, FirstActivity.class);
-                startActivity(intent);
+                if (getIntent().getBooleanExtra("phone", false)) {
+                } else {
+                    intent = new Intent(BunblePhoneActivity.this, FirstActivity.class);
+                    startActivity(intent);
+                }
                 finish();
                 break;
             case R.id.get_code:
@@ -64,9 +68,9 @@ public class BunblePhoneActivity extends BaseActivity {
                 break;
             case R.id.button_password_ok:
                 if (etPhone.getText().toString().trim().length() == 11) {
-                    if (etCode.getText().toString().trim().length() != 0){
+                    if (etCode.getText().toString().trim().length() != 0) {
                         bunblePhone();
-                    }else {
+                    } else {
                         AppUtils.showToast(getBaseContext(), "请输入验证码");
                     }
                 } else {
@@ -106,9 +110,13 @@ public class BunblePhoneActivity extends BaseActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Intent intent = new Intent(BunblePhoneActivity.this, PositionActivity.class);
-                                        startActivity(intent);
-                                        finish();
+                                        if (getIntent().getBooleanExtra("phone", false)) {
+                                            loadUser();
+                                        } else {
+                                            Intent intent = new Intent(BunblePhoneActivity.this, PositionActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
                                     }
                                 });
                             } else {
@@ -133,6 +141,41 @@ public class BunblePhoneActivity extends BaseActivity {
         }).start();
     }
 
+    private void loadUser() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("openId", spUtils.getString("openId", ""));
+                HttpUtils.doPost(Urls.HOST_AUTH, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                    }
+
+                    @Override
+                    public void onResponse(Call call, final Response response) {
+                        final String string;
+                        try {
+                            string = response.body().string();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    spUtils.put("auth", string);
+                                    setResult(10);
+                                    finish();
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+            }
+        }).start();
+    }
+
     CountDownTimer timer = new CountDownTimer(60000, 1000) {
 
         @Override
@@ -147,6 +190,7 @@ public class BunblePhoneActivity extends BaseActivity {
             getCode.setText("发送验证码");
         }
     };
+
     private void getPhoneCode() {
         new Thread(new Runnable() {
             @Override
@@ -201,19 +245,23 @@ public class BunblePhoneActivity extends BaseActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         Intent intent;
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            intent = new Intent(BunblePhoneActivity.this, FirstActivity.class);
-            startActivity(intent);
+            if (getIntent().getBooleanExtra("phone", false)) {
+            } else {
+                intent = new Intent(BunblePhoneActivity.this, FirstActivity.class);
+                startActivity(intent);
+            }
             finish();
             return false;
         } else {
             return super.onKeyDown(keyCode, event);
         }
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
-        if (timer != null){
+        if (timer != null) {
             timer.cancel();
         }
     }

@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
+import com.mango.bc.login.BunblePhoneActivity;
 import com.mango.bc.login.UserDetailActivity;
 import com.mango.bc.mine.activity.SettingActivity;
 import com.mango.bc.mine.bean.UserBean;
@@ -508,6 +509,9 @@ public class UserChangeActivity extends BaseActivity {
             case R.id.r1:
                 break;
             case R.id.r2:
+                intent = new Intent(this, BunblePhoneActivity.class);
+                intent.putExtra("phone", true);
+                startActivityForResult(intent, 10);
                 break;
             case R.id.r3:
                 break;

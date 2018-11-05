@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
+import com.mango.bc.login.UserDetailActivity;
 import com.mango.bc.mine.activity.SettingActivity;
 import com.mango.bc.mine.bean.UserBean;
 import com.mango.bc.mine.jsonutil.MineJsonUtils;
@@ -41,6 +42,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -140,8 +142,22 @@ public class UserChangeActivity extends BaseActivity {
             textView7.setText(userBean.getUserProfile().getSex());
             textView8.setText(userBean.getUserProfile().getCompany());
             textView9.setText(userBean.getUserProfile().getDuty());
+            spUtils.put("identity",listToString(userBean.getUserProfile().getIdentity()));
+            spUtils.put("hobbies",listToString(userBean.getUserProfile().getHobbies()));
         }
 
+    }
+    private String listToString(List<String> stringList) {
+        StringBuffer stringBuffer = new StringBuffer();
+        for (int i = 0; i < stringList.size(); i++) {
+            if (i == stringList.size() - 1) {
+                stringBuffer.append(stringList.get(i));
+                break;
+            }
+            stringBuffer.append(stringList.get(i) + ",");
+        }
+        Log.v("uuuuuuuu", "----" + stringBuffer.toString());
+        return stringBuffer.toString();
     }
 /*    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void userMessageEventBus(UserMessageBean bean) {
@@ -340,6 +356,10 @@ public class UserChangeActivity extends BaseActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d(TAG, "onActivityResult: requestCode: " + requestCode + "  resultCode:" + resultCode);
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 10 && resultCode == 10) {
+            initView(MineJsonUtils.readUserBean(spUtils.getString("auth", "")));
+            Log.v("jjjjjjjjjjj", "------");
+        }
         if (resultCode != RESULT_OK) {
             Log.e(TAG, "onActivityResult: resultCode!=RESULT_OK");
             return;
@@ -473,7 +493,7 @@ public class UserChangeActivity extends BaseActivity {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.imageView_user_back, R.id.circleImageView, R.id.r1, R.id.r2, R.id.r3, R.id.r4, R.id.r5, R.id.r6, R.id.r7, R.id.r8, R.id.r9})
+    @OnClick({R.id.rAll,R.id.imageView_user_back, R.id.circleImageView, R.id.r1, R.id.r2, R.id.r3, R.id.r4, R.id.r5, R.id.r6, R.id.r7, R.id.r8, R.id.r9})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -494,15 +514,65 @@ public class UserChangeActivity extends BaseActivity {
             case R.id.r4:
                 break;
             case R.id.r5:
+                intent = new Intent(this, UserDetailActivity.class);
+                intent.putExtra("update", true);
+                intent.putExtra("name", textView5.getText());
+                intent.putExtra("year", textView6.getText());
+                intent.putExtra("sex", textView7.getText());
+                intent.putExtra("company", textView8.getText());
+                intent.putExtra("position", textView9.getText());
+                startActivityForResult(intent, 10);
                 break;
             case R.id.r6:
+                intent = new Intent(this, UserDetailActivity.class);
+                intent.putExtra("update", true);
+                intent.putExtra("name", textView5.getText());
+                intent.putExtra("year", textView6.getText());
+                intent.putExtra("sex", textView7.getText());
+                intent.putExtra("company", textView8.getText());
+                intent.putExtra("position", textView9.getText());
+                startActivityForResult(intent, 10);
                 break;
             case R.id.r7:
+                intent = new Intent(this, UserDetailActivity.class);
+                intent.putExtra("update", true);
+                intent.putExtra("name", textView5.getText());
+                intent.putExtra("year", textView6.getText());
+                intent.putExtra("sex", textView7.getText());
+                intent.putExtra("company", textView8.getText());
+                intent.putExtra("position", textView9.getText());
+                startActivityForResult(intent, 10);
                 break;
             case R.id.r8:
+                intent = new Intent(this, UserDetailActivity.class);
+                intent.putExtra("update", true);
+                intent.putExtra("name", textView5.getText());
+                intent.putExtra("year", textView6.getText());
+                intent.putExtra("sex", textView7.getText());
+                intent.putExtra("company", textView8.getText());
+                intent.putExtra("position", textView9.getText());
+                startActivityForResult(intent, 10);
                 break;
             case R.id.r9:
+                intent = new Intent(this, UserDetailActivity.class);
+                intent.putExtra("update", true);
+                intent.putExtra("name", textView5.getText());
+                intent.putExtra("year", textView6.getText());
+                intent.putExtra("sex", textView7.getText());
+                intent.putExtra("company", textView8.getText());
+                intent.putExtra("position", textView9.getText());
+                startActivityForResult(intent, 10);
                 break;
+/*            case R.id.rAll:
+                intent = new Intent(this, UserDetailActivity.class);
+                intent.putExtra("update", true);
+                intent.putExtra("name", textView5.getText());
+                intent.putExtra("year", textView6.getText());
+                intent.putExtra("sex", textView7.getText());
+                intent.putExtra("company", textView8.getText());
+                intent.putExtra("position", textView9.getText());
+                startActivityForResult(intent, 10);
+                break;*/
         }
     }
 

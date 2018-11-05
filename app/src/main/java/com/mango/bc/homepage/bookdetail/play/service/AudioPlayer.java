@@ -1,13 +1,17 @@
 package com.mango.bc.homepage.bookdetail.play.service;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.Settings;
 import android.util.Log;
 
+import com.mango.bc.BcActivity;
+import com.mango.bc.R;
 import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
 import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
 import com.mango.bc.homepage.bookdetail.bean.PlayPauseBean;
@@ -16,7 +20,11 @@ import com.mango.bc.homepage.bookdetail.play.enums.PlayModeEnum;
 import com.mango.bc.homepage.bookdetail.play.global.Notifier;
 import com.mango.bc.homepage.bookdetail.play.preference.Preferences;
 import com.mango.bc.homepage.bookdetail.play.receiver.NoisyAudioStreamReceiver;
+import com.mango.bc.login.UserDetailActivity;
+import com.mango.bc.mine.bean.StatsBean;
+import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.AppUtils;
+import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 
@@ -24,8 +32,13 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 
 /**
@@ -166,7 +179,7 @@ public class AudioPlayer {
 
         setPlayPosition(position);
         BookMusicDetailBean music = getPlayMusic();
-
+        spUtils.put("start",System.currentTimeMillis());
         try {
             mediaPlayer.reset();
             mediaPlayer.setDataSource(music.getMp3Path());
@@ -285,6 +298,7 @@ public class AudioPlayer {
 
     public void stopPlayer() {
         EventBus.getDefault().postSticky(new PlayPauseBean(true));
+        learnTime(System.currentTimeMillis());
         if (isIdle()) {
             return;
         }
@@ -293,6 +307,75 @@ public class AudioPlayer {
         state = STATE_IDLE;
     }
 
+    private void learnTime(final long over) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
+                mapParams.put("seconds", (over-spUtils.getLong("start",over))/1000+"");
+                Log.v("oooooooooooo",(over-spUtils.getLong("start",over))/1000+"");
+                HttpUtils.doPost(Urls.HOST_USAGE, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            if ("ok".equals(response.body().string())) {
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        loadStats();
+                                    }
+                                });
+                            }
+                        } catch (Exception e) {
+
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void loadStats() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
+                HttpUtils.doPost(Urls.HOST_STATS/* + "?authToken=" + spUtils.getString("authToken", "")*/, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                    }
+
+                    @Override
+                    public void onResponse(Call call, final Response response) {
+                        try {
+                            final String string1 = response.body().string();
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //loadUser();//更新用户信息（钱）
+                                    StatsBean statsBean = MineJsonUtils.readStatsBean(string1);
+                                    spUtils.put("stats", string1);
+                                    EventBus.getDefault().postSticky(statsBean);//刷新钱包
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+            }
+        }).start();
+    }
     public void next() {
         if (musicList.isEmpty()) {
             return;

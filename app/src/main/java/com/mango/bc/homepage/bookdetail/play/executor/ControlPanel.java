@@ -55,7 +55,7 @@ public class ControlPanel implements View.OnClickListener, OnPlayerEventListener
                 break;
             case R.id.iv_close_bar_play:
                 flPlayBar.setVisibility(View.GONE);
-                AudioPlayer.get().stopPlayer();
+                //AudioPlayer.get().stopPlayer();
                 Notifier.get().cancelAll();
                 EventBus.getDefault().postSticky(new PlayBarBean(false));
                 break;

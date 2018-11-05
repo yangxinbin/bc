@@ -95,6 +95,9 @@ public class LikeActivity extends BaseActivity implements AdapterView.OnItemClic
 
                 }
                 intent = new Intent(this, UserDetailActivity.class);
+                if (getIntent().getBooleanExtra("perfect", false)) {
+                    intent.putExtra("perfect", true);
+                }
                 intent.putExtra("identity", getIntent().getStringExtra("position"));
                 intent.putExtra("hobbies",listToString(lists));
                 startActivity(intent);

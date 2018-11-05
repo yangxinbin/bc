@@ -74,6 +74,9 @@ public class PositionActivity extends BaseActivity implements AdapterView.OnItem
                     listPositions.add(list.get(entry.getKey()));
                 }
                 intent = new Intent(this, LikeActivity.class);
+                if (getIntent().getBooleanExtra("perfect", false)) {
+                    intent.putExtra("perfect", true);
+                }
                 intent.putExtra("position",listToString(listPositions));
                 startActivity(intent);
                 finish();

@@ -3,6 +3,7 @@ package com.mango.bc.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +16,7 @@ import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
 import com.mango.bc.login.adapter.GirdDownAdapter;
 import com.mango.bc.login.adapter.NoScrollGridView;
+import com.mango.bc.mine.activity.setting.UserChangeActivity;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.SPUtils;
@@ -106,7 +108,7 @@ public class UserDetailActivity extends BaseActivity implements AdapterView.OnIt
             case R.id.imageView_back:
                 if (getIntent().getBooleanExtra("update", false)) {
 
-                }else {
+                } else {
                     intent = new Intent(this, LikeActivity.class);
                     startActivity(intent);
                 }
@@ -211,7 +213,13 @@ public class UserDetailActivity extends BaseActivity implements AdapterView.OnIt
                                 @Override
                                 public void run() {
                                     spUtils.put("auth", string);
-                                    setResult(10);
+                                    if (getIntent().getBooleanExtra("perfect", false)) {
+                                        Log.v("iiiiiiiiii","=====");
+                                        Intent intent = new Intent(UserDetailActivity.this, UserChangeActivity.class);
+                                        startActivity(intent);
+                                    }else {
+                                        setResult(10);
+                                    }
                                     finish();
                                 }
                             });
@@ -257,9 +265,15 @@ public class UserDetailActivity extends BaseActivity implements AdapterView.OnIt
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Intent intent = new Intent(UserDetailActivity.this, BcActivity.class);
-                                        startActivity(intent);
-                                        finish();
+                                        Intent intent;
+                                        if (getIntent().getBooleanExtra("perfect", false)) {
+                                            loadUser();
+                                        } else {
+                                            intent = new Intent(UserDetailActivity.this, BcActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+
                                     }
                                 });
                             } else {
@@ -296,7 +310,7 @@ public class UserDetailActivity extends BaseActivity implements AdapterView.OnIt
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
             if (getIntent().getBooleanExtra("update", false)) {
 
-            }else {
+            } else {
                 intent = new Intent(this, LikeActivity.class);
                 startActivity(intent);
             }

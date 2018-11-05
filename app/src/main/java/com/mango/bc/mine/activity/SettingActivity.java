@@ -15,12 +15,14 @@ import com.mango.bc.mine.activity.setting.ChangePhoneActivity;
 import com.mango.bc.mine.activity.setting.ForgetPasswordActivity;
 import com.mango.bc.mine.activity.setting.UserChangeActivity;
 import com.mango.bc.util.PublicWay;
+import com.mango.bc.util.SPUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SettingActivity extends BaseActivity {
+    private SPUtils spUtils;
 
 /*    @Bind(R.id.tv_wenxin_state)
     TextView tvWenxinState;*/
@@ -28,6 +30,7 @@ public class SettingActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        spUtils = SPUtils.getInstance("bc", this);
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
     }
@@ -78,6 +81,7 @@ public class SettingActivity extends BaseActivity {
                         PublicWay.activityList.get(i).finish();
                     }
                 }
+                spUtils.remove("skip");
                 System.exit(0);
                 finish();
                 break;

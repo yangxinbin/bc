@@ -188,7 +188,23 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
         public void onGetClick(View view, int position) {//购买按钮
             tv_stage = view.findViewById(R.id.tv_stage);
             if (tv_stage.getText().equals("播放")) {//用户没有刷新没有加载时临时调用（刷新与加载会重新与书架匹配）
-                Log.v("bbbbbbbb", "---tv_stage--" + tv_stage.getText());
+                Log.v("bbbbbbbb", "-----" + tv_stage.getText());
+                EventBus.getDefault().postSticky(adapter.getItem(position));
+                if (chechState(adapter.getItem(position).getId())) {
+                    spUtils.put("isFree", true);
+                } else {
+                    spUtils.put("isFree", false);
+                }
+                if (AudioPlayer.get().isPausing() /*&& mData.get(position).getId().equals(spUtils.getString("isSameBook", ""))*/) {
+                    AudioPlayer.get().startPlayer();
+                    //tv_free_stage.setText("播放中");
+                    return;
+                }
+                if (NetUtil.isNetConnect(getActivity())) {
+                    loadBookDetail(false, adapter.getItem(position).getId());
+                } else {
+                    loadBookDetail(true, adapter.getItem(position).getId());
+                }
             } else {
                 Intent intent = new Intent(getActivity(), BuyBookActivity.class);
                 EventBus.getDefault().postSticky(adapter.getItem(position));

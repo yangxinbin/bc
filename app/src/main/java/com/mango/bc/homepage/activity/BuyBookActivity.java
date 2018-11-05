@@ -88,7 +88,6 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
         if (userBean.getWallet() != null) {
             ppCoins = userBean.getWallet().getPpCoins();
             tvAllPpg.setText(userBean.getWallet().getPpCoins() + "PPG");
-
         }
     }
 
@@ -104,12 +103,26 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
         bookId = bookDetailBean.getId();
         tvTitle.setText(bookDetailBean.getTitle());
         if (isVip) {
-            tvPpgNeed.setText(bookDetailBean.getVipPrice() + "PPG");
-            tvNeedPpg.setText("实付款：" + bookDetailBean.getVipPrice() + "PPG");
+            if ("0.0".startsWith(String.valueOf(bookDetailBean.getVipPrice()))) {
+                tvPpgNeed.setText("免费");
+                tvNeedPpg.setText("免费");
+                tvBuy.setText("免费领取");
+            } else {
+                tvPpgNeed.setText(bookDetailBean.getVipPrice() + "PPG");
+                tvNeedPpg.setText("实付款：" + bookDetailBean.getVipPrice() + "PPG");
+            }
             prices = bookDetailBean.getVipPrice();
+
         } else {
-            tvPpgNeed.setText(bookDetailBean.getPrice() + "PPG");
-            tvNeedPpg.setText("实付款：" + bookDetailBean.getPrice() + "PPG");
+            if ("0.0".startsWith(String.valueOf(bookDetailBean.getPrice()))) {
+                tvPpgNeed.setText("免费");
+                tvNeedPpg.setText("免费");
+                tvBuy.setText("免费领取");
+
+            } else {
+                tvPpgNeed.setText(bookDetailBean.getPrice() + "PPG");
+                tvNeedPpg.setText("实付款：" + bookDetailBean.getPrice() + "PPG");
+            }
             prices = bookDetailBean.getPrice();
         }
 

@@ -366,11 +366,11 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
     }
 
     private void prev15() {
-        AudioPlayer.get().seekTo(mLastProgress-15*1000);
+        AudioPlayer.get().seekTo(mLastProgress - 15 * 1000);
     }
 
     private void next15() {
-        AudioPlayer.get().seekTo(mLastProgress+15*1000);
+        AudioPlayer.get().seekTo(mLastProgress + 15 * 1000);
     }
 /*    private void switchPlayMode() {
         PlayModeEnum mode = PlayModeEnum.valueOf(Preferences.getPlayMode());
@@ -393,14 +393,17 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
     }*/
 
     public void onBackPressed() {
-        ivBack.setEnabled(false);
-        finish();
+        if (ivBack != null) {
+            ivBack.setEnabled(false);
+        }
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                ivBack.setEnabled(true);
+                if (ivBack != null)
+                    ivBack.setEnabled(true);
             }
         }, 300);
+        finish();
     }
 
     private void setCoverAndBg(BookMusicDetailBean music) {

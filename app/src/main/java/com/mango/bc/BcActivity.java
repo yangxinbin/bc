@@ -72,10 +72,10 @@ public class BcActivity extends BaseServiceActivity implements MyAllBookView {
             AppUtils.showToast(this, getResources().getString(R.string.check_net));
             //myBookPresenter.visitBooks(this, 3, 0, true);//获取书架的所有书
         }
-        if (getIntent().getBooleanExtra("wechat",false)){
+/*        if (getIntent().getBooleanExtra("wechat",false)){
         }else {
             spUtils.put("openId", "oXhi94jQkXPovBsqEs0B8QKsbM0A");
-        }
+        }*/
         ButterKnife.bind(this);
         //进来刷新可以屏蔽
         //loadUser(); //个人信息从网络拿数据

@@ -7,7 +7,8 @@ package com.mango.bc.util;
 public class Urls {
     //public static final String HOST = "http://192.168.1.145:8000/bcms";
     //public static final String HOST = "https://cms.bccontinent.com/bcms";
-    public static final String HOST = "https://api.bccontinent.com/bcms";
+    public static final String HOST = "http://192.168.0.145:8080/bcms";
+    //public static final String HOST = "https://api.bccontinent.com/bcms";
 
     public static final String BOOKCATEGORIES = "/book/categories";
     public static final String BOOKLISTCATEGORIES = "/book/list/category";
@@ -45,6 +46,7 @@ public class Urls {
     public static final String PROFILE = "/v2/user/add/profile";
     public static final String CARD = "/wallet/card/membership";
     public static final String USAGE = "/task/usage";
+    public static final String WEIXINPAY = "/payment/weixin/payorder/app";
 
 
 
@@ -85,5 +87,6 @@ public class Urls {
     public static final String HOST_PROFILE = HOST+PROFILE;
     public static final String HOST_CARD = HOST+CARD;
     public static final String HOST_USAGE = HOST+USAGE;
+    public static final String HOST_WEIXINPAY = HOST+WEIXINPAY;
 
 }

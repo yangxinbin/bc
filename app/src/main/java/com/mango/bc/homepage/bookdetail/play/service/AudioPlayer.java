@@ -22,6 +22,7 @@ import com.mango.bc.homepage.bookdetail.play.preference.Preferences;
 import com.mango.bc.homepage.bookdetail.play.receiver.NoisyAudioStreamReceiver;
 import com.mango.bc.login.UserDetailActivity;
 import com.mango.bc.mine.bean.StatsBean;
+import com.mango.bc.mine.bean.UserBean;
 import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
@@ -337,6 +338,7 @@ public class AudioPlayer {
                                     @Override
                                     public void run() {
                                         loadStats();
+                                        loadUser();
                                     }
                                 });
                             }
@@ -374,6 +376,41 @@ public class AudioPlayer {
                                     EventBus.getDefault().postSticky(statsBean);//刷新状态
                                     EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
 
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void loadUser() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("openId", spUtils.getString("openId", ""));
+                HttpUtils.doPost(Urls.HOST_AUTH, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                    }
+
+                    @Override
+                    public void onResponse(Call call, final Response response) {
+                        final String string;
+                        try {
+                            string = response.body().string();
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    spUtils.put("auth", string);
+                                    UserBean userBean = MineJsonUtils.readUserBean(string);
+                                    EventBus.getDefault().postSticky(userBean);//刷新钱包，我的。
                                 }
                             });
                         } catch (IOException e) {

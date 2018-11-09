@@ -16,6 +16,7 @@ import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
+import com.mango.bc.wallet.activity.TransferActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -53,6 +54,7 @@ public class BcCardActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView_back:
+                AppUtils.hideInput(BcCardActivity.this);
                 finish();
                 break;
             case R.id.bt_sure:

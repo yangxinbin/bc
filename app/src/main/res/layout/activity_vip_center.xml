@@ -120,7 +120,6 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
-                            android:text="至2018.03.30"
                             android:textColor="@color/gray"
                             android:textSize="@dimen/dp_12" />
                     </LinearLayout>

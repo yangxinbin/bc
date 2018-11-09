@@ -146,7 +146,6 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp_5"
                 android:layout_weight="1"
-                android:text="至2018-08-08"
                 android:textColor="@color/grayText"
                 android:textSize="@dimen/dp_14" />
 

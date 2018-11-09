@@ -302,7 +302,7 @@ public class NewestFragment extends Fragment implements BookNewestView, MyAllBoo
                                         //loadUser();//更新用户信息（钱）
                                         StatsBean statsBean = MineJsonUtils.readStatsBean(string1);
                                         spUtils.put("stats", string1);
-                                        EventBus.getDefault().postSticky(statsBean);//刷新钱包
+                                        EventBus.getDefault().postSticky(statsBean);//刷新状态
                                     }
                                 });
                         } catch (IOException e) {

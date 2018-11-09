@@ -27,6 +27,7 @@ import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
+import com.mango.bc.wallet.bean.RefreshTaskBean;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -370,7 +371,9 @@ public class AudioPlayer {
                                     //loadUser();//更新用户信息（钱）
                                     StatsBean statsBean = MineJsonUtils.readStatsBean(string1);
                                     spUtils.put("stats", string1);
-                                    EventBus.getDefault().postSticky(statsBean);//刷新钱包
+                                    EventBus.getDefault().postSticky(statsBean);//刷新状态
+                                    EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
+
                                 }
                             });
                         } catch (IOException e) {

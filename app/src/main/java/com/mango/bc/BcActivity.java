@@ -190,7 +190,6 @@ public class BcActivity extends BaseServiceActivity implements MyAllBookView {
                                     if (userBean != null) {
                                         spUtils.put("authToken", userBean.getAuthToken());
                                         ifCheckIn();
-                                        Log.v("llll1lllll", "=aaaa==" + userBean.isVip());
                                         EventBus.getDefault().postSticky(userBean);//刷新
                                     }
                                 }

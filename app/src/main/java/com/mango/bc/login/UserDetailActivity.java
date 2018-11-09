@@ -17,10 +17,14 @@ import com.mango.bc.base.BaseActivity;
 import com.mango.bc.login.adapter.GirdDownAdapter;
 import com.mango.bc.login.adapter.NoScrollGridView;
 import com.mango.bc.mine.activity.setting.UserChangeActivity;
+import com.mango.bc.mine.bean.UserBean;
+import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -215,6 +219,10 @@ public class UserDetailActivity extends BaseActivity implements AdapterView.OnIt
                                     spUtils.put("auth", string);
                                     if (getIntent().getBooleanExtra("perfect", false)) {
                                         Log.v("iiiiiiiiii","=====");
+                                        UserBean userBean = MineJsonUtils.readUserBean(string);
+                                        if (userBean != null) {
+                                            EventBus.getDefault().postSticky(userBean);//刷新
+                                        }
                                         Intent intent = new Intent(UserDetailActivity.this, UserChangeActivity.class);
                                         startActivity(intent);
                                     }else {

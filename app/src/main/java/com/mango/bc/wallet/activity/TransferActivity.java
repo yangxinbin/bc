@@ -74,6 +74,7 @@ public class TransferActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView_back:
+                AppUtils.hideInput(TransferActivity.this);
                 finish();
                 break;
             case R.id.bu_sure:
@@ -87,7 +88,6 @@ public class TransferActivity extends BaseActivity {
                 } else {
                     AppUtils.showToast(TransferActivity.this, getString(R.string.finish_information));
                 }
-
                 break;
         }
     }
@@ -139,6 +139,7 @@ public class TransferActivity extends BaseActivity {
                                     initAuth(MineJsonUtils.readUserBean(spUtils.getString("auth", "")));
                                     UserBean userBean = MineJsonUtils.readUserBean(string);
                                     EventBus.getDefault().postSticky(userBean);//刷新钱包
+                                    showDailog("转账成功", "");
                                 }
                             });
                         } catch (IOException e) {
@@ -149,6 +150,28 @@ public class TransferActivity extends BaseActivity {
                 });
             }
         }).start();
+    }
+
+    private void showDailog(String s1, final String s2) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setIcon(R.mipmap.icon)//设置标题的图片
+                .setTitle(s1)//设置对话框的标题
+                //.setMessage(s2)//设置对话框的内容
+                //设置对话框的按钮
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        dialog.dismiss();
+                    }
+                }).create();
+        dialog.show();
     }
 
     private void transfer() {
@@ -174,13 +197,17 @@ public class TransferActivity extends BaseActivity {
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         try {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    AppUtils.showToast(getBaseContext(), "转账成功");
-                                    loadUser();
-                                }
-                            });
+                            if ("ok".equals(response.body().string())) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        //AppUtils.showToast(getBaseContext(), "转账成功");
+                                        loadUser();
+                                    }
+                                });
+                            } else {
+                                AppUtils.showToast(getBaseContext(), "转账失败");
+                            }
                         } catch (Exception e) {
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -198,6 +225,7 @@ public class TransferActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            AppUtils.hideInput(TransferActivity.this);
             finish();
             return false;
         } else {

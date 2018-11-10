@@ -46,6 +46,7 @@ import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 import com.mango.bc.view.likeview.PraiseView;
 import com.mango.bc.wallet.bean.RefreshTaskBean;
+import com.mango.bc.wallet.bean.RefreshWalletBean;
 import com.tencent.mm.opensdk.modelmsg.WXMiniProgramObject;
 
 import org.greenrobot.eventbus.EventBus;
@@ -365,6 +366,8 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
                                         tvLikePlay.setText(likeNum + 1 + "");
                                         tvLikeGet.setText(likeNum + 1 + "");
                                         EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
+                                        EventBus.getDefault().postSticky(new RefreshWalletBean(true));//刷新钱包
+
                                     }/*else {
                                     l_like_play.setChecked(false);
                                     lLikeFree.setChecked(false);

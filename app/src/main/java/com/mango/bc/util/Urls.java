@@ -47,6 +47,7 @@ public class Urls {
     public static final String CARD = "/wallet/card/membership";
     public static final String USAGE = "/task/usage";
     public static final String WEIXINPAY = "/payment/weixin/payorder/app";
+    public static final String WALLET = "/wallet/my";
 
 
 
@@ -88,5 +89,6 @@ public class Urls {
     public static final String HOST_CARD = HOST+CARD;
     public static final String HOST_USAGE = HOST+USAGE;
     public static final String HOST_WEIXINPAY = HOST+WEIXINPAY;
+    public static final String HOST_WALLET = HOST+WALLET;
 
 }

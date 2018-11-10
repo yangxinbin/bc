@@ -187,7 +187,7 @@ public class VipAutoActivity extends BaseActivity {
                                     UserBean userBean = MineJsonUtils.readUserBean(string);
                                     initView(userBean);
                                     Log.v("lllllllll", "=aaaa==" + userBean.isVip());
-                                    EventBus.getDefault().postSticky(userBean);//刷新钱包，我的。
+                                    EventBus.getDefault().postSticky(userBean);//我的。
                                 }
                             });
                         } catch (IOException e) {

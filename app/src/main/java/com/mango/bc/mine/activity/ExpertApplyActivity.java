@@ -251,7 +251,7 @@ public class ExpertApplyActivity extends BaseActivity {
                                 public void run() {
                                     spUtils.put("auth", string);
                                     UserBean userBean = MineJsonUtils.readUserBean(string);
-                                    EventBus.getDefault().postSticky(userBean);//刷新钱包，我的。
+                                    EventBus.getDefault().postSticky(userBean);//我的。
                                     showDailog("审核中，请您耐心等待。", "");
                                 }
                             });

@@ -47,6 +47,7 @@ import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 import com.mango.bc.wallet.bean.RefreshTaskBean;
+import com.mango.bc.wallet.bean.RefreshWalletBean;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXMiniProgramObject;
@@ -580,6 +581,7 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
                     public void onResponse(Call call, Response response) throws IOException {
                         try {
                             EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
+                            EventBus.getDefault().postSticky(new RefreshWalletBean(true));//刷新钱包
                         } catch (Exception e) {
                             //mHandler.sendEmptyMessage(0);
                         }

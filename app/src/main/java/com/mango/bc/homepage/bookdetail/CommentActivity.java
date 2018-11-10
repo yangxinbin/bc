@@ -25,6 +25,7 @@ import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 import com.mango.bc.wallet.bean.RefreshTaskBean;
+import com.mango.bc.wallet.bean.RefreshWalletBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -123,6 +124,7 @@ public class CommentActivity extends BaseActivity {
                                 @Override
                                 public void run() {
                                     EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
+                                    EventBus.getDefault().postSticky(new RefreshWalletBean(true));//刷新钱包
                                     showDailog("提示", "你的评论已提交成功，待审核通过后发布。");
                                 }
                             });

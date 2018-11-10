@@ -26,6 +26,7 @@ import com.mango.bc.util.RoundImageView;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 import com.mango.bc.wallet.activity.RechargeActivity;
+import com.mango.bc.wallet.bean.RefreshWalletBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -181,7 +182,8 @@ public class CollageBuyBookActivity extends BaseActivity {
                                         showDailogHaved("您正在拼团中", "");
                                     } else {
                                         AppUtils.showToast(CollageBuyBookActivity.this, "购买成功");
-                                        loadUser();
+                                        //loadUser();
+                                        EventBus.getDefault().postSticky(new RefreshWalletBean(true));//刷新钱包
                                     }
 
                                 }
@@ -202,7 +204,7 @@ public class CollageBuyBookActivity extends BaseActivity {
         }).start();
     }
 
-    private void loadUser() {
+/*    private void loadUser() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -239,7 +241,7 @@ public class CollageBuyBookActivity extends BaseActivity {
                 });
             }
         }).start();
-    }
+    }*/
 
     private void showDailog(String s1, final String s2) {
         AlertDialog dialog = new AlertDialog.Builder(this)

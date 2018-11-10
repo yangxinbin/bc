@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.wallet.bean.TaskAndRewardBean;
 import com.mango.bc.wallet.bean.TransactionBean;
+import com.mango.bc.wallet.bean.WalletBean;
 import com.mango.bc.wallet.bean.WechatPayBean;
 
 import java.util.List;
@@ -35,5 +36,12 @@ public class WalletJsonUtils {
         WechatPayBean wechatPayBean = gson.fromJson(res, new TypeToken<WechatPayBean>() {
         }.getType());
         return wechatPayBean;
+    }
+
+    public static WalletBean readWalletBean(String res) {
+        Gson gson = new Gson();
+        WalletBean walletBean = gson.fromJson(res, new TypeToken<WalletBean>() {
+        }.getType());
+        return walletBean;
     }
 }

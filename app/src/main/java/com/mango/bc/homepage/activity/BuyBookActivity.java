@@ -27,6 +27,7 @@ import com.mango.bc.util.RoundImageView;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 import com.mango.bc.wallet.activity.RechargeActivity;
+import com.mango.bc.wallet.bean.RefreshWalletBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -224,7 +225,8 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    loadUser();//更新用户信息（钱）
+                                    //loadUser();//更新用户信息（钱）
+                                    EventBus.getDefault().postSticky(new RefreshWalletBean(true));//刷新钱包
                                     StatsBean statsBean = MineJsonUtils.readStatsBean(string1);
                                     spUtils.put("stats", string1);
                                     EventBus.getDefault().postSticky(statsBean);//刷新状态
@@ -240,7 +242,7 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
         }).start();
     }
 
-    private void loadUser() {
+/*    private void loadUser() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -273,7 +275,7 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
                 });
             }
         }).start();
-    }
+    }*/
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

@@ -245,7 +245,7 @@ public class HomePageFragment extends BaseHomeFragment implements MyAllBookView 
                                         UserBean userBean = MineJsonUtils.readUserBean(string2);
                                         if (userBean != null) {
                                             Log.v("lllllllll", "=rrrr==" + userBean.isVip());
-                                            EventBus.getDefault().postSticky(userBean);//刷新钱包
+                                            EventBus.getDefault().postSticky(userBean);//刷新钱包 我的
                                         }
                                     }
                                 });

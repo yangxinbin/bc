@@ -21,6 +21,7 @@ import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
+import com.mango.bc.wallet.bean.RefreshWalletBean;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -116,7 +117,7 @@ public class TransferActivity extends BaseActivity {
         dialog.show();
     }
 
-    private void loadUser() {
+/*    private void loadUser() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -150,7 +151,7 @@ public class TransferActivity extends BaseActivity {
                 });
             }
         }).start();
-    }
+    }*/
 
     private void showDailog(String s1, final String s2) {
         AlertDialog dialog = new AlertDialog.Builder(this)
@@ -202,7 +203,9 @@ public class TransferActivity extends BaseActivity {
                                     @Override
                                     public void run() {
                                         //AppUtils.showToast(getBaseContext(), "转账成功");
-                                        loadUser();
+                                        //loadUser();
+                                        EventBus.getDefault().postSticky(new RefreshWalletBean(true));//刷新钱包
+                                        showDailog("转账成功", "");
                                     }
                                 });
                             } else {

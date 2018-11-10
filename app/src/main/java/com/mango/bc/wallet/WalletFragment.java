@@ -23,11 +23,13 @@ import com.mango.bc.R;
 import com.mango.bc.adapter.ViewPageAdapter;
 import com.mango.bc.mine.bean.UserBean;
 import com.mango.bc.mine.jsonutil.MineJsonUtils;
+import com.mango.bc.util.ACache;
 import com.mango.bc.util.AppUtils;
 import com.mango.bc.util.BaseHomeFragment;
 import com.mango.bc.util.DensityUtil;
 import com.mango.bc.util.HttpUtils;
 import com.mango.bc.util.JsonUtil;
+import com.mango.bc.util.NetUtil;
 import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 import com.mango.bc.wallet.activity.CurrencyActivity;
@@ -37,8 +39,12 @@ import com.mango.bc.wallet.activity.TransferActivity;
 import com.mango.bc.wallet.bean.CheckBean;
 import com.mango.bc.wallet.bean.CheckInBean;
 import com.mango.bc.wallet.bean.RefreshTaskBean;
+import com.mango.bc.wallet.bean.TaskAndRewardBean;
+import com.mango.bc.wallet.bean.RefreshWalletBean;
+import com.mango.bc.wallet.bean.WalletBean;
 import com.mango.bc.wallet.fragment.AlreadyObtainedFragment;
 import com.mango.bc.wallet.fragment.DailyTasksFragment;
+import com.mango.bc.wallet.walletjsonutil.WalletJsonUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -122,12 +128,14 @@ public class WalletFragment extends BaseHomeFragment {
     List<Fragment> mfragments = new ArrayList<Fragment>();
     private SPUtils spUtils;
     private boolean flag = false;
+    private ACache mCache;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.wallet, container, false);
         spUtils = SPUtils.getInstance("bc", getActivity());
+        mCache = ACache.get(getActivity());
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         initDatas();
@@ -137,19 +145,92 @@ public class WalletFragment extends BaseHomeFragment {
         return view;
     }
 
-/*    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true, priority = 1)
-    public void CheckEventBus(CheckInBean checkInBean) {
-        if (checkInBean == null)
-            return;
-        initChechIf(checkInBean*//*JsonUtil.readCheckInBean(spUtils.getString("checkIf", ""))*//*);
+    /*    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true, priority = 1)
+        public void CheckEventBus(CheckInBean checkInBean) {
+            if (checkInBean == null)
+                return;
+            initChechIf(checkInBean*//*JsonUtil.readCheckInBean(spUtils.getString("checkIf", ""))*//*);
         //EventBus.getDefault().removeStickyEvent(CheckInBean.class);
     }*/
-
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void UserBeanEventBus(UserBean userBean) {
         if (userBean == null)
             return;
         initAuth(userBean);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void RefreshWalletEventBus(RefreshWalletBean refreshWalletBean) {
+        if (refreshWalletBean == null)
+            return;
+        if (refreshWalletBean.getIfWalletRefresh()) {
+            if (NetUtil.isNetConnect(getActivity())) {
+                loadWallet(false);
+            } else {
+                loadWallet(true);
+            }
+            refreshWalletBean.setIfWalletRefresh(false);
+        } else {
+            loadWallet(true);
+        }
+        EventBus.getDefault().removeStickyEvent(RefreshWalletBean.class);
+    }
+
+    private void loadWallet(final Boolean ifCache) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
+                if (ifCache) {//读取缓存数据
+                    String newString = mCache.getAsString("wallet");
+                    if (newString != null) {
+                        final WalletBean walletBean = WalletJsonUtils.readWalletBean(newString);
+                        if (getActivity() != null)
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    initAuth(walletBean);
+                                }
+                            });
+                        return;
+                    }
+                } else {
+                    mCache.remove("wallet");//刷新之后缓存也更新过来
+                }
+                HttpUtils.doPost(Urls.HOST_WALLET, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            String string = response.body().string();
+                            mCache.put("wallet");
+                            final WalletBean walletBean = WalletJsonUtils.readWalletBean(string);
+                            if (getActivity() != null)
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initAuth(walletBean);
+                                    }
+                                });
+                        } catch (Exception e) {
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void initAuth(WalletBean walletBean) {
+        if (walletBean == null)
+            return;
+        tvAllPp.setText(walletBean.getPpCoins() + "");
+        tvWalletadress.setText(walletBean.getWalletAddress());
     }
 
     private void initAuth(UserBean userBean) {
@@ -348,7 +429,8 @@ public class WalletFragment extends BaseHomeFragment {
                     try {
                         EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
                         AppUtils.showToast(getActivity(), "签到成功");
-                        loadUser();
+                        //loadUser();
+                        EventBus.getDefault().postSticky(new RefreshWalletBean(true));//刷新钱包
                         initChechfromWallet(checkBean);
                         //ifCheckIn();
                         //tvSign.setEnabled(false);
@@ -368,7 +450,7 @@ public class WalletFragment extends BaseHomeFragment {
         }
     }
 
-    private void loadUser() {
+/*    private void loadUser() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -403,7 +485,7 @@ public class WalletFragment extends BaseHomeFragment {
                 });
             }
         }).start();
-    }
+    }*/
 /*    private void ifCheckIn() {
         new Thread(new Runnable() {
             @Override

@@ -173,7 +173,7 @@ public class WalletFragment extends BaseHomeFragment {
         } else {
             loadWallet(true);
         }
-        EventBus.getDefault().removeStickyEvent(RefreshWalletBean.class);
+        //EventBus.getDefault().removeStickyEvent(RefreshWalletBean.class);
     }
 
     private void loadWallet(final Boolean ifCache) {

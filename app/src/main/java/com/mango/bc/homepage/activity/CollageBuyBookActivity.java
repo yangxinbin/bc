@@ -181,8 +181,10 @@ public class CollageBuyBookActivity extends BaseActivity {
                                     } else if (s.equals("ALREADY_BOUND_EXCEPTION")) {
                                         showDailogHaved("您正在拼团中", "");
                                     } else {
-                                        AppUtils.showToast(CollageBuyBookActivity.this, "购买成功");
+                                        //AppUtils.showToast(CollageBuyBookActivity.this, "购买成功");
                                         //loadUser();
+                                        Intent intent = new Intent(CollageBuyBookActivity.this, CollageActivity.class);
+                                        startActivity(intent);
                                         EventBus.getDefault().postSticky(new RefreshWalletBean(true));//刷新钱包
                                     }
 

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -54,7 +55,9 @@ public class BcCardActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView_back:
-                AppUtils.hideInput(BcCardActivity.this);
+                if (etBc.isCursorVisible()) {
+                    AppUtils.hideInput(BcCardActivity.this);
+                }
                 finish();
                 break;
             case R.id.bt_sure:
@@ -84,16 +87,23 @@ public class BcCardActivity extends BaseActivity {
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
+                        final String string;
                         try {
-                            loadUser();
-                            finish();
-                        } catch (Exception e) {
+                            string = response.body().string();
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    AppUtils.showToast(BcCardActivity.this, "激活失败");
+                                    spUtils.put("auth", string);
+                                    UserBean userBean = MineJsonUtils.readUserBean(string);
+                                    if (userBean != null) {
+                                        spUtils.put("authToken", userBean.getAuthToken());
+                                        EventBus.getDefault().postSticky(userBean);//刷新
+                                        finish();
+                                    }
                                 }
                             });
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                 });
@@ -129,6 +139,7 @@ public class BcCardActivity extends BaseActivity {
                                         spUtils.put("authToken", userBean.getAuthToken());
                                         Log.v("llll1lllll", "=aaaa==" + userBean.isVip());
                                         EventBus.getDefault().postSticky(userBean);//刷新
+                                        finish();
                                     }
                                 }
                             });

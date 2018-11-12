@@ -12,16 +12,17 @@ public class UserBean {
      * id : 5b8a3d4b04440c0a48a33a05
      * username : oXhi94jQkXPovBsqEs0B8QKsbM0A
      * unionId : oetTo5r15v1y6B2DNwRuiS22JaFo
-     * phone :
+     * phone : 18318836309
      * openId : oXhi94jQkXPovBsqEs0B8QKsbM0A
      * alias : 杨鑫斌
-     * type : agency
-     * avator : {"id":"5bd8710e1fd8420cd4b068da","alias":"avator","fileName":"15409113748273474.avator","contentType":"image/jpeg","size":1024,"createdOn":1540911374827}
-     * authToken : eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1NDA5Njc0MDk1OTQsImFsaWFzIjoi5p2o6ZGr5paMIiwiaWQiOiI1YjhhM2Q0YjA0NDQwYzBhNDhhMzNhMDUiLCJ0eXBlIjoiYWdlbmN5Iiwid2FsbGV0QWRkcmVzcyI6IjB4ZTcyZTM4N2FmMTJlMDg2YWVlY2M4ZWYxOWM3NzFjYzgiLCJleHAiOjQxMzI5Njc0MDksInVzZXJuYW1lIjoib1hoaTk0alFrWFBvdkJzcUVzMEI4UUtzYk0wQSJ9.XVG6l4g7D9XAcGjuaxZyTQiANjcbeH9LOCHTRvq7oo6fgaC9tuCVFiBmbpf04OCvQ9H1yIS4EEJkz-J-qb2glA
-     * agencyInfo : {"realName":"kk","company":"mango","position":"ceo ","phone":"18318836309","recommendedBy":null,"level":0,"status":2}
-     * userProfile : {"identity":["创业者","从业者"],"hobbies":["小白学堂","技术开发"],"realName":"leo","age":"19","sex":"男","company":"mango","duty":"software"}
-     * wallet : {"id":"5b8a3d4b04440c0a48a33a05","blockChainWalletAddress":null,"walletAddress":"0xe72e387af12e086aeecc8ef19c771cc8","ppCoins":79396.1}
-     * billing : {"startOn":1538135914379,"endOn":1559044714381,"billingAmount":28,"billingType":"monthly","auto":true}
+     * type : general
+     * avator : {"id":"5be6921239505f0fb4272069","alias":"avator","fileName":"1541837330090123939.avator","contentType":"image/jpeg","size":1024,"createdOn":1541837330090}
+     * authToken : eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1NDIwMDkwNzQxMTYsImFsaWFzIjoi5p2o6ZGr5paMIiwiaWQiOiI1YjhhM2Q0YjA0NDQwYzBhNDhhMzNhMDUiLCJ0eXBlIjoiZ2VuZXJhbCIsIndhbGxldEFkZHJlc3MiOiIweGU3MmUzODdhZjEyZTA4NmFlZWNjOGVmMTljNzcxY2M4IiwiZXhwIjo0MTM0MDA5MDc0LCJ1c2VybmFtZSI6Im9YaGk5NGpRa1hQb3ZCc3FFczBCOFFLc2JNMEEifQ.fwFXLanMFUdhdovHef2R4gnz3LBNwkAkU6SxB1qcookoCYAqqHYD9N-pGbQ5lhhFcV34PJnIwhcN08aAPmHdAQ
+     * agencyInfo : {"agencyCode":"","realName":"yy","company":"芒果","position":"IT","phone":"18318536309","status":1,"node":false,"accepted":false}
+     * recommender :
+     * userProfile : {"identity":["从业者","创业者"],"hobbies":["小白学堂","数字钱包"],"realName":"杨鑫斌","age":"18","sex":"先生","company":"安公","duty":"it"}
+     * wallet : {"id":"5b8a3d4b04440c0a48a33a05","blockChainWalletAddress":"","walletAddress":"0xe72e387af12e086aeecc8ef19c771cc8","ppCoins":79934.3}
+     * billing : {"startOn":1538135914379,"endOn":1566820714381,"billingAmount":28,"billingType":"monthly","auto":true}
      * vip : true
      * status : null
      * createdOn : 1538015317854
@@ -37,6 +38,7 @@ public class UserBean {
     private AvatorBean avator;
     private String authToken;
     private AgencyInfoBean agencyInfo;
+    private String recommender;
     private UserProfileBean userProfile;
     private WalletBean wallet;
     private BillingBean billing;
@@ -124,6 +126,14 @@ public class UserBean {
         this.agencyInfo = agencyInfo;
     }
 
+    public String getRecommender() {
+        return recommender;
+    }
+
+    public void setRecommender(String recommender) {
+        this.recommender = recommender;
+    }
+
     public UserProfileBean getUserProfile() {
         return userProfile;
     }
@@ -174,12 +184,12 @@ public class UserBean {
 
     public static class AvatorBean {
         /**
-         * id : 5bd8710e1fd8420cd4b068da
+         * id : 5be6921239505f0fb4272069
          * alias : avator
-         * fileName : 15409113748273474.avator
+         * fileName : 1541837330090123939.avator
          * contentType : image/jpeg
          * size : 1024
-         * createdOn : 1540911374827
+         * createdOn : 1541837330090
          */
 
         private String id;
@@ -240,22 +250,32 @@ public class UserBean {
 
     public static class AgencyInfoBean {
         /**
-         * realName : kk
-         * company : mango
-         * position : ceo
-         * phone : 18318836309
-         * recommendedBy : null
-         * level : 0
-         * status : 2
+         * agencyCode :
+         * realName : yy
+         * company : 芒果
+         * position : IT
+         * phone : 18318536309
+         * status : 1
+         * node : false
+         * accepted : false
          */
 
+        private String agencyCode;
         private String realName;
         private String company;
         private String position;
         private String phone;
-        private Object recommendedBy;
-        private int level;
         private int status;
+        private boolean node;
+        private boolean accepted;
+
+        public String getAgencyCode() {
+            return agencyCode;
+        }
+
+        public void setAgencyCode(String agencyCode) {
+            this.agencyCode = agencyCode;
+        }
 
         public String getRealName() {
             return realName;
@@ -289,22 +309,6 @@ public class UserBean {
             this.phone = phone;
         }
 
-        public Object getRecommendedBy() {
-            return recommendedBy;
-        }
-
-        public void setRecommendedBy(Object recommendedBy) {
-            this.recommendedBy = recommendedBy;
-        }
-
-        public int getLevel() {
-            return level;
-        }
-
-        public void setLevel(int level) {
-            this.level = level;
-        }
-
         public int getStatus() {
             return status;
         }
@@ -312,17 +316,33 @@ public class UserBean {
         public void setStatus(int status) {
             this.status = status;
         }
+
+        public boolean isNode() {
+            return node;
+        }
+
+        public void setNode(boolean node) {
+            this.node = node;
+        }
+
+        public boolean isAccepted() {
+            return accepted;
+        }
+
+        public void setAccepted(boolean accepted) {
+            this.accepted = accepted;
+        }
     }
 
     public static class UserProfileBean {
         /**
-         * identity : ["创业者","从业者"]
-         * hobbies : ["小白学堂","技术开发"]
-         * realName : leo
-         * age : 19
-         * sex : 男
-         * company : mango
-         * duty : software
+         * identity : ["从业者","创业者"]
+         * hobbies : ["小白学堂","数字钱包"]
+         * realName : 杨鑫斌
+         * age : 18
+         * sex : 先生
+         * company : 安公
+         * duty : it
          */
 
         private String realName;
@@ -393,13 +413,13 @@ public class UserBean {
     public static class WalletBean {
         /**
          * id : 5b8a3d4b04440c0a48a33a05
-         * blockChainWalletAddress : null
+         * blockChainWalletAddress :
          * walletAddress : 0xe72e387af12e086aeecc8ef19c771cc8
-         * ppCoins : 79396.1
+         * ppCoins : 79934.3
          */
 
         private String id;
-        private Object blockChainWalletAddress;
+        private String blockChainWalletAddress;
         private String walletAddress;
         private double ppCoins;
 
@@ -411,11 +431,11 @@ public class UserBean {
             this.id = id;
         }
 
-        public Object getBlockChainWalletAddress() {
+        public String getBlockChainWalletAddress() {
             return blockChainWalletAddress;
         }
 
-        public void setBlockChainWalletAddress(Object blockChainWalletAddress) {
+        public void setBlockChainWalletAddress(String blockChainWalletAddress) {
             this.blockChainWalletAddress = blockChainWalletAddress;
         }
 
@@ -439,15 +459,15 @@ public class UserBean {
     public static class BillingBean {
         /**
          * startOn : 1538135914379
-         * endOn : 1559044714381
-         * billingAmount : 28
+         * endOn : 1566820714381
+         * billingAmount : 28.0
          * billingType : monthly
          * auto : true
          */
 
         private long startOn;
         private long endOn;
-        private int billingAmount;
+        private double billingAmount;
         private String billingType;
         private boolean auto;
 
@@ -467,11 +487,11 @@ public class UserBean {
             this.endOn = endOn;
         }
 
-        public int getBillingAmount() {
+        public double getBillingAmount() {
             return billingAmount;
         }
 
-        public void setBillingAmount(int billingAmount) {
+        public void setBillingAmount(double billingAmount) {
             this.billingAmount = billingAmount;
         }
 

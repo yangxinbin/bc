@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -56,7 +57,11 @@ public class RefereeActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView_back:
-                AppUtils.hideInput(RefereeActivity.this);
+                if (!etBcRe.isCursorVisible()) {
+                    AppUtils.hideInput(RefereeActivity.this);
+                }else {
+
+                }
                 finish();
                 break;
             case R.id.bt_sure:

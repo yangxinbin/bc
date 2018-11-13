@@ -65,10 +65,9 @@
             <TextView
                 android:id="@+id/tv_free_title"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:text="徐小平·三点钟课程"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize" />

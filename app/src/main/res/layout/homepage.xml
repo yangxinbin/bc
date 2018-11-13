@@ -6,12 +6,14 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <include layout="@layout/refresh_recycler"/>
+    <include layout="@layout/refresh_recycler" />
+
     <include
         layout="@layout/include_play_bar"
         android:layout_width="match_parent"
-        android:layout_margin="@dimen/dp_10"
         android:layout_height="@dimen/play_bar_height"
         android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom" />
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10" />
 </RelativeLayout>

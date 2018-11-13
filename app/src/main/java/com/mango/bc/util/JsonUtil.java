@@ -2,6 +2,7 @@ package com.mango.bc.util;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.mango.bc.homepage.bean.BannerBean;
 import com.mango.bc.homepage.bean.VipPackageBean;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.wallet.bean.CheckBean;
@@ -28,5 +29,10 @@ public class JsonUtil {
         Gson gson = new Gson();
         List<VipPackageBean> vipPackageBeans = gson.fromJson(res, new TypeToken<List<VipPackageBean>>(){}.getType());
         return vipPackageBeans;
+    }
+    public static List<BannerBean> readBannerBean(String res) {
+        Gson gson = new Gson();
+        List<BannerBean> bannerBeanList = gson.fromJson(res, new TypeToken<List<BannerBean>>(){}.getType());
+        return bannerBeanList;
     }
 }

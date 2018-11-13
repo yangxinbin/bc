@@ -232,7 +232,7 @@ public class CoverLoader {
         Bitmap bitmap = null;
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = getinSampleSize(options);
-        //options.inPreferredConfig = Bitmap.Config.RGB_565;//颜色要求不高
+        options.inPreferredConfig = Bitmap.Config.RGB_565;//颜色要求不高
         //options.inPurgeable = true;
         //options.inInputShareable = true;
         SoftReference softRef = new SoftReference(BitmapFactory.decodeStream(

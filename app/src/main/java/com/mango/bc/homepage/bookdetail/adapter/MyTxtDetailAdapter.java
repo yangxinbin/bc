@@ -18,6 +18,8 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.mango.bc.R;
@@ -64,7 +66,11 @@ public class MyTxtDetailAdapter extends RecyclerView.Adapter {
             final MyTxtDetailAdapter.BookDetailViewHolder viewHolder = (MyTxtDetailAdapter.BookDetailViewHolder) holder;
             if (datas.get(position) != null) {
                 Log.v("uuuuuuuuuuuu", "----" + Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName());
+                RequestOptions options = new RequestOptions()
+                        .skipMemoryCache(true)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE);
                 Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName())
+                        .apply(options)
                         .into(new SimpleTarget<Drawable>() {
                             @Override
                             public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {

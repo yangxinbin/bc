@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,18 +17,31 @@ import com.mango.bc.R;
 import com.mango.bc.homepage.activity.CollageActivity;
 import com.mango.bc.homepage.activity.SearchActivity;
 import com.mango.bc.homepage.activity.VipDetailActivity;
+import com.mango.bc.homepage.bean.BannerBean;
+import com.mango.bc.mine.bean.UserBean;
+import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.GlideImageLoader;
+import com.mango.bc.util.HttpUtils;
+import com.mango.bc.util.JsonUtil;
+import com.mango.bc.util.Urls;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerClickListener;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class HeadFragment extends Fragment {
     @Bind(R.id.et_search)
@@ -78,9 +92,43 @@ public class HeadFragment extends Fragment {
             }
         });
         //AppUtils.hideInput(getActivity());
-        initBanner();
+        init();
+        //initBanner();
         //initView(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));
         return view;
+    }
+
+    private void init() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpUtils.doGet(Urls.HOST_BANNER, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                    }
+
+                    @Override
+                    public void onResponse(Call call, final Response response) {
+                        final String string;
+                        try {
+                            if (getActivity() != null) {
+                                string = response.body().string();
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        List<BannerBean> bannerBeanList = JsonUtil.readBannerBean(string);
+                                        initBanner(bannerBeanList);
+                                    }
+                                });
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+            }
+        }).start();
     }
 
     /*    private void initView(UserBean auth) {
@@ -109,13 +157,19 @@ public class HeadFragment extends Fragment {
                 return;
             initView(userBean);
         }*/
-    private void initBanner() {
+    private void initBanner(List<BannerBean> bannerBeanList) {
         List<String> pathsImage = new ArrayList<>();
         List<String> pathsTitle = new ArrayList<>();
-        pathsImage.add(getResourcesUri(R.drawable.banner));
+        for (int i = 0; i < bannerBeanList.size(); i++) {
+            if (bannerBeanList.get(i).getImage() != null) {
+                pathsImage.add(Urls.HOST_GETFILE + "?name=" + bannerBeanList.get(i).getImage().getFileName());
+                pathsTitle.add("");
+            }
+        }
+/*        pathsImage.add(getResourcesUri(R.drawable.banner));
         pathsImage.add(getResourcesUri(R.drawable.banner));
         pathsTitle.add("");
-        pathsTitle.add("");
+        pathsTitle.add("");*/
         imageView.setImageLoader(new GlideImageLoader())
                 .setBannerTitles(pathsTitle)
                 .setImages(pathsImage)

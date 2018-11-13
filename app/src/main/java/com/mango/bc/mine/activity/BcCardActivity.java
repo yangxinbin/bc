@@ -55,9 +55,7 @@ public class BcCardActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView_back:
-                if (etBc.isCursorVisible()) {
-                    AppUtils.hideInput(BcCardActivity.this);
-                }
+                AppUtils.HideKeyboard(etBc);
                 finish();
                 break;
             case R.id.bt_sure:

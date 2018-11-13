@@ -57,11 +57,7 @@ public class RefereeActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView_back:
-                if (!etBcRe.isCursorVisible()) {
-                    AppUtils.hideInput(RefereeActivity.this);
-                }else {
-
-                }
+                AppUtils.HideKeyboard(etBcRe);
                 finish();
                 break;
             case R.id.bt_sure:

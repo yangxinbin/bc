@@ -75,7 +75,7 @@ public class TransferActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView_back:
-                AppUtils.hideInput(TransferActivity.this);
+                AppUtils.HideKeyboard(etPurseAdress);
                 finish();
                 break;
             case R.id.bu_sure:
@@ -228,7 +228,7 @@ public class TransferActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            AppUtils.hideInput(TransferActivity.this);
+            AppUtils.HideKeyboard(etPurseAdress);
             finish();
             return false;
         } else {

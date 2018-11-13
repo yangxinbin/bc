@@ -229,7 +229,7 @@ public class SearchActivity extends BaseServiceActivity implements BookSearchVie
                     lHistory.setVisibility(View.VISIBLE);
                     lSearchBook.setVisibility(View.GONE);
                     imgNoBook.setVisibility(View.GONE);
-                    AppUtils.hideInput(getBaseContext());
+                    AppUtils.HideKeyboard(etSearch);
                 }
             }
         });
@@ -324,7 +324,7 @@ public class SearchActivity extends BaseServiceActivity implements BookSearchVie
                 bookPresenter.visitBooks(getBaseContext(), TYPE, etSearch.getText().toString(), page, false);
                 lHistory.setVisibility(View.GONE);
                 lSearchBook.setVisibility(View.VISIBLE);
-                AppUtils.hideInput(getBaseContext());
+                AppUtils.HideKeyboard(etSearch);
                 saveSearchHistory(inputText);                     //保存搜索历史
                 break;
         }

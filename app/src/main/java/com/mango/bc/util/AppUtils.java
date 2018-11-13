@@ -52,12 +52,18 @@ public class AppUtils {
     /**
      * 隐藏输入法
      *
-     * @param context 上下文
      */
-    @SuppressLint("NewApi")
+/*    @SuppressLint("NewApi")
     public static void hideInput(Context context) {
         InputMethodManager manager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         manager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+    }*/
+
+    public static void HideKeyboard(View v) {
+        InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm.isActive()) {
+            imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
+        }
     }
 
     /**

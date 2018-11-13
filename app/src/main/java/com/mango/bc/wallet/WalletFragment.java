@@ -411,7 +411,45 @@ public class WalletFragment extends BaseHomeFragment {
             }
         }).start();
     }
+    private void loadUser() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("openId", spUtils.getString("openId", ""));
+                Log.v("qqqqqqqqqqq1111", spUtils.getString("openId", ""));
+                HttpUtils.doPost(Urls.HOST_AUTH, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        mHandler.sendEmptyMessage(2);
+                    }
 
+                    @Override
+                    public void onResponse(Call call, final Response response) {
+                        final String string;
+                        try {
+                            string = response.body().string();
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    spUtils.put("auth", string);
+                                    UserBean userBean = MineJsonUtils.readUserBean(string);
+                                    if (userBean != null) {
+                                        spUtils.put("authToken", userBean.getAuthToken());
+                                        EventBus.getDefault().postSticky(userBean);//刷新
+                                    }
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+            }
+        }).start();
+    }
     private MyHandler mHandler = new MyHandler();
 
     private class MyHandler extends Handler {
@@ -429,7 +467,7 @@ public class WalletFragment extends BaseHomeFragment {
                     try {
                         EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
                         AppUtils.showToast(getActivity(), "签到成功");
-                        //loadUser();
+                        loadUser();
                         EventBus.getDefault().postSticky(new RefreshWalletBean(true));//刷新钱包
                         initChechfromWallet(checkBean);
                         //ifCheckIn();

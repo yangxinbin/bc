@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.mango.bc.R;
 import com.mango.bc.homepage.net.bean.BookBean;
 import com.mango.bc.util.HttpUtils;
@@ -59,8 +63,15 @@ public class TxtDetailAdapter extends RecyclerView.Adapter {
         if (holder instanceof TxtDetailAdapter.BookDetailViewHolder) {
             final TxtDetailAdapter.BookDetailViewHolder viewHolder = (TxtDetailAdapter.BookDetailViewHolder) holder;
             if (datas.get(position).getFileName() != null) {
-                //Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName()).into(viewHolder.img_book_detail);
-                Log.v("uuuuuuuuuuuu", "----" + Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName());
+                Log.v("uuuuuuuuuuuu", "------t---" + Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName());
+/*                Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName())
+                        .into(new SimpleTarget<Drawable>() {
+                            @Override
+                            public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
+                                dialog_load.dismiss();
+                                viewHolder.img_txt_detail.setImageDrawable(resource);
+                            }
+                        });*/
                 setIamge(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName(), viewHolder.img_txt_detail);
             }
         }
@@ -87,13 +98,13 @@ public class TxtDetailAdapter extends RecyclerView.Adapter {
                     public void run() {
                         dialog_load.dismiss();
                         imageView.setImageBitmap(bitmap);
-/*                        mHandler.postDelayed(new Runnable() {
+                        mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 bitmap.recycle();  //一秒之后回收
                                 System.gc();//提醒系统即时回收
                             }
-                        }, 1000);*/
+                        }, 1000);
                     }
                 });
             }
@@ -111,7 +122,7 @@ public class TxtDetailAdapter extends RecyclerView.Adapter {
         Bitmap bitmap = null;
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = getinSampleSize(options);
-        //options.inPreferredConfig = Bitmap.Config.RGB_565;//颜色要求不高
+        options.inPreferredConfig = Bitmap.Config.RGB_565;//颜色要求不高
         //options.inPurgeable = true;
         //options.inInputShareable = true;
         SoftReference softRef = new SoftReference(BitmapFactory.decodeStream(

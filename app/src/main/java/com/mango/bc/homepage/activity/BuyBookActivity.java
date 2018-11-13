@@ -28,6 +28,8 @@ import com.mango.bc.util.SPUtils;
 import com.mango.bc.util.Urls;
 import com.mango.bc.wallet.activity.RechargeActivity;
 import com.mango.bc.wallet.bean.RefreshWalletBean;
+import com.mango.bc.wallet.bean.WalletBean;
+import com.mango.bc.wallet.walletjsonutil.WalletJsonUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -74,7 +76,9 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
         spUtils = SPUtils.getInstance("bc", this);
         myBookPresenter = new MyBookPresenterImpl(this);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
         initAuth(MineJsonUtils.readUserBean(spUtils.getString("auth", "")));
+        initAuth(WalletJsonUtils.readWalletBean(spUtils.getString("wallet", "")));
         Log.v("ppppppp", ppCoins + "===" + prices);
         if (ppCoins < prices) {
             tvBuy.setText(getResources().getString(R.string.pp_recharge));
@@ -85,11 +89,17 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
         if (userBean == null)
             return;
         isVip = userBean.isVip();
-        EventBus.getDefault().register(this);
-        if (userBean.getWallet() != null) {
+/*        if (userBean.getWallet() != null) {
             ppCoins = userBean.getWallet().getPpCoins();
             tvAllPpg.setText(userBean.getWallet().getPpCoins() + "PPG");
-        }
+        }*/
+    }
+
+    private void initAuth(WalletBean walletBean) {
+        if (walletBean == null)
+            return;
+        ppCoins = walletBean.getPpCoins();
+        tvAllPpg.setText(ppCoins + "PPG");
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)

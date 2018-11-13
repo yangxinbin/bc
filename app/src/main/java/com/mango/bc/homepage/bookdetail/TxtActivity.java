@@ -61,7 +61,6 @@ public class TxtActivity extends BaseServiceActivity {
         if (playBarBean == null) {
             return;
         }
-        Log.v("iiiiiiiiiiiiii", "---iiiihhhhiiiii---");
         if (!playBarBean.isShowBar()) {
             flPlayBar.setVisibility(View.GONE);//播放控件
             Log.v("iiiiiiiiiiiiii", "----h---");
@@ -75,12 +74,15 @@ public class TxtActivity extends BaseServiceActivity {
         }
         if (bookBean.getChapters() != null) {
             if (position == -1) {
+                Log.v("uuuuuuuuuuuu", "----r1"+position);
+
                 txtDetailAdapter = new TxtDetailAdapter(bookBean.getChapters().get(0).getContentImages(), this);
             } else {
+                Log.v("uuuuuuuuuuuu", "----r2"+position);
+
                 txtDetailAdapter = new TxtDetailAdapter(bookBean.getChapters().get(position).getContentImages(), this);
             }
             recycle.setLayoutManager(new LinearLayoutManager(this));
-            Log.v("rrrrrrrrrrrr", "----r1");
             recycle.setAdapter(txtDetailAdapter);
         }
     }
@@ -121,6 +123,8 @@ public class TxtActivity extends BaseServiceActivity {
             txtDetailAdapter.recycleBitmap();
         if (myTxtDetailAdapter != null)
             myTxtDetailAdapter.recycleBitmap();
+        Log.v("uuuuuuuuuuuu", "----gc--");
+        recycle.removeAllViews();
         ButterKnife.unbind(this);
         EventBus.getDefault().unregister(this);
     }

@@ -175,7 +175,7 @@ public class MyTxtDetailAdapter extends RecyclerView.Adapter {
         window.setGravity(Gravity.CENTER);
         //设置动画效果
         //window.setWindowAnimations(R.style.AnimBottom);
-        dialog_load.setCanceledOnTouchOutside(true);
+        dialog_load.setCanceledOnTouchOutside(false);
         dialog_load.show();
     }
 

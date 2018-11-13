@@ -64,15 +64,15 @@ public class MyTxtDetailAdapter extends RecyclerView.Adapter {
             final MyTxtDetailAdapter.BookDetailViewHolder viewHolder = (MyTxtDetailAdapter.BookDetailViewHolder) holder;
             if (datas.get(position) != null) {
                 Log.v("uuuuuuuuuuuu", "----" + Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName());
-/*                Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName())
+                Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName())
                         .into(new SimpleTarget<Drawable>() {
                             @Override
                             public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
                                 dialog_load.dismiss();
                                 viewHolder.img_txt_detail.setImageDrawable(resource);
                             }
-                        });*/
-                setIamge(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName(), viewHolder.img_txt_detail);
+                        });
+                //setIamge(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName(), viewHolder.img_txt_detail);
             }
         }
     }
@@ -110,12 +110,14 @@ public class MyTxtDetailAdapter extends RecyclerView.Adapter {
             }
         });
     }
+
     public void recycleBitmap() {
-        if (bitmap != null){
+        if (bitmap != null) {
             bitmap.recycle();  //一秒之后回收
             System.gc();//提醒系统即时回收
         }
     }
+
     public static Bitmap streamToBitmap(InputStream input) {
         Bitmap bitmap = null;
         BitmapFactory.Options options = new BitmapFactory.Options();

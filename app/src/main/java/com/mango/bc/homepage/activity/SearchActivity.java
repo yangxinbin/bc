@@ -291,6 +291,7 @@ public class SearchActivity extends BaseServiceActivity implements BookSearchVie
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView_back:
+                AppUtils.HideKeyboard(etSearch);
                 finish();
                 break;
             case R.id.l_delete:

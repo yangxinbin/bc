@@ -211,7 +211,7 @@ public class ExpertApplyActivity extends BaseActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    AppUtils.showToast(ExpertApplyActivity.this, "申请成功");
+                                    //AppUtils.showToast(ExpertApplyActivity.this, "申请成功");
                                     loadUser();
                                 }
                             });

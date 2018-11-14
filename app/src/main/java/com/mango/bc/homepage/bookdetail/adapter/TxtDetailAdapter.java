@@ -4,6 +4,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
@@ -74,14 +77,42 @@ public class TxtDetailAdapter extends RecyclerView.Adapter {
                         .into(new SimpleTarget<Drawable>() {
                             @Override
                             public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
-                                Log.v("uuuuuuuuuuuu", datas.size()+"-----resource---"+resource.toString());
-                                viewHolder.img_txt_detail.setImageDrawable(resource);
+                                Log.v("uuuuuuuuuuuu", datas.size() + "-----resource---" + resource.toString());
+                                //if (datas.size() >= 3) {
+                                //    viewHolder.img_txt_detail.setImageBitmap(drawableToBitmap(resource));
+
+                                //} else {
+                                    viewHolder.img_txt_detail.setImageDrawable(resource);
+                                //}
                                 dialog_load.dismiss();
                             }
                         });
                 //setIamge(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName(), viewHolder.img_txt_detail);
             }
         }
+    }
+
+    public static Bitmap drawableToBitmap(Drawable drawable) {
+        // 取 drawable 的长宽
+        int w = drawable.getIntrinsicWidth();
+        int h = drawable.getIntrinsicHeight();
+
+        // 取 drawable 的颜色格式
+        Bitmap.Config config = /*drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
+                :*/ Bitmap.Config.ARGB_8888;
+        // 建立对应 bitmap
+        Bitmap bitmap = Bitmap.createBitmap(w, h, config);
+        // 建立对应 bitmap 的画布
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, w, h);
+        // 把 drawable 内容画到画布中
+        drawable.draw(canvas);
+        Log.v("uuuuuuuuuuuu", "----1-drawableToBitmap---" + bitmap.getByteCount());
+        Matrix matrix = new Matrix();
+        matrix.setScale(0.5f, 0.5f);
+        bitmap = Bitmap.createBitmap( bitmap, 0, 0,  bitmap.getWidth(), bitmap.getHeight(), matrix, false);
+        Log.v("uuuuuuuuuuuu", "----2-drawableToBitmap---" + bitmap.getByteCount());
+        return bitmap;
     }
 
     private void setIamge(String url, final ImageView imageView) {
@@ -182,7 +213,7 @@ public class TxtDetailAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        Log.v("uuuuuuuuuuuu", "-----datas.size()---"+datas.size());
+        Log.v("uuuuuuuuuuuu", "-----datas.size()---" + datas.size());
         return datas.size();
     }
 

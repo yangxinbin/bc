@@ -62,7 +62,7 @@
                     android:id="@+id/tv_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="已有成员452人"
+                    android:text="已有成员0人"
                     android:textColor="@color/black"
                     android:textSize="@dimen/textSize" />
 
@@ -70,7 +70,7 @@
                     android:id="@+id/tv_ppg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="累计收益200"
+                    android:text="累计收益0PPG"
                     android:textColor="@color/black"
                     android:textSize="@dimen/textSize" />
             </LinearLayout>

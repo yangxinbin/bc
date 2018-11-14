@@ -35,6 +35,7 @@ public class ExpertApplyDetailActivity extends BaseActivity {
     @Bind(R.id.tv_member_state)
     TextView tvMemberState;
     private SPUtils spUtils;
+    private String stringCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,10 @@ public class ExpertApplyDetailActivity extends BaseActivity {
         } else {
             imageViePic.setImageDrawable(getResources().getDrawable(R.drawable.head_pic2));
         }
+        if (auth.getAgencyInfo() != null) {
+            stringCode = auth.getAgencyInfo().getAgencyCode();
+            tvNumber.setText("邀请码：" + stringCode);
+        }
     }
 
     @OnClick({R.id.imageView_back, R.id.tv_teach, R.id.tv_copy, R.id.tv_code, R.id.l_member, R.id.open_point})
@@ -82,7 +87,7 @@ public class ExpertApplyDetailActivity extends BaseActivity {
                         (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
                 /**之前的应用过期的方法，clipboardManager.setText(copy);*/
                 assert clipboardManager != null;
-                clipboardManager.setPrimaryClip(ClipData.newPlainText(null, tvNumber.getText().toString()));
+                clipboardManager.setPrimaryClip(ClipData.newPlainText(null, stringCode));
                 if (clipboardManager.hasPrimaryClip()) {
                     clipboardManager.getPrimaryClip().getItemAt(0).getText();
                 }
@@ -97,7 +102,7 @@ public class ExpertApplyDetailActivity extends BaseActivity {
                 break;
             case R.id.open_point:
                 intent = new Intent(this, PointApplyActivity.class);
-                intent.putExtra("expert_detail",true);
+                intent.putExtra("expert_detail", true);
                 startActivity(intent);
                 finish();
                 break;

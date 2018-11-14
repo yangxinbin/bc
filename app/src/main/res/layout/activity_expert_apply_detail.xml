@@ -179,7 +179,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:padding="@dimen/dp_5"
-                        android:text="52人收益200"
+                        android:text="0人收益0PPG"
                         android:textColor="@color/gray_6"
                         android:textSize="@dimen/dp_14" />
 

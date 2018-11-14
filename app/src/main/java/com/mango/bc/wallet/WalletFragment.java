@@ -209,12 +209,14 @@ public class WalletFragment extends BaseHomeFragment {
                     public void onResponse(Call call, Response response) throws IOException {
                         try {
                             String string = response.body().string();
-                            mCache.put("wallet");
+                            mCache.put("wallet",string);
+                            spUtils.put("wallet",string);
                             final WalletBean walletBean = WalletJsonUtils.readWalletBean(string);
                             if (getActivity() != null)
                                 getActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
+                                        Log.v("tttttttttttt", "===wallet====");
                                         initAuth(walletBean);
                                     }
                                 });

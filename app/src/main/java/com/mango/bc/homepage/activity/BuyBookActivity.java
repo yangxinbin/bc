@@ -79,26 +79,27 @@ public class BuyBookActivity extends BaseActivity implements MyAllBookView {
         EventBus.getDefault().register(this);
         initAuth(MineJsonUtils.readUserBean(spUtils.getString("auth", "")));
         initAuth(WalletJsonUtils.readWalletBean(spUtils.getString("wallet", "")));
-        Log.v("ppppppp", ppCoins + "===" + prices);
-        if (ppCoins < prices) {
-            tvBuy.setText(getResources().getString(R.string.pp_recharge));
-        }
+        Log.v("tttttttttttt", ppCoins + "===" + prices);
     }
 
     private void initAuth(UserBean userBean) {
         if (userBean == null)
             return;
         isVip = userBean.isVip();
-/*        if (userBean.getWallet() != null) {
+        if (userBean.getWallet() != null) {
             ppCoins = userBean.getWallet().getPpCoins();
             tvAllPpg.setText(userBean.getWallet().getPpCoins() + "PPG");
-        }*/
+        }
     }
 
     private void initAuth(WalletBean walletBean) {
         if (walletBean == null)
             return;
         ppCoins = walletBean.getPpCoins();
+        if (ppCoins < prices) {
+            tvBuy.setText(getResources().getString(R.string.pp_recharge));
+        }
+        Log.v("tttttttttttt", "===ppCoins===="+ppCoins);
         tvAllPpg.setText(ppCoins + "PPG");
     }
 

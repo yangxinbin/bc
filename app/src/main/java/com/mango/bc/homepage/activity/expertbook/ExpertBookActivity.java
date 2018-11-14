@@ -18,6 +18,7 @@ import com.mango.bc.base.BaseServiceActivity;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.activity.BuyBookActivity;
 import com.mango.bc.homepage.adapter.BookExpertAdapter;
+import com.mango.bc.homepage.bean.BuySuccessBean;
 import com.mango.bc.homepage.bookdetail.ExpertBookDetailActivity;
 import com.mango.bc.homepage.bookdetail.play.executor.ControlPanel;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
@@ -100,6 +101,20 @@ public class ExpertBookActivity extends BaseServiceActivity implements BookExper
         //parseIntent();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void BuySuccessBeanEventBus(BuySuccessBean bean) {
+        if (bean == null) {
+            return;
+        }
+        Log.v("bbbbb", "---1----" + bean.getBuySuccess());
+
+        if (bean.getBuySuccess()) {
+            Log.v("bbbbb", "----2---");
+            tv_stage.setText("播放");
+        }
+        EventBus.getDefault().removeStickyEvent(BuySuccessBean.class);
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true, priority = 5)
     public void RefreshStageBeanEventBus(RefreshStageBean bean) {
         if (bean == null) {
@@ -162,7 +177,23 @@ public class ExpertBookActivity extends BaseServiceActivity implements BookExper
         public void onGetClick(View view, int position) {
             tv_stage = view.findViewById(R.id.tv_stage);
             if (tv_stage.getText().equals("播放")) {//用户没有刷新没有加载时临时调用（刷新与加载会重新与书架匹配）
-                Log.v("bbbbbbbb", "---tv_stage--" + tv_stage.getText());
+                Log.v("bbbbbbbb", "-----" + tv_stage.getText());
+                EventBus.getDefault().postSticky(bookExpertAdapter.getItem(position));
+                if (chechState(bookExpertAdapter.getItem(position).getId())) {
+                    spUtils.put("isFree", true);
+                } else {
+                    spUtils.put("isFree", false);
+                }
+                if (AudioPlayer.get().isPausing() /*&& mData.get(position).getId().equals(spUtils.getString("isSameBook", ""))*/) {
+                    AudioPlayer.get().startPlayer();
+                    //tv_free_stage.setText("播放中");
+                    return;
+                }
+                if (NetUtil.isNetConnect(ExpertBookActivity.this)) {
+                    loadBookDetail(false, bookExpertAdapter.getItem(position).getId());
+                } else {
+                    loadBookDetail(true, bookExpertAdapter.getItem(position).getId());
+                }
             } else {
                 Intent intent = new Intent(ExpertBookActivity.this, BuyBookActivity.class);
                 EventBus.getDefault().postSticky(bookExpertAdapter.getItem(position));

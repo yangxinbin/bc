@@ -74,8 +74,9 @@ public class TxtDetailAdapter extends RecyclerView.Adapter {
                         .into(new SimpleTarget<Drawable>() {
                             @Override
                             public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
-                                dialog_load.dismiss();
+                                Log.v("uuuuuuuuuuuu", "-----resource---"+resource.toString());
                                 viewHolder.img_txt_detail.setImageDrawable(resource);
+                                dialog_load.dismiss();
                             }
                         });
                 //setIamge(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName(), viewHolder.img_txt_detail);
@@ -181,6 +182,7 @@ public class TxtDetailAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
+        Log.v("uuuuuuuuuuuu", "-----datas.size()---"+datas.size());
         return datas.size();
     }
 

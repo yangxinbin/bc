@@ -78,7 +78,8 @@ public class MyTxtDetailAdapter extends RecyclerView.Adapter {
                             @Override
                             public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
                                 drawableToBitmap(resource, viewHolder.img_txt_detail, viewHolder.img_txt_detail_2);
-                                dialog_load.dismiss();
+                                if (datas.size() - 1 == position)
+                                    dialog_load.dismiss();
                             }
                         });
                 //setIamge(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName(), viewHolder.img_txt_detail);

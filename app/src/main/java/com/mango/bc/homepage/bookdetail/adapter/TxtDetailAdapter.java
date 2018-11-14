@@ -86,7 +86,8 @@ public class TxtDetailAdapter extends RecyclerView.Adapter {
                                 //} else {
                                 //viewHolder.img_txt_detail.setImageDrawable(resource);
                                 //}
-                                dialog_load.dismiss();
+                                if (datas.size() - 1 == position)
+                                    dialog_load.dismiss();
                             }
                         });
                 //setIamge(Urls.HOST_GETFILE + "?name=" + datas.get(position).getFileName(), viewHolder.img_txt_detail);

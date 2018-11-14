@@ -2,6 +2,8 @@ package com.mango.bc.util;
 
 import android.app.Activity;
 
+import com.mango.bc.homepage.bookdetail.play.global.Notifier;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class ActivityCollector {
     public static void finishAll() {
         for (Activity activity : activities) {
             if (!activity.isFinishing()) {
+                Notifier.get().cancelAll();
                 activity.finish();
             }
         }

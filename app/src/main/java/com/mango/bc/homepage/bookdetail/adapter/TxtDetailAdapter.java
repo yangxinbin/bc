@@ -49,7 +49,9 @@ public class TxtDetailAdapter extends RecyclerView.Adapter {
     private List<BookBean.ChaptersBean.ContentImagesBean> datas = new ArrayList<>();
     private Handler mHandler = new Handler(Looper.getMainLooper()); //获取主线程的Handler
     private Dialog dialog_load;
-    private Bitmap bitmap;
+    private static Bitmap bitmap;
+    private static Bitmap topBitmap;
+    private static Bitmap bottomBitmap;
 
     public TxtDetailAdapter(List<BookBean.ChaptersBean.ContentImagesBean> datas, Context context) {
         createLoadDailog(context);
@@ -80,7 +82,7 @@ public class TxtDetailAdapter extends RecyclerView.Adapter {
                                 Log.v("uuuuuuuuuuuu", datas.size() + "-----resource---" + resource.toString());
                                 //if (datas.size() >= 3) {
                                 //    viewHolder.img_txt_detail.setImageBitmap(drawableToBitmap(resource));
-                                drawableToBitmap(resource,viewHolder.img_txt_detail,viewHolder.img_txt_detail_2);
+                                drawableToBitmap(resource, viewHolder.img_txt_detail, viewHolder.img_txt_detail_2);
                                 //} else {
                                 //viewHolder.img_txt_detail.setImageDrawable(resource);
                                 //}
@@ -93,7 +95,7 @@ public class TxtDetailAdapter extends RecyclerView.Adapter {
     }
 
 
-    public static void drawableToBitmap(Drawable drawable,ImageView img_txt_detail, ImageView img_txt_detail_2) {
+    public static void drawableToBitmap(Drawable drawable, ImageView img_txt_detail, ImageView img_txt_detail_2) {
         // 取 drawable 的长宽
         int w = drawable.getIntrinsicWidth();
         int h = drawable.getIntrinsicHeight();
@@ -102,14 +104,14 @@ public class TxtDetailAdapter extends RecyclerView.Adapter {
         Bitmap.Config config = /*drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
                 :*/ Bitmap.Config.RGB_565;
         // 建立对应 bitmap
-        Bitmap bitmap = Bitmap.createBitmap(w, h, config);
+        bitmap = Bitmap.createBitmap(w, h, config);
         // 建立对应 bitmap 的画布
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, w, h);
         // 把 drawable 内容画到画布中
         drawable.draw(canvas);
-        Bitmap topBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), (int) (bitmap.getHeight() / 2.0f));
-        Bitmap bottomBitmap = Bitmap.createBitmap(bitmap, 0, (int) (bitmap.getHeight() / 2.0f), bitmap.getWidth(),
+        topBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), (int) (bitmap.getHeight() / 2.0f));
+        bottomBitmap = Bitmap.createBitmap(bitmap, 0, (int) (bitmap.getHeight() / 2.0f), bitmap.getWidth(),
                 bitmap.getHeight() - (int) (bitmap.getHeight() / 2.0f));
         img_txt_detail.setImageBitmap(topBitmap);
         img_txt_detail_2.setImageBitmap(bottomBitmap);
@@ -157,10 +159,14 @@ public class TxtDetailAdapter extends RecyclerView.Adapter {
     }
 
     public void recycleBitmap() {
-        if (bitmap != null) {
+        if (bitmap != null)
             bitmap.recycle();  //一秒之后回收
-            System.gc();//提醒系统即时回收
-        }
+        if (topBitmap != null) //如果没有回收
+            topBitmap.recycle();
+        if (bottomBitmap != null) //如果没有回收
+            bottomBitmap.recycle();
+        System.gc();//提醒系统即时回收
+
     }
 
     public static Bitmap streamToBitmap(InputStream input) {
@@ -225,7 +231,7 @@ public class TxtDetailAdapter extends RecyclerView.Adapter {
     }
 
     class BookDetailViewHolder extends RecyclerView.ViewHolder {
-        ImageView img_txt_detail,img_txt_detail_2;
+        ImageView img_txt_detail, img_txt_detail_2;
 
         public BookDetailViewHolder(final View itemView) {
             super(itemView);

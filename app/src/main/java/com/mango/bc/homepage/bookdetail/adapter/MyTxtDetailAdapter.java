@@ -47,7 +47,9 @@ public class MyTxtDetailAdapter extends RecyclerView.Adapter {
     private List<MyBookBean.BookBean.ChaptersBean.ContentImagesBean> datas = new ArrayList<>();
     private Handler mHandler = new Handler(Looper.getMainLooper()); //获取主线程的Handler
     private Dialog dialog_load;
-    private Bitmap bitmap;
+    private static Bitmap bitmap;
+    private static Bitmap topBitmap;
+    private static Bitmap bottomBitmap;
 
     public MyTxtDetailAdapter(List<MyBookBean.BookBean.ChaptersBean.ContentImagesBean> datas, Context context) {
         createLoadDailog(context);
@@ -93,14 +95,14 @@ public class MyTxtDetailAdapter extends RecyclerView.Adapter {
         Bitmap.Config config = /*drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
                 :*/ Bitmap.Config.RGB_565;
         // 建立对应 bitmap
-        Bitmap bitmap = Bitmap.createBitmap(w, h, config);
+        bitmap = Bitmap.createBitmap(w, h, config);
         // 建立对应 bitmap 的画布
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, w, h);
         // 把 drawable 内容画到画布中
         drawable.draw(canvas);
-        Bitmap topBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), (int) (bitmap.getHeight() / 2.0f));
-        Bitmap bottomBitmap = Bitmap.createBitmap(bitmap, 0, (int) (bitmap.getHeight() / 2.0f), bitmap.getWidth(),
+        topBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), (int) (bitmap.getHeight() / 2.0f));
+        bottomBitmap = Bitmap.createBitmap(bitmap, 0, (int) (bitmap.getHeight() / 2.0f), bitmap.getWidth(),
                 bitmap.getHeight() - (int) (bitmap.getHeight() / 2.0f));
         img_txt_detail.setImageBitmap(topBitmap);
         img_txt_detail_2.setImageBitmap(bottomBitmap);
@@ -148,10 +150,13 @@ public class MyTxtDetailAdapter extends RecyclerView.Adapter {
     }
 
     public void recycleBitmap() {
-        if (bitmap != null) {
+        if (bitmap != null)
             bitmap.recycle();  //一秒之后回收
-            System.gc();//提醒系统即时回收
-        }
+        if (topBitmap != null) //如果没有回收
+            topBitmap.recycle();
+        if (bottomBitmap != null) //如果没有回收
+            bottomBitmap.recycle();
+        System.gc();//提醒系统即时回收
     }
 
     public static Bitmap streamToBitmap(InputStream input) {

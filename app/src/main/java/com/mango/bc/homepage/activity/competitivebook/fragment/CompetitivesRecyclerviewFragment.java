@@ -217,7 +217,22 @@ public class CompetitivesRecyclerviewFragment extends Fragment implements BookCo
         public void onHeadGetClick(View view, int position) {
             tv_head_stage = view.findViewById(R.id.tv_head_stage);
             if (tv_head_stage.getText().equals("播放")) {
-                Log.v("bbbbbbbb", "---tv_head_stage--" + tv_head_stage.getText());
+                EventBus.getDefault().postSticky(adapter.getItem(position));
+                if (chechState(adapter.getItem(position).getId())) {
+                    spUtils.put("isFree", true);
+                } else {
+                    spUtils.put("isFree", false);
+                }
+                if (AudioPlayer.get().isPausing() /*&& mData.get(position).getId().equals(spUtils.getString("isSameBook", ""))*/) {
+                    AudioPlayer.get().startPlayer();
+                    //tv_free_stage.setText("播放中");
+                    return;
+                }
+                if (NetUtil.isNetConnect(getActivity())) {
+                    loadBookDetail(false, adapter.getItem(position).getId());
+                } else {
+                    loadBookDetail(true, adapter.getItem(position).getId());
+                }
             } else {
                 Intent intent = new Intent(getActivity(), BuyBookActivity.class);
                 EventBus.getDefault().postSticky(adapter.getItem(position));

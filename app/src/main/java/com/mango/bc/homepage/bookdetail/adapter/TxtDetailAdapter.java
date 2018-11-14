@@ -74,7 +74,7 @@ public class TxtDetailAdapter extends RecyclerView.Adapter {
                         .into(new SimpleTarget<Drawable>() {
                             @Override
                             public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
-                                Log.v("uuuuuuuuuuuu", "-----resource---"+resource.toString());
+                                Log.v("uuuuuuuuuuuu", datas.size()+"-----resource---"+resource.toString());
                                 viewHolder.img_txt_detail.setImageDrawable(resource);
                                 dialog_load.dismiss();
                             }

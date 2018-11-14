@@ -11,4 +11,11 @@
         android:scaleType="fitXY"
         android:adjustViewBounds="true"
         android:background="@drawable/write_alp"/>
+    <ImageView
+        android:id="@+id/img_txt_detail_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:background="@drawable/write_alp"/>
 </LinearLayout>

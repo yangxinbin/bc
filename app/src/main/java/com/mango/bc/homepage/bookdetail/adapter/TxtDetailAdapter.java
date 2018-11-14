@@ -80,9 +80,9 @@ public class TxtDetailAdapter extends RecyclerView.Adapter {
                                 Log.v("uuuuuuuuuuuu", datas.size() + "-----resource---" + resource.toString());
                                 //if (datas.size() >= 3) {
                                 //    viewHolder.img_txt_detail.setImageBitmap(drawableToBitmap(resource));
-
+                                drawableToBitmap(resource,viewHolder.img_txt_detail,viewHolder.img_txt_detail_2);
                                 //} else {
-                                    viewHolder.img_txt_detail.setImageDrawable(resource);
+                                //viewHolder.img_txt_detail.setImageDrawable(resource);
                                 //}
                                 dialog_load.dismiss();
                             }
@@ -92,14 +92,15 @@ public class TxtDetailAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public static Bitmap drawableToBitmap(Drawable drawable) {
+
+    public static void drawableToBitmap(Drawable drawable,ImageView img_txt_detail, ImageView img_txt_detail_2) {
         // 取 drawable 的长宽
         int w = drawable.getIntrinsicWidth();
         int h = drawable.getIntrinsicHeight();
 
         // 取 drawable 的颜色格式
         Bitmap.Config config = /*drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
-                :*/ Bitmap.Config.ARGB_8888;
+                :*/ Bitmap.Config.RGB_565;
         // 建立对应 bitmap
         Bitmap bitmap = Bitmap.createBitmap(w, h, config);
         // 建立对应 bitmap 的画布
@@ -107,12 +108,18 @@ public class TxtDetailAdapter extends RecyclerView.Adapter {
         drawable.setBounds(0, 0, w, h);
         // 把 drawable 内容画到画布中
         drawable.draw(canvas);
-        Log.v("uuuuuuuuuuuu", "----1-drawableToBitmap---" + bitmap.getByteCount());
+        Bitmap topBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), (int) (bitmap.getHeight() / 2.0f));
+        Bitmap bottomBitmap = Bitmap.createBitmap(bitmap, 0, (int) (bitmap.getHeight() / 2.0f), bitmap.getWidth(),
+                bitmap.getHeight() - (int) (bitmap.getHeight() / 2.0f));
+        img_txt_detail.setImageBitmap(topBitmap);
+        img_txt_detail_2.setImageBitmap(bottomBitmap);
+        /*Log.v("uuuuuuuuuuuu", w+"----"+h+"---"+canvas.getMaximumBitmapHeight()+"----"+canvas.getMaximumBitmapWidth()+"----1-drawableToBitmap---" + bitmap.getByteCount());
         Matrix matrix = new Matrix();
         matrix.setScale(0.5f, 0.5f);
-        bitmap = Bitmap.createBitmap( bitmap, 0, 0,  bitmap.getWidth(), bitmap.getHeight(), matrix, false);
-        Log.v("uuuuuuuuuuuu", "----2-drawableToBitmap---" + bitmap.getByteCount());
-        return bitmap;
+        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, false);
+        Log.v("uuuuuuuuuuuu", w*h+"=="+(canvas.getMaximumBitmapHeight()*canvas.getMaximumBitmapWidth())+"----2-drawableToBitmap---" + bitmap.getByteCount());*/
+        //return bitmap;
+
     }
 
     private void setIamge(String url, final ImageView imageView) {
@@ -218,11 +225,12 @@ public class TxtDetailAdapter extends RecyclerView.Adapter {
     }
 
     class BookDetailViewHolder extends RecyclerView.ViewHolder {
-        ImageView img_txt_detail;
+        ImageView img_txt_detail,img_txt_detail_2;
 
         public BookDetailViewHolder(final View itemView) {
             super(itemView);
             img_txt_detail = (ImageView) itemView.findViewById(R.id.img_txt_detail);
+            img_txt_detail_2 = (ImageView) itemView.findViewById(R.id.img_txt_detail_2);
 
         }
 

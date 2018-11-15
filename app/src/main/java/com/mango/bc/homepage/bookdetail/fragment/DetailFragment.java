@@ -50,7 +50,7 @@ public class DetailFragment extends Fragment {
             recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
             recycle.setAdapter(bookDetailAdapter);
         }
-        EventBus.getDefault().removeStickyEvent(BookDetailBean.class);//展示完删除
+        //EventBus.getDefault().removeStickyEvent(BookDetailBean.class);//展示完删除
     }
 
     @Override

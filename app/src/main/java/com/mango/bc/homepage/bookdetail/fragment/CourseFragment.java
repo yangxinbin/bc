@@ -54,7 +54,7 @@ public class CourseFragment extends BaseServiceFragment implements OnPlayerEvent
     }
 
 
-/*    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void BookDetailBeanEventBus(BookDetailBean bookBean) {
         if (bookBean == null) {
             return;
@@ -83,7 +83,7 @@ public class CourseFragment extends BaseServiceFragment implements OnPlayerEvent
             bookCourseAdapter.setOnItemClickLitener(mOnClickListenner);
         }
         //EventBus.getDefault().removeStickyEvent(MyBookBean.class);//展示完删除
-    }*/
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void BookBeanEventBus(BookBean bookBean) {

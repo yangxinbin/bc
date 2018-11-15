@@ -353,15 +353,19 @@ public class ExpertBookActivity extends BaseServiceActivity implements BookExper
             public void run() {
                 if (bookBeanList == null || bookBeanList.size() == 0) {
                     if (page == 0) {
-                        refresh.setVisibility(View.GONE);
-                        imgNoBook.setVisibility(View.VISIBLE);
+                        if (refresh != null)
+                            refresh.setVisibility(View.GONE);
+                        if (imgNoBook != null)
+                            imgNoBook.setVisibility(View.VISIBLE);
                         return;
                     }
                     AppUtils.showToast(getBaseContext(), getString(R.string.date_over));
                     return;
                 } else {
-                    refresh.setVisibility(View.VISIBLE);
-                    imgNoBook.setVisibility(View.GONE);
+                    if (refresh != null)
+                        refresh.setVisibility(View.VISIBLE);
+                    if (imgNoBook != null)
+                        imgNoBook.setVisibility(View.GONE);
                 }
                 if (page == 0) {
                     bookExpertAdapter.reMove();

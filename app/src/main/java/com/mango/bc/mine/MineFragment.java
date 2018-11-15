@@ -52,6 +52,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 
 import butterknife.Bind;
@@ -140,6 +142,7 @@ public class MineFragment extends BaseHomeFragment {
         initView(MineJsonUtils.readUserBean(spUtils.getString("auth", "")));
         return view;
     }
+
     private void loadStats() {
         new Thread(new Runnable() {
             @Override
@@ -175,6 +178,7 @@ public class MineFragment extends BaseHomeFragment {
             }
         }).start();
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void RefreshMemberBeanEventBus(RefreshMemberBean bean) {
         if (bean == null)
@@ -379,10 +383,10 @@ public class MineFragment extends BaseHomeFragment {
                 tvExpertState.setText("审核失败");
                 break;
         }
-        if (userBean.getUserProfile() != null){
-            if (userBean.getUserProfile().getRealName() != null){
+        if (userBean.getUserProfile() != null) {
+            if (userBean.getUserProfile().getRealName() != null) {
                 btFinish.setText("查看信息");
-            }else {
+            } else {
                 btFinish.setText("完善信息");
             }
         }
@@ -393,7 +397,8 @@ public class MineFragment extends BaseHomeFragment {
             return;
         tvClass.setText(statsBean.getPaidBooks() + "本");
         tvGet.setText(statsBean.getVipBooks() + "本");
-        tvTime.setText(statsBean.getTotalDuration() + "小时");
+        DecimalFormat df = new DecimalFormat("0.00");
+        tvTime.setText(df.format((float)statsBean.getTotalDuration() / 60) + "小时");
         tvCode.setText(statsBean.getPpCoinEarned() + "PPG");
     }
 
@@ -404,7 +409,7 @@ public class MineFragment extends BaseHomeFragment {
         EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.tv_referee,R.id.bt_finish, R.id.l_expert, R.id.l_point, R.id.center_vip, R.id.imageView_to_vip, R.id.l_collage, R.id.imageVie_pic, R.id.l_class, R.id.l_get, R.id.l_time, R.id.l_code,/* R.id.l_to_vip,*/ R.id.l_to_agent, /*R.id.l_to_talent,*/ R.id.l_faq, R.id.l_service, R.id.l_setting, R.id.l_bc})
+    @OnClick({R.id.tv_referee, R.id.bt_finish, R.id.l_expert, R.id.l_point, R.id.center_vip, R.id.imageView_to_vip, R.id.l_collage, R.id.imageVie_pic, R.id.l_class, R.id.l_get, R.id.l_time, R.id.l_code,/* R.id.l_to_vip,*/ R.id.l_to_agent, /*R.id.l_to_talent,*/ R.id.l_faq, R.id.l_service, R.id.l_setting, R.id.l_bc})
     public void onViewClicked(View view) {
         Intent intent = null;
         switch (view.getId()) {
@@ -480,9 +485,9 @@ public class MineFragment extends BaseHomeFragment {
                 startActivity(intent);*/
                 break;
             case R.id.bt_finish:
-                if ("查看信息".equals(btFinish.getText().toString())){
+                if ("查看信息".equals(btFinish.getText().toString())) {
                     intent = new Intent(getActivity(), UserChangeActivity.class);
-                }else if ("完善信息".equals(btFinish.getText().toString())){
+                } else if ("完善信息".equals(btFinish.getText().toString())) {
                     intent = new Intent(getActivity(), PositionActivity.class);
                     intent.putExtra("perfect", true);
                 }

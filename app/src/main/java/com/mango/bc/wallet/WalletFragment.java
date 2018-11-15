@@ -1,9 +1,11 @@
 package com.mango.bc.wallet;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -373,15 +375,35 @@ public class WalletFragment extends BaseHomeFragment {
                 startActivity(intent);
                 break;
             case R.id.l_currency:
-                intent = new Intent(getActivity(), CurrencyActivity.class);
-                startActivity(intent);
+/*                intent = new Intent(getActivity(), CurrencyActivity.class);
+                startActivity(intent);*/
+                showDailog("敬请期待","");
                 break;
             case R.id.tv_sign:
                 checkIn();
                 break;
         }
     }
-
+    private void showDailog(String s1, final String s2) {
+        AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                .setIcon(R.mipmap.icon)//设置标题的图片
+                .setTitle(s1)//设置对话框的标题
+                //.setMessage(s2)//设置对话框的内容
+                //设置对话框的按钮
+/*                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })*/
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).create();
+        dialog.show();
+    }
     private void checkIn() {
         new Thread(new Runnable() {
             @Override

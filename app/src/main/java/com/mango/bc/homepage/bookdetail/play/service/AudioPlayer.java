@@ -85,7 +85,6 @@ public class AudioPlayer {
         }
         stopPlayer();
         if (mediaPlayer != null) {
-            Log.v("mmmmmmmmmmmm", "-----mmmm---");
             mediaPlayer.stop();
             mediaPlayer.release();
             mediaPlayer = null;
@@ -94,15 +93,12 @@ public class AudioPlayer {
         musicList.clear();
         BookDetailBean bookBean = JsonBookDetailUtils.readBookDetailBean(spUtils.getString("bookDetail", ""));
         if (bookBean != null) {
-            Log.v("bbbbbbb", "-----" + spUtils.getString("bookDetail", ""));
             if (bookBean.getChapters() != null)
                 for (int i = 0; i < bookBean.getChapters().size(); i++) {
-                    Log.v("bbbbbbb", bookBean.getChapters().get(i).isFree() + "-----" + spUtils.getBoolean("isFree", false));
                     if (bookBean.getChapters().get(i).isFree() || spUtils.getBoolean("isFree", false)) {
                         BookMusicDetailBean bookMusicDetailBean = new BookMusicDetailBean();
                         bookMusicDetailBean.setBookId(bookBean.getId());
                         bookMusicDetailBean.setType(bookBean.getType());
-                        Log.v("bbbbbbb", "---isSameBook--" + bookBean.getId());
                         spUtils.put("isSameBook", bookBean.getId());
                         //bookMusicDetailBean.setContentImages(bookBean.getChapters().get(i).getContentImages().get(i).getFileName());
                         if (bookBean.getAuthor() != null)
@@ -183,7 +179,6 @@ public class AudioPlayer {
         } else if (position >= musicList.size()) {
             position = 0;
         }
-
         setPlayPosition(position);
         BookMusicDetailBean music = getPlayMusic();
         spUtils.put("start", System.currentTimeMillis());
@@ -200,7 +195,7 @@ public class AudioPlayer {
             MediaSessionManager.get().updatePlaybackState();
         } catch (IOException e) {
             e.printStackTrace();
-            AppUtils.showToast(context, "当前歌曲无法播放");
+            AppUtils.showToast(context, "当前课程无法播放");
         }
     }
 
@@ -230,6 +225,8 @@ public class AudioPlayer {
             stopPlayer();
         } else if (isPlaying()) {
             playPauseBean.setPause(true);
+            learnTime(System.currentTimeMillis());
+            //spUtils.put("start", 0L);
             pausePlayer();
         } else if (isPausing()) {
             playPauseBean.setPause(false);
@@ -245,7 +242,7 @@ public class AudioPlayer {
         if (!isPreparing() && !isPausing()) {
             return;
         }
-
+        spUtils.put("start", System.currentTimeMillis());
         if (audioFocusManager.requestAudioFocus()) {
             mediaPlayer.start();
             state = STATE_PLAYING;
@@ -268,7 +265,6 @@ public class AudioPlayer {
         if (!isPlaying()) {
             return;
         }
-
         mediaPlayer.pause();
         state = STATE_PAUSE;
         handler.removeCallbacks(mPublishRunnable);
@@ -305,7 +301,7 @@ public class AudioPlayer {
 
     public void stopPlayer() {
         EventBus.getDefault().postSticky(new PlayPauseBean(true));
-        if (spUtils.getLong("start", 0L) != 0L) {
+        if (spUtils.getLong("start", 0L) != 0L && !isPausing()) {
             learnTime(System.currentTimeMillis());
         }
         if (isIdle()) {
@@ -324,7 +320,6 @@ public class AudioPlayer {
                 mapParams.clear();
                 mapParams.put("authToken", spUtils.getString("authToken", ""));
                 mapParams.put("seconds", (over - spUtils.getLong("start", over)) / 1000 + "");
-                Log.v("oooooooooooo", (over - spUtils.getLong("start", over)) / 1000 + "");
                 HttpUtils.doPost(Urls.HOST_USAGE, mapParams, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {

@@ -58,7 +58,6 @@ public class FieldAdapter extends RecyclerView.Adapter {
         if (holder instanceof FieldAdapter.FinefieldViewHolder) {
             final FieldAdapter.FinefieldViewHolder viewHolder = (FieldAdapter.FinefieldViewHolder) holder;
             if (datas != null) {
-                Log.v("kkkkkkk", "=====" + Urls.HOST_GETFILE + "?name=" + datas.get(position));
                 Glide.with(mContext).load(Urls.HOST_GETFILE + "?name=" + datas.get(position)).into(viewHolder.img);
             } else {
                 viewHolder.img.setImageDrawable(mContext.getResources().getDrawable(R.drawable.school));

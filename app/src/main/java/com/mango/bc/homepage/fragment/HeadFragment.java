@@ -141,7 +141,6 @@ public class HeadFragment extends Fragment {
             return;
         }
         if (bean.getBanner()) {
-            Log.v("yyyyyy", "---RefreshStageBeanEventBus---");
             init();
             bean.setBanner(false);//刷新完修改状态
             EventBus.getDefault().postSticky(bean);
@@ -203,14 +202,11 @@ public class HeadFragment extends Fragment {
             @Override
             public void OnBannerClick(int position) {
                 Intent intent = null;
-                Log.v("11111111111111111", (position - 1) + "***************position***********" + bannerBeanList.get(position - 1).getUrl());
                 if ("vip".equals(bannerBeanList.get(position - 1).getUrl())) {
                     intent = new Intent(getContext(), VipDetailActivity.class);
-                    Log.v("11111111111111111", "*********1**********");
                 } /*else if ("agency".equals(bannerBeanList.get(position-1).getUrl())) {
                     intent = new Intent(getContext(), VipDetailActivity.class);
                 }*/ else {
-                    Log.v("11111111111111111", "*********2*********");
                     intent = new Intent(getActivity(), ExpertBookDetailActivity.class);
                     intent.putExtra("bannerBookId", bannerBeanList.get(position - 1).getUrl());
                 }

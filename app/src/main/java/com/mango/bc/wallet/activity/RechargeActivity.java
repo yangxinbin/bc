@@ -163,7 +163,7 @@ public class RechargeActivity extends BaseActivity {
                         num = 208;
                         break;
                     case 5:
-                        num = 308;
+                        num = 388;
                         break;
                     default:
                         break;

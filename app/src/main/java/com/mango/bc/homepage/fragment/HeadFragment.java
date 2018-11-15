@@ -18,6 +18,8 @@ import com.mango.bc.homepage.activity.CollageActivity;
 import com.mango.bc.homepage.activity.SearchActivity;
 import com.mango.bc.homepage.activity.VipDetailActivity;
 import com.mango.bc.homepage.bean.BannerBean;
+import com.mango.bc.homepage.bookdetail.ExpertBookDetailActivity;
+import com.mango.bc.homepage.net.bean.RefreshStageBean;
 import com.mango.bc.mine.bean.UserBean;
 import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.GlideImageLoader;
@@ -30,6 +32,8 @@ import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerClickListener;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -82,7 +86,7 @@ public class HeadFragment extends Fragment {
         View view = inflater.inflate(R.layout.home, container, false);
         //spUtils = SPUtils.getInstance("bc", getActivity());
         ButterKnife.bind(this, view);
-        //EventBus.getDefault().register(this);
+        EventBus.getDefault().register(this);
         etSearch.setFocusable(false);
         etSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +96,7 @@ public class HeadFragment extends Fragment {
             }
         });
         //AppUtils.hideInput(getActivity());
-        init();
+        //init();
         //initBanner();
         //initView(AuthJsonUtils.readUserBean(spUtils.getString("auth", "")));
         return view;
@@ -131,6 +135,21 @@ public class HeadFragment extends Fragment {
         }).start();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void RefreshStageBeanEventBus(RefreshStageBean bean) {
+        if (bean == null) {
+            return;
+        }
+        if (bean.getBanner()) {
+            Log.v("yyyyyy", "---RefreshStageBeanEventBus---");
+            init();
+            bean.setBanner(false);//刷新完修改状态
+            EventBus.getDefault().postSticky(bean);
+        } else {
+            //bookPresenter.visitBooks(getActivity(), TYPE, "", page, true);//缓存。
+        }
+    }
+
     /*    private void initView(UserBean auth) {
             if (auth == null)
                 return;
@@ -157,7 +176,9 @@ public class HeadFragment extends Fragment {
                 return;
             initView(userBean);
         }*/
-    private void initBanner(List<BannerBean> bannerBeanList) {
+    private void initBanner(final List<BannerBean> bannerBeanList) {
+        if (bannerBeanList == null)
+            return;
         List<String> pathsImage = new ArrayList<>();
         List<String> pathsTitle = new ArrayList<>();
         for (int i = 0; i < bannerBeanList.size(); i++) {
@@ -181,7 +202,16 @@ public class HeadFragment extends Fragment {
         imageView.setOnBannerClickListener(new OnBannerClickListener() {
             @Override
             public void OnBannerClick(int position) {
-                Intent intent = new Intent(getContext(), VipDetailActivity.class);
+                Intent intent = null;
+                Log.v("bbbbbbbbbbbbbbb", (position - 1) + "***************position***********" + bannerBeanList.get(position - 1).getUrl());
+                if ("vip".equals(bannerBeanList.get(position - 1).getUrl())) {
+                    intent = new Intent(getContext(), VipDetailActivity.class);
+                } /*else if ("agency".equals(bannerBeanList.get(position-1).getUrl())) {
+                    intent = new Intent(getContext(), VipDetailActivity.class);
+                }*/ else {
+                    intent = new Intent(getActivity(), ExpertBookDetailActivity.class);
+                    intent.putExtra("bannerBookId", bannerBeanList.get(position - 1).getUrl());
+                }
                 startActivity(intent);
             }
         });
@@ -200,6 +230,7 @@ public class HeadFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        EventBus.getDefault().unregister(this);
     }
 
     @OnClick({/*R.id.imageView_novip, R.id.buy_vip, R.id.l_vip,*/ R.id.imageView_collage})

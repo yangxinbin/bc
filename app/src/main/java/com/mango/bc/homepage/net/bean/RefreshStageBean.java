@@ -10,13 +10,16 @@ public class RefreshStageBean {
     private Boolean expertBook;
     private Boolean freeBook;
     private Boolean newestBook;
+    private Boolean banner;
 
-    public RefreshStageBean(Boolean competitiveField, Boolean competitiveBook, Boolean expertBook, Boolean freeBook, Boolean newestBook) {
+
+    public RefreshStageBean(Boolean competitiveField, Boolean competitiveBook, Boolean expertBook, Boolean freeBook, Boolean newestBook, Boolean banner) {
         this.competitiveField = competitiveField;
         this.competitiveBook = competitiveBook;
         this.expertBook = expertBook;
         this.freeBook = freeBook;
         this.newestBook = newestBook;
+        this.banner = banner;
     }
 
     public Boolean getCompetitiveField() {
@@ -59,6 +62,14 @@ public class RefreshStageBean {
         this.newestBook = newestBook;
     }
 
+    public Boolean getBanner() {
+        return banner;
+    }
+
+    public void setBanner(Boolean banner) {
+        this.banner = banner;
+    }
+
     @Override
     public String toString() {
         return "RefreshStageBean{" +
@@ -67,6 +78,7 @@ public class RefreshStageBean {
                 ", expertBook=" + expertBook +
                 ", freeBook=" + freeBook +
                 ", newestBook=" + newestBook +
+                ", banner=" + banner +
                 '}';
     }
 }

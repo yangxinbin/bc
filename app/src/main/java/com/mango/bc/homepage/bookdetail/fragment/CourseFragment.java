@@ -14,6 +14,7 @@ import com.mango.bc.R;
 import com.mango.bc.bookcase.net.bean.MyBookBean;
 import com.mango.bc.homepage.bookdetail.TxtActivity;
 import com.mango.bc.homepage.bookdetail.adapter.BookCourseAdapter;
+import com.mango.bc.homepage.bookdetail.bean.BookDetailBean;
 import com.mango.bc.homepage.bookdetail.bean.BookMusicDetailBean;
 import com.mango.bc.homepage.bookdetail.play.BaseServiceFragment;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
@@ -51,6 +52,38 @@ public class CourseFragment extends BaseServiceFragment implements OnPlayerEvent
         EventBus.getDefault().register(this);
         return view;
     }
+
+
+/*    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void BookDetailBeanEventBus(BookDetailBean bookBean) {
+        if (bookBean == null) {
+            return;
+        }
+        Log.v("uuuuuuuuuuuu", "--2--");
+        List<BookMusicDetailBean> bookMusicDetailBeanList = new ArrayList<>();
+        bookMusicDetailBeanList.clear();
+        if (bookBean.getChapters() != null) {
+            for (int i = 0; i < bookBean.getChapters().size(); i++) {
+                BookMusicDetailBean bookMusicDetailBean = new BookMusicDetailBean();
+                bookMusicDetailBean.setName(bookBean.getAuthor().getName());
+                bookMusicDetailBean.setTitle(bookBean.getTitle());
+                bookMusicDetailBean.setBookId(bookBean.getId());
+                bookMusicDetailBean.setIsFree(bookBean.getChapters().get(i).isFree());
+                bookMusicDetailBean.setMp3Name(bookBean.getChapters().get(i).getTitle());
+                if (bookBean.getChapters().get(i).getAudio() != null)
+                    bookMusicDetailBean.setMp3Path(bookBean.getChapters().get(i).getAudio().getFileName());
+                bookMusicDetailBean.setDuration(bookBean.getChapters().get(i).getDuration());
+                bookMusicDetailBeanList.add(bookMusicDetailBean);
+            }
+            bookCourseAdapter = new BookCourseAdapter(bookMusicDetailBeanList, getActivity());
+            if (AudioPlayer.get().isPlaying() || AudioPlayer.get().isPausing())
+                bookCourseAdapter.setIsPlaylist(true);
+            recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recycle.setAdapter(bookCourseAdapter);
+            bookCourseAdapter.setOnItemClickLitener(mOnClickListenner);
+        }
+        //EventBus.getDefault().removeStickyEvent(MyBookBean.class);//展示完删除
+    }*/
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void BookBeanEventBus(BookBean bookBean) {

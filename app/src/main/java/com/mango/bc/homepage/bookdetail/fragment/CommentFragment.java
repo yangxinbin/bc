@@ -67,6 +67,9 @@ public class CommentFragment extends Fragment {
         View view = inflater.inflate(R.layout.comment_book, container, false);
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
+        if (getActivity().getIntent().getStringExtra("bannerBookId") != null) {
+            bookId = getActivity().getIntent().getStringExtra("bannerBookId");
+        }
         initView();
         if (NetUtil.isNetConnect(getActivity())){
             vivistNet(false,page);

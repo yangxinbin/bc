@@ -55,11 +55,10 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
         Log.d("pay", "onPayFinish, errCode = " + resp.errCode);
         if (resp.errCode == 0) {
             EventBus.getDefault().postSticky(new PayMes(true));//刷新钱包
-            finish();
         } else {
             AppUtils.showToast(this, "充值失败，请检查网络！");
         }
-
+        finish();
     }
 
 }

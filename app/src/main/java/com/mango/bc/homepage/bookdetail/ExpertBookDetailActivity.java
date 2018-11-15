@@ -138,6 +138,9 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
         spUtils = SPUtils.getInstance("bc", this);
         mCache = ACache.get(this.getApplicationContext());
         ButterKnife.bind(this);
+        if (getIntent().getStringExtra("bannerBookId") != null) {
+            bannerEventBus(getIntent().getStringExtra("bannerBookId"));
+        }
         EventBus.getDefault().register(this);
         etComment.setFocusable(false);
         initDatas();
@@ -262,6 +265,7 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    //EventBus.getDefault().postSticky(bookDetailBean);
                                     initBookDetailView(bookDetailBean);
                                 }
                             });
@@ -415,6 +419,16 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
         tvLikePlay.setText(bookDetailBean.getLikes() + "");
         lBuy.setText(bookDetailBean.getPrice() + "币购买\n" + "会员" + bookDetailBean.getVipPrice() + "币");
         lCollage.setText(bookDetailBean.getGroupBuy2Price() + "-" + bookDetailBean.getGroupBuy3Price() + "币\n拼团购买");
+    }
+
+    public void bannerEventBus(String bookId) {
+        initState(chechState(bookId), type);
+        checkLike(bookId);
+        if (NetUtil.isNetConnect(this)) {
+            loadBookDetail(false, bookId);
+        } else {
+            loadBookDetail(true, bookId);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true, priority = 1)

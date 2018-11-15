@@ -179,7 +179,7 @@ public class HomePageFragment extends BaseHomeFragment implements MyAllBookView 
                         if (NetUtil.isNetConnect(getActivity())) {
                             if (isFirstRefresh) {
                                 isFirstRefresh = false;
-                                RefreshStageBean refreshStageBean = new RefreshStageBean(true, true, true, true, true);
+                                RefreshStageBean refreshStageBean = new RefreshStageBean(true, true, true, true, true, true);
                                 Log.v("llllllll", "=====all--" + refreshStageBean.toString());
                                 EventBus.getDefault().postSticky(refreshStageBean);
                             }
@@ -187,7 +187,7 @@ public class HomePageFragment extends BaseHomeFragment implements MyAllBookView 
                             EventBus.getDefault().postSticky(new RefreshMemberBean(true));//刷新达人
                         } else {
                             AppUtils.showToast(getActivity(), getString(R.string.check_net));
-                            RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, false, false);
+                            RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, false, false, false);
                             EventBus.getDefault().postSticky(refreshStageBean);
                         }
                         refreshLayout.finishRefresh();
@@ -276,7 +276,7 @@ public class HomePageFragment extends BaseHomeFragment implements MyAllBookView 
                         isFirstInit = false;
                         initView();
                     } else {
-                        RefreshStageBean refreshStageBean = new RefreshStageBean(true, true, true, true, true);
+                        RefreshStageBean refreshStageBean = new RefreshStageBean(true, true, true, true, true, true);
                         Log.v("yyyyyyy", "=====all--" + refreshStageBean.toString());
                         EventBus.getDefault().postSticky(refreshStageBean);
                     }

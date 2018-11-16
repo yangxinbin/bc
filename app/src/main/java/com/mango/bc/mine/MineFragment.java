@@ -398,7 +398,7 @@ public class MineFragment extends BaseHomeFragment {
         tvClass.setText(statsBean.getPaidBooks() + "本");
         tvGet.setText(statsBean.getVipBooks() + "本");
         DecimalFormat df = new DecimalFormat("0.00");
-        tvTime.setText(df.format((float)statsBean.getTotalDuration() / 60) + "小时");
+        tvTime.setText(df.format((float) statsBean.getTotalDuration() / 60) + "小时");
         tvCode.setText(statsBean.getPpCoinEarned() + "PPG");
     }
 
@@ -487,6 +487,7 @@ public class MineFragment extends BaseHomeFragment {
             case R.id.bt_finish:
                 if ("查看信息".equals(btFinish.getText().toString())) {
                     intent = new Intent(getActivity(), UserChangeActivity.class);
+                    intent.putExtra("chat", true);
                 } else if ("完善信息".equals(btFinish.getText().toString())) {
                     intent = new Intent(getActivity(), PositionActivity.class);
                     intent.putExtra("perfect", true);

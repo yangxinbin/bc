@@ -504,8 +504,11 @@ public class UserChangeActivity extends BaseActivity {
         Intent intent;
         switch (view.getId()) {
             case R.id.imageView_user_back:
-                intent = new Intent(this, SettingActivity.class);
-                startActivity(intent);
+                if (getIntent().getBooleanExtra("chat", false)) {
+                } else {
+                    intent = new Intent(this, SettingActivity.class);
+                    startActivity(intent);
+                }
                 finish();
                 break;
             case R.id.circleImageView:
@@ -589,8 +592,11 @@ public class UserChangeActivity extends BaseActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         Intent intent;
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            intent = new Intent(this, SettingActivity.class);
-            startActivity(intent);
+            if (getIntent().getBooleanExtra("chat", false)) {
+            } else {
+                intent = new Intent(this, SettingActivity.class);
+                startActivity(intent);
+            }
             finish();
             return false;
         } else {

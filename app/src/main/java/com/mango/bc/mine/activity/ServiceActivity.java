@@ -140,7 +140,7 @@ public class ServiceActivity extends BaseActivity {
         ImageView imgView = new ImageView(this);
         imgView.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT));
 
-        @SuppressLint("ResourceType") InputStream is = getResources().openRawResource(R.drawable.qr_code1);
+        @SuppressLint("ResourceType") InputStream is = getResources().openRawResource(R.drawable.qr_code11);
         Drawable drawable = BitmapDrawable.createFromStream(is, null);
         imgView.setImageDrawable(drawable);
 
@@ -151,7 +151,7 @@ public class ServiceActivity extends BaseActivity {
         ImageView imgView = new ImageView(this);
         imgView.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT));
 
-        @SuppressLint("ResourceType") InputStream is = getResources().openRawResource(R.drawable.qr_code2);
+        @SuppressLint("ResourceType") InputStream is = getResources().openRawResource(R.drawable.qr_code22);
         Drawable drawable = BitmapDrawable.createFromStream(is, null);
         imgView.setImageDrawable(drawable);
 

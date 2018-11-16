@@ -211,8 +211,8 @@ public class WalletFragment extends BaseHomeFragment {
                     public void onResponse(Call call, Response response) throws IOException {
                         try {
                             String string = response.body().string();
-                            mCache.put("wallet",string);
-                            spUtils.put("wallet",string);
+                            mCache.put("wallet", string);
+                            spUtils.put("wallet", string);
                             final WalletBean walletBean = WalletJsonUtils.readWalletBean(string);
                             if (getActivity() != null)
                                 getActivity().runOnUiThread(new Runnable() {
@@ -242,8 +242,10 @@ public class WalletFragment extends BaseHomeFragment {
             return;
         Log.v("cccccccccc", "-----R--1--" + spUtils.getString("auth", ""));
         if (userBean.getWallet() != null) {
-            tvAllPp.setText(userBean.getWallet().getPpCoins() + "");
-            tvWalletadress.setText(userBean.getWallet().getWalletAddress());
+            if (tvAllPp != null)
+                tvAllPp.setText(userBean.getWallet().getPpCoins() + "");
+            if (tvWalletadress != null)
+                tvWalletadress.setText(userBean.getWallet().getWalletAddress());
         }
     }
 
@@ -377,13 +379,14 @@ public class WalletFragment extends BaseHomeFragment {
             case R.id.l_currency:
 /*                intent = new Intent(getActivity(), CurrencyActivity.class);
                 startActivity(intent);*/
-                showDailog("敬请期待","");
+                showDailog("敬请期待", "");
                 break;
             case R.id.tv_sign:
                 checkIn();
                 break;
         }
     }
+
     private void showDailog(String s1, final String s2) {
         AlertDialog dialog = new AlertDialog.Builder(getActivity())
                 .setIcon(R.mipmap.icon)//设置标题的图片
@@ -405,6 +408,7 @@ public class WalletFragment extends BaseHomeFragment {
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
+
     private void checkIn() {
         new Thread(new Runnable() {
             @Override
@@ -436,6 +440,7 @@ public class WalletFragment extends BaseHomeFragment {
             }
         }).start();
     }
+
     private void loadUser() {
         new Thread(new Runnable() {
             @Override
@@ -475,6 +480,7 @@ public class WalletFragment extends BaseHomeFragment {
             }
         }).start();
     }
+
     private MyHandler mHandler = new MyHandler();
 
     private class MyHandler extends Handler {

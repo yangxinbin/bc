@@ -44,7 +44,7 @@ public class Urls {
     public static final String SEND = "/v2/user/send";
     public static final String VERIFY = "/v2/user/verify";
     public static final String PROFILE = "/v2/user/add/profile";
-    public static final String CARD = "/wallet/card/membership";
+    public static final String CARD = "/wallet/activate/card";
     public static final String USAGE = "/task/usage";
     public static final String WEIXINPAY = "/payment/weixin/payorder/app";
     public static final String WALLET = "/wallet/my";

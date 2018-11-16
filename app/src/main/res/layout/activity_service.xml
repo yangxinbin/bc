@@ -45,6 +45,7 @@
         android:padding="@dimen/dp_15">
 
         <ImageView
+            android:id="@+id/image1"
             android:layout_width="@dimen/dp_160"
             android:layout_height="@dimen/dp_160"
             android:layout_marginRight="@dimen/dp_10"
@@ -102,6 +103,7 @@
         android:padding="@dimen/dp_15">
 
         <ImageView
+            android:id="@+id/image2"
             android:layout_width="@dimen/dp_160"
             android:layout_height="@dimen/dp_160"
             android:layout_marginRight="@dimen/dp_10"

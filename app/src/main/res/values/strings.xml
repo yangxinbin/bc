@@ -162,5 +162,7 @@
     <string name="vip_c">Member Center</string>
     <string name="bc_card">Activate the BC card</string>
     <string name="newest_book">Latest course</string>
+    <string name="save_picture1">小艾</string>
+    <string name="save_picture2">小蓝</string>
 
 </resources>

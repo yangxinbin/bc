@@ -101,6 +101,8 @@ public class BcCardActivity extends BaseActivity {
                                         EventBus.getDefault().postSticky(userBean);//刷新
                                         finish();*/
                                         showDailog("BC卡激活成功", "", userBean);
+                                    } else {
+                                        AppUtils.showToast(BcCardActivity.this, "激活失败");
                                     }
                                 }
                             });

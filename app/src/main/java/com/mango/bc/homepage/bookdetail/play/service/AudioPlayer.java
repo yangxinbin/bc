@@ -301,7 +301,7 @@ public class AudioPlayer {
 
     public void stopPlayer() {
         EventBus.getDefault().postSticky(new PlayPauseBean(true));
-        if (spUtils.getLong("start", 0L) != 0L && !isPausing()) {
+        if (spUtils.getLong("start", 0L) != 0L && !isPausing() && isPlaying()) {
             learnTime(System.currentTimeMillis());
         }
         if (isIdle()) {
@@ -320,6 +320,7 @@ public class AudioPlayer {
                 mapParams.clear();
                 mapParams.put("authToken", spUtils.getString("authToken", ""));
                 mapParams.put("seconds", (over - spUtils.getLong("start", over)) / 1000 + "");
+                Log.v("oooooooooo","-------------"+(over - spUtils.getLong("start", over)) / 1000);
                 HttpUtils.doPost(Urls.HOST_USAGE, mapParams, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {

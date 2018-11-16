@@ -161,5 +161,6 @@
     <string name="exit_sure">Press again.</string>
     <string name="vip_c">Member Center</string>
     <string name="bc_card">Activate the BC card</string>
+    <string name="newest_book">Latest course</string>
 
 </resources>

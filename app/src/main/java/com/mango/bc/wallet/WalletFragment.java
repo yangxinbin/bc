@@ -379,7 +379,7 @@ public class WalletFragment extends BaseHomeFragment {
             case R.id.l_currency:
 /*                intent = new Intent(getActivity(), CurrencyActivity.class);
                 startActivity(intent);*/
-                showDailog("敬请期待", "");
+                showDailog("稍后更新", "");
                 break;
             case R.id.tv_sign:
                 checkIn();

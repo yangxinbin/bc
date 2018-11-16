@@ -15,11 +15,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mango.bc.R;
-import com.mango.bc.homepage.activity.OpenUpVipActivity;
 import com.mango.bc.homepage.activity.competitivebook.CompetitiveBookActivity;
 import com.mango.bc.homepage.activity.expertbook.ExpertBookActivity;
-import com.mango.bc.homepage.net.bean.RefreshStageBean;
-import com.mango.bc.mine.activity.SettingActivity;
+import com.mango.bc.mine.bean.UserBean;
 import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.ACache;
 import com.mango.bc.util.HttpUtils;
@@ -87,10 +85,27 @@ public class DailyTasksFragment extends Fragment {
     TextView tvVipNum;
     @Bind(R.id.tv_vip)
     TextView tvVip;
+    @Bind(R.id.tv_get_like)
+    TextView tvGetLike;
+    @Bind(R.id.tv_get_share)
+    TextView tvGetShare;
+    @Bind(R.id.tv_get_comment)
+    TextView tvGetComment;
+    @Bind(R.id.tv_get_online)
+    TextView tvGetOnline;
+    @Bind(R.id.tv_get_group)
+    TextView tvGetGroup;
+    @Bind(R.id.tv_get_paid)
+    TextView tvGetPaid;
+    @Bind(R.id.tv_get_member)
+    TextView tvGetMember;
+    @Bind(R.id.tv_get_vip)
+    TextView tvGetVip;
     private SPUtils spUtils;
     private ACache mCache;
     private String userId;
     private String alias;
+    private String type;
 
     @Nullable
     @Override
@@ -108,6 +123,7 @@ public class DailyTasksFragment extends Fragment {
         if (MineJsonUtils.readUserBean(spUtils.getString("auth", "")) != null) {
             userId = MineJsonUtils.readUserBean(spUtils.getString("auth", "")).getId();
             alias = MineJsonUtils.readUserBean(spUtils.getString("auth", "")).getAlias();
+            type = MineJsonUtils.readUserBean(spUtils.getString("auth", "")).getType();
         }
         return view;
     }
@@ -127,6 +143,13 @@ public class DailyTasksFragment extends Fragment {
         } else {
             loadReward(true);
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void UserBeanEventBus(UserBean userBean) {
+        if (userBean == null)
+            return;
+        type = userBean.getType();
     }
 
     private void loadReward(final Boolean ifCache) {
@@ -184,6 +207,7 @@ public class DailyTasksFragment extends Fragment {
         if (taskAndRewardBeans == null)
             return;
         tvLikeRate.setText("进度" + taskAndRewardBeans.get(0).getCount() + "/10");
+
         tvLikeNum.setText("已获得" + taskAndRewardBeans.get(0).getEarning() + "PPG");
 
         tvShareRate.setText("进度" + taskAndRewardBeans.get(1).getCount() + "/10");
@@ -202,7 +226,16 @@ public class DailyTasksFragment extends Fragment {
         tvMemberNum.setText("已获得" + taskAndRewardBeans.get(6).getEarning() + "PPG");
 
         tvVipNum.setText("已获得" + taskAndRewardBeans.get(7).getEarning() + "PPG");
-
+        if (!("general".equals(type))) {
+            tvGetLike.setText("限10次，0.3PPG/次");
+            tvGetShare.setText("限10次，0.3PPG/次");
+            tvGetComment.setText("限10次，0.3PPG/次");
+            tvGetOnline.setText("10分钟0.6PPG，限50分钟");
+            tvGetGroup.setText("20%收益");
+            tvGetPaid.setText("15%收益");
+            tvGetMember.setText("20%收益");
+            tvGetVip.setText("10%收益");
+        }
     }
 
     @Override

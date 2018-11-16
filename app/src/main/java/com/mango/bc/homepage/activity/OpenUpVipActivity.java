@@ -67,6 +67,7 @@ public class OpenUpVipActivity extends BaseActivity {
     private String sAutoBilling;
     private SPUtils spUtils;
     private Double ppg;
+    private String type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,16 @@ public class OpenUpVipActivity extends BaseActivity {
         } else {
             intVipPackage(true);
         }
+        initAuth(MineJsonUtils.readUserBean(spUtils.getString("auth", "")));
+        Log.v("4444444444", "--uu---" + spUtils.getString("auth", ""));
+
+    }
+
+    private void initAuth(UserBean auth) {
+        if (auth == null)
+            return;
+        type = auth.getType();
+        Log.v("4444444444", "-----" + type);
     }
 
     private void intVipPackage(final Boolean ifCache) {
@@ -253,7 +264,11 @@ public class OpenUpVipActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.buy_vip:
-                showDailog("是否确认支付", "");
+                if ("agency".equals(type)) {
+                    showDailogOvew("你已经是达人，无需购买VIP。", "");
+                } else {
+                    showDailog("是否确认支付", "");
+                }
                 break;
         }
     }
@@ -306,6 +321,29 @@ public class OpenUpVipActivity extends BaseActivity {
         dialog.show();
     }
 
+    private void showDailogOvew(String s1, final String s2) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setIcon(R.mipmap.icon)//设置标题的图片
+                .setTitle(s1)//设置对话框的标题
+                //.setMessage(s2)//设置对话框的内容
+                //设置对话框的按钮
+/*                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })*/
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        dialog.dismiss();
+                    }
+                }).create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
+
     private void becomeVip() {
         new Thread(new Runnable() {
             @Override
@@ -332,17 +370,27 @@ public class OpenUpVipActivity extends BaseActivity {
                         final String s;
                         try {
                             s = response.body().string();
+                            Log.v("333333333333", "===========" + s);
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    if (s.equals("LOW_BALANCE")) {
-                                        showDailogOpen(getString(R.string.less_ppg), "");
+                                    //if (s.equals("LOW_BALANCE")) {
+                                    //    showDailogOpen(getString(R.string.less_ppg), "");
+                                    //} else {
+                                    if ("downgrade_error".equals(s)) {
+                                        AppUtils.showToast(OpenUpVipActivity.this, "购买失败,请检查网络");
                                     } else {
-                                        AppUtils.showToast(OpenUpVipActivity.this, "购买成功");
+                                        UserBean userBean = MineJsonUtils.readUserBean(s);
+                                        if (userBean != null) {
+                                            spUtils.put("auth", s);
+                                            Log.v("lllllllll", "=aaaa==" + userBean.isVip());
+                                            EventBus.getDefault().postSticky(userBean);//刷新钱包，我的。
+                                        /*AppUtils.showToast(OpenUpVipActivity.this, "购买成功");
                                         loadUser();
-                                        finish();
+                                        finish();*/
+                                            //}
+                                        }
                                     }
-
                                 }
                             });
                         } catch (IOException e) {
@@ -352,16 +400,14 @@ public class OpenUpVipActivity extends BaseActivity {
                                     AppUtils.showToast(OpenUpVipActivity.this, "购买失败");
                                 }
                             });
-
                         }
-
                     }
                 });
             }
         }).start();
     }
 
-    private void loadUser() {
+/*    private void loadUser() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -395,7 +441,7 @@ public class OpenUpVipActivity extends BaseActivity {
                 });
             }
         }).start();
-    }
+    }*/
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

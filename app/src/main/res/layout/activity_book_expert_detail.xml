@@ -1,10 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="@color/common_gray"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/common_gray"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        android:padding="@dimen/dp_5">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/book_detail"
+            android:textColor="@color/black"
+            android:textSize="@dimen/title" />
+
+        <ImageView
+            android:id="@+id/imageView_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
+            app:srcCompat="@drawable/back" />
+    </RelativeLayout>
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -27,33 +55,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:padding="@dimen/dp_5">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:text="@string/book_detail"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/title" />
-
-                        <ImageView
-                            android:id="@+id/imageView_back"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="@dimen/dp_10"
-                            android:layout_marginStart="@dimen/dp_10"
-                            app:srcCompat="@drawable/back" />
-                    </RelativeLayout>
 
                     <ImageView
                         android:id="@+id/img_cover"
@@ -141,26 +142,28 @@
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.view.ViewPager
-            android:layout_marginBottom="@dimen/dp_50"
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_50"
             android:background="@color/white"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
         <include
             layout="@layout/include_play_bar"
             android:layout_width="match_parent"
-            android:layout_margin="@dimen/dp_10"
             android:layout_height="@dimen/play_bar_height"
-            android:layout_gravity="bottom" />
+            android:layout_gravity="bottom"
+            android:layout_margin="@dimen/dp_10" />
     </android.support.design.widget.CoordinatorLayout>
+
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/l_get"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
         android:background="@color/common_gray"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -177,11 +180,11 @@
                 android:src="@drawable/black_like" />
 
             <TextView
+                android:id="@+id/tv_like_get"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:id="@+id/tv_like_get"
                 android:textColor="@color/gray_3"
                 android:textSize="@dimen/dp_14" />
 
@@ -235,15 +238,17 @@
             android:textSize="@dimen/dp_14" />
 
     </LinearLayout>
+
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/l_2"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
         android:layout_marginTop="@dimen/dp_1"
         android:background="@color/white"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -270,6 +275,7 @@
 
 
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/l_play_expert"
         android:layout_width="match_parent"
@@ -292,11 +298,11 @@
                 android:layout_weight="1" />
 
             <TextView
+                android:id="@+id/tv_like_play"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:id="@+id/tv_like_play"
                 android:textColor="@color/gray_3"
                 android:textSize="@dimen/dp_14" />
 

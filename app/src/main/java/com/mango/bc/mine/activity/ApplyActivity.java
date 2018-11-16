@@ -1,6 +1,8 @@
 package com.mango.bc.mine.activity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -154,11 +156,33 @@ public class ApplyActivity extends BaseServiceActivity {
                 finish();
                 break;
             case R.id.point_apply:
-                intent = new Intent(this, PointApplyActivity.class);
+                /*intent = new Intent(this, PointApplyActivity.class);
                 startActivity(intent);
-                finish();
+                finish();*/
+                showDailog("稍后更新", "");
                 break;
         }
+    }
+    private void showDailog(String s1, final String s2) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setIcon(R.mipmap.icon)//设置标题的图片
+                .setTitle(s1)//设置对话框的标题
+                //.setMessage(s2)//设置对话框的内容
+                //设置对话框的按钮
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                }).create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

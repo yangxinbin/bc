@@ -27,6 +27,7 @@
                 android:textSize="@dimen/textSize" />
 
             <TextView
+                android:id="@+id/tv_get_like"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginBottom="@dimen/dp_10"
@@ -85,6 +86,7 @@
                 android:textSize="@dimen/textSize" />
 
             <TextView
+                android:id="@+id/tv_get_share"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginBottom="@dimen/dp_10"
@@ -143,6 +145,7 @@
                 android:textSize="@dimen/textSize" />
 
             <TextView
+                android:id="@+id/tv_get_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginBottom="@dimen/dp_10"
@@ -201,6 +204,7 @@
                 android:textSize="@dimen/textSize" />
 
             <TextView
+                android:id="@+id/tv_get_online"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginBottom="@dimen/dp_10"
@@ -259,6 +263,7 @@
                 android:textSize="@dimen/textSize" />
 
             <TextView
+                android:id="@+id/tv_get_group"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginBottom="@dimen/dp_10"
@@ -329,6 +334,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_get_paid"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1.5"
@@ -407,6 +413,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_get_member"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1.5"
@@ -484,6 +491,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_get_vip"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1.5"

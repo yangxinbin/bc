@@ -1,5 +1,7 @@
 package com.mango.bc.mine.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,6 +18,9 @@ import com.mango.bc.homepage.adapter.SingleAdapter;
 import com.mango.bc.homepage.bean.VipType;
 import com.mango.bc.mine.adapter.SinglePayAdapter;
 import com.mango.bc.mine.adapter.SinglePointAdapter;
+import com.mango.bc.mine.bean.UserBean;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -123,11 +128,34 @@ public class PointApplyActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.pay_ok:
-                intent = new Intent(this, PointDetailActivity.class);
-                startActivity(intent);
-                finish();
+                //intent = new Intent(this, PointDetailActivity.class);
+                //startActivity(intent);
+                //finish();
+                showDailog("稍后更新", "");
                 break;
         }
+    }
+
+    private void showDailog(String s1, final String s2) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setIcon(R.mipmap.icon)//设置标题的图片
+                .setTitle(s1)//设置对话框的标题
+                //.setMessage(s2)//设置对话框的内容
+                //设置对话框的按钮
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                }).create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
     }
 
     @Override

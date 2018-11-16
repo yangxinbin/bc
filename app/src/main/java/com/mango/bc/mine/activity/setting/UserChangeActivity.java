@@ -204,6 +204,7 @@ public class UserChangeActivity extends BaseActivity {
             }
         });
         dialog.setView(view);
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 

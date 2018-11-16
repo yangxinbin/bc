@@ -1,6 +1,7 @@
 package com.mango.bc.homepage.collage;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
+import com.mango.bc.homepage.bookdetail.ExpertBookDetailActivity;
 import com.mango.bc.homepage.collage.bean.CollageBean;
 import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.DateUtil;
@@ -64,6 +66,8 @@ public class CollageDetailActivity extends BaseActivity {
     TextView tvCollageMes;
     @Bind(R.id.tv_collage_delete)
     Button tvCollageDelete;
+    @Bind(R.id.l_book)
+    LinearLayout lBook;
     private Long leftTime;
     private String title;
     private String cover;
@@ -71,7 +75,8 @@ public class CollageDetailActivity extends BaseActivity {
     private String userName;
     private String groupId;
     private double price;
-    private int allNum,hasNum;
+    private int allNum, hasNum;
+    private String bookId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +85,7 @@ public class CollageDetailActivity extends BaseActivity {
         spUtils = SPUtils.getInstance("bc", this);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
-        if (MineJsonUtils.readUserBean(spUtils.getString("auth", "")) != null){
+        if (MineJsonUtils.readUserBean(spUtils.getString("auth", "")) != null) {
             userName = MineJsonUtils.readUserBean(spUtils.getString("auth", "")).getAlias();
         }
     }
@@ -89,11 +94,12 @@ public class CollageDetailActivity extends BaseActivity {
     public void CollageBeanEventBus(CollageBean collageBean) { //首页进来 需要判断 是否可以播放 是否要钱购买
         if (collageBean == null)
             return;
-        if (collageBean.getBookCover() != null){
+        if (collageBean.getBookCover() != null) {
             cover = collageBean.getBookCover().getFileName();
             Glide.with(this).load(Urls.HOST_GETFILE + "?name=" + cover).into(imgCollageBook);
         }
         groupId = collageBean.getId();
+        bookId = collageBean.getBookId();
         title = collageBean.getBookTitle();
         tvCollageName.setText(title);
         if (collageBean.getType().equals("three")) {
@@ -104,7 +110,7 @@ public class CollageDetailActivity extends BaseActivity {
             allNum = 2;
         }
         price = collageBean.getPrice();
-        tvCollagePriceAfter.setText(price+ "PPG");
+        tvCollagePriceAfter.setText(price + "PPG");
         tvCollagePriceBefore.setText(collageBean.getBookPrice() + "PPG");
         tvCollagePriceBefore.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
         leftTime = ((collageBean.getTimestamp() + (1000 * 60 * 60 * 24)) - System.currentTimeMillis()) / 1000;
@@ -231,7 +237,7 @@ public class CollageDetailActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.imageView_back, R.id.tv_collage_time, R.id.tv_collage_delete})
+    @OnClick({R.id.imageView_back, R.id.tv_collage_time, R.id.tv_collage_delete, R.id.l_book})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView_back:
@@ -242,16 +248,24 @@ public class CollageDetailActivity extends BaseActivity {
             case R.id.tv_collage_time:
                 collageWechat();
                 break;
+            case R.id.l_book:
+                Intent intent = new Intent(this, ExpertBookDetailActivity.class);
+                intent.putExtra("bannerBookId", bookId);
+                startActivity(intent);
+                break;
             case R.id.tv_collage_delete:
+                collageWechat();
+                break;
+            default:
                 break;
         }
     }
 
     private void collageWechat() {
         OnekeyShare oks = new OnekeyShare();
-        oks.setTitle("【仅剩"+(allNum-hasNum)+"人】"+userName+"邀请你"+price+"PPG拼《"+title+"》");
+        oks.setTitle("【仅剩" + (allNum - hasNum) + "人】" + userName + "邀请你" + price + "PPG拼《" + title + "》");
         oks.setText("BC大陆");
-        oks.setImageUrl(Urls.HOST_GETFILE + "?name="+cover);
+        oks.setImageUrl(Urls.HOST_GETFILE + "?name=" + cover);
         oks.setUrl("http://www.mob.com");
         oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
             @Override
@@ -260,7 +274,7 @@ public class CollageDetailActivity extends BaseActivity {
                     paramsToShare.setShareType(Platform.SHARE_WXMINIPROGRAM);
                     paramsToShare.setWxMiniProgramType(WXMiniProgramObject.MINIPTOGRAM_TYPE_RELEASE);
                     paramsToShare.setWxUserName("gh_482031325125");
-                    paramsToShare.setWxPath("pages/groupBuy/groupBuy?model="+"\""+groupId+"\"");
+                    paramsToShare.setWxPath("pages/groupBuy/groupBuy?model=" + "\"" + groupId + "\"");
                 }
             }
         });

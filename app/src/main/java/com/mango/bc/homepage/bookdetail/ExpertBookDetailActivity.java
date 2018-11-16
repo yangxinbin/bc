@@ -140,8 +140,9 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
         ButterKnife.bind(this);
         if (getIntent().getStringExtra("bannerBookId") != null) {
             bannerEventBus(getIntent().getStringExtra("bannerBookId"));
+        }else {
+            EventBus.getDefault().register(this);
         }
-        EventBus.getDefault().register(this);
         etComment.setFocusable(false);
         initDatas();
         init();

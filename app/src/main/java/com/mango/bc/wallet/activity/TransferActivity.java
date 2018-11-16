@@ -114,6 +114,7 @@ public class TransferActivity extends BaseActivity {
                         dialog.dismiss();
                     }
                 }).create();
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 
@@ -172,6 +173,7 @@ public class TransferActivity extends BaseActivity {
                         dialog.dismiss();
                     }
                 }).create();
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 

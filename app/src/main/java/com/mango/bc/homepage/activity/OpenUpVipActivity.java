@@ -277,6 +277,7 @@ public class OpenUpVipActivity extends BaseActivity {
                         dialog.dismiss();
                     }
                 }).create();
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 
@@ -301,6 +302,7 @@ public class OpenUpVipActivity extends BaseActivity {
                         dialog.dismiss();
                     }
                 }).create();
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 

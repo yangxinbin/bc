@@ -402,6 +402,7 @@ public class WalletFragment extends BaseHomeFragment {
                         dialog.dismiss();
                     }
                 }).create();
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
     private void checkIn() {

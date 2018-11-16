@@ -264,6 +264,7 @@ public class CollageBuyBookActivity extends BaseActivity {
                         dialog.dismiss();
                     }
                 }).create();
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 
@@ -288,6 +289,7 @@ public class CollageBuyBookActivity extends BaseActivity {
                         dialog.dismiss();
                     }
                 }).create();
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 
@@ -312,6 +314,7 @@ public class CollageBuyBookActivity extends BaseActivity {
                         dialog.dismiss();
                     }
                 }).create();
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 

@@ -152,6 +152,7 @@ public class MyExpertFragment extends Fragment implements MyExpertBookView {
                         dialog.dismiss();
                     }
                 }).create();
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
     private void deleteGift(final int position) {

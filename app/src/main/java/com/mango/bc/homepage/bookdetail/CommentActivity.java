@@ -194,6 +194,7 @@ public class CommentActivity extends BaseActivity {
                         dialog.dismiss();
                     }
                 }).create();
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 

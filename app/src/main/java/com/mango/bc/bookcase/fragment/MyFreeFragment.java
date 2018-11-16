@@ -154,6 +154,7 @@ public class MyFreeFragment extends Fragment implements MyFreeBookView {
                         dialog.dismiss();
                     }
                 }).create();
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
     private void deleteGift(final int position) {

@@ -1,5 +1,7 @@
 package com.mango.bc.mine.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -88,15 +90,17 @@ public class BcCardActivity extends BaseActivity {
                         final String string;
                         try {
                             string = response.body().string();
+                            Log.v("eeeeeeeee", "-----" + string);
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     spUtils.put("auth", string);
                                     UserBean userBean = MineJsonUtils.readUserBean(string);
                                     if (userBean != null) {
-                                        spUtils.put("authToken", userBean.getAuthToken());
+                                        /*spUtils.put("authToken", userBean.getAuthToken());
                                         EventBus.getDefault().postSticky(userBean);//刷新
-                                        finish();
+                                        finish();*/
+                                        showDailog("BC卡激活成功", "", userBean);
                                     }
                                 }
                             });
@@ -107,6 +111,30 @@ public class BcCardActivity extends BaseActivity {
                 });
             }
         }).start();
+    }
+
+    private void showDailog(String s1, final String s2, final UserBean userBean) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setIcon(R.mipmap.icon)//设置标题的图片
+                .setTitle(s1)//设置对话框的标题
+                //.setMessage(s2)//设置对话框的内容
+                //设置对话框的按钮
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        spUtils.put("authToken", userBean.getAuthToken());
+                        EventBus.getDefault().postSticky(userBean);//刷新
+                        finish();
+                    }
+                }).create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
     }
 
     private void loadUser() {

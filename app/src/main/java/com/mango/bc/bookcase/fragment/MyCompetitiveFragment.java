@@ -159,6 +159,7 @@ public class MyCompetitiveFragment extends Fragment implements MyCompetitiveBook
                         dialog.dismiss();
                     }
                 }).create();
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
     private void deleteGift(final int position) {

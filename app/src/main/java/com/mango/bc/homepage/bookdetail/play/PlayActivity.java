@@ -617,7 +617,7 @@ public class PlayActivity extends BasePlayActivity implements View.OnClickListen
         window.setGravity(Gravity.CENTER);
         //设置动画效果
         window.setWindowAnimations(R.style.AnimBottom);
-        dialog.setCanceledOnTouchOutside(true);
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 

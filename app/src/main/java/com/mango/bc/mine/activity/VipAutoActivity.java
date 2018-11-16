@@ -160,6 +160,7 @@ public class VipAutoActivity extends BaseActivity {
                         dialog.dismiss();
                     }
                 }).create();
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 

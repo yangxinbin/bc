@@ -99,7 +99,7 @@ public class MyExpertBookGirdAdapter extends RecyclerView.Adapter {
             if (datas.get(position).getBook() == null)
                 return;
             viewHolder.tv_free_title.setText(datas.get(position).getBook().getTitle());
-            viewHolder.tv_buy.setText("已售：" + datas.get(position).getBook().getSold());
+            viewHolder.tv_buy.setText("已售：" + (datas.get(position).getBook().getSold()+datas.get(position).getBook().getSoldPlus()));
             if (datas.get(position).getBook().getChapters() != null)
                 viewHolder.tv_time.setText("共" + datas.get(position).getBook().getChapters().size() + "节课");
             if (datas.get(position).getBook().getCover() != null)

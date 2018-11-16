@@ -105,7 +105,7 @@ public class BookExpertAdapter extends RecyclerView.Adapter {
                 ((BookExpertAdapter.BookViewHolder) holder).tv_title.setText(datas.get(position).getTitle());
                 ((BookExpertAdapter.BookViewHolder) holder).tv_detail.setText(datas.get(position).getSubtitle());
                 ((BookExpertAdapter.BookViewHolder) holder).tv_time.setText("共" + datas.get(position).getChapters().size() + "节课");
-                ((BookExpertAdapter.BookViewHolder) holder).tv_buy.setText("已售：" + datas.get(position).getSold());
+                ((BookExpertAdapter.BookViewHolder) holder).tv_buy.setText("已售：" + (datas.get(position).getSold()+datas.get(position).getSoldPlus()));
                 if (datas.get(position).getCover() != null)
                     Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + datas.get(position).getCover().getFileName()).into(((BookExpertAdapter.BookViewHolder) holder).img_book);
                 //((BookExpertAdapter.BookViewHolder) holder).tv_stage.setText(datas.get(position).getPrice() + "PPG");

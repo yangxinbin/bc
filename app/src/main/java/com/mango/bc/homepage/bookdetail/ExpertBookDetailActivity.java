@@ -140,7 +140,7 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
         ButterKnife.bind(this);
         if (getIntent().getStringExtra("bannerBookId") != null) {
             bannerEventBus(getIntent().getStringExtra("bannerBookId"));
-        }else {
+        } else {
             EventBus.getDefault().register(this);
         }
         etComment.setFocusable(false);
@@ -413,11 +413,11 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
         } else if (AudioPlayer.get().isPausing() && mBookDetailBean.getId().equals(spUtils.getString("isSameBook", ""))) {
             bookStageExpertPlay.setText(getResources().getString(R.string.play));
         }
-        tvBuyer.setText(bookDetailBean.getSold() + "");
+        tvBuyer.setText((bookDetailBean.getSold()+bookDetailBean.getSoldPlus()) + "");
         tvCourse.setText(bookDetailBean.getChapters().size() + "");
-        likeNum = bookDetailBean.getLikes();
-        tvLikeGet.setText(bookDetailBean.getLikes() + "");
-        tvLikePlay.setText(bookDetailBean.getLikes() + "");
+        likeNum = bookDetailBean.getLikes() + bookDetailBean.getLikesPlus();
+        tvLikeGet.setText(likeNum + "");
+        tvLikePlay.setText(likeNum + "");
         lBuy.setText(bookDetailBean.getPrice() + "币购买\n" + "会员" + bookDetailBean.getVipPrice() + "币");
         lCollage.setText(bookDetailBean.getGroupBuy2Price() + "-" + bookDetailBean.getGroupBuy3Price() + "币\n拼团购买");
     }

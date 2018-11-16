@@ -159,5 +159,7 @@
     <string name="bunble_fail">Bindings failure</string>
     <string name="send_fail">Submission failure</string>
     <string name="exit_sure">Press again.</string>
+    <string name="vip_c">Member Center</string>
+    <string name="bc_card">Activate the BC card</string>
 
 </resources>

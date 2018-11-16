@@ -180,7 +180,7 @@ public class BookComprtitiveAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 ((ItemViewHolder) holder).tv_title.setText(mData.get(position).getTitle());
                 ((ItemViewHolder) holder).tv_detail.setText(mData.get(position).getSubtitle());
                 ((ItemViewHolder) holder).tv_time.setText("时长：" + secToTime(mData.get(position).getChapters().get(0).getDuration()));
-                ((ItemViewHolder) holder).tv_buy.setText("已售：" + mData.get(position).getSold());
+                ((ItemViewHolder) holder).tv_buy.setText("已售：" + (mData.get(position).getSold()+mData.get(position).getSoldPlus()));
                 if (mData.get(position).getCover() != null)
                     Glide.with(context).load(Urls.HOST_GETFILE + "?name=" + mData.get(position).getCover().getFileName()).into(((ItemViewHolder) holder).img_book);
                 if (chechState(mData.get(position).getId())) {//拿书id遍历判断

@@ -135,7 +135,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:padding="@dimen/dp_5"
-                android:text="会员中心"
+                android:text="@string/vip_c"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize" />
 
@@ -255,7 +255,7 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_weight="1"
                 android:padding="@dimen/dp_5"
-                android:text="激活BC卡"
+                android:text="@string/bc_card"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize" />
 

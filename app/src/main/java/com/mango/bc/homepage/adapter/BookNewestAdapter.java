@@ -110,7 +110,7 @@ public class BookNewestAdapter extends RecyclerView.Adapter {
                 ((BookNewestAdapter.BookViewHolder) holder).tv_title.setText(datas.get(position).getTitle());
                 ((BookNewestAdapter.BookViewHolder) holder).tv_detail.setText(datas.get(position).getSubtitle());
                 ((BookNewestAdapter.BookViewHolder) holder).tv_time.setText("时长：" + secToTime(datas.get(position).getChapters().get(0).getDuration()));
-                ((BookNewestAdapter.BookViewHolder) holder).tv_buy.setText("已售：" + datas.get(position).getSold());
+                ((BookNewestAdapter.BookViewHolder) holder).tv_buy.setText("已售：" + (datas.get(position).getSold()+datas.get(position).getSoldPlus()));
                 if (datas.get(position) == null)
                     return;
                 if (datas.get(position).getCover() != null)

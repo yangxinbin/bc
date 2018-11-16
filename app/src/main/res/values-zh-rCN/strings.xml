@@ -112,4 +112,6 @@
     <string name="bunble_fail">绑定失败</string>
     <string name="send_fail">提交失败</string>
     <string name="exit_sure">再按一次退出</string>
+    <string name="vip_c">会员中心</string>
+    <string name="bc_card">激活BC卡</string>
 </resources>

@@ -130,12 +130,14 @@ public class UserChangeActivity extends BaseActivity {
         if (userBean.getUserProfile() != null) {
             StringBuffer s1 = new StringBuffer();
             StringBuffer s2 = new StringBuffer();
-            for (int j = 0; j < userBean.getUserProfile().getIdentity().size(); j++) {
-                s1.append(userBean.getUserProfile().getIdentity().get(j) + " ");
-            }
-            for (int i = 0; i < userBean.getUserProfile().getHobbies().size(); i++) {
-                s2.append(userBean.getUserProfile().getHobbies().get(i) + " ");
-            }
+            if (userBean.getUserProfile().getIdentity() != null)
+                for (int j = 0; j < userBean.getUserProfile().getIdentity().size(); j++) {
+                    s1.append(userBean.getUserProfile().getIdentity().get(j) + " ");
+                }
+            if (userBean.getUserProfile().getHobbies() != null)
+                for (int i = 0; i < userBean.getUserProfile().getHobbies().size(); i++) {
+                    s2.append(userBean.getUserProfile().getHobbies().get(i) + " ");
+                }
             textView3.setText(s1);
             textView4.setText(s2);
             textView5.setText(userBean.getUserProfile().getRealName());
@@ -143,20 +145,22 @@ public class UserChangeActivity extends BaseActivity {
             textView7.setText(userBean.getUserProfile().getSex());
             textView8.setText(userBean.getUserProfile().getCompany());
             textView9.setText(userBean.getUserProfile().getDuty());
-            spUtils.put("identity",listToString(userBean.getUserProfile().getIdentity()));
-            spUtils.put("hobbies",listToString(userBean.getUserProfile().getHobbies()));
+            spUtils.put("identity", listToString(userBean.getUserProfile().getIdentity()));
+            spUtils.put("hobbies", listToString(userBean.getUserProfile().getHobbies()));
         }
 
     }
+
     private String listToString(List<String> stringList) {
         StringBuffer stringBuffer = new StringBuffer();
-        for (int i = 0; i < stringList.size(); i++) {
-            if (i == stringList.size() - 1) {
-                stringBuffer.append(stringList.get(i));
-                break;
+        if (stringList != null)
+            for (int i = 0; i < stringList.size(); i++) {
+                if (i == stringList.size() - 1) {
+                    stringBuffer.append(stringList.get(i));
+                    break;
+                }
+                stringBuffer.append(stringList.get(i) + ",");
             }
-            stringBuffer.append(stringList.get(i) + ",");
-        }
         Log.v("uuuuuuuu", "----" + stringBuffer.toString());
         return stringBuffer.toString();
     }
@@ -495,7 +499,7 @@ public class UserChangeActivity extends BaseActivity {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.rAll,R.id.imageView_user_back, R.id.circleImageView, R.id.r1, R.id.r2, R.id.r3, R.id.r4, R.id.r5, R.id.r6, R.id.r7, R.id.r8, R.id.r9})
+    @OnClick({R.id.rAll, R.id.imageView_user_back, R.id.circleImageView, R.id.r1, R.id.r2, R.id.r3, R.id.r4, R.id.r5, R.id.r6, R.id.r7, R.id.r8, R.id.r9})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {

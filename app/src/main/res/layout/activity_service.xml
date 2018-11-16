@@ -43,42 +43,93 @@
         android:layout_height="wrap_content">
         <ImageView
             android:layout_marginRight="@dimen/dp_10"
-            android:src="@drawable/qr_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:src="@drawable/qr_code1"
+            android:layout_width="@dimen/dp_160"
+            android:layout_height="@dimen/dp_160" />
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
+
             <TextView
-                android:text="咨询总监：齐某某"
-                android:textSize="@dimen/textSize"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="客服小艾"
                 android:textColor="@color/black"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp" />
+                android:textSize="@dimen/textSize" />
+
             <TextView
-                android:text="电话号：13264736583"
-                android:textSize="@dimen/textSize"
-                android:textColor="@color/grayText"
-                android:layout_weight="1"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp" />
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="电话号：0755-26920262"
+                android:textColor="@color/grayText"
+                android:textSize="@dimen/textSize" />
+
             <TextView
-                android:text="微信号：238423489723984"
-                android:textSize="@dimen/textSize"
-                android:textColor="@color/grayText"
-                android:layout_weight="1"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp" />
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="微信号：bccontinent6616"
+                android:textColor="@color/grayText"
+                android:textSize="@dimen/textSize" />
             <TextView
                 android:text="添加微信，亲遇到的业务问题我们专业的工作人员会为您贴心解决"
-                android:textSize="@dimen/textSize"
+                android:textSize="@dimen/dp_14"
                 android:textColor="@color/grayText"
                 android:layout_weight="1.5"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp" />
         </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:padding="@dimen/dp_15"
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/dp_10"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginRight="@dimen/dp_10"
+            android:src="@drawable/qr_code2"
+            android:layout_width="@dimen/dp_160"
+            android:layout_height="@dimen/dp_160" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="客服小蓝"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="电话号：0755-26920262"
+                android:textColor="@color/grayText"
+                android:textSize="@dimen/textSize" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="微信号：BCxiaolan"
+                android:textColor="@color/grayText"
+                android:textSize="@dimen/textSize" />
+            <TextView
+                android:text="添加微信，亲遇到的业务问题我们专业的工作人员会为您贴心解决"
+                android:textSize="@dimen/dp_14"
+                android:textColor="@color/grayText"
+                android:layout_weight="1.5"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

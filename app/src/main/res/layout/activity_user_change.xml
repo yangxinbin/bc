@@ -118,6 +118,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="8dp"
+                    android:visibility="gone"
                     app:srcCompat="@drawable/grey_back" />
             </RelativeLayout>
 
@@ -207,6 +208,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="8dp"
+                    android:visibility="gone"
                     app:srcCompat="@drawable/grey_back" />
             </RelativeLayout>
 
@@ -252,6 +254,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="8dp"
+                    android:visibility="gone"
                     app:srcCompat="@drawable/grey_back" />
             </RelativeLayout>
 

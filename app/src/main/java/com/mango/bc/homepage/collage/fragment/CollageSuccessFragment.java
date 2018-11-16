@@ -1,5 +1,6 @@
 package com.mango.bc.homepage.collage.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.mango.bc.R;
+import com.mango.bc.homepage.collage.CollageDetailActivity;
 import com.mango.bc.homepage.collage.adapter.CollageAdapter;
 import com.mango.bc.homepage.collage.bean.CollageBean;
 import com.mango.bc.homepage.collage.presenter.CollagePresenter;
@@ -27,6 +29,8 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -76,8 +80,17 @@ public class CollageSuccessFragment extends Fragment implements CollageSuccessVi
     private CollageAdapter.OnItemClickLitener mOnClickListenner = new CollageAdapter.OnItemClickLitener() {
         @Override
         public void onItemClick(View view, int position) {
-            //Intent intent = new Intent(getActivity(), OtherBookDetailActivity.class);
-            //startActivity(intent);
+            Log.v("ooooo", "---");
+            Intent intent = new Intent(getActivity(), CollageDetailActivity.class);
+            EventBus.getDefault().postSticky(collageAdapter.getItem(position));
+            //if (collageAdapter.getItem(position).getStatus().equals("started")) {
+            //    intent.putExtra("status", 0);
+            //} else if (collageAdapter.getItem(position).getStatus().equals("finished")) {
+            intent.putExtra("status", 1);
+            //} else if (collageAdapter.getItem(position).getStatus().equals("expired")) {
+            //    intent.putExtra("status", 2);
+            //}
+            startActivity(intent);
         }
 
     };

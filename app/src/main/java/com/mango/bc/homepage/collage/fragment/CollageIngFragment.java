@@ -83,13 +83,13 @@ public class CollageIngFragment extends Fragment implements CollageIngView {
             Log.v("ooooo", "---");
             Intent intent = new Intent(getActivity(), CollageDetailActivity.class);
             EventBus.getDefault().postSticky(collageAdapter.getItem(position));
-            if (collageAdapter.getItem(position).getStatus().equals("started")) {
-                intent.putExtra("status", 0);
-            } else if (collageAdapter.getItem(position).getStatus().equals("finished")) {
-                intent.putExtra("status", 1);
-            } else if (collageAdapter.getItem(position).getStatus().equals("expired")) {
-                intent.putExtra("status", 2);
-            }
+            //if (collageAdapter.getItem(position).getStatus().equals("started")) {
+            intent.putExtra("status", 0);
+            //} else if (collageAdapter.getItem(position).getStatus().equals("finished")) {
+            //    intent.putExtra("status", 1);
+            //} else if (collageAdapter.getItem(position).getStatus().equals("expired")) {
+            //    intent.putExtra("status", 2);
+            //}
             startActivity(intent);
         }
 

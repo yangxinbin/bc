@@ -413,7 +413,7 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
         } else if (AudioPlayer.get().isPausing() && mBookDetailBean.getId().equals(spUtils.getString("isSameBook", ""))) {
             bookStageExpertPlay.setText(getResources().getString(R.string.play));
         }
-        tvBuyer.setText((bookDetailBean.getSold()+bookDetailBean.getSoldPlus()) + "");
+        tvBuyer.setText((bookDetailBean.getSold() + bookDetailBean.getSoldPlus()) + "");
         tvCourse.setText(bookDetailBean.getChapters().size() + "");
         likeNum = bookDetailBean.getLikes() + bookDetailBean.getLikesPlus();
         tvLikeGet.setText(likeNum + "");
@@ -685,6 +685,7 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
         oks.setCallback(new PlatformActionListener() {
             @Override
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                shareNum();
             }
 
             @Override
@@ -696,6 +697,33 @@ public class ExpertBookDetailActivity extends BaseServiceActivity {
             }
         });
         oks.show(getApplicationContext());
+    }
+
+    private void shareNum() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
+                HttpUtils.doPost(Urls.HOST_TASKSHARE, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        //mHandler.sendEmptyMessage(0);
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
+                            EventBus.getDefault().postSticky(new RefreshWalletBean(true));//刷新钱包
+                        } catch (Exception e) {
+                            //mHandler.sendEmptyMessage(0);
+                        }
+                    }
+                });
+            }
+        }).start();
     }
 
     @Override

@@ -355,7 +355,7 @@ public class OtherBookDetailActivity extends BaseServiceActivity implements MyAl
         if (bookDetailBean == null)
             return;
         title = bookDetailBean.getTitle();
-        if (bookDetailBean.getCover() != null){
+        if (bookDetailBean.getCover() != null) {
             cover = bookDetailBean.getCover().getFileName();
         }
         this.mBookDetailBean = bookDetailBean;
@@ -369,14 +369,14 @@ public class OtherBookDetailActivity extends BaseServiceActivity implements MyAl
             bookStagePlay.setText(getResources().getString(R.string.play));
         }
         tvTitle.setText(bookDetailBean.getTitle());
-        tvBuyer.setText((bookDetailBean.getSold()+bookDetailBean.getSoldPlus()) + "人已购买");
-        likeNum = bookDetailBean.getLikes()+bookDetailBean.getLikesPlus();
+        tvBuyer.setText((bookDetailBean.getSold() + bookDetailBean.getSoldPlus()) + "人已购买");
+        likeNum = bookDetailBean.getLikes() + bookDetailBean.getLikesPlus();
         tvLikePlay.setText(likeNum + "");
         tvLikeFree.setText(likeNum + "");
         tvLikeNeedbuy.setText(likeNum + "");
         bookStageNeedbuyMoney.setText(bookDetailBean.getPrice() + "PPG免费读");//还要判断是否是VIP
         if (bookDetailBean.getDescriptionImages() != null) {
-            bookDetailAdapter = new BookDetailAdapter(bookDetailBean.getDescriptionImages(), this,bookId);
+            bookDetailAdapter = new BookDetailAdapter(bookDetailBean.getDescriptionImages(), this, bookId);
             recycle.setLayoutManager(new LinearLayoutManager(this));
             recycle.setAdapter(bookDetailAdapter);
             Log.v("uuuuuuuuuuuu", "--?--");
@@ -410,7 +410,7 @@ public class OtherBookDetailActivity extends BaseServiceActivity implements MyAl
             bookId = bookBean.getBook().getId();
             type = bookBean.getBook().getType();
             Log.v("kkkkk", type + "---2--" + bookId);
-            if (getIntent().getBooleanExtra("gift",false)) {
+            if (getIntent().getBooleanExtra("gift", false)) {
                 initState(false, "free");
             } else {
                 initState(chechState(bookId), type);
@@ -518,6 +518,33 @@ public class OtherBookDetailActivity extends BaseServiceActivity implements MyAl
         }
     }
 
+    private void shareNum() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> mapParams = new HashMap<String, String>();
+                mapParams.clear();
+                mapParams.put("authToken", spUtils.getString("authToken", ""));
+                HttpUtils.doPost(Urls.HOST_TASKSHARE, mapParams, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        //mHandler.sendEmptyMessage(0);
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
+                            EventBus.getDefault().postSticky(new RefreshWalletBean(true));//刷新钱包
+                        } catch (Exception e) {
+                            //mHandler.sendEmptyMessage(0);
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
+
     private void getFreeBook(final String bookId) {
         new Thread(new Runnable() {
             @Override
@@ -622,7 +649,7 @@ public class OtherBookDetailActivity extends BaseServiceActivity implements MyAl
         OnekeyShare oks = new OnekeyShare();
         oks.setTitle(title);
         oks.setText("BC大陆");
-        oks.setImageUrl(Urls.HOST_GETFILE + "?name=" +cover);
+        oks.setImageUrl(Urls.HOST_GETFILE + "?name=" + cover);
         oks.setUrl("http://www.mob.com");
         oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
             @Override
@@ -631,13 +658,14 @@ public class OtherBookDetailActivity extends BaseServiceActivity implements MyAl
                     paramsToShare.setShareType(Platform.SHARE_WXMINIPROGRAM);
                     paramsToShare.setWxMiniProgramType(WXMiniProgramObject.MINIPTOGRAM_TYPE_RELEASE);
                     paramsToShare.setWxUserName("gh_482031325125");
-                    paramsToShare.setWxPath("/pages/giftBook/giftBook?model=" + "\""+bookId+"\"");
+                    paramsToShare.setWxPath("/pages/giftBook/giftBook?model=" + "\"" + bookId + "\"");
                 }
             }
         });
         oks.setCallback(new PlatformActionListener() {
             @Override
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                shareNum();
             }
 
             @Override

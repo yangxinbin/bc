@@ -1,10 +1,13 @@
 package com.mango.bc.login;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mango.bc.BcActivity;
@@ -38,6 +41,8 @@ public class FirstActivity extends BaseActivity {
 
     @Bind(R.id.tv_see)
     TextView tvSee;
+    @Bind(R.id.l_wechat)
+    LinearLayout lWechat;
     private SPUtils spUtils;
     private boolean isFirstEnter = true;
 /*    @Bind(R.id.button_begin)
@@ -65,10 +70,21 @@ public class FirstActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.l_wechat:
                 if (NetUtil.isNetConnect(this)) {
-                    if (isFirstEnter) {
+/*                    if (isFirstEnter) {
                         isFirstEnter = false;
                         wechatLogin();//只能点一次
-                    }
+                    }*/
+                    ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(lWechat,"alpha",0F,1F);
+                    objectAnimator.setDuration(1000);
+                    objectAnimator.addListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            wechatLogin();//只能点一次
+                            lWechat.setEnabled(false);
+                        }
+                    });
+                    objectAnimator.start();
                 } else {
                     AppUtils.showToast(this, getResources().getString(R.string.check_net));
                 }

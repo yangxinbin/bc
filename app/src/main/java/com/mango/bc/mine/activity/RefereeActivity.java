@@ -88,7 +88,6 @@ public class RefereeActivity extends BaseActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    spUtils.put("auth", string);
                                     UserBean userBean = MineJsonUtils.readUserBean(string);
                                     if (userBean != null) {
                                         tvReferee.setText("你的推荐人："+userBean.getAlias());

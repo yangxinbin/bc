@@ -129,6 +129,8 @@ public class MineFragment extends BaseHomeFragment {
     TextView btFinish;
     private SPUtils spUtils;
     private int agencyInfo;
+    private boolean hasparent = false;
+    private String parentId;
 
     @Nullable
     @Override
@@ -333,6 +335,10 @@ public class MineFragment extends BaseHomeFragment {
         if (userBean == null)
             return;
         Log.v("cccccccccc", "------R--2--" + spUtils.getString("auth", ""));
+        if (userBean.getRecommender() != null){
+            hasparent = true;
+            parentId = userBean.getRecommender();
+        }
         if (userBean.isVip()) {
             imgVip.setVisibility(View.VISIBLE);
             centerVip.setVisibility(View.VISIBLE);
@@ -417,6 +423,12 @@ public class MineFragment extends BaseHomeFragment {
                 break;
             case R.id.tv_referee:
                 intent = new Intent(getActivity(), RefereeActivity.class);
+                if (hasparent){
+                    intent.putExtra("hasparent",true);
+                    intent.putExtra("parentId",parentId);
+                }else {
+                    intent.putExtra("hasparent",false);
+                }
                 startActivity(intent);
                 break;
             case R.id.l_class:

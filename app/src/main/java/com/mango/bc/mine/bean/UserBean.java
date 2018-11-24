@@ -15,16 +15,17 @@ public class UserBean {
      * phone : 18318836309
      * openId : oXhi94jQkXPovBsqEs0B8QKsbM0A
      * alias : 杨鑫斌
-     * type : general
-     * avator : {"id":"5be6921239505f0fb4272069","alias":"avator","fileName":"1541837330090123939.avator","contentType":"image/jpeg","size":1024,"createdOn":1541837330090}
-     * authToken : eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1NDIwMDkwNzQxMTYsImFsaWFzIjoi5p2o6ZGr5paMIiwiaWQiOiI1YjhhM2Q0YjA0NDQwYzBhNDhhMzNhMDUiLCJ0eXBlIjoiZ2VuZXJhbCIsIndhbGxldEFkZHJlc3MiOiIweGU3MmUzODdhZjEyZTA4NmFlZWNjOGVmMTljNzcxY2M4IiwiZXhwIjo0MTM0MDA5MDc0LCJ1c2VybmFtZSI6Im9YaGk5NGpRa1hQb3ZCc3FFczBCOFFLc2JNMEEifQ.fwFXLanMFUdhdovHef2R4gnz3LBNwkAkU6SxB1qcookoCYAqqHYD9N-pGbQ5lhhFcV34PJnIwhcN08aAPmHdAQ
-     * agencyInfo : {"agencyCode":"","realName":"yy","company":"芒果","position":"IT","phone":"18318536309","status":1,"node":false,"accepted":false}
+     * type : agency
+     * avator : {"id":"5bf5437439505f0458fb48e5","alias":"avator","fileName":"1542800244800243831.avator","contentType":"image/jpeg","size":1024,"createdOn":1542800244800}
+     * authToken : eyJhbGciOiJIUzUxMiJ9.eyJhdWRpZW5jZSI6Im1vYmlsZSIsImNyZWF0ZWQiOjE1NDMwNzg1OTI1MzksImFsaWFzIjoi5p2o6ZGr5paMIiwiaWQiOiI1YjhhM2Q0YjA0NDQwYzBhNDhhMzNhMDUiLCJ0eXBlIjoiYWdlbmN5Iiwid2FsbGV0QWRkcmVzcyI6IjB4ZTcyZTM4N2FmMTJlMDg2YWVlY2M4ZWYxOWM3NzFjYzgiLCJleHAiOjQxMzUwNzg1OTIsInVzZXJuYW1lIjoib1hoaTk0alFrWFBvdkJzcUVzMEI4UUtzYk0wQSJ9.MJ556m-dLhlqdGywmw8p84wDPD9MINmfiHNUNcL4sxsyP50UGy1ZhbIogZtDJenh7_2NikmzTiBwnIihiG1cYQ
+     * agencyInfo : {"agencyCode":"A33A05A","realName":"kk","company":"芒果","position":"IT","phone":"18318836309","status":2,"node":false,"accepted":false}
      * recommender :
-     * userProfile : {"identity":["从业者","创业者"],"hobbies":["小白学堂","数字钱包"],"realName":"杨鑫斌","age":"18","sex":"先生","company":"安公","duty":"it"}
-     * wallet : {"id":"5b8a3d4b04440c0a48a33a05","blockChainWalletAddress":"","walletAddress":"0xe72e387af12e086aeecc8ef19c771cc8","ppCoins":79934.3}
-     * billing : {"startOn":1538135914379,"endOn":1566820714381,"billingAmount":28,"billingType":"monthly","auto":true}
+     * userProfile : {"identity":["从业者","创业者"],"hobbies":["小白学堂","数字钱包"],"realName":"杨","age":"18","sex":"先生","company":"安公","duty":"it"}
+     * banner : null
+     * wallet : {"id":"5b8a3d4b04440c0a48a33a05","blockChainWalletAddress":null,"walletAddress":"0xe72e387af12e086aeecc8ef19c771cc8","ppCoins":79478.38}
+     * billing : {"startOn":1538135914379,"endOn":1605873514381,"billingAmount":39.9,"billingType":"monthly","auto":false}
      * vip : true
-     * status : null
+     * status :
      * createdOn : 1538015317854
      */
 
@@ -40,10 +41,11 @@ public class UserBean {
     private AgencyInfoBean agencyInfo;
     private String recommender;
     private UserProfileBean userProfile;
+    private Object banner;
     private WalletBean wallet;
     private BillingBean billing;
     private boolean vip;
-    private Object status;
+    private String status;
     private long createdOn;
 
     public String getId() {
@@ -142,6 +144,14 @@ public class UserBean {
         this.userProfile = userProfile;
     }
 
+    public Object getBanner() {
+        return banner;
+    }
+
+    public void setBanner(Object banner) {
+        this.banner = banner;
+    }
+
     public WalletBean getWallet() {
         return wallet;
     }
@@ -166,11 +176,11 @@ public class UserBean {
         this.vip = vip;
     }
 
-    public Object getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Object status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -184,12 +194,12 @@ public class UserBean {
 
     public static class AvatorBean {
         /**
-         * id : 5be6921239505f0fb4272069
+         * id : 5bf5437439505f0458fb48e5
          * alias : avator
-         * fileName : 1541837330090123939.avator
+         * fileName : 1542800244800243831.avator
          * contentType : image/jpeg
          * size : 1024
-         * createdOn : 1541837330090
+         * createdOn : 1542800244800
          */
 
         private String id;
@@ -250,12 +260,12 @@ public class UserBean {
 
     public static class AgencyInfoBean {
         /**
-         * agencyCode :
-         * realName : yy
+         * agencyCode : A33A05A
+         * realName : kk
          * company : 芒果
          * position : IT
-         * phone : 18318536309
-         * status : 1
+         * phone : 18318836309
+         * status : 2
          * node : false
          * accepted : false
          */
@@ -338,7 +348,7 @@ public class UserBean {
         /**
          * identity : ["从业者","创业者"]
          * hobbies : ["小白学堂","数字钱包"]
-         * realName : 杨鑫斌
+         * realName : 杨
          * age : 18
          * sex : 先生
          * company : 安公
@@ -413,13 +423,13 @@ public class UserBean {
     public static class WalletBean {
         /**
          * id : 5b8a3d4b04440c0a48a33a05
-         * blockChainWalletAddress :
+         * blockChainWalletAddress : null
          * walletAddress : 0xe72e387af12e086aeecc8ef19c771cc8
-         * ppCoins : 79934.3
+         * ppCoins : 79478.38
          */
 
         private String id;
-        private String blockChainWalletAddress;
+        private Object blockChainWalletAddress;
         private String walletAddress;
         private double ppCoins;
 
@@ -431,11 +441,11 @@ public class UserBean {
             this.id = id;
         }
 
-        public String getBlockChainWalletAddress() {
+        public Object getBlockChainWalletAddress() {
             return blockChainWalletAddress;
         }
 
-        public void setBlockChainWalletAddress(String blockChainWalletAddress) {
+        public void setBlockChainWalletAddress(Object blockChainWalletAddress) {
             this.blockChainWalletAddress = blockChainWalletAddress;
         }
 
@@ -459,10 +469,10 @@ public class UserBean {
     public static class BillingBean {
         /**
          * startOn : 1538135914379
-         * endOn : 1566820714381
-         * billingAmount : 28.0
+         * endOn : 1605873514381
+         * billingAmount : 39.9
          * billingType : monthly
-         * auto : true
+         * auto : false
          */
 
         private long startOn;

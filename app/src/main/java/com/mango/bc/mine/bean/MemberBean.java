@@ -9,9 +9,9 @@ import java.util.List;
 public class MemberBean {
 
     /**
-     * total : 26.72
-     * size : 2
-     * users : [{"userId":"5b991c74c6987a31a42779f1","type":"general","agencyInfo":{"realName":"","company":"","position":"","phone":"","recommendedBy":"","level":0,"status":0},"alias":"KK","walletAddress":"0x6e83c04be7c15170b695fa5be0cf047f","commission":"13.36","avator":{"id":"5bc00b762557b905d888975a","alias":"avator","fileName":"15393125021706388.avator","contentType":"image/jpeg","size":1024,"createdOn":1539312502170}},{"userId":"5b839f3804440c1224e1cea7","type":"general","agencyInfo":{"realName":"","company":"","position":"","phone":"","recommendedBy":"","level":0,"status":0},"alias":"嘻嘻","walletAddress":"0x5a06281007f928c010089bfcdb0804c0","commission":"13.36","avator":{"id":"5bc07efc2557b905d888989a","alias":"avator","fileName":"15393420766652274.avator","contentType":"image/jpeg","size":1024,"createdOn":1539342076665}}]
+     * total : 68.53
+     * size : 1
+     * users : [{"userId":"5ba745112557b911bc8a1eb9","type":"general","agencyInfo":{"agencyCode":"aa","realName":"123","company":"123","position":"123","phone":"123456789","status":4,"node":false,"accepted":false},"alias":"KK","walletAddress":"0xff8b88a2a45c6deb7ad3e077f437b1cf","commission":"0","avator":{"id":"5be3b01f1fd8420b242b5334","alias":"avator","fileName":"1541648415825162286.avator","contentType":"image/jpeg","size":1024,"createdOn":1541648415825}}]
      */
 
     private double total;
@@ -44,13 +44,13 @@ public class MemberBean {
 
     public static class UsersBean {
         /**
-         * userId : 5b991c74c6987a31a42779f1
+         * userId : 5ba745112557b911bc8a1eb9
          * type : general
-         * agencyInfo : {"realName":"","company":"","position":"","phone":"","recommendedBy":"","level":0,"status":0}
+         * agencyInfo : {"agencyCode":"aa","realName":"123","company":"123","position":"123","phone":"123456789","status":4,"node":false,"accepted":false}
          * alias : KK
-         * walletAddress : 0x6e83c04be7c15170b695fa5be0cf047f
-         * commission : 13.36
-         * avator : {"id":"5bc00b762557b905d888975a","alias":"avator","fileName":"15393125021706388.avator","contentType":"image/jpeg","size":1024,"createdOn":1539312502170}
+         * walletAddress : 0xff8b88a2a45c6deb7ad3e077f437b1cf
+         * commission : 0
+         * avator : {"id":"5be3b01f1fd8420b242b5334","alias":"avator","fileName":"1541648415825162286.avator","contentType":"image/jpeg","size":1024,"createdOn":1541648415825}
          */
 
         private String userId;
@@ -119,22 +119,32 @@ public class MemberBean {
 
         public static class AgencyInfoBean {
             /**
-             * realName :
-             * company :
-             * position :
-             * phone :
-             * recommendedBy :
-             * level : 0
-             * status : 0
+             * agencyCode : aa
+             * realName : 123
+             * company : 123
+             * position : 123
+             * phone : 123456789
+             * status : 4
+             * node : false
+             * accepted : false
              */
 
+            private String agencyCode;
             private String realName;
             private String company;
             private String position;
             private String phone;
-            private String recommendedBy;
-            private int level;
             private int status;
+            private boolean node;
+            private boolean accepted;
+
+            public String getAgencyCode() {
+                return agencyCode;
+            }
+
+            public void setAgencyCode(String agencyCode) {
+                this.agencyCode = agencyCode;
+            }
 
             public String getRealName() {
                 return realName;
@@ -168,22 +178,6 @@ public class MemberBean {
                 this.phone = phone;
             }
 
-            public String getRecommendedBy() {
-                return recommendedBy;
-            }
-
-            public void setRecommendedBy(String recommendedBy) {
-                this.recommendedBy = recommendedBy;
-            }
-
-            public int getLevel() {
-                return level;
-            }
-
-            public void setLevel(int level) {
-                this.level = level;
-            }
-
             public int getStatus() {
                 return status;
             }
@@ -191,16 +185,32 @@ public class MemberBean {
             public void setStatus(int status) {
                 this.status = status;
             }
+
+            public boolean isNode() {
+                return node;
+            }
+
+            public void setNode(boolean node) {
+                this.node = node;
+            }
+
+            public boolean isAccepted() {
+                return accepted;
+            }
+
+            public void setAccepted(boolean accepted) {
+                this.accepted = accepted;
+            }
         }
 
         public static class AvatorBean {
             /**
-             * id : 5bc00b762557b905d888975a
+             * id : 5be3b01f1fd8420b242b5334
              * alias : avator
-             * fileName : 15393125021706388.avator
+             * fileName : 1541648415825162286.avator
              * contentType : image/jpeg
              * size : 1024
-             * createdOn : 1539312502170
+             * createdOn : 1541648415825
              */
 
             private String id;

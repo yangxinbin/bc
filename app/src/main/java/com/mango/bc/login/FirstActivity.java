@@ -74,17 +74,17 @@ public class FirstActivity extends BaseActivity {
                         isFirstEnter = false;
                         wechatLogin();//只能点一次
                     }*/
-                    ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(lWechat,"alpha",0F,1F);
+                    ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(lWechat, "alpha", 0F, 1F);
                     objectAnimator.setDuration(1000);
                     objectAnimator.addListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             super.onAnimationEnd(animation);
                             wechatLogin();//只能点一次
-                            lWechat.setEnabled(false);
                         }
                     });
                     objectAnimator.start();
+                    lWechat.setEnabled(false);
                 } else {
                     AppUtils.showToast(this, getResources().getString(R.string.check_net));
                 }
@@ -178,6 +178,7 @@ public class FirstActivity extends BaseActivity {
                                     UserBean userBean = MineJsonUtils.readUserBean(string);
                                     if (userBean != null) {
                                         spUtils.put("authToken", userBean.getAuthToken());
+                                        spUtils.put("parentId", userBean.getId());
                                         EventBus.getDefault().postSticky(userBean);//刷新
                                         Intent intent = null;
                                         if (userBean.getUserProfile() != null) {

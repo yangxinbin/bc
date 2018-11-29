@@ -39,7 +39,7 @@ public class Urls {
     public static final String APPLYAGENCY = "/v2/user/apply/agency";
     public static final String GROUP = "/wallet/my/groups";
     public static final String CREATEGROUP = "/wallet/create/group";
-    public static final String MEMBER = "/v2/user/my/member";
+    public static final String MEMBER = "/v2/user/members";
     public static final String DELETEGIFT = "/book/gift";
     public static final String SEND = "/v2/user/send";
     public static final String VERIFY = "/v2/user/verify";

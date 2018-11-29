@@ -176,6 +176,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
+                            android:id="@+id/p1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
@@ -225,6 +226,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
+                            android:id="@+id/p2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
@@ -354,7 +356,7 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/open_point"
+        android:id="@+id/buy_ppg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp_15"

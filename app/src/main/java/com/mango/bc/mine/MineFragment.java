@@ -26,6 +26,8 @@ import com.mango.bc.mine.activity.BcCardActivity;
 import com.mango.bc.mine.activity.ExpertApplyActivity;
 import com.mango.bc.mine.activity.ExpertApplyDetailActivity;
 import com.mango.bc.mine.activity.FaqActivity;
+import com.mango.bc.mine.activity.PointApplyDetailActivity;
+import com.mango.bc.mine.activity.PointDetailActivity;
 import com.mango.bc.mine.activity.RefereeActivity;
 import com.mango.bc.mine.activity.ServiceActivity;
 import com.mango.bc.mine.activity.SettingActivity;
@@ -187,7 +189,7 @@ public class MineFragment extends BaseHomeFragment {
             return;
         if (bean.isRefresh()) {
             if (NetUtil.isNetConnect(getActivity())) {
-                Log.v("ttttttttt", "-----ttt");
+                Log.v("ttttttttt", "ttttt");
                 initMember();
             } else {
             }
@@ -202,7 +204,7 @@ public class MineFragment extends BaseHomeFragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                HttpUtils.doGet(Urls.HOST_MEMBER + "?authToken=" + spUtils.getString("authToken", ""), new Callback() {
+                HttpUtils.doGet(Urls.HOST_MEMBER + "?parentId=" + spUtils.getString("parentId", ""), new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         mHandler.sendEmptyMessage(0);
@@ -243,6 +245,8 @@ public class MineFragment extends BaseHomeFragment {
                         return;
                     if (tvExpertState != null)
                         tvExpertState.setText("已获取贡献值" + memberBean.getTotal() + "PPG");
+                    if (tvPointGet != null)
+                        tvPointGet.setText("已获取贡献值" + memberBean.getTotal() + "PPG");
                     break;
             }
         }
@@ -335,7 +339,7 @@ public class MineFragment extends BaseHomeFragment {
         if (userBean == null)
             return;
         Log.v("cccccccccc", "------R--2--" + spUtils.getString("auth", ""));
-        if (userBean.getRecommender() != null){
+        if (userBean.getRecommender() != null) {
             hasparent = true;
             parentId = userBean.getRecommender();
         }
@@ -360,34 +364,42 @@ public class MineFragment extends BaseHomeFragment {
         tvTime.setText(userBean.getStats().getTotalDuration() + "小时");
         tvCode.setText(userBean.getStats().getPpCoinEarned() + "PPG");*/
         //以下是达人节点UI
-        if (userBean.getAgencyInfo() == null)
-            return;
-        agencyInfo = userBean.getAgencyInfo().getStatus();
-        switch (agencyInfo) {
-            case 0:
-                lToAgent.setVisibility(View.VISIBLE);
+        if (userBean.getAgencyInfo() != null) {
+            if (true/*userBean.getAgencyInfo().isNode()*/) {
+                lToAgent.setVisibility(View.GONE);
                 lExpert.setVisibility(View.GONE);
-                lPoint.setVisibility(View.GONE);
-                break;
-            case 1://申请中
-                lToAgent.setVisibility(View.GONE);
-                lExpert.setVisibility(View.VISIBLE);
-                lPoint.setVisibility(View.GONE);
-                tvExpertState.setText("审核中");
-                break;
-            case 2://达人申请成功
-                lToAgent.setVisibility(View.GONE);
-                lExpert.setVisibility(View.VISIBLE);
-                lPoint.setVisibility(View.GONE);
-                tvExpertState.setText("已获取贡献值900PPG");
-                imgAgency.setVisibility(View.VISIBLE);
-                break;
-            case 3://达人申请失败
-                lToAgent.setVisibility(View.GONE);
-                lExpert.setVisibility(View.VISIBLE);
-                lPoint.setVisibility(View.GONE);
-                tvExpertState.setText("审核失败");
-                break;
+                lPoint.setVisibility(View.VISIBLE);
+                tvExpertState.setText("已获取贡献值PPG");
+                //imgAgency.setVisibility(View.VISIBLE);
+            } else {
+                agencyInfo = userBean.getAgencyInfo().getStatus();
+                switch (agencyInfo) {
+                    case 0:
+                        lToAgent.setVisibility(View.VISIBLE);
+                        lExpert.setVisibility(View.GONE);
+                        lPoint.setVisibility(View.GONE);
+                        break;
+                    case 1://申请中
+                        lToAgent.setVisibility(View.GONE);
+                        lExpert.setVisibility(View.VISIBLE);
+                        lPoint.setVisibility(View.GONE);
+                        tvExpertState.setText("审核中");
+                        break;
+                    case 2://达人申请成功
+                        lToAgent.setVisibility(View.GONE);
+                        lExpert.setVisibility(View.VISIBLE);
+                        lPoint.setVisibility(View.GONE);
+                        tvExpertState.setText("已获取贡献值PPG");
+                        imgAgency.setVisibility(View.VISIBLE);
+                        break;
+                    case 3://达人申请失败
+                        lToAgent.setVisibility(View.GONE);
+                        lExpert.setVisibility(View.VISIBLE);
+                        lPoint.setVisibility(View.GONE);
+                        tvExpertState.setText("审核失败");
+                        break;
+                }
+            }
         }
         if (userBean.getUserProfile() != null) {
             if (userBean.getUserProfile().getRealName() != null) {
@@ -423,11 +435,11 @@ public class MineFragment extends BaseHomeFragment {
                 break;
             case R.id.tv_referee:
                 intent = new Intent(getActivity(), RefereeActivity.class);
-                if (hasparent){
-                    intent.putExtra("hasparent",true);
-                    intent.putExtra("parentId",parentId);
-                }else {
-                    intent.putExtra("hasparent",false);
+                if (hasparent) {
+                    intent.putExtra("hasparent", true);
+                    intent.putExtra("parentId", parentId);
+                } else {
+                    intent.putExtra("hasparent", false);
                 }
                 startActivity(intent);
                 break;
@@ -493,8 +505,8 @@ public class MineFragment extends BaseHomeFragment {
                 break;
             case R.id.l_point:
                 //详情
-/*                intent = new Intent(getContext(), CollageActivity.class);
-                startActivity(intent);*/
+                intent = new Intent(getContext(), PointApplyDetailActivity.class);
+                startActivity(intent);
                 break;
             case R.id.bt_finish:
                 if ("查看信息".equals(btFinish.getText().toString())) {

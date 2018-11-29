@@ -163,7 +163,7 @@
         <activity android:name=".mine.activity.BcCardActivity" />
         <activity android:name=".mine.activity.RefereeActivity" />
         <activity android:name=".mine.activity.TeachActivity" />
-        <activity android:name=".mine.PointApplyDetailActivity"></activity>
+        <activity android:name=".mine.activity.PointApplyDetailActivity"></activity>
     </application>
 
 </manifest>

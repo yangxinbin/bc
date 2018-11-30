@@ -54,7 +54,12 @@ public class MemberActivity extends BaseActivity {
 
     @OnClick(R.id.imageView_back)
     public void onViewClicked() {
-        Intent intent = new Intent(this, ExpertApplyDetailActivity.class);
+        Intent intent;
+        if (getIntent().getBooleanExtra("node", false)) {
+            intent = new Intent(this, PointApplyDetailActivity.class);
+        } else {
+            intent = new Intent(this, ExpertApplyDetailActivity.class);
+        }
         startActivity(intent);
         finish();
     }
@@ -62,7 +67,12 @@ public class MemberActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            Intent intent = new Intent(this, ExpertApplyDetailActivity.class);
+            Intent intent;
+            if (getIntent().getBooleanExtra("node", false)) {
+                intent = new Intent(this, PointApplyDetailActivity.class);
+            } else {
+                intent = new Intent(this, ExpertApplyDetailActivity.class);
+            }
             startActivity(intent);
             finish();
             return false;

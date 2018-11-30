@@ -21,6 +21,7 @@ import com.mango.bc.bookcase.net.presenter.MyBookPresenterImpl;
 import com.mango.bc.bookcase.net.view.MyAllBookView;
 import com.mango.bc.homepage.adapter.BookGirdFreeAdapter;
 import com.mango.bc.homepage.bookdetail.OtherBookDetailActivity;
+import com.mango.bc.homepage.bookdetail.bean.PlayBarBean;
 import com.mango.bc.homepage.bookdetail.play.executor.ControlPanel;
 import com.mango.bc.homepage.bookdetail.play.service.AudioPlayer;
 import com.mango.bc.homepage.net.bean.BookBean;
@@ -99,7 +100,16 @@ public class FreeBookActivity extends BaseServiceActivity implements BookFreeVie
         }
         refreshAndLoadMore();
     }
-
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void PlayBarBeanEventBus(PlayBarBean playBarBean) {
+        if (playBarBean == null) {
+            return;
+        }
+        if (!playBarBean.isShowBar()) {
+            flPlayBar.setVisibility(View.GONE);//播放控件
+        }
+        EventBus.getDefault().removeStickyEvent(PlayBarBean.class);
+    }
     @Override
     protected void onServiceBound() {
         controlPanel = new ControlPanel(flPlayBar);

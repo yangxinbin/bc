@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,12 +67,18 @@ public class PointSuccessFragment extends Fragment {
         refreshAndLoadMore();
         return view;
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void RefreshNodeBeanEventBus(NodeBean bean) {
         if (bean == null)
             return;
-        initViewFrom();
+        if (bean.isIfRefesh()) {
+            refresh.autoRefresh();
+            bean.setIfRefesh(false);
+            EventBus.getDefault().postSticky(bean);
+        }
     }
+
     private void refreshAndLoadMore() {
         refresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -122,7 +129,13 @@ public class PointSuccessFragment extends Fragment {
                         try {
                             String string = response.body().string();
                             spUtils.put("member", string);
-                            initViewFrom();
+                            if (getActivity() != null)
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initViewFrom();
+                                    }
+                                });
                         } catch (Exception e) {
                         }
                     }
@@ -157,8 +170,11 @@ public class PointSuccessFragment extends Fragment {
         }
         //pointAdapter.setOnItemClickLitener(mOnClickListenner);
     }
+
     private void initViewFrom() {
         pointAdapter.reMove();
+        if (usersBeans != null)
+            usersBeans.clear();
         MemberBean memberBean = MineJsonUtils.readMemberBean(spUtils.getString("member", ""));
         if (memberBean.getUsers() == null) {
             //refresh.setVisibility(View.GONE);
@@ -167,12 +183,14 @@ public class PointSuccessFragment extends Fragment {
             //refresh.setVisibility(View.VISIBLE);
             //imgNocollage.setVisibility(View.GONE);
             for (int i = 0; i < memberBean.getUsers().size(); i++) {
-                if (memberBean.getUsers().get(i).getAgencyInfo().getStatus() == 3 || memberBean.getUsers().get(i).getAgencyInfo().getStatus() == 4) {
+                if (memberBean.getUsers().get(i).getAgencyInfo().getStatus() == 2) {
                     usersBeans.add(memberBean.getUsers().get(i));
                 }
             }
             if (usersBeans.size() != 0) {
+                Log.v("ppppppppppppppp", "===2===" + usersBeans.size());
                 pointAdapter.setmDate(usersBeans);
+                pointAdapter.notifyDataSetChanged();
             } else {
                 //refresh.setVisibility(View.GONE);
                 //imgNocollage.setVisibility(View.VISIBLE);

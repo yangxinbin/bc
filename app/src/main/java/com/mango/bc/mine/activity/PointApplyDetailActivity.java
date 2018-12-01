@@ -85,7 +85,7 @@ public class PointApplyDetailActivity extends BaseActivity {
             return;
         if (member.getUsers() != null) {
             for (int i = 0; i < member.getUsers().size(); i++) {
-                if ("agency".equals(member.getUsers().get(i).getType())) {
+                if (member.getUsers().get(i).getAgencyInfo().getStatus() == 2) {
                     num_1 = num_1 + 1;
                     c_1 = c_1 + Double.parseDouble(member.getUsers().get(i).getCommission());
                 } else {

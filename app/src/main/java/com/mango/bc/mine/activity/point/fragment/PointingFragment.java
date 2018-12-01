@@ -66,6 +66,7 @@ public class PointingFragment extends Fragment {
         refreshAndLoadMore();
         return view;
     }
+
     private void refreshAndLoadMore() {
         refresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -101,6 +102,7 @@ public class PointingFragment extends Fragment {
             //mAdapter.refresh(initData());
         }
     }
+
     private void initMember() {
         new Thread(new Runnable() {
             @Override
@@ -116,6 +118,13 @@ public class PointingFragment extends Fragment {
                             String string = response.body().string();
                             spUtils.put("member", string);
                             EventBus.getDefault().postSticky(new NodeBean(true));
+                            if (getActivity() != null)
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initViewFrom();
+                                    }
+                                });
                             //initView();
                         } catch (Exception e) {
                         }
@@ -124,6 +133,7 @@ public class PointingFragment extends Fragment {
             }
         }).start();
     }
+
     private void initView() {
         pointAdapter = new PointAdapter(getActivity());
         pointAdapter.reMove();
@@ -137,18 +147,44 @@ public class PointingFragment extends Fragment {
             //refresh.setVisibility(View.VISIBLE);
             //imgNocollage.setVisibility(View.GONE);
             for (int i = 0; i < memberBean.getUsers().size(); i++) {
-                if (memberBean.getUsers().get(i).getAgencyInfo().getStatus() == 1){
+                if (memberBean.getUsers().get(i).getAgencyInfo().getStatus() == 1) {
                     usersBeans.add(memberBean.getUsers().get(i));
                 }
             }
-            if (usersBeans.size() != 0){
+            if (usersBeans.size() != 0) {
                 pointAdapter.setmDate(usersBeans);
-            }else {
+            } else {
                 //refresh.setVisibility(View.GONE);
                 //imgNocollage.setVisibility(View.VISIBLE);
             }
         }
         pointAdapter.setOnItemClickLitener(mOnClickListenner);
+    }
+
+    private void initViewFrom() {
+        pointAdapter.reMove();
+        if (usersBeans != null)
+            usersBeans.clear();
+        MemberBean memberBean = MineJsonUtils.readMemberBean(spUtils.getString("member", ""));
+        if (memberBean.getUsers() == null) {
+            //refresh.setVisibility(View.GONE);
+            //imgNocollage.setVisibility(View.VISIBLE);
+        } else {
+            //refresh.setVisibility(View.VISIBLE);
+            //imgNocollage.setVisibility(View.GONE);
+            for (int i = 0; i < memberBean.getUsers().size(); i++) {
+                if (memberBean.getUsers().get(i).getAgencyInfo().getStatus() == 1) {
+                    usersBeans.add(memberBean.getUsers().get(i));
+                }
+            }
+            if (usersBeans.size() != 0) {
+                pointAdapter.setmDate(usersBeans);
+            } else {
+                //refresh.setVisibility(View.GONE);
+                //imgNocollage.setVisibility(View.VISIBLE);
+            }
+        }
+        //pointAdapter.setOnItemClickLitener(mOnClickListenner);
     }
 
     private PointAdapter.OnItemClickLitener mOnClickListenner = new PointAdapter.OnItemClickLitener() {
@@ -163,6 +199,7 @@ public class PointingFragment extends Fragment {
             reject(position);
         }
     };
+
     private void reject(final int position) {
         new Thread(new Runnable() {
             @Override
@@ -192,6 +229,7 @@ public class PointingFragment extends Fragment {
                                     public void run() {
                                         AppUtils.showToast(getActivity(), "拒绝成功");
                                         initMember();
+                                        pointAdapter.deleteItem(position);
                                     }
                                 });
                         } catch (Exception e) {
@@ -208,6 +246,7 @@ public class PointingFragment extends Fragment {
             }
         }).start();
     }
+
     private void accept(final int position) {
         new Thread(new Runnable() {
             @Override

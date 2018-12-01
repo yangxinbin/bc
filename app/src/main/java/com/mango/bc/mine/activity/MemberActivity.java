@@ -49,7 +49,7 @@ public class MemberActivity extends BaseActivity {
         int type = getIntent().getIntExtra("node", -1);
         if (type == 1) {
             for (int i = 0; i < member.getUsers().size(); i++) {
-                if ("agency".equals(member.getUsers().get(i).getType())) {
+                if (member.getUsers().get(i).getAgencyInfo().getStatus() == 2 ) {
                     usersBeans.add(member.getUsers().get(i));
                     c_1 = c_1 + Double.parseDouble(member.getUsers().get(i).getCommission());
                 }
@@ -58,7 +58,7 @@ public class MemberActivity extends BaseActivity {
             tvPpg.setText("累计收益" + c_1 + "PPG");
         } else if (type == 2) {
             for (int i = 0; i < member.getUsers().size(); i++) {
-                if (!("agency".equals(member.getUsers().get(i).getType()))) {
+                if (member.getUsers().get(i).getAgencyInfo().getStatus() != 2 ) {
                     usersBeans.add(member.getUsers().get(i));
                     c_2 = c_2 + Double.parseDouble(member.getUsers().get(i).getCommission());
                 }

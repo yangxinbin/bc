@@ -184,7 +184,6 @@ public class HomePageFragment extends BaseHomeFragment implements MyAllBookView 
                                 EventBus.getDefault().postSticky(refreshStageBean);
                             }
                             EventBus.getDefault().postSticky(new RefreshTaskBean(true));//刷新任务列表
-                            EventBus.getDefault().postSticky(new RefreshMemberBean(true));//刷新达人
                         } else {
                             AppUtils.showToast(getActivity(), getString(R.string.check_net));
                             RefreshStageBean refreshStageBean = new RefreshStageBean(false, false, false, false, false, false);
@@ -243,10 +242,12 @@ public class HomePageFragment extends BaseHomeFragment implements MyAllBookView 
                                         spUtils.put("auth", string2);//刷新用户信息
                                         Log.v("cccccccccc", "-----auth----");
                                         UserBean userBean = MineJsonUtils.readUserBean(string2);
+                                        spUtils.put("parentId", userBean.getId());
                                         if (userBean != null) {
                                             Log.v("lllllllll", "=rrrr==" + userBean.isVip());
                                             EventBus.getDefault().postSticky(userBean);//刷新钱包 我的
                                         }
+                                        EventBus.getDefault().postSticky(new RefreshMemberBean(true));//刷新达人
                                     }
                                 });
                         } catch (IOException e) {

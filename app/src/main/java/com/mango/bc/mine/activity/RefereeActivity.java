@@ -64,6 +64,7 @@ public class RefereeActivity extends BaseActivity {
             btSure.setVisibility(View.GONE);
             tcRefereeTitle.setVisibility(View.VISIBLE);
             tvReferee.setVisibility(View.VISIBLE);
+            Log.v("ccccccccccccccc","========="+getIntent().getStringExtra("parentId"));
             whatParent(getIntent().getStringExtra("parentId"));
         } else {
             etBcRe.setVisibility(View.VISIBLE);

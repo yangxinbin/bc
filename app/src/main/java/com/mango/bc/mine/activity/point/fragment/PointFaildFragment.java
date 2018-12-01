@@ -80,7 +80,13 @@ public class PointFaildFragment extends Fragment {
     public void RefreshNodeBeanEventBus(NodeBean bean) {
         if (bean == null)
             return;
-        initViewFrom();
+        if (bean.isIfRefesh()) {
+            //initViewFrom();
+            //Log.v("ppppppppppppppp", "===1");
+            refresh.autoRefresh();
+            bean.setIfRefesh(false);
+            EventBus.getDefault().postSticky(bean);
+        }
     }
 
     private void refreshAndLoadMore() {
@@ -133,7 +139,13 @@ public class PointFaildFragment extends Fragment {
                         try {
                             String string = response.body().string();
                             spUtils.put("member", string);
-                            initViewFrom();
+                            if (getActivity() != null)
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initViewFrom();
+                                    }
+                                });
                         } catch (Exception e) {
                         }
                     }
@@ -171,6 +183,8 @@ public class PointFaildFragment extends Fragment {
 
     private void initViewFrom() {
         pointAdapter.reMove();
+        if (usersBeans != null)
+            usersBeans.clear();
         MemberBean memberBean = MineJsonUtils.readMemberBean(spUtils.getString("member", ""));
         if (memberBean.getUsers() == null) {
             //refresh.setVisibility(View.GONE);

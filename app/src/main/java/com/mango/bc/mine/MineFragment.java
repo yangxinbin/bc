@@ -132,7 +132,7 @@ public class MineFragment extends BaseHomeFragment {
     private SPUtils spUtils;
     private int agencyInfo;
     private boolean hasparent = false;
-    private String parentId;
+    private String getRecommender;
 
     @Nullable
     @Override
@@ -189,7 +189,6 @@ public class MineFragment extends BaseHomeFragment {
             return;
         if (bean.isRefresh()) {
             if (NetUtil.isNetConnect(getActivity())) {
-                Log.v("ttttttttt", "ttttt");
                 initMember();
             } else {
             }
@@ -341,7 +340,10 @@ public class MineFragment extends BaseHomeFragment {
         Log.v("cccccccccc", "------R--2--" + spUtils.getString("auth", ""));
         if (userBean.getRecommender() != null) {
             hasparent = true;
-            parentId = userBean.getRecommender();
+            getRecommender = userBean.getRecommender();
+        }else {
+            hasparent = false;
+            getRecommender = "";
         }
         if (userBean.isVip()) {
             imgVip.setVisibility(View.VISIBLE);
@@ -442,7 +444,7 @@ public class MineFragment extends BaseHomeFragment {
                 intent = new Intent(getActivity(), RefereeActivity.class);
                 if (hasparent) {
                     intent.putExtra("hasparent", true);
-                    intent.putExtra("parentId", parentId);
+                    intent.putExtra("parentId", getRecommender);
                 } else {
                     intent.putExtra("hasparent", false);
                 }

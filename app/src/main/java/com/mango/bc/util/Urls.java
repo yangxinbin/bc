@@ -5,10 +5,10 @@ package com.mango.bc.util;
  */
 
 public class Urls {
-    //public static final String HOST = "http://192.168.1.145:8000/bcms";
-    //public static final String HOST = "https://cms.bccontinent.com/bcms";
+    //public static final String HOST = "http://192.168.0.195:80/bcms";
+    public static final String HOST = "https://cms.bccontinent.com/bcms";
     //public static final String HOST = "http://192.168.0.145:8080/bcms";
-    public static final String HOST = "https://api.bccontinent.com/bcms";
+    //public static final String HOST = "https://api.bccontinent.com/bcms";
 
     public static final String BOOKCATEGORIES = "/book/categories";
     public static final String BOOKLISTCATEGORIES = "/book/list/category";
@@ -50,8 +50,9 @@ public class Urls {
     public static final String WALLET = "/wallet/my";
     public static final String BANNER = "/v2/user/banners";
     public static final String BECAME = "/v2/user/became/member";
-
-
+    public static final String ACCEPT = "/v2/user/member/accept";
+    public static final String REJECT = "/v2/user/member/reject";
+    public static final String INFO = "/v2/user/update/agency/info";
 
 
 
@@ -95,5 +96,8 @@ public class Urls {
     public static final String HOST_WALLET = HOST+WALLET;
     public static final String HOST_BANNER = HOST+BANNER;
     public static final String HOST_BECAME = HOST+BECAME;
+    public static final String HOST_ACCEPT = HOST+ACCEPT;
+    public static final String HOST_REJECT = HOST+REJECT;
+    public static final String HOST_INFO = HOST+INFO;
 
 }

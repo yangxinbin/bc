@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.mango.bc.R;
 import com.mango.bc.base.BaseActivity;
+import com.mango.bc.mine.activity.point.PointReviewedActivity;
 import com.mango.bc.mine.bean.MemberBean;
 import com.mango.bc.mine.bean.UserBean;
 import com.mango.bc.mine.jsonutil.MineJsonUtils;
@@ -112,7 +113,9 @@ public class PointApplyDetailActivity extends BaseActivity {
             stringCode = auth.getAgencyInfo().getAgencyCode();
             tvNumber.setText("邀请码：" + stringCode);
         }
-        if (auth.getAgencyInfo().getRealName() != null) {
+        if (auth.getAgencyInfo().getRealName() == null || auth.getAgencyInfo().getPhone() == null || auth.getAgencyInfo().getCompany() == null || auth.getAgencyInfo().getPosition() == null) {
+            finishInfo.setVisibility(View.VISIBLE);
+        }else {
             finishInfo.setVisibility(View.GONE);
         }
     }
@@ -137,14 +140,20 @@ public class PointApplyDetailActivity extends BaseActivity {
                 AppUtils.showToast(this, "复制成功");
                 break;
             case R.id.p1:
+                intent = new Intent(this, MemberActivity.class);//达人
+                intent.putExtra("node", 1);
+                startActivity(intent);
+                finish();
                 break;
             case R.id.p2:
-                intent = new Intent(this, MemberActivity.class);
-                intent.putExtra("node",true);
+                intent = new Intent(this, MemberActivity.class);//成员
+                intent.putExtra("node", 2);
                 startActivity(intent);
                 finish();
                 break;
             case R.id.l_1:
+                intent = new Intent(this, PointReviewedActivity.class);
+                startActivity(intent);
                 break;
             case R.id.l_2:
                 intent = new Intent(this, PointDetailActivity.class);

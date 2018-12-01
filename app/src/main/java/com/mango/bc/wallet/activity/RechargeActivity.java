@@ -60,7 +60,7 @@ public class RechargeActivity extends BaseActivity {
     private ArrayList<RechargeType> datas;
     private SPUtils spUtils;
     private IWXAPI api;
-    private int num;
+    private int num = 6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,6 +208,8 @@ public class RechargeActivity extends BaseActivity {
         mapParams.clear();
         mapParams.put("authToken", spUtils.getString("authToken", ""));
         mapParams.put("dollar", dollar + "");
+        mapParams.put("ttype", "topup");
+        mapParams.put("mobileType", "android");
         HttpUtils.doPost(Urls.HOST_WEIXINPAY, mapParams, new Callback() {
             @Override
             public void onFailure(Call call, final IOException e) {

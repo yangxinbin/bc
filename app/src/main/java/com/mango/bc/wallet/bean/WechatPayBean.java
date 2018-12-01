@@ -9,23 +9,23 @@ import com.google.gson.annotations.SerializedName;
 public class WechatPayBean {
 
     /**
-     * id : 5be54ba47f701105b8150f2b
-     * uuid : ce4c2cbbbe0e42cb9105bf42
+     * id : 5c02478e5976860d88748188
+     * uuid : feab44a1e6954540b9ab2e47
      * userId : 5b8a3d4b04440c0a48a33a05
      * walletAddress : 0xe72e387af12e086aeecc8ef19c771cc8
-     * ppCoin : 10
-     * dollars : 10
-     * type : topup
+     * ppCoin : 0.01
+     * dollars : 0.01
+     * type : become_node
      * status : 0
-     * payMap : {"appid":"wxb93480bda524daa0","partnerid":"1515082901","prepayid":"wx0916560470333479455ec23b3865438202","package":"Sign=WXPay","noncestr":"bc02d3afdd1246c59be0f40c8617fb8d","timestamp":"1541753764","sign":"DEC71D4BE0BD49E44AA78FA677CBA7C1BB69034718E2CCFEC0A9EECD23A3F0F1","out_trade_no":"ce4c2cbbbe0e42cb9105bf42"}
+     * payMap : {"appid":"wxb93480bda524daa0","partnerid":"1515082901","prepayid":"wx011634227768834a8ac4fba30206120284","package":"Sign=WXPay","noncestr":"50e84462983f4e24956ecc13128c4999","timestamp":"1543653262","sign":"B40E119F00ED98862CE5705B42266A659ED303B1F6876CDF356EF00E5929EEB6","out_trade_no":"feab44a1e6954540b9ab2e47"}
      */
 
     private String id;
     private String uuid;
     private String userId;
     private String walletAddress;
-    private int ppCoin;
-    private int dollars;
+    private double ppCoin;
+    private double dollars;
     private String type;
     private int status;
     private PayMapBean payMap;
@@ -62,19 +62,19 @@ public class WechatPayBean {
         this.walletAddress = walletAddress;
     }
 
-    public int getPpCoin() {
+    public double getPpCoin() {
         return ppCoin;
     }
 
-    public void setPpCoin(int ppCoin) {
+    public void setPpCoin(double ppCoin) {
         this.ppCoin = ppCoin;
     }
 
-    public int getDollars() {
+    public double getDollars() {
         return dollars;
     }
 
-    public void setDollars(int dollars) {
+    public void setDollars(double dollars) {
         this.dollars = dollars;
     }
 
@@ -103,15 +103,29 @@ public class WechatPayBean {
     }
 
     public static class PayMapBean {
+        @Override
+        public String toString() {
+            return "PayMapBean{" +
+                    "appid='" + appid + '\'' +
+                    ", partnerid='" + partnerid + '\'' +
+                    ", prepayid='" + prepayid + '\'' +
+                    ", packageX='" + packageX + '\'' +
+                    ", noncestr='" + noncestr + '\'' +
+                    ", timestamp='" + timestamp + '\'' +
+                    ", sign='" + sign + '\'' +
+                    ", out_trade_no='" + out_trade_no + '\'' +
+                    '}';
+        }
+
         /**
          * appid : wxb93480bda524daa0
          * partnerid : 1515082901
-         * prepayid : wx0916560470333479455ec23b3865438202
+         * prepayid : wx011634227768834a8ac4fba30206120284
          * package : Sign=WXPay
-         * noncestr : bc02d3afdd1246c59be0f40c8617fb8d
-         * timestamp : 1541753764
-         * sign : DEC71D4BE0BD49E44AA78FA677CBA7C1BB69034718E2CCFEC0A9EECD23A3F0F1
-         * out_trade_no : ce4c2cbbbe0e42cb9105bf42
+         * noncestr : 50e84462983f4e24956ecc13128c4999
+         * timestamp : 1543653262
+         * sign : B40E119F00ED98862CE5705B42266A659ED303B1F6876CDF356EF00E5929EEB6
+         * out_trade_no : feab44a1e6954540b9ab2e47
          */
 
         private String appid;
@@ -186,20 +200,6 @@ public class WechatPayBean {
 
         public void setOut_trade_no(String out_trade_no) {
             this.out_trade_no = out_trade_no;
-        }
-
-        @Override
-        public String toString() {
-            return "PayMapBean{" +
-                    "appid='" + appid + '\'' +
-                    ", partnerid='" + partnerid + '\'' +
-                    ", prepayid='" + prepayid + '\'' +
-                    ", packageX='" + packageX + '\'' +
-                    ", noncestr='" + noncestr + '\'' +
-                    ", timestamp='" + timestamp + '\'' +
-                    ", sign='" + sign + '\'' +
-                    ", out_trade_no='" + out_trade_no + '\'' +
-                    '}';
         }
     }
 }

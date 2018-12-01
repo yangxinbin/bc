@@ -243,9 +243,9 @@ public class MineFragment extends BaseHomeFragment {
                     MemberBean memberBean = (MemberBean) msg.obj;
                     if (memberBean == null)
                         return;
-                    if (tvExpertState != null)
+                    if (tvExpertState != null && agencyInfo == 2)
                         tvExpertState.setText("已获取贡献值" + memberBean.getTotal() + "PPG");
-                    if (tvPointGet != null)
+                    if (tvPointGet != null && agencyInfo == 2)
                         tvPointGet.setText("已获取贡献值" + memberBean.getTotal() + "PPG");
                     break;
             }
@@ -365,7 +365,7 @@ public class MineFragment extends BaseHomeFragment {
         tvCode.setText(userBean.getStats().getPpCoinEarned() + "PPG");*/
         //以下是达人节点UI
         if (userBean.getAgencyInfo() != null) {
-            if (true/*userBean.getAgencyInfo().isNode()*/) {
+            if (userBean.getAgencyInfo().isNode()) {
                 lToAgent.setVisibility(View.GONE);
                 lExpert.setVisibility(View.GONE);
                 lPoint.setVisibility(View.VISIBLE);
@@ -397,6 +397,11 @@ public class MineFragment extends BaseHomeFragment {
                         lExpert.setVisibility(View.VISIBLE);
                         lPoint.setVisibility(View.GONE);
                         tvExpertState.setText("审核失败");
+                        break;
+                    case 4://达人申请取消
+                        lToAgent.setVisibility(View.VISIBLE);
+                        lExpert.setVisibility(View.GONE);
+                        lPoint.setVisibility(View.GONE);
                         break;
                 }
             }

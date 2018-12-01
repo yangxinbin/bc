@@ -57,21 +57,21 @@ public class SinglePayAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof SingleViewHolder) {
             final SingleViewHolder viewHolder = (SingleViewHolder) holder;
-            switch (position) {
+/*            switch (position) {
                 case 0:
                     viewHolder.img_pay_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.alipay));
                     viewHolder.tv_pay_name.setText(R.string.aliPay);
                     break;
-                case 1:
-                    viewHolder.img_pay_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.weixin));
-                    viewHolder.tv_pay_name.setText(R.string.weixin);
-                    break;
+                case 1:*/
+            viewHolder.img_pay_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.weixin));
+            viewHolder.tv_pay_name.setText(R.string.weixin);
+/*                    break;
             }
             if (selected == position) {
                 viewHolder.itemView.setSelected(true);
             } else {
                 viewHolder.itemView.setSelected(false);
-            }
+            }*/
 
             if (mOnItemClickLitener != null) {
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +86,7 @@ public class SinglePayAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 2;
+        return 1;
     }
 
     class SingleViewHolder extends RecyclerView.ViewHolder {

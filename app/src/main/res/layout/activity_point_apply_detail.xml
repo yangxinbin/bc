@@ -329,7 +329,8 @@
                     android:padding="@dimen/dp_5"
                     android:text="去完善"
                     android:textColor="@color/gray_6"
-                    android:textSize="@dimen/dp_14" />
+                    android:textSize="@dimen/dp_14"
+                    android:visibility="gone" />
 
                 <ImageView
                     android:layout_width="wrap_content"

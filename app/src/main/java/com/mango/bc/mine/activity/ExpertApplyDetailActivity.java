@@ -93,8 +93,6 @@ public class ExpertApplyDetailActivity extends BaseActivity {
                 }
                 AppUtils.showToast(this, "复制成功");
                 break;
-            case R.id.tv_code:
-                break;
             case R.id.l_member:
                 intent = new Intent(this, MemberActivity.class);
                 startActivity(intent);

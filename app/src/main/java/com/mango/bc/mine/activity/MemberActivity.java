@@ -13,6 +13,7 @@ import com.mango.bc.mine.bean.MemberBean;
 import com.mango.bc.mine.jsonutil.MineJsonUtils;
 import com.mango.bc.util.SPUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -29,6 +30,9 @@ public class MemberActivity extends BaseActivity {
     NoScrollGridView gv;
     private SPUtils spUtils;
     private MemberAdapter adapter;
+    private List<MemberBean.UsersBean> usersBeans = new ArrayList<>();
+    private double c_1 = 0;
+    private double c_2 = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +46,29 @@ public class MemberActivity extends BaseActivity {
     private void initMember(MemberBean member) {
         if (member == null)
             return;
-        tvNum.setText("已有成员" + member.getSize() + "人");
-        tvPpg.setText("累计收益" + member.getTotal() + "PPG");
-        initView(member.getUsers());
+        int type = getIntent().getIntExtra("node", -1);
+        if (type == 1) {
+            for (int i = 0; i < member.getUsers().size(); i++) {
+                if ("agency".equals(member.getUsers().get(i).getType())) {
+                    usersBeans.add(member.getUsers().get(i));
+                    c_1 = c_1 + Double.parseDouble(member.getUsers().get(i).getCommission());
+                }
+            }
+            tvNum.setText("已有达人" + usersBeans.size() + "人");
+            tvPpg.setText("累计收益" + c_1 + "PPG");
+        } else if (type == 2) {
+            for (int i = 0; i < member.getUsers().size(); i++) {
+                if (!("agency".equals(member.getUsers().get(i).getType()))) {
+                    usersBeans.add(member.getUsers().get(i));
+                    c_2 = c_2 + Double.parseDouble(member.getUsers().get(i).getCommission());
+                }
+            }
+            tvNum.setText("已有成员" + usersBeans.size() + "人");
+            tvPpg.setText("累计收益" + c_2 + "PPG");
+        }
+
+
+        initView(usersBeans);
     }
 
     private void initView(List<MemberBean.UsersBean> list) {
@@ -55,7 +79,7 @@ public class MemberActivity extends BaseActivity {
     @OnClick(R.id.imageView_back)
     public void onViewClicked() {
         Intent intent;
-        if (getIntent().getBooleanExtra("node", false)) {
+        if (getIntent().getIntExtra("node", 0) != 0) {
             intent = new Intent(this, PointApplyDetailActivity.class);
         } else {
             intent = new Intent(this, ExpertApplyDetailActivity.class);
@@ -68,7 +92,7 @@ public class MemberActivity extends BaseActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
             Intent intent;
-            if (getIntent().getBooleanExtra("node", false)) {
+            if (getIntent().getIntExtra("node", 0) != 0) {
                 intent = new Intent(this, PointApplyDetailActivity.class);
             } else {
                 intent = new Intent(this, ExpertApplyDetailActivity.class);

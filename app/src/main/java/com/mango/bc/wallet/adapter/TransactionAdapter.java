@@ -108,6 +108,12 @@ public class TransactionAdapter extends RecyclerView.Adapter {
                     viewHolder.tv_time.setText(DateUtil.getDateToString(datas.get(position).getTimestamp(),"yyyy-MM-dd HH:mm:ss"));
                     viewHolder.tv_pp.setText(datas.get(position).getPpCoin()+"PPG");
                     viewHolder.tv_pp.setTextColor(context.getResources().getColor(R.color.gray_3));
+                }else if (datas.get(position).getType().equals("become_node")){
+                    viewHolder.img_transaction.setImageResource(R.drawable.record_buy);
+                    viewHolder.tv_title.setText("成为节点");
+                    viewHolder.tv_time.setText(DateUtil.getDateToString(datas.get(position).getTimestamp(),"yyyy-MM-dd HH:mm:ss"));
+                    viewHolder.tv_pp.setText(datas.get(position).getPpCoin()+"PPG");
+                    viewHolder.tv_pp.setTextColor(context.getResources().getColor(R.color.gray_3));
                 }
 
             }

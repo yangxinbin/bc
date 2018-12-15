@@ -159,7 +159,11 @@ public class ApplyActivity extends BaseServiceActivity {
                 /*intent = new Intent(this, PointApplyActivity.class);
                 startActivity(intent);
                 finish();*/
-                showDailog("稍后更新", "");
+                //showDailog("稍后更新", "");
+                intent = new Intent(this, PointApplyActivity.class);
+                //intent.putExtra("expert_detail", true);
+                startActivity(intent);
+                finish();
                 break;
         }
     }

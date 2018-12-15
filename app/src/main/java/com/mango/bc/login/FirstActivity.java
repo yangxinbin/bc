@@ -80,6 +80,8 @@ public class FirstActivity extends BaseActivity {
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             super.onAnimationEnd(animation);
+                            //spUtils.put("openId", "oXhi94nbKcHUxGHGGhqMV9341");
+                            //loadUser("oXhi94nbKcHUxGHGGhqMV9341");
                             wechatLogin();//只能点一次
                         }
                     });

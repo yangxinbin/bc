@@ -115,15 +115,15 @@ public class DailyTasksFragment extends Fragment {
         EventBus.getDefault().register(this);
         spUtils = SPUtils.getInstance("bc", getActivity());
         mCache = ACache.get(getActivity());
-        if (NetUtil.isNetConnect(getActivity())) {
-            loadReward(false);
-        } else {
-            loadReward(true);
-        }
         if (MineJsonUtils.readUserBean(spUtils.getString("auth", "")) != null) {
             userId = MineJsonUtils.readUserBean(spUtils.getString("auth", "")).getId();
             alias = MineJsonUtils.readUserBean(spUtils.getString("auth", "")).getAlias();
             type = MineJsonUtils.readUserBean(spUtils.getString("auth", "")).getType();
+        }
+        if (NetUtil.isNetConnect(getActivity())) {
+            loadReward(false);
+        } else {
+            loadReward(true);
         }
         return view;
     }
@@ -158,7 +158,8 @@ public class DailyTasksFragment extends Fragment {
             public void run() {
                 final HashMap<String, String> mapParams = new HashMap<String, String>();
                 mapParams.clear();
-                mapParams.put("authToken", spUtils.getString("authToken", ""));
+                if (spUtils != null && spUtils.getString("authToken", "") != null)
+                    mapParams.put("authToken", spUtils.getString("authToken", ""));
                 if (ifCache) {//读取缓存数据
                     String newString = mCache.getAsString("task");
                     if (newString != null) {
